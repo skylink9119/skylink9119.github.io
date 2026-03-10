@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2026 零基础 VPS 节点搭建保姆级教程 (小白必看) | skylink</title><meta name="author" content="skylink"><meta name="copyright" content="skylink"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="⚠️ 免责声明：本教程仅供网络技术研究与个人学习使用，请务必遵守当地法律法规，严禁用于非法用途。  📺 视频演示如果你更习惯看视频操作，请点击下方播放（建议配合文字脚本食用）：        🛠️ 第一步：选购高性价比 VPS搭建节点的第一步是拥有一台属于自己的海外服务器。2026 年，我们主要看重 IP 纯净度 和 线路质量。 推荐服务商对比表   服务商 推荐线路 特点 支付方式 官网链">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2026 零基础 VPS 节点搭建保姆级教程 (小白必看)">
+<meta property="og:url" content="http://example.com/docs/vps-setup/index.html">
+<meta property="og:site_name" content="skylink">
+<meta property="og:description" content="⚠️ 免责声明：本教程仅供网络技术研究与个人学习使用，请务必遵守当地法律法规，严禁用于非法用途。  📺 视频演示如果你更习惯看视频操作，请点击下方播放（建议配合文字脚本食用）：        🛠️ 第一步：选购高性价比 VPS搭建节点的第一步是拥有一台属于自己的海外服务器。2026 年，我们主要看重 IP 纯净度 和 线路质量。 推荐服务商对比表   服务商 推荐线路 特点 支付方式 官网链">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/icon.jpg">
+<meta property="article:published_time" content="2026-03-04T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-04T08:48:27.358Z">
+<meta property="article:author" content="skylink">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/icon.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/docs/vps-setup/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2026 零基础 VPS 节点搭建保姆级教程 (小白必看)',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">skylink</span></a></span><div id="menus"></div></nav><div id="page-site-info"><h1 id="site-title">2026 零基础 VPS 节点搭建保姆级教程 (小白必看)</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><blockquote>
+<p><strong>⚠️ 免责声明</strong>：本教程仅供网络技术研究与个人学习使用，请务必遵守当地法律法规，严禁用于非法用途。</p>
+</blockquote>
+<h2 id="📺-视频演示"><a href="#📺-视频演示" class="headerlink" title="📺 视频演示"></a>📺 视频演示</h2><p>如果你更习惯看视频操作，请点击下方播放（建议配合文字脚本食用）：</p>
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/你的视频ID" frameborder="0" loading="lazy" allowfullscreen></iframe>
+</div>
+
+<hr>
+<h2 id="🛠️-第一步：选购高性价比-VPS"><a href="#🛠️-第一步：选购高性价比-VPS" class="headerlink" title="🛠️ 第一步：选购高性价比 VPS"></a>🛠️ 第一步：选购高性价比 VPS</h2><p>搭建节点的第一步是拥有一台属于自己的海外服务器。2026 年，我们主要看重 <strong>IP 纯净度</strong> 和 <strong>线路质量</strong>。</p>
+<h3 id="推荐服务商对比表"><a href="#推荐服务商对比表" class="headerlink" title="推荐服务商对比表"></a>推荐服务商对比表</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">推荐线路</th>
+<th align="left">特点</th>
+<th align="left">支付方式</th>
+<th align="left">官网链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Bandwagon (搬瓦工)</strong></td>
+<td align="left">CN2-GIA</td>
+<td align="left">极速稳定，适合 4K&#x2F;8K</td>
+<td align="left">支付宝&#x2F;信用卡</td>
+<td align="left"><a href="%E4%BD%A0%E7%9A%84%E6%8E%A8%E5%B9%BF%E9%93%BE%E6%8E%A5">立即前往</a></td>
+</tr>
+<tr>
+<td align="left"><strong>Vultr</strong></td>
+<td align="left">日本&#x2F;美国机房</td>
+<td align="left">按量计费，随时销毁</td>
+<td align="left">支付宝&#x2F;PayPal</td>
+<td align="left"><a href="%E4%BD%A0%E7%9A%84%E6%8E%A8%E5%B9%BF%E9%93%BE%E6%8E%A5">立即前往</a></td>
+</tr>
+<tr>
+<td align="left"><strong>DigitalOcean</strong></td>
+<td align="left">新加坡&#x2F;法兰克福</td>
+<td align="left">适合技术开发，IP 多</td>
+<td align="left">信用卡</td>
+<td align="left"><a href="%E4%BD%A0%E7%9A%84%E6%8E%A8%E5%B9%BF%E9%93%BE%E6%8E%A5">立即前往</a></td>
+</tr>
+</tbody></table>
+<a class="btn-beautify orange" href="/%E4%BD%A0%E7%9A%84%E6%8E%A8%E5%B9%BF%E9%93%BE%E6%8E%A5" title="猛击领取 $100 赠送金"><i class="fa fa-gift"></i><span>猛击领取 $100 赠送金</span></a>
+
+<hr>
+<h2 id="💻-第二步：连接你的-VPS-服务器"><a href="#💻-第二步：连接你的-VPS-服务器" class="headerlink" title="💻 第二步：连接你的 VPS 服务器"></a>💻 第二步：连接你的 VPS 服务器</h2><p>购买成功后，你会收到 IP、用户名（通常是 root）和密码。</p>
+<ol>
+<li><strong>下载 SSH 工具</strong>：推荐使用 <strong>Tabby</strong> 或 <strong>Termius</strong>。</li>
+<li><strong>连接命令</strong>：<br>在终端输入 <code>ssh root@你的服务器IP</code>。</li>
+<li><strong>首次登录</strong>：如果是第一次连接，输入 <code>yes</code> 并回车，然后输入密码（<strong>注意：密码输入时不会显示任何字符</strong>）。</li>
+</ol>
+<hr>
+<h2 id="🚀-第三步：一键脚本搭建-2026-最新版"><a href="#🚀-第三步：一键脚本搭建-2026-最新版" class="headerlink" title="🚀 第三步：一键脚本搭建 (2026 最新版)"></a>🚀 第三步：一键脚本搭建 (2026 最新版)</h2><p>目前最推荐使用基于 <strong>Sing-box</strong> 内核的 <strong>Reality</strong> 协议，因为它不需要域名，且抗封锁能力极强。</p>
+<h3 id="1-执行安装脚本"><a href="#1-执行安装脚本" class="headerlink" title="1. 执行安装脚本"></a>1. 执行安装脚本</h3><p>在终端复制并粘贴以下代码：</p>
+<pre><code class="language-bash"># 执行 2026 聚合版一键脚本
+bash &lt;(curl -Ls [https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh](https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh))
+
+   ## 📺 视频演示
+如果你觉得文字太枯燥，可以先看我制作的详细视频演示：
+&lt;div class=&quot;video-container&quot;&gt;
+  &lt;iframe src=&quot;https://www.youtube.com/embed/你的视频ID&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</code></pre>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">skylink</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操">🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</a><time datetime="2026-03-04T11:08:02.000Z" title="发表于 2026-03-04 19:08:02">2026-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</a><time datetime="2026-03-04T08:20:52.441Z" title="发表于 2026-03-04 16:20:52">2026-03-04</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">技术教程</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"><span class="card-category-list-name">网络链路</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" style="font-size: 1.1em; color: #999">服务器运维</a> <a href="/tags/Reality%E5%8D%8F%E8%AE%AE/" style="font-size: 1.1em; color: #999">Reality协议</a> <a href="/tags/VPS/" style="font-size: 1.1em; color: #999">VPS</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/" style="font-size: 1.1em; color: #999">网络优化</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-03-10T03:16:35.276Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By skylink</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
