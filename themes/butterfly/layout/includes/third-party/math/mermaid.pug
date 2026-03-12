@@ -1,0 +1,323 @@
+script.
+  (() => {
+    const parseViewBox = viewBox => {
+      if (!viewBox) return null
+      const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+      if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+      return parts
+    }
+
+    const getSvgViewBox = svg => {
+      const attr = parseViewBox(svg.getAttribute('viewBox'))
+      if (attr) return attr
+
+      // Fallback: use bbox to build a viewBox
+      try {
+        const bbox = svg.getBBox()
+        if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+      } catch (e) {
+        // getBBox may fail on some edge cases; ignore
+      }
+
+      const w = Number(svg.getAttribute('width')) || 0
+      const h = Number(svg.getAttribute('height')) || 0
+      if (w > 0 && h > 0) return [0, 0, w, h]
+      return [0, 0, 100, 100]
+    }
+
+    const setSvgViewBox = (svg, vb) => {
+      svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+    }
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+    const openSvgInNewTab = ({ source, initViewBox }) => {
+      const getClonedSvg = () => {
+        if (typeof source === 'string') {
+          const template = document.createElement('template')
+          template.innerHTML = source.trim()
+          const svg = template.content.querySelector('svg')
+          return svg ? svg.cloneNode(true) : null
+        }
+        if (source && typeof source.cloneNode === 'function') {
+          return source.cloneNode(true)
+        }
+        return null
+      }
+
+      const clone = getClonedSvg()
+      if (!clone) return
+      if (initViewBox && initViewBox.length === 4) {
+        clone.setAttribute('viewBox', initViewBox.join(' '))
+      }
+      if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+      if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+        clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+      }
+      // inject background to match current theme
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+      const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+      if (!clone.style.background) clone.style.background = bg
+
+      const serializer = new XMLSerializer()
+      const svgSource = serializer.serializeToString(clone)
+      const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+        <style>
+          html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+          svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+        </style>
+        </head><body>${svgSource}</body></html>`
+      const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      window.open(url, '_blank', 'noopener')
+      setTimeout(() => URL.revokeObjectURL(url), 30000)
+    }
+
+    const attachMermaidViewerButton = wrap => {
+      let btn = wrap.querySelector('.mermaid-open-btn')
+      if (!btn) {
+        btn = document.createElement('button')
+        btn.type = 'button'
+        btn.className = 'mermaid-open-btn'
+        wrap.appendChild(btn)
+      }
+
+      btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+      if (!btn.__mermaidViewerBound) {
+        btn.addEventListener('click', e => {
+          e.preventDefault()
+          e.stopPropagation()
+          const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+          if (!svg) return
+          const initViewBox = wrap.__mermaidInitViewBox
+          if (typeof svg === 'string') {
+            openSvgInNewTab({ source: svg, initViewBox })
+            return
+          }
+          openSvgInNewTab({ source: svg, initViewBox })
+        })
+        btn.__mermaidViewerBound = true
+      }
+    }
+
+    // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+    const zoomAtPoint = (vb, factor, px, py) => {
+      const w = vb[2] * factor
+      const h = vb[3] * factor
+      const nx = px - (px - vb[0]) * factor
+      const ny = py - (py - vb[1]) * factor
+      return [nx, ny, w, h]
+    }
+
+    const initMermaidGestures = wrap => {
+      const svg = wrap.querySelector('svg')
+      if (!svg) return
+
+      // Ensure viewBox exists so gestures always work
+      const initVb = getSvgViewBox(svg)
+      wrap.__mermaidInitViewBox = initVb
+      wrap.__mermaidCurViewBox = initVb.slice()
+      setSvgViewBox(svg, initVb)
+
+      // Avoid binding multiple times on themeChange/pjax
+      if (wrap.__mermaidGestureBound) return
+      wrap.__mermaidGestureBound = true
+
+      // Helper: map client (viewport) coordinate -> viewBox coordinate
+      const clientToViewBox = (clientX, clientY) => {
+        const rect = svg.getBoundingClientRect()
+        const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+        const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+        const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+        return { x, y, rect, vb }
+      }
+
+      const state = {
+        pointers: new Map(),
+        startVb: null,
+        startDist: 0,
+        startCenter: null
+      }
+
+      const clampVb = vb => {
+        const init = wrap.__mermaidInitViewBox || vb
+        const minW = init[2] * 0.1
+        const maxW = init[2] * 10
+        const minH = init[3] * 0.1
+        const maxH = init[3] * 10
+        vb[2] = clamp(vb[2], minW, maxW)
+        vb[3] = clamp(vb[3], minH, maxH)
+        return vb
+      }
+
+      const setCurVb = vb => {
+        vb = clampVb(vb)
+        wrap.__mermaidCurViewBox = vb
+        setSvgViewBox(svg, vb)
+      }
+
+      const onPointerDown = e => {
+        // Allow only primary button for mouse
+        if (e.pointerType === 'mouse' && e.button !== 0) return
+        svg.setPointerCapture(e.pointerId)
+        state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+        if (state.pointers.size === 1) {
+          state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        } else if (state.pointers.size === 2) {
+          const pts = [...state.pointers.values()]
+          const dx = pts[0].x - pts[1].x
+          const dy = pts[0].y - pts[1].y
+          state.startDist = Math.hypot(dx, dy)
+          state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+          state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+        }
+      }
+
+      const onPointerMove = e => {
+        if (!state.pointers.has(e.pointerId)) return
+        state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+        // Pan with 1 pointer
+        if (state.pointers.size === 1 && state.startVb) {
+          const p = [...state.pointers.values()][0]
+          const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+          // movementX/Y unreliable on touch, compute from stored last position
+          const last = wrap.__mermaidLastSinglePointer || p
+          const dxClient = p.x - last.x
+          const dyClient = p.y - last.y
+          wrap.__mermaidLastSinglePointer = p
+
+          const { rect } = clientToViewBox(p.x, p.y)
+          const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+          const dx = dxClient * (vb[2] / rect.width)
+          const dy = dyClient * (vb[3] / rect.height)
+          setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+          return
+        }
+
+        // Pinch zoom with 2 pointers
+        if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+          const pts = [...state.pointers.values()]
+          const dx = pts[0].x - pts[1].x
+          const dy = pts[0].y - pts[1].y
+          const dist = Math.hypot(dx, dy)
+          if (!dist) return
+          const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+          const cx = (pts[0].x + pts[1].x) / 2
+          const cy = (pts[0].y + pts[1].y) / 2
+          const centerClient = { x: cx, y: cy }
+
+          const pxy = clientToViewBox(centerClient.x, centerClient.y)
+          const cpx = pxy.x
+          const cpy = pxy.y
+
+          const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+          setCurVb(vb)
+        }
+      }
+
+      const onPointerUpOrCancel = e => {
+        state.pointers.delete(e.pointerId)
+        if (state.pointers.size === 0) {
+          state.startVb = null
+          state.startDist = 0
+          state.startCenter = null
+          wrap.__mermaidLastSinglePointer = null
+        } else if (state.pointers.size === 1) {
+          // reset single pointer baseline to avoid jump
+          wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+        }
+      }
+
+      // Wheel zoom (mouse/trackpad)
+      const onWheel = e => {
+        // ctrlKey on mac trackpad pinch; we treat both as zoom
+        e.preventDefault()
+        const delta = e.deltaY
+        const zoomFactor = delta > 0 ? 1.1 : 0.9
+        const { x, y } = clientToViewBox(e.clientX, e.clientY)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+      }
+
+      const onDblClick = () => {
+        const init = wrap.__mermaidInitViewBox
+        if (!init) return
+        wrap.__mermaidCurViewBox = init.slice()
+        setSvgViewBox(svg, init)
+      }
+
+      svg.addEventListener('pointerdown', onPointerDown)
+      svg.addEventListener('pointermove', onPointerMove)
+      svg.addEventListener('pointerup', onPointerUpOrCancel)
+      svg.addEventListener('pointercancel', onPointerUpOrCancel)
+      svg.addEventListener('wheel', onWheel, { passive: false })
+      svg.addEventListener('dblclick', onDblClick)
+    }
+
+    const runMermaid = ele => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '!{theme.mermaid.theme.dark}' : '!{theme.mermaid.theme.light}'
+
+      ele.forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+
+        // Clear old render (themeChange/pjax will rerun)
+        const oldSvg = item.querySelector('svg')
+        if (oldSvg) oldSvg.remove()
+        item.__mermaidGestureBound = false
+
+        const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+        if (!config.theme) {
+          config.theme = theme
+        }
+        const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+        const mermaidID = `mermaid-${index}`
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+        const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+        const renderMermaid = svg => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+          if (!{theme.mermaid.zoom_pan}) initMermaidGestures(item)
+          item.__mermaidOriginalSvg = svg
+          if (!{theme.mermaid.open_in_new_tab}) attachMermaidViewerButton(item)
+        }
+
+
+        // mermaid v9 and v10 compatibility
+        typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+      })
+    }
+
+    const codeToMermaid = () => {
+      const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+      if (codeMermaidEle.length === 0) return
+
+      codeMermaidEle.forEach(ele => {
+        const preEle = document.createElement('pre')
+        preEle.className = 'mermaid-src'
+        preEle.hidden = true
+        preEle.textContent = ele.textContent
+        const newEle = document.createElement('div')
+        newEle.className = 'mermaid-wrap'
+        newEle.appendChild(preEle)
+        ele.parentNode.replaceWith(newEle)
+      })
+    }
+
+    const loadMermaid = () => {
+      if (!{theme.mermaid.code_write}) codeToMermaid()
+      const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+      if ($mermaid.length === 0) return
+
+      const runMermaidFn = () => runMermaid($mermaid)
+      btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+      window.loadMermaid ? runMermaidFn() : btf.getScript('!{url_for(theme.asset.mermaid)}').then(runMermaidFn)
+    }
+
+    btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  })()
