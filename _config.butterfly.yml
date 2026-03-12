@@ -265,6 +265,7 @@ footer:
     enable: true
     version: true
   custom_text:
+  beautify: true
 
 # --------------------------------------
 # Aside Settings
