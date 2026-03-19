@@ -19,6 +19,8 @@ nav:
 
 menu:
   Home: / || fas fa-home
+  测试脚本: /script/ || fas fa-terminal
+  分类: /categories/ || fas fa-folder-open
   Archives: /archives/ || fas fa-archive
   Tags: /tags/ || fas fa-tags
   Categories: /categories/ || fas fa-folder-open

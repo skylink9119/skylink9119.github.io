@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyline Project - sky9119.cc 专属测评工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0b1120; color: #e2e8f0; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .glass-card { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(56, 189, 248, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="max-w-xl w-full glass-card rounded-3xl p-8 shadow-2xl mx-4">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-black tracking-widest text-white mb-2 uppercase">
+                SKY<span class="text-sky-400">LINE</span> 2026
+            </h1>
+            <p class="text-slate-400 text-sm tracking-widest">OFFICIAL SCRIPT BY SKY9119.CC</p>
+        </div>
+
+        <div class="bg-[#050505] rounded-2xl border border-slate-800 p-5 mb-8 relative">
+            <div class="flex items-center space-x-2 mb-4 text-slate-600 font-mono text-[10px]">
+                <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                <span>Root@Skyline:~#</span>
+            </div>
+            <div class="font-mono text-sm sm:text-base text-sky-300 mb-10">
+                curl -sL https://tinyurl.com/Skyline9119 | bash
+            </div>
+            <button onclick="copyCmd()" class="absolute bottom-4 right-4 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all active:scale-95">
+                <i class="far fa-copy mr-2"></i><span id="btnText">一键复制</span>
+            </button>
+        </div>
+
+        <div class="text-center pt-6 border-t border-slate-800/50 text-xs text-slate-500">
+            <a href="https://sky9119.cc" class="hover:text-sky-400">返回 <span class="font-bold">sky9119.cc</span> 导航站 <i class="fas fa-external-link-alt ml-1"></i></a>
+        </div>
+    </div>
+
+    <script>
+        function copyCmd() {
+            const cmd = "curl -sL https://tinyurl.com/Skyline9119 | bash";
+            navigator.clipboard.writeText(cmd).then(() => {
+                const btn = document.getElementById('btnText');
+                btn.innerText = '复制成功！';
+                setTimeout(() => { btn.innerText = '一键复制'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
