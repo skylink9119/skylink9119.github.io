@@ -1,53 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
-      <link href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<div class="video-container">  <iframe src="https://www.youtube.com/embed/你的视频ID" frameborder="0" allowfullscreen></iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><h2 id="🛠️-第一步：选购高性价比优质-VPS-CN2-GIA-线路推荐"><a href="#🛠️-第一步：选购高性价比优质-VPS-CN2-GIA-线路推荐" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS (CN2-GIA 线路推荐)"></a>🛠️ 第一步：选购高性价比优质 VPS (CN2-GIA 线路推荐)</h2><h2 id="在配置远程链路之前，你首先需要一台海外服务器，即-VPS。2026-年网络环境瞬息万变，线路质量直接决定了你的使用体验。"><a href="#在配置远程链路之前，你首先需要一台海外服务器，即-VPS。2026-年网络环境瞬息万变，线路质量直接决定了你的使用体验。" class="headerlink" title="在配置远程链路之前，你首先需要一台海外服务器，即 VPS。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。"></a>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</h2><h3 id="1-核心选购指标（避坑指南）"><a href="#1-核心选购指标（避坑指南）" class="headerlink" title="1. 核心选购指标（避坑指南）"></a>1. 核心选购指标（避坑指南）</h3><ul><li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li><li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li><li><strong>💳 支付方式</strong>：作为中文教程，我们优先推荐支持 <strong>支付宝（Alipay）</strong> 的顶级服务商。</li></ul><h1 id="2026-热门-VPS-服务商横向对比表"><a href="#2026-热门-VPS-服务商横向对比表" class="headerlink" title="2026 热门 VPS 服务商横向对比表"></a>2026 热门 VPS 服务商横向对比表</h1><table><thead><tr><th align="left">服务商</th><th align="left">核心优势</th><th align="left">推荐线路</th><th align="left">适用场景</th><th align="left">价格区间</th></tr></thead><tbody><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td><td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td><td align="left"><strong>CN2 GIA (Premium)</strong></td><td align="left">高质量生产力博客、极速中转节点</td><td align="left"><strong>高</strong> ($15+&#x2F;月)</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td><td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td><td align="left"><strong>CN2 GIA-E &#x2F; 日本软银</strong></td><td align="left">资深折腾党、多机房灵活切换需求</td><td align="left"><strong>中高</strong> ($49+&#x2F;季)</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td><td align="left">界面现代，支持按小时计费，内网互联强</td><td align="left"><strong>港台 &#x2F; 日韩 BGP</strong></td><td align="left">临时项目测试、流媒体解锁、即用即删</td><td align="left"><strong>低</strong> (按量 &#x2F; 月付)</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td><td align="left">极致性价比，“价格屠夫”，老牌稳定</td><td align="left"><strong>常规直连 (优化较少)</strong></td><td align="left">静态博客挂载、自动化部署备份机</td><td align="left"><strong>极低</strong> ($10+&#x2F;年)</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td><td align="left">全球大厂，按需创建，API 支持完善</td><td align="left"><strong>国际标准 BGP</strong></td><td align="left">纯海外业务拓展、纯开发环境调试</td><td align="left"><strong>中</strong> ($5+&#x2F;月)</td></tr></tbody></table><h1 id="🚀-VPS-操作系统选择与初始化全攻略-2026-版"><a href="#🚀-VPS-操作系统选择与初始化全攻略-2026-版" class="headerlink" title="🚀 VPS 操作系统选择与初始化全攻略 (2026 版)"></a>🚀 VPS 操作系统选择与初始化全攻略 (2026 版)</h1><p>选择好 VPS 硬件后，安装一个合适的操作系统（OS）是搭建服务器的第一步。</p><h2 id="一、-操作系统对比与推荐"><a href="#一、-操作系统对比与推荐" class="headerlink" title="一、 操作系统对比与推荐"></a>一、 操作系统对比与推荐</h2><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p><h3 id="1-Debian-首选推荐"><a href="#1-Debian-首选推荐" class="headerlink" title="1. Debian (首选推荐)"></a>1. Debian (首选推荐)</h3><ul><li><strong>优势</strong>：极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好。</li><li><strong>适用场景</strong>：个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。</li><li><strong>版本建议</strong>：<strong>Debian 12 (Bookworm)</strong> 或最新的 <strong>Debian 13 (Trixie)</strong>。</li></ul><h3 id="2-Ubuntu-Server-新手友好"><a href="#2-Ubuntu-Server-新手友好" class="headerlink" title="2. Ubuntu Server (新手友好)"></a>2. Ubuntu Server (新手友好)</h3><ul><li><strong>优势</strong>：社区支持极其庞大，几乎所有的开发工具和脚本都会优先适配 Ubuntu。</li><li><strong>适用场景</strong>：初学者练习、需要快速找到报错解决方案、运行最新版的软件。</li><li><strong>版本建议</strong>：<strong>Ubuntu 24.04 LTS</strong> (长期支持版)。</li></ul><h3 id="3-AlmaLinux-Rocky-Linux-企业级"><a href="#3-AlmaLinux-Rocky-Linux-企业级" class="headerlink" title="3. AlmaLinux &#x2F; Rocky Linux (企业级)"></a>3. AlmaLinux &#x2F; Rocky Linux (企业级)</h3><ul><li><strong>优势</strong>：CentOS 的正统继任者，完全兼容 RHEL (红帽)。</li><li><strong>适用场景</strong>：运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</li></ul><h2 id="二、-系统安装步骤"><a href="#二、-系统安装步骤" class="headerlink" title="二、 系统安装步骤"></a>二、 系统安装步骤</h2><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p><ol><li><strong>登录控制面板</strong>：进入你的 VPS 管理后台。</li><li><strong>寻找 “Reinstall” 或 “OS Installation”</strong>：通常在电源开关按钮附近。</li><li><strong>选择镜像</strong>：<ul><li>推荐选择 <strong>Debian 12&#x2F;13 64-bit</strong>。</li><li>如果面板提供 “Minimal”（最小化）版本，优先选择它，这样系统最干净。</li></ul></li><li><strong>设置 Root 密码</strong>：务必设置一个包含大小写字母、数字和特殊字符的高强度密码。</li><li><strong>等待重启</strong>：通常 2-5 分钟内系统会安装完成并自动开机。</li></ol><h2 id="三、-服务器初始化-保姆级教程"><a href="#三、-服务器初始化-保姆级教程" class="headerlink" title="三、 服务器初始化 (保姆级教程)"></a>三、 服务器初始化 (保姆级教程)</h2><p>系统安装完成后，请通过 SSH 连接工具（如 PowerShell, Tabby, 或 Termius）连接到服务器，并执行以下操作。</p><h3 id="1-更新系统软件包"><a href="#1-更新系统软件包" class="headerlink" title="1. 更新系统软件包"></a>1. 更新系统软件包</h3><p>确保所有组件都是最新的，避免安全漏洞。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y curl wget sudo vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure><h3 id="开启BBR加速器"><a href="#开启BBR加速器" class="headerlink" title="开启BBR加速器"></a>开启BBR加速器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.core.default_qdisc = fq&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; echo &quot;net.ipv4.tcp_congestion_control = bbr&quot; &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure><h3 id="1-核心状态检查（最常用）"><a href="#1-核心状态检查（最常用）" class="headerlink" title="1. 核心状态检查（最常用）"></a>1. 核心状态检查（最常用）</h3><p>执行以下命令，查看当前系统生效的 TCP 控制算法：<br>sysctl net.ipv4.tcp_congestion_control<br>成功标志：输出 net.ipv4.tcp_congestion_control &#x3D; bbr</p><h3 id="2-验证内核模块"><a href="#2-验证内核模块" class="headerlink" title="2. 验证内核模块"></a>2. 验证内核模块</h3><p>检查 BBR 模块是否已经加载到内核中 lsmod | grep bbr<br>如果发现没开启成功（无输出）</p><h3 id="3-生效配置"><a href="#3-生效配置" class="headerlink" title="3.生效配置"></a>3.生效配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure><h2 id="四-安装3X-UI面板"><a href="#四-安装3X-UI面板" class="headerlink" title="四.安装3X-UI面板"></a>四.安装3X-UI面板</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure><h2 id="🚀-3x-ui-交互安装与防火墙配置全指南"><a href="#🚀-3x-ui-交互安装与防火墙配置全指南" class="headerlink" title="🚀 3x-ui 交互安装与防火墙配置全指南"></a>🚀 3x-ui 交互安装与防火墙配置全指南</h2><p>本教程详细记录了 3x-ui 面板安装过程中的每一个交互步骤，以及安装完成后确保能正常访问的关键操作。</p><h2 id="📋-第一阶段：交互选项详解-建议收藏"><a href="#📋-第一阶段：交互选项详解-建议收藏" class="headerlink" title="📋 第一阶段：交互选项详解 (建议收藏)"></a>📋 第一阶段：交互选项详解 (建议收藏)</h2><p>当你运行安装脚本后，请按以下指南依次操作。</p><h3 id="1-确认安装-Confirm"><a href="#1-确认安装-Confirm" class="headerlink" title="1. 确认安装 (Confirm)"></a>1. 确认安装 (Confirm)</h3><ul><li><strong>屏幕显示</strong>：<code>确认安装/更新 3x-ui 面板吗? (y/n)</code></li><li><strong>操作</strong>：输入 <strong><code>y</code></strong> 并回车。</li><li><strong>含义</strong>：授权脚本开始下载二进制文件并配置系统服务。</li></ul><h3 id="2-设置登录用户名-Username"><a href="#2-设置登录用户名-Username" class="headerlink" title="2. 设置登录用户名 (Username)"></a>2. 设置登录用户名 (Username)</h3><ul><li><strong>屏幕显示</strong>：<code>请设置登录用户名 (默认随机):</code></li><li><strong>操作</strong>：输入一个你容易记住的账号（如 <code>myadmin2026</code>）。</li><li><strong>注意</strong>：<strong>强烈建议手动设置</strong>。不要留空使用默认随机账号，否则后续在没有备忘录的情况下找回非常麻烦。</li></ul><h3 id="3-设置登录密码-Password"><a href="#3-设置登录密码-Password" class="headerlink" title="3. 设置登录密码 (Password)"></a>3. 设置登录密码 (Password)</h3><ul><li><strong>屏幕显示</strong>：<code>请设置登录密码 (默认随机):</code></li><li><strong>操作</strong>：输入强密码并回车。</li><li><strong>⚠️ 核心注意</strong>：Linux 输入密码时<strong>屏幕不会显示任何字符</strong>（没有星号，没有点）。请盲输完成后直接按回车，不要怀疑键盘坏了。</li></ul><h3 id="4-设置面板监听端口-Port"><a href="#4-设置面板监听端口-Port" class="headerlink" title="4. 设置面板监听端口 (Port)"></a>4. 设置面板监听端口 (Port)</h3><ul><li><strong>屏幕显示</strong>：<code>请设置面板监听端口 (默认随机):</code></li><li><strong>操作</strong>：输入一个 <strong>10,000 - 65,535</strong> 之间的随机数字（例如 <code>28530</code>）。</li><li><strong>💡 避坑指南</strong>：严禁使用 <code>80</code>、<code>443</code> 或 <code>22</code> 端口，以免与网页服务（如 Hexo）或 SSH 连接产生冲突。</li></ul><h3 id="5-设置面板根路径-Base-Path"><a href="#5-设置面板根路径-Base-Path" class="headerlink" title="5. 设置面板根路径 (Base Path)"></a>5. 设置面板根路径 (Base Path)</h3><ul><li><strong>屏幕显示</strong>：<code>请设置面板根路径 (默认为空):</code></li><li><strong>操作</strong>：<strong>直接按回车跳过</strong>。</li><li><strong>风险提示</strong>：设置路径（如 <code>/secret</code>）后，你的登录地址会强制变为 <code>http://IP:端口/secret</code>。新手极易忘记这个后缀，导致看到 404 页面以为安装失败。</li></ul><h2 id="⚠️-第二阶段：安装后的“救命”步骤"><a href="#⚠️-第二阶段：安装后的“救命”步骤" class="headerlink" title="⚠️ 第二阶段：安装后的“救命”步骤"></a>⚠️ 第二阶段：安装后的“救命”步骤</h2><p><strong>安装成功不代表能打开网页。</strong> 如果你发现面板打不开，通常是由于服务器内部防火墙拦截导致的。</p><h3 id="1-放行系统防火墙-UFW"><a href="#1-放行系统防火墙-UFW" class="headerlink" title="1. 放行系统防火墙 (UFW)"></a>1. 放行系统防火墙 (UFW)</h3><p>你需要告诉服务器允许外部访问你设定的端口（以 <code>28530</code> 为例）。请在终端依次执行：</p><h3 id="允许面板通信端口"><a href="#允许面板通信端口" class="headerlink" title="允许面板通信端口"></a>允许面板通信端口</h3><p>ufw allow 28530&#x2F;tcp</p><h3 id="重新加载防火墙使配置生效"><a href="#重新加载防火墙使配置生效" class="headerlink" title="重新加载防火墙使配置生效"></a>重新加载防火墙使配置生效</h3><p>ufw reload</p><h2 id="📡-3x-ui-进站设置全流程：新手保姆级教程"><a href="#📡-3x-ui-进站设置全流程：新手保姆级教程" class="headerlink" title="📡 3x-ui 进站设置全流程：新手保姆级教程"></a>📡 3x-ui 进站设置全流程：新手保姆级教程</h2><p>“进站设置” (Inbound) 决定了你的客户端（手机或电脑）如何连接到服务器。本教程推荐使用目前最主流、最简单的 <strong>VLESS + Reality</strong> 方案。</p><h3 id="🛠️-第一步：进入设置界面"><a href="#🛠️-第一步：进入设置界面" class="headerlink" title="🛠️ 第一步：进入设置界面"></a>🛠️ 第一步：进入设置界面</h3><ol><li>打开浏览器，输入你的面板地址：<code>https://服务器IP:端口</code>。</li><li>登录后，点击左侧菜单栏的 <strong>“入站列表” (Inbound List)</strong>。</li><li>点击页面右上角的蓝色按钮 <strong>“添加入站” (Add Inbound)</strong>。</li></ol><h3 id="📋-第二步：配置基础参数-必填"><a href="#📋-第二步：配置基础参数-必填" class="headerlink" title="📋 第二步：配置基础参数 (必填)"></a>📋 第二步：配置基础参数 (必填)</h3><p>在弹出的窗口中，请严格按照以下说明填写：</p><table><thead><tr><th align="left">选项名称</th><th align="left">建议填写内容</th><th align="left">说明</th></tr></thead><tbody><tr><td align="left"><strong>备注 (Remark)</strong></td><td align="left">随便填 (如: My_Vless)</td><td align="left">只是为了方便你自己识别。</td></tr><tr><td align="left"><strong>协议 (Protocol)</strong></td><td align="left"><strong>VLESS</strong></td><td align="left">目前性能最强、延迟最低的协议。</td></tr><tr><td align="left"><strong>监听 IP</strong></td><td align="left">保持默认 (0.0.0.0)</td><td align="left">监听服务器所有网卡。</td></tr><tr><td align="left"><strong>端口 (Port)</strong></td><td align="left"><strong>443</strong> (推荐)</td><td align="left">模拟网页流量。如果被占用，可随机填 10000+。</td></tr><tr><td align="left"><strong>总流量 (Total GB)</strong></td><td align="left">留空</td><td align="left">留空表示不限制流量。</td></tr><tr><td align="left"><strong>到期时间</strong></td><td align="left">留空</td><td align="left">留空表示永久有效。</td></tr></tbody></table><h2 id="🔒-第三步：配置传输安全-Reality-设置"><a href="#🔒-第三步：配置传输安全-Reality-设置" class="headerlink" title="🔒 第三步：配置传输安全 (Reality 设置)"></a>🔒 第三步：配置传输安全 (Reality 设置)</h2><p>这是防封锁的关键步骤。在“添加入站”窗口下方找到 <strong>传输 (Transport)</strong> 部分：</p><ol><li><strong>传输方式 (Network)</strong>：选择 <strong>tcp</strong>。</li><li><strong>安全 (Security)</strong>：选择 <strong>reality</strong>。</li><li><strong>uTLS</strong>：选择 <strong>chrome</strong> (模拟谷歌浏览器指纹)。</li><li><strong>Dest (目标网站)</strong>：填入 <code>www.microsoft.com:443</code> 或 <code>www.lovelive-anime.jp:443</code>。<ul><li><em>原理：这会让你的流量看起来像是在访问微软或正版网站。</em></li></ul></li><li><strong>SNI</strong>：填入你刚才在 Dest 填的域名（如 <code>www.microsoft.com</code>）。</li><li><strong>Short ID</strong>：点击旁边的“生成”按钮。</li><li><strong>Private Key (私钥)</strong>：点击旁边的“生成”按钮（公钥会自动同步生成）。</li></ol><h2 id="🚀-第四步：保存并开启防火墙"><a href="#🚀-第四步：保存并开启防火墙" class="headerlink" title="🚀 第四步：保存并开启防火墙"></a>🚀 第四步：保存并开启防火墙</h2><ol><li>点击右下角的 <strong>“添加” (Add)</strong>。</li><li><strong>非常重要</strong>：如果你在第三步设置了端口（如 443），必须在 SSH 终端放行该端口：<pre><code class="language-bash"># 以 443 端口为例sudo ufw allow 443/tcpsudo ufw reload</code></pre></li></ol><h2 id="📱-第五步：如何连接到手机-电脑？"><a href="#📱-第五步：如何连接到手机-电脑？" class="headerlink" title="📱 第五步：如何连接到手机&#x2F;电脑？"></a>📱 第五步：如何连接到手机&#x2F;电脑？</h2><p>在“入站列表”中找到你刚创建的那条记录。<br>点击操作栏中的 “二维码” 图标或 “复制” 图标。<br>打开你的客户端软件（如 v2rayN、Shadowrocket 或 Clash Meta）：<br>手机端：直接扫描二维码。<br>电脑端：从剪贴板导入连接。</p><h3 id="🏁-全教程完结"><a href="#🏁-全教程完结" class="headerlink" title="🏁 全教程完结"></a>🏁 全教程完结</h3><p>通过本教程，你已经构建了一套密钥认证、端口隐藏、BBR 内核加速、Reality 强力伪装的顶级跨境网络链路。</p><h3 id="📢-写在最后："><a href="#📢-写在最后：" class="headerlink" title="📢 写在最后："></a>📢 写在最后：</h3><p>任何技术都有时效性。建议关注我的博客，每 3 个月进行一次组件更新。如果在配置防火墙时把自己“关在门外”了，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">
+    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>
+    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>
+    <div style="display: flex; gap: 10px;">
+        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>
+        <a href="/docs/ssh-tool/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>
+    </div>
+</div>
+]]></content>
       <categories>
-          
-          <category> 技术教程 </category>
-          
-          <category> 网络链路 </category>
-          
+        <category>技术教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> 网络优化 </tag>
-            
-            <tag> Reality协议 </tag>
-            
-            <tag> 服务器运维 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-      <link href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理-Remote-Management-绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理-Remote-Management-绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理 (Remote Management) 绕过全攻略"></a>2026 最新 macOS MDM 远程管理 (Remote Management) 绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到“远程管理” (MDM) 提示无法进入桌面？本教程将通过简单的自动化脚本，教你如何在<strong>恢复模式</strong>下彻底绕过 MDM 注册流程。</p><blockquote><p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p></blockquote><hr><h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 屏蔽 Apple 的 MDM 验证域名，并手动创建一个本地管理员账户，从而跳过强制注册过程。</p><hr><h2 id="🛠-第一阶段：进入恢复模式并准备"><a href="#🛠-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠 第一阶段：进入恢复模式并准备"></a>🛠 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul><li><strong>Apple Silicon (M系列)：</strong><br>  关机后，按住 <strong>电源按钮</strong> 直到看到“正在加载启动选项”。点击 <strong>选项 (Options)</strong> -&gt; <strong>继续</strong>。</li><li><strong>Intel 处理器：</strong><br>  重启时立即按住 <code>Command (⌘) + R</code> 键，直到看到 Apple Logo。</li></ul><h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p><h3 id="3-启动终端-Terminal"><a href="#3-启动终端-Terminal" class="headerlink" title="3. 启动终端 (Terminal)"></a>3. 启动终端 (Terminal)</h3><p>在顶部菜单栏选择 <strong>实用工具 (Utilities)</strong> &gt; <strong>终端 (Terminal)</strong>。</p><hr><h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下经过优化的自动化命令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; chmod +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure><h3 id="关键步骤说明："><a href="#关键步骤说明：" class="headerlink" title="关键步骤说明："></a>关键步骤说明：</h3><p>卷检测： 脚本会自动识别 Macintosh HD 路径。</p><p>模式选择： 输入 1 选择 “From Recovery Bypass MDM”。</p><p>账户设置： * 用户名： 建议使用默认 Apple（或自定义，仅限英文字符）。</p><p>密码： 设置一个简单的密码（如 1234），后续可以更改。</p><p>自动执行： 脚本会自动执行 屏蔽 MDM 域 (Block MDM Domains) 和 写入配置文件 操作。</p><p>当看到 “MDM Bypass Successfully” 提示时，即可关闭终端并点击左上角图标 重新启动。</p><p>🔄 第三阶段：登录与账户清理<br>初始进入： 使用脚本创建的 Apple 账户登录。</p><p>跳过向导： 登录后会再次出现设置向导，请全部选择“稍后设置”或“跳过”。</p><p>创建正式账户：</p><p>前往 系统设置 &gt; 用户与组。</p><p>新建一个您自己的管理员账户。</p><p>安全删除： 切换到新账户后，删除最初创建的临时 Apple 账户。</p><p>❓ 常见问题排查 (FAQ)</p><ol><li>脚本报错 “Could not resolve host”？<br>原因： Wi-Fi 未连接或 DNS 解析失败。</li></ol><p>解决： 检查恢复模式右上角的网络图标，确保已连接。</p><ol start="2"><li>提示 “Read-only file system”？<br>原因： 磁盘未挂载或处于保护状态。</li></ol><p>解决： 打开“磁盘工具”，选择你的主硬盘卷（如 Macintosh HD），点击“挂载”，输入开机密码后重试脚本。</p><ol start="3"><li>重启后 MDM 弹窗又出现了？<br>解决： 确保在脚本运行中成功执行了“Block MDM Domains”步骤。如果未生效，可手动在 &#x2F;etc&#x2F;hosts 中添加 127.0.0.1 iprofiles.apple.com。</li></ol><p>💡 总结<br>通过上述步骤，你可以完美解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p><p>觉得有用？ 欢迎分享给更多需要的朋友！</p><div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>    <div style="display: flex; gap: 10px;">        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>        <a href="/docs/ssh-tool/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>    </div></div>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>macOS</tag>
+        <tag>MDM</tag>
+        <tag>系统工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
+    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/rbvd4RZQaNY"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p>
+<h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul>
+<li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li>
+<li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li>
+<li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li>
+</ul>
+<h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">核心优势</th>
+<th align="left">推荐线路</th>
+<th align="left">适用场景</th>
+<th align="left">价格区间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
+<td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td>
+<td align="left">CN2 GIA (Premium)</td>
+<td align="left">高质量生产力博客、极速中转节点</td>
+<td align="left">高（$15+&#x2F;月）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td>
+<td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td>
+<td align="left">CN2 GIA-E &#x2F; 日本软银</td>
+<td align="left">资深折腾党、多机房灵活切换需求</td>
+<td align="left">中高（$49+&#x2F;季）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
+<td align="left">界面现代，支持按小时计费，内网互联强</td>
+<td align="left">港台 &#x2F; 日韩 BGP</td>
+<td align="left">临时项目测试、流媒体解锁、即用即删</td>
+<td align="left">低（按量&#x2F;月付）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
+<td align="left">极致性价比，”价格屠夫”，老牌稳定</td>
+<td align="left">常规直连（优化较少）</td>
+<td align="left">静态博客挂载、自动化部署备份机</td>
+<td align="left">极低（$10+&#x2F;年）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
+<td align="left">全球大厂，按需创建，API 支持完善</td>
+<td align="left">国际标准 BGP</td>
+<td align="left">纯海外业务拓展、纯开发环境调试</td>
+<td align="left">中（$5+&#x2F;月）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p>
+<p><strong>1. Debian（首选推荐）</strong></p>
+<p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p>
+<p><strong>2. Ubuntu Server（新手友好）</strong></p>
+<p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p>
+<p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p>
+<p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p>
+<h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p>
+<ol>
+<li>登录 VPS 管理后台。</li>
+<li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li>
+<li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li>
+<li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li>
+<li>等待 2-5 分钟，系统安装完成后自动重启。</li>
+</ol>
+<h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令：</p>
+<p><strong>更新系统软件包</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装常用工具</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget <span class="built_in">sudo</span> vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc = fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control = bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>成功标志：输出 <code>net.ipv4.tcp_congestion_control = bbr</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>如果有输出，说明 BBR 内核模块已加载。</p>
+<hr>
+<h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="交互安装说明（建议收藏）"><a href="#交互安装说明（建议收藏）" class="headerlink" title="交互安装说明（建议收藏）"></a>交互安装说明（建议收藏）</h3><table>
+<thead>
+<tr>
+<th align="left">提示</th>
+<th align="left">建议操作</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">确认安装&#x2F;更新？(y&#x2F;n)</td>
+<td align="left">输入 <code>y</code></td>
+<td align="left">授权脚本开始下载并配置</td>
+</tr>
+<tr>
+<td align="left">请设置登录用户名</td>
+<td align="left">手动设置（如 <code>myadmin2026</code>）</td>
+<td align="left"><strong>强烈建议手动填写</strong>，不要留空</td>
+</tr>
+<tr>
+<td align="left">请设置登录密码</td>
+<td align="left">输入强密码</td>
+<td align="left">Linux 输入密码时屏幕不显示任何字符，这是正常的</td>
+</tr>
+<tr>
+<td align="left">请设置面板监听端口</td>
+<td align="left">输入 10000~65535 之间的数字</td>
+<td align="left"><strong>禁止使用</strong> <code>80</code>、<code>443</code>、<code>22</code> 端口</td>
+</tr>
+<tr>
+<td align="left">请设置面板根路径</td>
+<td align="left">直接按回车跳过</td>
+<td align="left">设置路径后易忘，新手容易误以为安装失败</td>
+</tr>
+</tbody></table>
+<h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📡-第五步：配置-VLESS-Reality-进站"><a href="#📡-第五步：配置-VLESS-Reality-进站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 进站"></a>📡 第五步：配置 VLESS + Reality 进站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p>
+<h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">建议填写</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">备注 (Remark)</td>
+<td align="left">随便填（如 <code>My_Vless</code>）</td>
+<td align="left">方便自己识别</td>
+</tr>
+<tr>
+<td align="left">协议 (Protocol)</td>
+<td align="left"><strong>VLESS</strong></td>
+<td align="left">性能最强、延迟最低</td>
+</tr>
+<tr>
+<td align="left">监听 IP</td>
+<td align="left">默认 <code>0.0.0.0</code></td>
+<td align="left">监听服务器所有网卡</td>
+</tr>
+<tr>
+<td align="left">端口 (Port)</td>
+<td align="left"><strong>443</strong>（推荐）</td>
+<td align="left">模拟正常网页流量</td>
+</tr>
+<tr>
+<td align="left">总流量 &#x2F; 到期时间</td>
+<td align="left">留空</td>
+<td align="left">留空表示不限制</td>
+</tr>
+</tbody></table>
+<h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p>
+<ol>
+<li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li>
+<li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li>
+<li><strong>uTLS</strong>：选 <strong>chrome</strong>（模拟谷歌浏览器指纹）</li>
+<li><strong>Dest（目标网站）</strong>：填 <code>www.microsoft.com:443</code></li>
+<li><strong>SNI</strong>：填 <code>www.microsoft.com</code></li>
+<li><strong>Short ID</strong>：点击”生成”按钮</li>
+<li><strong>Private Key（私钥）</strong>：点击”生成”按钮（公钥自动同步）</li>
+</ol>
+<h3 id="保存并放行端口"><a href="#保存并放行端口" class="headerlink" title="保存并放行端口"></a>保存并放行端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 443/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p>
+<hr>
+<h2 id="🏁-总结"><a href="#🏁-总结" class="headerlink" title="🏁 总结"></a>🏁 总结</h2><p>通过本教程，你已经构建了一套具备：<strong>SSH 密钥认证 + BBR 内核加速 + Reality 强力伪装 + UFW 端口防护</strong>的高性能跨境网络链路。</p>
+<blockquote>
+<p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>网络优化</tag>
+        <tag>Reality协议</tag>
+        <tag>服务器运维</tag>
+      </tags>
+  </entry>
 </search>

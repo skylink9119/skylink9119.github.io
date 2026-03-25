@@ -1,85 +1,308 @@
-/* 1. 定制代码块顶部的黑色工具栏 */
+/* =============================================
+   Butterfly 主题自定义样式 - custom.css
+   ============================================= */
+
+/* -----------------------------------------------
+   1. 代码块样式
+----------------------------------------------- */
+
+/* 代码块顶部工具栏背景 */
 #article-container figure.highlight > .highlight-tools {
-    background: #949292 !important; /* 黑色背景 */
+    background: #2d2d2d !important;
     height: 38px !important;
     padding: 0 10px !important;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 3. 定制右侧的橙色复制按钮 (核心部分) */
+/* 语言标识样式 */
+#article-container figure.highlight .code-lang {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #d0d0d0;
+    font-size: 13px;
+}
+
+/* 复制按钮样式 */
 #article-container figure.highlight .copy-notice {
-    background-color: #ff7242 !important; /* 橙色背景 */
-    color: #ed4b4b !important;           /* 白色图标/文字 */
-    border-radius: 4px !important;       /* 圆角 */
-    padding: 3px 6px !important;         /* 按钮大小 */
-    opacity: 1 !important;               /* 始终显示，不透明 */
+    background-color: #ff7242 !important;
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    padding: 3px 8px !important;
+    opacity: 1 !important;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s ease;
+    font-size: 12px;
 }
 
-/* 4. 鼠标悬停在橙色按钮上时变深一点 */
+/* 复制按钮悬停效果 */
 #article-container figure.highlight .copy-notice:hover {
     background-color: #e65a2d !important;
 }
 
-/* 自定义代码块复制按钮通知样式 */
-#article-container figure.highlight .copy-notice {
-  background: #666666; 
-  color: #ffffff; 
-  border-radius: 4px;
-  padding: 2px 6px;
+/* -----------------------------------------------
+   2. 文字排版优化
+----------------------------------------------- */
+
+/* 全局字体渲染优化 */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
-/* 强调代码块右上角的语言标识 */
-#article-container figure.highlight .code-lang {
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #a9a9b3;
+/* 文章正文行距 */
+#article-container p {
+    line-height: 1.85;
 }
 
-```css
-/* 强制修改所有代码块标签 */
-figure.highlight::before {
-  font-family: 'Arial';
-  font-weight: bold;
-  padding: 2px 8px;
-}
-```
-```css
-/* 彻底隐藏代码块左上角的语言标签 */
-figure.highlight::before {
-  display: none !important;
-}
-figure.highlight.plaintext::before {
-  content: "Bash" !important;
-  text-transform: none; /* 防止自动转大写 */
+/* -----------------------------------------------
+   3. 文章卡片悬停效果
+----------------------------------------------- */
+
+#recent-posts .recent-post-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-```css
-/* 针对 Anzhiyu 主题代码块顶栏左侧的语言标识进行隐藏 */
-#article-container figure.highlight::before,
-.blog-item figure.highlight::before,
-figure.highlight::before {
-    content: none !important;
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
+#recent-posts .recent-post-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* 同时处理可能存在的伪元素高度占用 */
-figure.highlight {
-    padding-top: 10px !important; /* 根据需要调整顶部间距，保持美观 */
+/* -----------------------------------------------
+   4. 侧边栏卡片优化
+----------------------------------------------- */
+
+#aside-content .card-widget {
+    transition: box-shadow 0.3s ease;
 }
 
-```css
-/* 1. 隐藏代码块左上角的语言文字 */
-.copy-notice, 
-.code-lang, 
-figure.highlight::before, 
-.highlight-tools .code-lang {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
+#aside-content .card-widget:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* -----------------------------------------------
+   5. 导航栏优化
+----------------------------------------------- */
+
+/* 导航栏毛玻璃效果（滚动后） */
+#nav.nav-fixed {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* -----------------------------------------------
+   6. 滚动条美化
+----------------------------------------------- */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #49B1F5;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3a9de0;
+}
+
+/* -----------------------------------------------
+   7. 链接悬停效果
+----------------------------------------------- */
+
+#article-container a:not(.btn):not(.tag) {
+    transition: color 0.2s ease, border-bottom 0.2s ease;
+}
+
+/* -----------------------------------------------
+   8. 图片优化
+----------------------------------------------- */
+
+#article-container img {
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#article-container img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* -----------------------------------------------
+   9. 引用块样式
+----------------------------------------------- */
+
+#article-container blockquote {
+    border-radius: 0 8px 8px 0;
+}
+
+/* -----------------------------------------------
+   10. 标签页 / 分类页优化
+----------------------------------------------- */
+
+#tag-cloud-list a:hover,
+#category-list a:hover {
+    transition: all 0.2s ease;
+}
+
+/* -----------------------------------------------
+   11. 文章横幅 & 主页横幅 — 赛博朋克（明亮版）
+----------------------------------------------- */
+
+/* 关键帧：RGB 扫描线 */
+@keyframes cyber-scan {
+    0%   { top: -4px; opacity: 1; }
+    100% { top: 100%; opacity: 0.2; }
+}
+
+/* 关键帧：标题入场 */
+@keyframes cyber-in {
+    0%   { opacity: 0; transform: translateX(-20px) skewX(-4deg); }
+    60%  { opacity: 1; transform: translateX(3px) skewX(0.5deg); }
+    100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+}
+
+/* 关键帧：霓虹竖条流光 */
+@keyframes cyber-neon-flow {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 0% 200%; }
+}
+
+/* 关键帧：左下角光晕脉冲 */
+@keyframes cyber-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50%       { opacity: 0.8;  transform: scale(1.08); }
+}
+
+/* ── 通用背景（文章页 + 主页共用） ── */
+#page-header.post-bg,
+#page-header:not(.post-bg) {
+    background:
+        /* 左下角洋红光晕 */
+        radial-gradient(ellipse 70% 60% at 10% 90%,  rgba(255, 60, 180, 0.45) 0%, transparent 65%),
+        /* 右上角青蓝光晕 */
+        radial-gradient(ellipse 60% 55% at 90% 10%,  rgba(0, 200, 255, 0.40) 0%, transparent 65%),
+        /* 中央偏右紫色晕 */
+        radial-gradient(ellipse 50% 50% at 65% 55%,  rgba(120, 0, 220, 0.30) 0%, transparent 60%),
+        /* 底色：深蓝紫，比原来亮很多 */
+        linear-gradient(155deg, #1a0538 0%, #0e1a40 45%, #1a0538 100%)
+        !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── 网格底纹（更明显） ── */
+#page-header.post-bg::before,
+#page-header:not(.post-bg)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 100, 220, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 255, 0.12) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── RGB 扫描线 ── */
+#page-header.post-bg::after,
+#page-header:not(.post-bg)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -4px;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 80, 200, 0.9) 25%,
+        rgba(80, 220, 255, 1.0) 50%,
+        rgba(255, 80, 200, 0.9) 75%,
+        transparent 100%
+    );
+    filter: blur(2px);
+    animation: cyber-scan 3.5s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* ── 文章页：信息区 ── */
+#page-header.post-bg #post-info {
+    position: absolute;
+    z-index: 2;
+}
+
+/* 标题左侧霓虹竖条 */
+#page-header.post-bg #post-info h1.post-title {
+    border-left: 4px solid #ff50c8;
+    padding-left: 14px;
+    color: #ffffff !important;
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px;
+    text-shadow:
+        0  0  8px  rgba(255, 255, 255, 1.0),
+        0  0  20px rgba(80, 220, 255, 0.9),
+        0  0  40px rgba(255, 80, 200, 0.6) !important;
+}
+
+/* ── 文章元信息（使用模板真实类名）── */
+#page-header.post-bg #post-info #post-meta,
+#page-header.post-bg #post-info #post-meta *,
+#page-header.post-bg #post-info #post-meta i {
+    color: rgba(160, 230, 255, 0.95) !important;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+/* ── 遮罩层（更轻，不压暗背景） ── */
+#page-header.post-bg .header-mask,
+#page-header:not(.post-bg) .header-mask {
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 5, 40, 0.35) 0%,
+        transparent 45%,
+        rgba(15, 5, 40, 0.5)  100%
+    ) !important;
+}
+
+/* ── 主页：博客标题 ── */
+#page-header:not(.post-bg) #site-name a,
+#page-header:not(.post-bg) .site-title {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow:
+        0  0  10px rgba(255, 255, 255, 1.0),
+        0  0  24px rgba(80, 220, 255, 0.9),
+        0  0  48px rgba(255, 80, 200, 0.6) !important;
+}
+
+/* ── 主页：副标题打字机 ── */
+#page-header:not(.post-bg) #site-subtitle,
+#page-header:not(.post-bg) .site-subtitle,
+#page-header:not(.post-bg) .typed-cursor {
+    color: rgba(140, 230, 255, 1.0) !important;
+    text-shadow: 0 0 12px rgba(80, 220, 255, 0.8), 0 0 24px rgba(255, 80, 200, 0.4) !important;
+    letter-spacing: 1px;
+}
+
+/* 暗色模式保持一致 */
+[data-theme='dark'] #page-header.post-bg,
+[data-theme='dark'] #page-header:not(.post-bg) {
+    background:
+        radial-gradient(ellipse 70% 60% at 10% 90%,  rgba(200, 40, 150, 0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 55% at 90% 10%,  rgba(0, 160, 220, 0.30) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 65% 55%,  rgba(90, 0, 180, 0.25) 0%, transparent 60%),
+        linear-gradient(155deg, #100328 0%, #080f28 45%, #100328 100%)
+        !important;
 }
