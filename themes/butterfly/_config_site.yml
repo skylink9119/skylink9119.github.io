@@ -7,8 +7,8 @@ author: sky
 language: zh-CN
 timezone: Asia/Shanghai
 
-# ===== 网站 URL（如有自定义域名请替换此处） =====
-url: https://skylink9119.github.io
+# ===== 网站 URL（部署前请改成你的真实域名！） =====
+url: https://skylink9119.github.io   # ⚠️ 如有自定义域名请替换此处
 root: /
 
 permalink: :year/:month/:day/:title/
@@ -45,8 +45,3 @@ search:
   field: post
   format: html
   limit: 10000
-
-deploy:
-  type: git
-  repo: git@github.com:skylink9119/skylink9119.github.io.git
-  branch: main  # 或者是你仓库显示的主分支名

@@ -54,7 +54,7 @@ avatar:
 
 disable_top_img: false
 default_top_img:
-index_img: /img/home-bg.jpg
+index_img: /img/home-bg2.jpg
 archive_img:
 tag_img:
 tag_per_img:
@@ -178,6 +178,7 @@ footer:
     enable: true
     version: true
   custom_text:
+  beautify: true
 
 # --------------------------------------
 # 侧边栏设置
@@ -725,7 +726,6 @@ css_prefix: true
 
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css">
   bottom:
 
 CDN:
