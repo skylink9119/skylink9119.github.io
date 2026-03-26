@@ -1,0 +1,440 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="OpenClaw AGENTS.md,OpenClaw SOUL.md,OpenClaw USER.md,OpenClaw配置教程,OpenClaw助理设定"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="手把手讲清楚 OpenClaw 里 AGENTS.md、SOUL.md、USER.md 分别负责什么、应该写哪些内容，以及怎样写才能让 OpenClaw 更像你的长期助理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程">
+<meta property="og:url" content="https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="手把手讲清楚 OpenClaw 里 AGENTS.md、SOUL.md、USER.md 分别负责什么、应该写哪些内容，以及怎样写才能让 OpenClaw 更像你的长期助理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-03-26T16:10:00.000Z">
+<meta property="article:modified_time" content="2026-03-26T16:10:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="AGENTS.md">
+<meta property="article:tag" content="AI工具">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="SOUL.md">
+<meta property="article:tag" content="USER.md">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-03-26T16:10:00.000Z"><meta property="article:modified_time" content="2026-03-26T16:10:00.000Z"><meta property="article:section" content="AI工具"><meta property="article:tag" content="AI工具"><meta property="article:tag" content="OpenClaw"><meta property="article:tag" content="AGENTS.md"><meta property="article:tag" content="SOUL.md"><meta property="article:tag" content="USER.md"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程",
+  "description": "手把手讲清楚 OpenClaw 里 AGENTS.md、SOUL.md、USER.md 分别负责什么、应该写哪些内容，以及怎样写才能让 OpenClaw 更像你的长期助理。",
+  "url": "https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-03-26T16:10:00.000Z",
+  "dateModified": "2026-03-26T16:10:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "OpenClaw AGENTS.md,OpenClaw SOUL.md,OpenClaw USER.md,OpenClaw配置教程,OpenClaw助理设定",
+  "articleSection": [
+    "AI工具"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/cursor-effects.css"><link rel="stylesheet" href="/css/footer-cta.css"><link rel="stylesheet" href="/css/openclaw-series.css"><link rel="stylesheet" href="/css/homepage-posts.css"><link rel="stylesheet" href="/css/homepage-topics.css"><link rel="stylesheet" href="/css/script-tool.css"><link rel="stylesheet" href="/css/software-toolbox.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/software-toolbox/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #0b132b 0%, #1c2541 34%, #3a86ff 62%, #8338ec 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/software-toolbox/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-26T16:10:00.000Z" title="发表于 2026-03-27 00:10:00">2026-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-26T16:10:00.000Z" title="更新于 2026-03-27 00:10:00">2026-03-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-03-27 00:10:00&quot;}" hidden></div><div class="openclaw-series-inline">
+  <div class="oc-series__label">OpenClaw Series</div>
+  <h3>这篇文章属于 OpenClaw 系列教程</h3>
+  <p>如果你还想连同安装、助理设定、配置模板和内容自动化一起系统看完，可以直接进入专题导航页；如果你更喜欢视频讲解，也可以跳去 YouTube 频道。</p>
+  <div class="oc-series__actions">
+    <a class="oc-series__btn oc-series__btn--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow">去 YouTube 看演示</a>
+    <a class="oc-series__btn oc-series__btn--secondary" href="/docs/openclaw/">查看 OpenClaw 专题</a>
+  </div>
+</div>
+
+<blockquote>
+<p>很多人知道 OpenClaw 支持 <code>AGENTS.md</code>、<code>SOUL.md</code>、<code>USER.md</code>，但真正开始写时就卡住了。原因通常不是不会写字，而是不知道这三个文件到底分别负责什么。写混了，效果就会很差。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="先说结论：这三个文件分别是干什么的"><a href="#先说结论：这三个文件分别是干什么的" class="headerlink" title="先说结论：这三个文件分别是干什么的"></a>先说结论：这三个文件分别是干什么的</h2><p>你可以这样理解：</p>
+<ul>
+<li><code>AGENTS.md</code>：规定它怎么做事</li>
+<li><code>SOUL.md</code>：规定它像什么样的人</li>
+<li><code>USER.md</code>：规定你是谁、你要什么</li>
+</ul>
+<p>如果你还是分不清，我给你一个最简单的判断方法：</p>
+<ul>
+<li>这是工作规则吗？放 <code>AGENTS.md</code></li>
+<li>这是性格和表达风格吗？放 <code>SOUL.md</code></li>
+<li>这是用户画像和长期偏好吗？放 <code>USER.md</code></li>
+</ul>
+<p>这三个文件并不是越长越好，而是越清楚越好。</p>
+<hr>
+<h2 id="先理解一个原则：不要把三个文件写成一锅粥"><a href="#先理解一个原则：不要把三个文件写成一锅粥" class="headerlink" title="先理解一个原则：不要把三个文件写成一锅粥"></a>先理解一个原则：不要把三个文件写成一锅粥</h2><p>最常见的错误就是：</p>
+<ul>
+<li>在 <code>SOUL.md</code> 里写工作流程</li>
+<li>在 <code>AGENTS.md</code> 里写用户目标</li>
+<li>在 <code>USER.md</code> 里写一堆人格设定</li>
+</ul>
+<p>结果就是 OpenClaw 读进去了，但行为并不稳定。</p>
+<p>所以你写之前，先记住一个原则：</p>
+<p>每个文件只承担一种职责。</p>
+<hr>
+<h2 id="AGENTS-md-应该怎么写"><a href="#AGENTS-md-应该怎么写" class="headerlink" title="AGENTS.md 应该怎么写"></a>AGENTS.md 应该怎么写</h2><p><code>AGENTS.md</code> 最适合放这些内容：</p>
+<ul>
+<li>角色职责</li>
+<li>工作原则</li>
+<li>优先级</li>
+<li>输出规则</li>
+<li>文件组织规则</li>
+<li>敏感信息规则</li>
+</ul>
+<p>你可以把它理解成“助理工作手册”。</p>
+<h3 id="一个适合大多数人的结构"><a href="#一个适合大多数人的结构" class="headerlink" title="一个适合大多数人的结构"></a>一个适合大多数人的结构</h3><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># AGENTS.md</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 角色</span></span><br><span class="line">你是我的长期个人助理，主要负责内容整理、选题延展、脚本生成和信息归档。</span><br><span class="line"></span><br><span class="line"><span class="section">## 工作目标</span></span><br><span class="line"><span class="bullet">-</span> 优先提高输出效率</span><br><span class="line"><span class="bullet">-</span> 优先产出可执行内容</span><br><span class="line"><span class="bullet">-</span> 优先保留长期可复用信息</span><br><span class="line"></span><br><span class="line"><span class="section">## 工作原则</span></span><br><span class="line"><span class="bullet">-</span> 先给结论，再给步骤</span><br><span class="line"><span class="bullet">-</span> 不输出空泛建议</span><br><span class="line"><span class="bullet">-</span> 如果是长期规则，主动写入 MEMORY.md</span><br><span class="line"><span class="bullet">-</span> 不把敏感信息写入公开仓库</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出要求</span></span><br><span class="line"><span class="bullet">-</span> 尽量结构清晰</span><br><span class="line"><span class="bullet">-</span> 适合继续整理成文章、笔记或视频脚本</span><br><span class="line"><span class="bullet">-</span> 标题和小节层级明确</span><br></pre></td></tr></table></figure>
+
+<h3 id="AGENTS-md-的关键点"><a href="#AGENTS-md-的关键点" class="headerlink" title="AGENTS.md 的关键点"></a>AGENTS.md 的关键点</h3><p>你写它时，要重点回答这些问题：</p>
+<ul>
+<li>它主要负责什么</li>
+<li>遇到任务时优先考虑什么</li>
+<li>输出应该长什么样</li>
+<li>什么内容要记住</li>
+<li>什么内容不能乱写</li>
+</ul>
+<hr>
+<h2 id="SOUL-md-应该怎么写"><a href="#SOUL-md-应该怎么写" class="headerlink" title="SOUL.md 应该怎么写"></a>SOUL.md 应该怎么写</h2><p><code>SOUL.md</code> 不负责流程，它负责气质。</p>
+<p>你可以理解为：</p>
+<ul>
+<li>助理的人设</li>
+<li>表达习惯</li>
+<li>沟通方式</li>
+<li>价值取向</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># SOUL.md</span></span><br><span class="line"></span><br><span class="line">你是一个冷静、可靠、执行导向的长期助理。</span><br><span class="line"></span><br><span class="line">你的风格：</span><br><span class="line"><span class="bullet">-</span> 简洁</span><br><span class="line"><span class="bullet">-</span> 有条理</span><br><span class="line"><span class="bullet">-</span> 不夸张</span><br><span class="line"><span class="bullet">-</span> 不敷衍</span><br><span class="line"><span class="bullet">-</span> 不用空洞套话</span><br><span class="line"></span><br><span class="line">你的表达方式：</span><br><span class="line"><span class="bullet">-</span> 先说重点</span><br><span class="line"><span class="bullet">-</span> 少说废话</span><br><span class="line"><span class="bullet">-</span> 对复杂事情拆步骤</span><br><span class="line"><span class="bullet">-</span> 对不确定内容要明确说明</span><br></pre></td></tr></table></figure>
+
+<h3 id="SOUL-md-最适合写什么"><a href="#SOUL-md-最适合写什么" class="headerlink" title="SOUL.md 最适合写什么"></a>SOUL.md 最适合写什么</h3><ul>
+<li>它说话是强势还是温和</li>
+<li>它是偏专业、偏生活化，还是偏创作型</li>
+<li>它是否需要更强调效率、执行力、商业化意识</li>
+</ul>
+<h3 id="SOUL-md-不适合写什么"><a href="#SOUL-md-不适合写什么" class="headerlink" title="SOUL.md 不适合写什么"></a>SOUL.md 不适合写什么</h3><ul>
+<li>文件路径规则</li>
+<li>记忆写入规则</li>
+<li>项目目录结构</li>
+<li>技术性约束</li>
+</ul>
+<p>这些都应该放回 <code>AGENTS.md</code>。</p>
+<hr>
+<h2 id="USER-md-应该怎么写"><a href="#USER-md-应该怎么写" class="headerlink" title="USER.md 应该怎么写"></a>USER.md 应该怎么写</h2><p><code>USER.md</code> 是让 OpenClaw 理解“你”的地方。</p>
+<p>这里最适合写：</p>
+<ul>
+<li>你的身份</li>
+<li>你的主要工作内容</li>
+<li>你的长期目标</li>
+<li>你的风格偏好</li>
+<li>你的做事习惯</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># USER.md</span></span><br><span class="line"></span><br><span class="line">用户是一个技术内容创作者。</span><br><span class="line"></span><br><span class="line">主要方向：</span><br><span class="line"><span class="bullet">-</span> VPS 搭建与优化</span><br><span class="line"><span class="bullet">-</span> AI 工具教程</span><br><span class="line"><span class="bullet">-</span> 博客 SEO</span><br><span class="line"><span class="bullet">-</span> YouTube 内容引流</span><br><span class="line"></span><br><span class="line">长期目标：</span><br><span class="line"><span class="bullet">-</span> 用博客承接搜索流量</span><br><span class="line"><span class="bullet">-</span> 把高价值文章转化为视频内容</span><br><span class="line"><span class="bullet">-</span> 建立长期内容资产</span><br><span class="line"></span><br><span class="line">内容偏好：</span><br><span class="line"><span class="bullet">-</span> 注重实操</span><br><span class="line"><span class="bullet">-</span> 风格偏科技感和赛博朋克</span><br><span class="line"><span class="bullet">-</span> 更喜欢高信息密度和清晰结构</span><br></pre></td></tr></table></figure>
+
+<h3 id="USER-md-的核心价值"><a href="#USER-md-的核心价值" class="headerlink" title="USER.md 的核心价值"></a>USER.md 的核心价值</h3><p>它能让 OpenClaw 明白：</p>
+<ul>
+<li>你做什么行业</li>
+<li>你最关心什么结果</li>
+<li>你更喜欢怎样的输出</li>
+</ul>
+<p>这会明显减少“每次都从零解释自己”的成本。</p>
+<hr>
+<h2 id="这三个文件怎么配合"><a href="#这三个文件怎么配合" class="headerlink" title="这三个文件怎么配合"></a>这三个文件怎么配合</h2><p>最容易理解的方式是：</p>
+<ul>
+<li><code>AGENTS.md</code> 负责“规则”</li>
+<li><code>SOUL.md</code> 负责“气质”</li>
+<li><code>USER.md</code> 负责“用户画像”</li>
+</ul>
+<p>如果把它们放在一起看，大概就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AGENTS.md = 怎么做</span><br><span class="line">SOUL.md   = 像谁</span><br><span class="line">USER.md   = 为谁做</span><br></pre></td></tr></table></figure>
+
+<p>只要这三者分工明确，OpenClaw 的稳定性就会好很多。</p>
+<hr>
+<h2 id="一个适合内容创作者的完整示例"><a href="#一个适合内容创作者的完整示例" class="headerlink" title="一个适合内容创作者的完整示例"></a>一个适合内容创作者的完整示例</h2><p>如果你主要做博客和 YouTube，其实可以直接用这种思路。</p>
+<h3 id="AGENTS-md"><a href="#AGENTS-md" class="headerlink" title="AGENTS.md"></a>AGENTS.md</h3><p>写：</p>
+<ul>
+<li>优先输出可执行内容</li>
+<li>优先服务博客和 YouTube 工作流</li>
+<li>长期信息写入 <code>MEMORY.md</code></li>
+</ul>
+<h3 id="SOUL-md"><a href="#SOUL-md" class="headerlink" title="SOUL.md"></a>SOUL.md</h3><p>写：</p>
+<ul>
+<li>简洁</li>
+<li>可靠</li>
+<li>不空话</li>
+<li>强执行感</li>
+</ul>
+<h3 id="USER-md"><a href="#USER-md" class="headerlink" title="USER.md"></a>USER.md</h3><p>写：</p>
+<ul>
+<li>你是技术内容创作者</li>
+<li>主线是 VPS、AI 工具、教程</li>
+<li>博客的目标是承接搜索流量</li>
+<li>YouTube 的目标是承接视频转化</li>
+</ul>
+<p>这套组合就已经很实用了。</p>
+<hr>
+<h2 id="写这三个文件时最容易踩的坑"><a href="#写这三个文件时最容易踩的坑" class="headerlink" title="写这三个文件时最容易踩的坑"></a>写这三个文件时最容易踩的坑</h2><h2 id="1-写得太长"><a href="#1-写得太长" class="headerlink" title="1. 写得太长"></a>1. 写得太长</h2><p>内容太长不一定更好，反而可能稀释重点。</p>
+<h2 id="2-写得太空"><a href="#2-写得太空" class="headerlink" title="2. 写得太空"></a>2. 写得太空</h2><p>比如“请你成为最好的助理”，这种几乎没用。</p>
+<h2 id="3-重复"><a href="#3-重复" class="headerlink" title="3. 重复"></a>3. 重复</h2><p>同一件事在三个文件里都写一遍，会让边界模糊。</p>
+<h2 id="4-经常改来改去"><a href="#4-经常改来改去" class="headerlink" title="4. 经常改来改去"></a>4. 经常改来改去</h2><p>如果规则还没跑够几轮就频繁改，很难判断哪里有效。</p>
+<h2 id="5-只写一次就不维护"><a href="#5-只写一次就不维护" class="headerlink" title="5. 只写一次就不维护"></a>5. 只写一次就不维护</h2><p>随着你工作方向变化，这三个文件也应该逐步更新。</p>
+<hr>
+<h2 id="最推荐的写法策略"><a href="#最推荐的写法策略" class="headerlink" title="最推荐的写法策略"></a>最推荐的写法策略</h2><p>如果你现在还没有这些文件，我建议按这个顺序写：</p>
+<ol>
+<li>先写 <code>USER.md</code></li>
+<li>再写 <code>AGENTS.md</code></li>
+<li>最后写 <code>SOUL.md</code></li>
+</ol>
+<p>原因很简单：</p>
+<ul>
+<li>先知道你是谁</li>
+<li>再决定它怎么帮你</li>
+<li>最后决定它以什么风格帮你</li>
+</ul>
+<p>这样逻辑最顺。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw 里的这三个文件，其实并不复杂。</p>
+<p>真正关键的是分工：</p>
+<ul>
+<li><code>AGENTS.md</code> 管规则</li>
+<li><code>SOUL.md</code> 管风格</li>
+<li><code>USER.md</code> 管用户画像</li>
+</ul>
+<p>只要你把边界分清楚，再持续微调，OpenClaw 就会越来越像一个真正理解你、而不是每次都随机发挥的长期助理。</p>
+<hr>
+<h2 id="OpenClaw-系列文章推荐"><a href="#OpenClaw-系列文章推荐" class="headerlink" title="OpenClaw 系列文章推荐"></a>OpenClaw 系列文章推荐</h2><ul>
+<li><a href="/2025/07/01/opencla-claude-api-tutorial/">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</a></li>
+<li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</a></li>
+<li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</a></li>
+<li><a href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">如何让 OpenClaw 成为自己的助理详细教程</a></li>
+<li><a href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</a></li>
+<li><a href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/">适合我博客和 YouTube 工作流的 OpenClaw 配置模板</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">https://skylink9119.github.io/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/AGENTS-md/">AGENTS.md</a><a class="post-meta__tags" href="/tags/SOUL-md/">SOUL.md</a><a class="post-meta__tags" href="/tags/USER-md/">USER.md</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/" title="OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 30%, #14b8a6 62%, #e11d48 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</div></div><div class="info-2"><div class="info-item-1">详细讲解如何用 OpenClaw 做博客选题、长文整理、YouTube 视频脚本生成、缩略图文案提炼和内容工作流自动化，适合内容创作者长期使用。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="如何让 OpenClaw 成为自己的助理详细教程"><div class="cover" style="background: linear-gradient(135deg, #050816 0%, #1d4ed8 32%, #22d3ee 62%, #a855f7 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">如何让 OpenClaw 成为自己的助理详细教程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明如何通过 workspace、AGENTS.md、SOUL.md、USER.md、MEMORY.md 和 skills，把 OpenClaw 调成自己的长期 AI 助理。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="如何让 OpenClaw 成为自己的助理详细教程"><div class="cover" style="background: linear-gradient(135deg, #050816 0%, #1d4ed8 32%, #22d3ee 62%, #a855f7 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">如何让 OpenClaw 成为自己的助理详细教程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明如何通过 workspace、AGENTS.md、SOUL.md、USER.md、MEMORY.md 和 skills，把 OpenClaw 调成自己的长期 AI 助理。</div></div></div></a><a class="pagination-related" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑"><div class="cover" style="background: linear-gradient(135deg, #09111f 0%, #0f4c75 28%, #2563eb 58%, #f43f5e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">OpenClaw 新手第一次安装后最容易踩的 10 个坑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日可查到的 OpenClaw 官方 FAQ、Control UI 和 Troubleshooting 文档整理，总结新手第一次安装 OpenClaw 后最常遇到的 10 个坑与解决思路。</div></div></div></a><a class="pagination-related" href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/" title="适合我博客和 YouTube 工作流的 OpenClaw 配置模板"><div class="cover" style="background: linear-gradient(135deg, #09111f 0%, #1d4ed8 34%, #06b6d4 62%, #ec4899 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">适合我博客和 YouTube 工作流的 OpenClaw 配置模板</div></div><div class="info-2"><div class="info-item-1">给出一套适合博客 SEO 与 YouTube 引流工作流的 OpenClaw 配置模板，包含 AGENTS.md、SOUL.md、USER.md、MEMORY.md 和内容自动化建议。</div></div></div></a><a class="pagination-related" href="/2025/07/01/opencla-claude-api-tutorial/" title="新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #4f46e5 30%, #06b6d4 62%, #7c3aed 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-01</div><div class="info-item-2">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日官方文档整理，手把手教新手从零安装 OpenClaw，并接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商 API。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方卸载文档整理，手把手说明 macOS、Windows、Linux 本地电脑如何完整卸载 OpenClaw、删除网关服务、清理配置和工作区。</div></div></div></a><a class="pagination-related" href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/" title="OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 30%, #14b8a6 62%, #e11d48 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</div></div><div class="info-2"><div class="info-item-1">详细讲解如何用 OpenClaw 做博客选题、长文整理、YouTube 视频脚本生成、缩略图文案提炼和内容工作流自动化，适合内容创作者长期使用。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">这篇文章属于 OpenClaw 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E8%BF%99%E4%B8%89%E4%B8%AA%E6%96%87%E4%BB%B6%E5%88%86%E5%88%AB%E6%98%AF%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84"><span class="toc-number">2.</span> <span class="toc-text">先说结论：这三个文件分别是干什么的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E7%90%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%88%99%EF%BC%9A%E4%B8%8D%E8%A6%81%E6%8A%8A%E4%B8%89%E4%B8%AA%E6%96%87%E4%BB%B6%E5%86%99%E6%88%90%E4%B8%80%E9%94%85%E7%B2%A5"><span class="toc-number">3.</span> <span class="toc-text">先理解一个原则：不要把三个文件写成一锅粥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AGENTS-md-%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99"><span class="toc-number">4.</span> <span class="toc-text">AGENTS.md 应该怎么写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E9%80%82%E5%90%88%E5%A4%A7%E5%A4%9A%E6%95%B0%E4%BA%BA%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">4.1.</span> <span class="toc-text">一个适合大多数人的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AGENTS-md-%E7%9A%84%E5%85%B3%E9%94%AE%E7%82%B9"><span class="toc-number">4.2.</span> <span class="toc-text">AGENTS.md 的关键点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOUL-md-%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99"><span class="toc-number">5.</span> <span class="toc-text">SOUL.md 应该怎么写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SOUL-md-%E6%9C%80%E9%80%82%E5%90%88%E5%86%99%E4%BB%80%E4%B9%88"><span class="toc-number">5.1.</span> <span class="toc-text">SOUL.md 最适合写什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOUL-md-%E4%B8%8D%E9%80%82%E5%90%88%E5%86%99%E4%BB%80%E4%B9%88"><span class="toc-number">5.2.</span> <span class="toc-text">SOUL.md 不适合写什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#USER-md-%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99"><span class="toc-number">6.</span> <span class="toc-text">USER.md 应该怎么写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#USER-md-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC"><span class="toc-number">6.1.</span> <span class="toc-text">USER.md 的核心价值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%89%E4%B8%AA%E6%96%87%E4%BB%B6%E6%80%8E%E4%B9%88%E9%85%8D%E5%90%88"><span class="toc-number">7.</span> <span class="toc-text">这三个文件怎么配合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E9%80%82%E5%90%88%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C%E8%80%85%E7%9A%84%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">一个适合内容创作者的完整示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AGENTS-md"><span class="toc-number">8.1.</span> <span class="toc-text">AGENTS.md</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOUL-md"><span class="toc-number">8.2.</span> <span class="toc-text">SOUL.md</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#USER-md"><span class="toc-number">8.3.</span> <span class="toc-text">USER.md</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E8%BF%99%E4%B8%89%E4%B8%AA%E6%96%87%E4%BB%B6%E6%97%B6%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="toc-number">9.</span> <span class="toc-text">写这三个文件时最容易踩的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%86%99%E5%BE%97%E5%A4%AA%E9%95%BF"><span class="toc-number">10.</span> <span class="toc-text">1. 写得太长</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%86%99%E5%BE%97%E5%A4%AA%E7%A9%BA"><span class="toc-number">11.</span> <span class="toc-text">2. 写得太空</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%87%8D%E5%A4%8D"><span class="toc-number">12.</span> <span class="toc-text">3. 重复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%8F%E5%B8%B8%E6%94%B9%E6%9D%A5%E6%94%B9%E5%8E%BB"><span class="toc-number">13.</span> <span class="toc-text">4. 经常改来改去</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8F%AA%E5%86%99%E4%B8%80%E6%AC%A1%E5%B0%B1%E4%B8%8D%E7%BB%B4%E6%8A%A4"><span class="toc-number">14.</span> <span class="toc-text">5. 只写一次就不维护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E6%8E%A8%E8%8D%90%E7%9A%84%E5%86%99%E6%B3%95%E7%AD%96%E7%95%A5"><span class="toc-number">15.</span> <span class="toc-text">最推荐的写法策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">16.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenClaw-%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90"><span class="toc-number">17.</span> <span class="toc-text">OpenClaw 系列文章推荐</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑"><div style="background: linear-gradient(135deg, #09111f 0%, #0f4c75 28%, #2563eb 58%, #f43f5e 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑">OpenClaw 新手第一次安装后最容易踩的 10 个坑</a><time datetime="2026-03-26T17:40:00.000Z" title="发表于 2026-03-27 01:40:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/" title="适合我博客和 YouTube 工作流的 OpenClaw 配置模板"><div style="background: linear-gradient(135deg, #09111f 0%, #1d4ed8 34%, #06b6d4 62%, #ec4899 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/" title="适合我博客和 YouTube 工作流的 OpenClaw 配置模板">适合我博客和 YouTube 工作流的 OpenClaw 配置模板</a><time datetime="2026-03-26T16:40:00.000Z" title="发表于 2026-03-27 00:40:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/" title="OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 30%, #14b8a6 62%, #e11d48 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/" title="OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</a><time datetime="2026-03-26T16:20:00.000Z" title="发表于 2026-03-27 00:20:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程"><div style="background: linear-gradient(135deg, #0b132b 0%, #1c2541 34%, #3a86ff 62%, #8338ec 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程">OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程</a><time datetime="2026-03-26T16:10:00.000Z" title="发表于 2026-03-27 00:10:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="如何让 OpenClaw 成为自己的助理详细教程"><div style="background: linear-gradient(135deg, #050816 0%, #1d4ed8 32%, #22d3ee 62%, #a855f7 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="如何让 OpenClaw 成为自己的助理详细教程">如何让 OpenClaw 成为自己的助理详细教程</a><time datetime="2026-03-26T15:55:00.000Z" title="发表于 2026-03-26 23:55:00">2026-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/auto-theme-switcher.js"></script><script src="/js/cursor-effects.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
