@@ -1,100 +1,594 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>VPS搭建过程中遇到的问题及具体解决方法</title>
-      <link href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-      <url>/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
-      
-        <content type="html"><![CDATA[<h1 id="VPS搭建过程中遇到的问题及具体解决方法"><a href="#VPS搭建过程中遇到的问题及具体解决方法" class="headerlink" title="VPS搭建过程中遇到的问题及具体解决方法"></a>VPS搭建过程中遇到的问题及具体解决方法</h1><p>买了人生第一台VPS，满怀期待地开始折腾，结果一路踩坑。这篇文章记录了我在搭建过程中遇到的真实问题和解决方法，希望能帮到同样踩坑的你。</p><hr><h2 id="一、连接问题"><a href="#一、连接问题" class="headerlink" title="一、连接问题"></a>一、连接问题</h2><h3 id="1-SSH-连接超时-无法连接"><a href="#1-SSH-连接超时-无法连接" class="headerlink" title="1. SSH 连接超时 &#x2F; 无法连接"></a>1. SSH 连接超时 &#x2F; 无法连接</h3><p><strong>现象：</strong> <code>ssh root@your_ip</code> 一直卡着，或者报 <code>Connection timed out</code>。</p><p><strong>原因排查：</strong></p><ul><li>服务商防火墙&#x2F;安全组没有开放 22 端口</li><li>VPS 系统未正常启动</li><li>本地网络被限制</li></ul><p><strong>解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查本地能否 ping 通</span></span><br><span class="line">ping your_ip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 telnet 测试端口是否开放</span></span><br><span class="line">telnet your_ip 22</span><br></pre></td></tr></table></figure><p>登录 VPS 控制面板，检查”安全组&#x2F;防火墙规则”，确保入站规则允许 TCP 22 端口。如果是国内机器，还需确认没有被运营商封端口。</p><hr><h3 id="2-SSH-密钥认证失败"><a href="#2-SSH-密钥认证失败" class="headerlink" title="2. SSH 密钥认证失败"></a>2. SSH 密钥认证失败</h3><p><strong>现象：</strong> 提示 <code>Permission denied (publickey)</code>。</p><p><strong>原因：</strong> 公钥没有正确写入服务器，或权限设置不对。</p><p><strong>解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在服务器上检查权限（必须严格）</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将本地公钥追加到服务器</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub | ssh root@your_ip <span class="string">&quot;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure><p>同时确认 <code>/etc/ssh/sshd_config</code> 中以下配置已开启：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys</span><br></pre></td></tr></table></figure><p>修改后重启 SSH：<code>systemctl restart sshd</code></p><hr><h3 id="3-SSH-频繁断开-超时断连"><a href="#3-SSH-频繁断开-超时断连" class="headerlink" title="3. SSH 频繁断开 &#x2F; 超时断连"></a>3. SSH 频繁断开 &#x2F; 超时断连</h3><p><strong>现象：</strong> 几分钟不操作就掉线。</p><p><strong>解决方法（客户端配置）：</strong></p><p>编辑 <code>~/.ssh/config</code>，添加：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">  ServerAliveInterval 60</span><br><span class="line">  ServerAliveCountMax 3</span><br></pre></td></tr></table></figure><p>或在服务端 <code>/etc/ssh/sshd_config</code> 中设置：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 3</span><br></pre></td></tr></table></figure><hr><h2 id="二、系统与环境配置"><a href="#二、系统与环境配置" class="headerlink" title="二、系统与环境配置"></a>二、系统与环境配置</h2><h3 id="4-apt-yum-更新极慢，下载包超时"><a href="#4-apt-yum-更新极慢，下载包超时" class="headerlink" title="4. apt&#x2F;yum 更新极慢，下载包超时"></a>4. apt&#x2F;yum 更新极慢，下载包超时</h3><p><strong>现象：</strong> <code>apt update</code> 卡死或速度 1KB&#x2F;s。</p><p><strong>解决方法（以 Ubuntu&#x2F;Debian 为例，换国内镜像源）：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原始源</span></span><br><span class="line"><span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换为阿里云镜像（Ubuntu 22.04 示例）</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/apt/sources.list &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">apt update</span><br></pre></td></tr></table></figure><hr><h3 id="5-时区错误，时间对不上"><a href="#5-时区错误，时间对不上" class="headerlink" title="5. 时区错误，时间对不上"></a>5. 时区错误，时间对不上</h3><p><strong>现象：</strong> 服务器时间比本地早&#x2F;晚几小时，日志时间戳混乱。</p><p><strong>解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前时区</span></span><br><span class="line">timedatectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置为中国时区</span></span><br><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line"><span class="built_in">date</span></span><br></pre></td></tr></table></figure><hr><h3 id="6-磁盘空间莫名被占满"><a href="#6-磁盘空间莫名被占满" class="headerlink" title="6. 磁盘空间莫名被占满"></a>6. 磁盘空间莫名被占满</h3><p><strong>现象：</strong> 明明没装多少东西，<code>df -h</code> 显示磁盘快满了。</p><p><strong>排查方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找出占用最大的目录</span></span><br><span class="line"><span class="built_in">du</span> -sh /* 2&gt;/dev/null | <span class="built_in">sort</span> -rh | <span class="built_in">head</span> -20</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常见罪魁祸首：系统日志</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/log/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理旧日志</span></span><br><span class="line">journalctl --vacuum-size=100M</span><br></pre></td></tr></table></figure><hr><h2 id="三、Web-服务相关"><a href="#三、Web-服务相关" class="headerlink" title="三、Web 服务相关"></a>三、Web 服务相关</h2><h3 id="7-Nginx-启动报错：端口被占用"><a href="#7-Nginx-启动报错：端口被占用" class="headerlink" title="7. Nginx 启动报错：端口被占用"></a>7. Nginx 启动报错：端口被占用</h3><p><strong>现象：</strong> <code>nginx -t</code> 通过，但 <code>systemctl start nginx</code> 失败，报 <code>Address already in use</code>。</p><p><strong>解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看谁在占用 80/443</span></span><br><span class="line">lsof -i :80</span><br><span class="line">lsof -i :443</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到 PID 后 kill 掉</span></span><br><span class="line"><span class="built_in">kill</span> -9 &lt;PID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或直接</span></span><br><span class="line">fuser -k 80/tcp</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure><hr><h3 id="8-网站可以访问但-HTTPS-证书申请失败"><a href="#8-网站可以访问但-HTTPS-证书申请失败" class="headerlink" title="8. 网站可以访问但 HTTPS 证书申请失败"></a>8. 网站可以访问但 HTTPS 证书申请失败</h3><p><strong>现象：</strong> 用 Certbot 申请 Let’s Encrypt 证书时报错 <code>Connection refused</code> 或 <code>Timeout</code>。</p><p><strong>常见原因与解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 确保 80 端口对外开放（Let&#x27;s Encrypt 验证需要）</span></span><br><span class="line">curl -I http://your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 申请时指定 webroot 方式（更稳定）</span></span><br><span class="line">certbot certonly --webroot -w /var/www/html -d your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是 standalone 模式，先停掉 nginx</span></span><br><span class="line">systemctl stop nginx</span><br><span class="line">certbot certonly --standalone -d your_domain.com</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure><p>检查域名 DNS 是否已正确解析到服务器 IP：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup your_domain.com</span><br></pre></td></tr></table></figure><hr><h3 id="9-反向代理后获取不到真实-IP"><a href="#9-反向代理后获取不到真实-IP" class="headerlink" title="9. 反向代理后获取不到真实 IP"></a>9. 反向代理后获取不到真实 IP</h3><p><strong>现象：</strong> 后端应用拿到的 IP 全是 <code>127.0.0.1</code>。</p><p><strong>Nginx 配置修复：</strong></p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h2 id="四、安全相关"><a href="#四、安全相关" class="headerlink" title="四、安全相关"></a>四、安全相关</h2><h3 id="10-服务器被暴力破解-SSH，日志里全是失败登录"><a href="#10-服务器被暴力破解-SSH，日志里全是失败登录" class="headerlink" title="10. 服务器被暴力破解 SSH，日志里全是失败登录"></a>10. 服务器被暴力破解 SSH，日志里全是失败登录</h3><p><strong>现象：</strong> <code>lastb</code> 或 <code>cat /var/log/auth.log | grep Failed</code> 看到大量陌生 IP 的登录尝试。</p><p><strong>加固方案：</strong></p><p><strong>① 禁止密码登录，只允许密钥</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line">PermitRootLogin prohibit-password</span><br></pre></td></tr></table></figure><p><strong>② 修改默认 SSH 端口</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">Port 2222   <span class="comment"># 改成非常用端口</span></span><br></pre></td></tr></table></figure><p><strong>③ 安装 Fail2Ban 自动封 IP</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install fail2ban -y</span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban --now</span><br></pre></td></tr></table></figure><hr><h3 id="11-iptables-规则重启后丢失"><a href="#11-iptables-规则重启后丢失" class="headerlink" title="11. iptables 规则重启后丢失"></a>11. iptables 规则重启后丢失</h3><p><strong>现象：</strong> 手动配置的防火墙规则，重启后全没了。</p><p><strong>解决方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装持久化工具</span></span><br><span class="line">apt install iptables-persistent -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存当前规则</span></span><br><span class="line">netfilter-persistent save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者手动保存</span></span><br><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-save &gt; /etc/iptables/rules.v6</span><br></pre></td></tr></table></figure><hr><h2 id="五、Docker-相关"><a href="#五、Docker-相关" class="headerlink" title="五、Docker 相关"></a>五、Docker 相关</h2><h3 id="12-Docker-拉取镜像失败-极慢"><a href="#12-Docker-拉取镜像失败-极慢" class="headerlink" title="12. Docker 拉取镜像失败 &#x2F; 极慢"></a>12. Docker 拉取镜像失败 &#x2F; 极慢</h3><p><strong>现象：</strong> <code>docker pull</code> 卡死，或者报 <code>Error response from daemon: Get ... timeout</code>。</p><p><strong>解决方法（配置国内镜像加速）：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 Docker 配置</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure><hr><h3 id="13-Docker-容器启动后立即退出"><a href="#13-Docker-容器启动后立即退出" class="headerlink" title="13. Docker 容器启动后立即退出"></a>13. Docker 容器启动后立即退出</h3><p><strong>现象：</strong> <code>docker ps</code> 看不到容器，<code>docker ps -a</code> 显示状态为 <code>Exited</code>。</p><p><strong>排查方法：</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;container_id&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以交互模式启动排查</span></span><br><span class="line">docker run -it --entrypoint /bin/sh your_image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查容器退出码</span></span><br><span class="line">docker inspect &lt;container_id&gt; | grep ExitCode</span><br></pre></td></tr></table></figure><p>常见原因：入口命令路径错误、环境变量缺失、端口冲突。</p><hr><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>VPS 折腾之路永无止境，踩坑才是成长。遇到问题不要慌，按这个思路排查：</p><ol><li><strong>看日志</strong> — <code>journalctl -xe</code>、<code>/var/log/</code> 目录是好朋友</li><li><strong>测连通性</strong> — <code>ping</code>、<code>curl</code>、<code>telnet</code> 先确认网络</li><li><strong>看端口</strong> — <code>ss -tlnp</code> 或 <code>netstat -tlnp</code></li><li><strong>看权限</strong> — Linux 很多问题都是权限导致的</li><li><strong>重启服务</strong> — 改完配置别忘了 <code>systemctl restart</code></li></ol><p>有什么没覆盖到的问题，欢迎留言交流！</p><hr><p><em>本文持续更新，遇到新坑会第一时间补充。</em></p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
+    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/rbvd4RZQaNY"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p>
+<h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul>
+<li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li>
+<li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li>
+<li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li>
+</ul>
+<h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">核心优势</th>
+<th align="left">推荐线路</th>
+<th align="left">适用场景</th>
+<th align="left">价格区间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
+<td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td>
+<td align="left">CN2 GIA (Premium)</td>
+<td align="left">高质量生产力博客、极速中转节点</td>
+<td align="left">高（$15+&#x2F;月）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td>
+<td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td>
+<td align="left">CN2 GIA-E &#x2F; 日本软银</td>
+<td align="left">资深折腾党、多机房灵活切换需求</td>
+<td align="left">中高（$49+&#x2F;季）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
+<td align="left">界面现代，支持按小时计费，内网互联强</td>
+<td align="left">港台 &#x2F; 日韩 BGP</td>
+<td align="left">临时项目测试、流媒体解锁、即用即删</td>
+<td align="left">低（按量&#x2F;月付）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
+<td align="left">极致性价比，”价格屠夫”，老牌稳定</td>
+<td align="left">常规直连（优化较少）</td>
+<td align="left">静态博客挂载、自动化部署备份机</td>
+<td align="left">极低（$10+&#x2F;年）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
+<td align="left">全球大厂，按需创建，API 支持完善</td>
+<td align="left">国际标准 BGP</td>
+<td align="left">纯海外业务拓展、纯开发环境调试</td>
+<td align="left">中（$5+&#x2F;月）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p>
+<p><strong>1. Debian（首选推荐）</strong></p>
+<p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p>
+<p><strong>2. Ubuntu Server（新手友好）</strong></p>
+<p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p>
+<p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p>
+<p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p>
+<h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p>
+<ol>
+<li>登录 VPS 管理后台。</li>
+<li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li>
+<li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li>
+<li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li>
+<li>等待 2-5 分钟，系统安装完成后自动重启。</li>
+</ol>
+<h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令：</p>
+<p><strong>更新系统软件包</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装常用工具</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget <span class="built_in">sudo</span> vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc = fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control = bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>成功标志：输出 <code>net.ipv4.tcp_congestion_control = bbr</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>如果有输出，说明 BBR 内核模块已加载。</p>
+<hr>
+<h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="交互安装说明（建议收藏）"><a href="#交互安装说明（建议收藏）" class="headerlink" title="交互安装说明（建议收藏）"></a>交互安装说明（建议收藏）</h3><table>
+<thead>
+<tr>
+<th align="left">提示</th>
+<th align="left">建议操作</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">确认安装&#x2F;更新？(y&#x2F;n)</td>
+<td align="left">输入 <code>y</code></td>
+<td align="left">授权脚本开始下载并配置</td>
+</tr>
+<tr>
+<td align="left">请设置登录用户名</td>
+<td align="left">手动设置（如 <code>myadmin2026</code>）</td>
+<td align="left"><strong>强烈建议手动填写</strong>，不要留空</td>
+</tr>
+<tr>
+<td align="left">请设置登录密码</td>
+<td align="left">输入强密码</td>
+<td align="left">Linux 输入密码时屏幕不显示任何字符，这是正常的</td>
+</tr>
+<tr>
+<td align="left">请设置面板监听端口</td>
+<td align="left">输入 10000~65535 之间的数字</td>
+<td align="left"><strong>禁止使用</strong> <code>80</code>、<code>443</code>、<code>22</code> 端口</td>
+</tr>
+<tr>
+<td align="left">请设置面板根路径</td>
+<td align="left">直接按回车跳过</td>
+<td align="left">设置路径后易忘，新手容易误以为安装失败</td>
+</tr>
+</tbody></table>
+<h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📡-第五步：配置-VLESS-Reality-进站"><a href="#📡-第五步：配置-VLESS-Reality-进站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 进站"></a>📡 第五步：配置 VLESS + Reality 进站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p>
+<h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">建议填写</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">备注 (Remark)</td>
+<td align="left">随便填（如 <code>My_Vless</code>）</td>
+<td align="left">方便自己识别</td>
+</tr>
+<tr>
+<td align="left">协议 (Protocol)</td>
+<td align="left"><strong>VLESS</strong></td>
+<td align="left">性能最强、延迟最低</td>
+</tr>
+<tr>
+<td align="left">监听 IP</td>
+<td align="left">默认 <code>0.0.0.0</code></td>
+<td align="left">监听服务器所有网卡</td>
+</tr>
+<tr>
+<td align="left">端口 (Port)</td>
+<td align="left"><strong>443</strong>（推荐）</td>
+<td align="left">模拟正常网页流量</td>
+</tr>
+<tr>
+<td align="left">总流量 &#x2F; 到期时间</td>
+<td align="left">留空</td>
+<td align="left">留空表示不限制</td>
+</tr>
+</tbody></table>
+<h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p>
+<ol>
+<li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li>
+<li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li>
+<li><strong>uTLS</strong>：选 <strong>chrome</strong>（模拟谷歌浏览器指纹）</li>
+<li><strong>Dest（目标网站）</strong>：填 <code>www.microsoft.com:443</code></li>
+<li><strong>SNI</strong>：填 <code>www.microsoft.com</code></li>
+<li><strong>Short ID</strong>：点击”生成”按钮</li>
+<li><strong>Private Key（私钥）</strong>：点击”生成”按钮（公钥自动同步）</li>
+</ol>
+<h3 id="保存并放行端口"><a href="#保存并放行端口" class="headerlink" title="保存并放行端口"></a>保存并放行端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 443/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p>
+<hr>
+<h2 id="🏁-总结。"><a href="#🏁-总结。" class="headerlink" title="🏁 总结。"></a>🏁 总结。</h2><p>通过本教程，你已经构建了一套具备：<strong>SSH 密钥认证 + BBR 内核加速 + Reality 强力伪装 + UFW 端口防护</strong>的高性能跨境网络链路。</p>
+<blockquote>
+<p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p>
+</blockquote>
+]]></content>
       <categories>
-          
-          <category> 技术笔记 </category>
-          
+        <category>技术教程</category>
+        <category>网络链路</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> Linux </tag>
-            
-            <tag> 运维 </tag>
-            
-            <tag> 服务器 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
-      <link href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<div class="video-container">  <iframe    src="https://www.youtube.com/embed/rbvd4RZQaNY"    frameborder="0"    allowfullscreen>  </iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p><h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul><li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li><li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li><li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li></ul><h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table><thead><tr><th align="left">服务商</th><th align="left">核心优势</th><th align="left">推荐线路</th><th align="left">适用场景</th><th align="left">价格区间</th></tr></thead><tbody><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td><td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td><td align="left">CN2 GIA (Premium)</td><td align="left">高质量生产力博客、极速中转节点</td><td align="left">高（$15+&#x2F;月）</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td><td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td><td align="left">CN2 GIA-E &#x2F; 日本软银</td><td align="left">资深折腾党、多机房灵活切换需求</td><td align="left">中高（$49+&#x2F;季）</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td><td align="left">界面现代，支持按小时计费，内网互联强</td><td align="left">港台 &#x2F; 日韩 BGP</td><td align="left">临时项目测试、流媒体解锁、即用即删</td><td align="left">低（按量&#x2F;月付）</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td><td align="left">极致性价比，”价格屠夫”，老牌稳定</td><td align="left">常规直连（优化较少）</td><td align="left">静态博客挂载、自动化部署备份机</td><td align="left">极低（$10+&#x2F;年）</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td><td align="left">全球大厂，按需创建，API 支持完善</td><td align="left">国际标准 BGP</td><td align="left">纯海外业务拓展、纯开发环境调试</td><td align="left">中（$5+&#x2F;月）</td></tr></tbody></table><hr><h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p><p><strong>1. Debian（首选推荐）</strong></p><p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p><p><strong>2. Ubuntu Server（新手友好）</strong></p><p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p><p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p><p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p><h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p><ol><li>登录 VPS 管理后台。</li><li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li><li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li><li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li><li>等待 2-5 分钟，系统安装完成后自动重启。</li></ol><h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令：</p><p><strong>更新系统软件包</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure><p><strong>安装常用工具</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y curl wget <span class="built_in">sudo</span> vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure><hr><h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc = fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control = bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure><h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure><p>成功标志：输出 <code>net.ipv4.tcp_congestion_control = bbr</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure><p>如果有输出，说明 BBR 内核模块已加载。</p><hr><h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure><h3 id="交互安装说明（建议收藏）"><a href="#交互安装说明（建议收藏）" class="headerlink" title="交互安装说明（建议收藏）"></a>交互安装说明（建议收藏）</h3><table><thead><tr><th align="left">提示</th><th align="left">建议操作</th><th align="left">说明</th></tr></thead><tbody><tr><td align="left">确认安装&#x2F;更新？(y&#x2F;n)</td><td align="left">输入 <code>y</code></td><td align="left">授权脚本开始下载并配置</td></tr><tr><td align="left">请设置登录用户名</td><td align="left">手动设置（如 <code>myadmin2026</code>）</td><td align="left"><strong>强烈建议手动填写</strong>，不要留空</td></tr><tr><td align="left">请设置登录密码</td><td align="left">输入强密码</td><td align="left">Linux 输入密码时屏幕不显示任何字符，这是正常的</td></tr><tr><td align="left">请设置面板监听端口</td><td align="left">输入 10000~65535 之间的数字</td><td align="left"><strong>禁止使用</strong> <code>80</code>、<code>443</code>、<code>22</code> 端口</td></tr><tr><td align="left">请设置面板根路径</td><td align="left">直接按回车跳过</td><td align="left">设置路径后易忘，新手容易误以为安装失败</td></tr></tbody></table><h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 28530/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure><hr><h2 id="📡-第五步：配置-VLESS-Reality-进站"><a href="#📡-第五步：配置-VLESS-Reality-进站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 进站"></a>📡 第五步：配置 VLESS + Reality 进站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p><h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p><table><thead><tr><th align="left">选项</th><th align="left">建议填写</th><th align="left">说明</th></tr></thead><tbody><tr><td align="left">备注 (Remark)</td><td align="left">随便填（如 <code>My_Vless</code>）</td><td align="left">方便自己识别</td></tr><tr><td align="left">协议 (Protocol)</td><td align="left"><strong>VLESS</strong></td><td align="left">性能最强、延迟最低</td></tr><tr><td align="left">监听 IP</td><td align="left">默认 <code>0.0.0.0</code></td><td align="left">监听服务器所有网卡</td></tr><tr><td align="left">端口 (Port)</td><td align="left"><strong>443</strong>（推荐）</td><td align="left">模拟正常网页流量</td></tr><tr><td align="left">总流量 &#x2F; 到期时间</td><td align="left">留空</td><td align="left">留空表示不限制</td></tr></tbody></table><h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p><ol><li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li><li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li><li><strong>uTLS</strong>：选 <strong>chrome</strong>（模拟谷歌浏览器指纹）</li><li><strong>Dest（目标网站）</strong>：填 <code>www.microsoft.com:443</code></li><li><strong>SNI</strong>：填 <code>www.microsoft.com</code></li><li><strong>Short ID</strong>：点击”生成”按钮</li><li><strong>Private Key（私钥）</strong>：点击”生成”按钮（公钥自动同步）</li></ol><h3 id="保存并放行端口"><a href="#保存并放行端口" class="headerlink" title="保存并放行端口"></a>保存并放行端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 443/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure><h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p><hr><h2 id="🏁-总结。"><a href="#🏁-总结。" class="headerlink" title="🏁 总结。"></a>🏁 总结。</h2><p>通过本教程，你已经构建了一套具备：<strong>SSH 密钥认证 + BBR 内核加速 + Reality 强力伪装 + UFW 端口防护</strong>的高性能跨境网络链路。</p><blockquote><p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p></blockquote>]]></content>
-      
-      
+      <tags>
+        <tag>VPS</tag>
+        <tag>网络优化</tag>
+        <tag>Reality协议</tag>
+        <tag>服务器运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>零基础搭建 OpenCLAW 并接入 Claude API 详细教程</title>
+    <url>/2025/07/01/opencla-claude-api-tutorial/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>前言：</strong> OpenCLAW 是一个轻量的 Claude API 前端面板，让你不借助 ChatBox 等第三方客户端，就能在浏览器里直接对话 Claude 各系列模型。本文面向<strong>零基础用户</strong>，从申请 API Key 到跑通第一条对话，每步都有截图说明。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E7%94%B3%E8%AF%B7-anthropic-api-key">申请 Anthropic API Key</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">服务器环境准备</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-openclaw">安装 OpenCLAW</a></li>
+<li><a href="#%E6%8E%A5%E5%85%A5-claude-api-%E9%85%8D%E7%BD%AE">接入 Claude API 配置</a></li>
+<li><a href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%8F%AF%E9%80%89">反向代理（可选）</a></li>
+<li><a href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E8%B7%91%E9%80%9A">验证是否跑通</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E4%B8%8E%E8%A7%A3%E5%86%B3">常见报错与解决</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ol>
+<hr>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始之前，确保你手头有：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务器</td>
+<td>一台能访问 Anthropic API 的 VPS（境外或有出口代理）</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Ubuntu 20.04 &#x2F; 22.04 &#x2F; Debian 11+ 均可</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>root 或具备 sudo 权限的账户</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>服务器能正常 <code>curl https://api.anthropic.com</code></td>
+</tr>
+<tr>
+<td>域名（可选）</td>
+<td>如需 HTTPS 访问，准备一个解析好的域名</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>⚠ 注意：</strong> Anthropic API 在中国大陆无法直连，请确保服务器在境外（如香港、美国、日本等节点）。</p>
+</blockquote>
+<hr>
+<h2 id="申请-Anthropic-API-Key"><a href="#申请-Anthropic-API-Key" class="headerlink" title="申请 Anthropic API Key"></a>申请 Anthropic API Key</h2><h3 id="第一步：注册-Anthropic-账号"><a href="#第一步：注册-Anthropic-账号" class="headerlink" title="第一步：注册 Anthropic 账号"></a>第一步：注册 Anthropic 账号</h3><p>访问 <a href="https://console.anthropic.com/">https://console.anthropic.com</a>，使用邮箱注册账号并完成邮件验证。</p>
+<h3 id="第二步：充值额度"><a href="#第二步：充值额度" class="headerlink" title="第二步：充值额度"></a>第二步：充值额度</h3><p>Anthropic 采用<strong>预付费</strong>模式，新账号需要先充值才能调用 API：</p>
+<ol>
+<li>登录后进入控制台 → <strong>Billing</strong> → <strong>Add credits</strong></li>
+<li>最低充值 $5，支持信用卡&#x2F;借记卡</li>
+<li>充值完成后自动获得对应 token 额度</li>
+</ol>
+<blockquote>
+<p>💡 <strong>小提示：</strong> 新账号注册后可能有少量免费额度用于测试，但正式使用仍需充值。</p>
+</blockquote>
+<h3 id="第三步：生成-API-Key"><a href="#第三步：生成-API-Key" class="headerlink" title="第三步：生成 API Key"></a>第三步：生成 API Key</h3><ol>
+<li>进入 <strong>API Keys</strong> 页面</li>
+<li>点击 <strong>Create Key</strong> 按钮</li>
+<li>输入一个便于识别的名称，如 <code>openclaw-server</code></li>
+<li>点击确认，<strong>立即复制并保存</strong>显示的 Key（格式：<code>sk-ant-api03-xxxxxxxx</code>）</li>
+</ol>
+<blockquote>
+<p><strong>⚠ 重要：</strong> API Key 只在创建时显示一次，请立刻保存到安全的地方（如密码管理器）。</p>
+</blockquote>
+<hr>
+<h2 id="服务器环境准备"><a href="#服务器环境准备" class="headerlink" title="服务器环境准备"></a>服务器环境准备</h2><p>SSH 登录服务器后，依次执行以下命令：</p>
+<h3 id="更新系统"><a href="#更新系统" class="headerlink" title="更新系统"></a>更新系统</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装必要依赖"><a href="#安装必要依赖" class="headerlink" title="安装必要依赖"></a>安装必要依赖</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 Node.js 18+（推荐 LTS 版本）</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_18.x | bash -</span><br><span class="line">apt install -y nodejs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证版本</span></span><br><span class="line">node -v   <span class="comment"># 应输出 v18.x.x 或更高</span></span><br><span class="line">npm -v    <span class="comment"># 应输出 9.x.x 或更高</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装其他工具</span></span><br><span class="line">apt install -y git curl wget unzip</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查网络连通性"><a href="#检查网络连通性" class="headerlink" title="检查网络连通性"></a>检查网络连通性</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I https://api.anthropic.com</span><br><span class="line"><span class="comment"># 正常应返回 HTTP/2 200 或 404，说明能连通</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>curl</code> 超时或连接被拒，说明服务器无法访问 Anthropic，需要先解决网络问题。</p>
+<hr>
+<h2 id="安装-OpenCLAW"><a href="#安装-OpenCLAW" class="headerlink" title="安装 OpenCLAW"></a>安装 OpenCLAW</h2><h3 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入工作目录</span></span><br><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆 OpenCLAW 仓库</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/OpenCLAW/openclaw.git</span><br><span class="line"><span class="built_in">cd</span> openclaw</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果 git clone 速度慢，可以先挂代理或使用镜像地址。</p>
+</blockquote>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>安装过程通常需要 1~3 分钟，取决于服务器网速。</p>
+<h3 id="复制配置文件"><a href="#复制配置文件" class="headerlink" title="复制配置文件"></a>复制配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="接入-Claude-API-配置"><a href="#接入-Claude-API-配置" class="headerlink" title="接入 Claude API 配置"></a>接入 Claude API 配置</h2><p>用你喜欢的编辑器打开 <code>.env</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nano .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+
+<p>找到并修改以下关键字段：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ===== Claude API 配置 =====</span><br><span class="line"></span><br><span class="line"># 你的 Anthropic API Key</span><br><span class="line">ANTHROPIC_API_KEY=sk-ant-api03-你的key填这里</span><br><span class="line"></span><br><span class="line"># 默认使用的模型（可选，推荐最新 claude-3-5-sonnet）</span><br><span class="line">DEFAULT_MODEL=claude-3-5-sonnet-20241022</span><br><span class="line"></span><br><span class="line"># 服务监听端口（默认 3000，可按需修改）</span><br><span class="line">PORT=3000</span><br><span class="line"></span><br><span class="line"># 访问密码（强烈建议设置，防止他人盗用）</span><br><span class="line">ACCESS_PASSWORD=你的访问密码</span><br><span class="line"></span><br><span class="line"># 是否启用流式输出（推荐开启）</span><br><span class="line">STREAM_RESPONSE=true</span><br></pre></td></tr></table></figure>
+
+<p>按 <code>Ctrl + X</code>，然后 <code>Y</code>，<code>Enter</code> 保存退出。</p>
+<h3 id="可选：配置模型列表"><a href="#可选：配置模型列表" class="headerlink" title="可选：配置模型列表"></a>可选：配置模型列表</h3><p>如果你想在前端切换多个模型，可以在 <code>.env</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AVAILABLE_MODELS=claude-3-5-sonnet-20241022,claude-3-5-haiku-20241022,claude-3-opus-20240229</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><h3 id="直接启动（测试用）"><a href="#直接启动（测试用）" class="headerlink" title="直接启动（测试用）"></a>直接启动（测试用）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+
+<p>看到以下输出说明启动成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">✅ OpenCLAW server running on port 3000</span><br><span class="line">🔗 http://localhost:3000</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-PM2-守护进程（推荐生产使用）"><a href="#使用-PM2-守护进程（推荐生产使用）" class="headerlink" title="使用 PM2 守护进程（推荐生产使用）"></a>使用 PM2 守护进程（推荐生产使用）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局安装 PM2</span></span><br><span class="line">npm install -g pm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 PM2 启动</span></span><br><span class="line">pm2 start npm --name <span class="string">&quot;openclaw&quot;</span> -- start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机自启</span></span><br><span class="line">pm2 startup</span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure>
+
+<p>常用 PM2 命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pm2 status          <span class="comment"># 查看运行状态</span></span><br><span class="line">pm2 logs openclaw    <span class="comment"># 查看日志</span></span><br><span class="line">pm2 restart openclaw <span class="comment"># 重启服务</span></span><br><span class="line">pm2 stop openclaw    <span class="comment"># 停止服务</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="反向代理（可选）"><a href="#反向代理（可选）" class="headerlink" title="反向代理（可选）"></a>反向代理（可选）</h2><p>如果你有域名且希望通过 HTTPS 访问，可以用 Nginx 做反向代理。</p>
+<h3 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建站点配置"><a href="#创建站点配置" class="headerlink" title="创建站点配置"></a>创建站点配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nano /etc/nginx/sites-available/openclaw</span><br></pre></td></tr></table></figure>
+
+<p>粘贴以下内容（把 <code>your-domain.com</code> 替换为你的域名）：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> your-domain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自动跳转 HTTPS（配置 SSL 后取消注释）</span></span><br><span class="line">    <span class="comment"># return 301 https://$host$request_uri;</span></span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 支持流式输出（SSE）</span></span><br><span class="line">        <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_cache</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">300s</span>;</span><br><span class="line">        <span class="attribute">chunked_transfer_encoding</span> <span class="literal">on</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用配置"><a href="#启用配置" class="headerlink" title="启用配置"></a>启用配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /etc/nginx/sites-available/openclaw /etc/nginx/sites-enabled/</span><br><span class="line">nginx -t          <span class="comment"># 检查语法</span></span><br><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="申请-SSL-证书（Let’s-Encrypt）"><a href="#申请-SSL-证书（Let’s-Encrypt）" class="headerlink" title="申请 SSL 证书（Let’s Encrypt）"></a>申请 SSL 证书（Let’s Encrypt）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y certbot python3-certbot-nginx</span><br><span class="line">certbot --nginx -d your-domain.com</span><br></pre></td></tr></table></figure>
+
+<p>按提示输入邮箱并同意协议，完成后 Nginx 会自动配置 HTTPS 跳转。</p>
+<hr>
+<h2 id="验证是否跑通"><a href="#验证是否跑通" class="headerlink" title="验证是否跑通"></a>验证是否跑通</h2><h3 id="方式一：浏览器访问"><a href="#方式一：浏览器访问" class="headerlink" title="方式一：浏览器访问"></a>方式一：浏览器访问</h3><p>打开 <code>http://你的服务器IP:3000</code>（或配置了域名则访问 <code>https://your-domain.com</code>），能看到 OpenCLAW 的聊天界面。</p>
+<p>输入访问密码登录后，在输入框里发一条消息，如果 Claude 正常回复，说明全部配置成功。</p>
+<h3 id="方式二：命令行直接测-API"><a href="#方式二：命令行直接测-API" class="headerlink" title="方式二：命令行直接测 API"></a>方式二：命令行直接测 API</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://api.anthropic.com/v1/messages \</span><br><span class="line">  -H <span class="string">&quot;x-api-key: 你的API_KEY&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;anthropic-version: 2023-06-01&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;content-type: application/json&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">    &quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;,</span></span><br><span class="line"><span class="string">    &quot;max_tokens&quot;: 64,</span></span><br><span class="line"><span class="string">    &quot;messages&quot;: [&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好，请用一句话介绍你自己。&quot;&#125;]</span></span><br><span class="line"><span class="string">  &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>正常返回示例：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你好！我是 Claude，Anthropic 开发的 AI 助手……&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;usage&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;input_tokens&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">,</span> <span class="attr">&quot;output_tokens&quot;</span><span class="punctuation">:</span> <span class="number">30</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="常见报错与解决"><a href="#常见报错与解决" class="headerlink" title="常见报错与解决"></a>常见报错与解决</h2><h3 id="401-Unauthorized"><a href="#401-Unauthorized" class="headerlink" title="401 Unauthorized"></a><code>401 Unauthorized</code></h3><p><strong>原因：</strong> API Key 填写有误，或 Key 前后有多余空格。</p>
+<p><strong>解决：</strong> 重新检查 <code>.env</code> 中的 <code>ANTHROPIC_API_KEY</code>，确保无空格、无换行。</p>
+<hr>
+<h3 id="403-Forbidden-permission-error"><a href="#403-Forbidden-permission-error" class="headerlink" title="403 Forbidden &#x2F; permission_error"></a><code>403 Forbidden</code> &#x2F; <code>permission_error</code></h3><p><strong>原因：</strong> 账户未充值或额度耗尽。</p>
+<p><strong>解决：</strong> 登录 <a href="https://console.anthropic.com/">console.anthropic.com</a> → Billing，检查余额并充值。</p>
+<hr>
+<h3 id="connection-timeout-curl-28"><a href="#connection-timeout-curl-28" class="headerlink" title="connection timeout &#x2F; curl: (28)"></a><code>connection timeout</code> &#x2F; <code>curl: (28)</code></h3><p><strong>原因：</strong> 服务器无法访问 Anthropic API（被墙或网络问题）。</p>
+<p><strong>解决：</strong></p>
+<ol>
+<li>确认服务器在境外节点</li>
+<li>检查服务器防火墙是否拦截了出站 443 端口</li>
+<li>可临时测试：<code>curl -v https://api.anthropic.com --max-time 10</code></li>
+</ol>
+<hr>
+<h3 id="npm-install-卡住不动"><a href="#npm-install-卡住不动" class="headerlink" title="npm install 卡住不动"></a><code>npm install</code> 卡住不动</h3><p><strong>原因：</strong> npm 默认源在境外，速度慢。</p>
+<p><strong>解决：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到淘宝镜像（境内服务器适用）</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="流式输出中断-打字卡顿"><a href="#流式输出中断-打字卡顿" class="headerlink" title="流式输出中断 &#x2F; 打字卡顿"></a>流式输出中断 &#x2F; 打字卡顿</h3><p><strong>原因：</strong> Nginx 默认缓冲导致 SSE 流被截断。</p>
+<p><strong>解决：</strong> 检查 Nginx 配置中是否已加入 <code>proxy_buffering off;</code>（参考上方反向代理配置）。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>完成本教程后，你已经：</p>
+<ul>
+<li>✅ 申请了 Anthropic API Key</li>
+<li>✅ 在服务器上部署了 OpenCLAW 面板</li>
+<li>✅ 成功接入 Claude API 并完成对话验证</li>
+<li>✅ （可选）配置了 Nginx + HTTPS 反向代理</li>
+</ul>
+<p><strong>后续可以探索的方向：</strong></p>
+<ul>
+<li>在 <code>.env</code> 中添加更多模型，按场景切换</li>
+<li>结合 <a href="https://n8n.io/">n8n</a> 或 <a href="https://dify.ai/">Dify</a> 做自动化工作流</li>
+<li>配置 Fail2Ban + 强密码，加固面板安全性</li>
+</ul>
+<p>如有疑问欢迎评论区留言，或通过 <a href="https://github.com/skylink9119/skylink9119.github.io/issues">GitHub Issues</a> 反馈。</p>
+<hr>
+<p><em>本文首发于 <a href="https://skylink9119.github.io/">Skyline Blog</a>，转载请注明出处，遵循 CC BY-NC-SA 4.0 协议。</em></p>
+]]></content>
       <categories>
-          
-          <category> 技术教程 </category>
-          
-          <category> 网络链路 </category>
-          
+        <category>AI工具</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> 网络优化 </tag>
-            
-            <tag> Reality协议 </tag>
-            
-            <tag> 服务器运维 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-      <link href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p><blockquote><p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p></blockquote><hr><h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p><hr><h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul><li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li><li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li></ul><h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p><h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p><hr><h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure><h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol><li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li><li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li><li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li><li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li></ol><p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p><hr><h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol><li>使用脚本创建的 <code>Apple</code> 账户登录。</li><li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li><li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li><li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li></ol><hr><h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p><p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p><p><strong>Q2：提示 “Read-only file system”</strong></p><p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p><p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p><p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure><hr><h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p><div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>    <div style="display: flex; gap: 10px;">        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>        <a href="/docs/ssh-tool/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>    </div></div>]]></content>
-      
-      
+      <tags>
+        <tag>Claude API</tag>
+        <tag>OpenCLAW</tag>
+        <tag>AI工具</tag>
+        <tag>教程</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VPS搭建过程中遇到的问题及具体解决方法</title>
+    <url>/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="VPS搭建过程中遇到的问题及具体解决方法"><a href="#VPS搭建过程中遇到的问题及具体解决方法" class="headerlink" title="VPS搭建过程中遇到的问题及具体解决方法"></a>VPS搭建过程中遇到的问题及具体解决方法</h1><p>买了人生第一台VPS，满怀期待地开始折腾，结果一路踩坑。这篇文章记录了我在搭建过程中遇到的真实问题和解决方法，希望能帮到同样踩坑的你。</p>
+<hr>
+<h2 id="一、连接问题"><a href="#一、连接问题" class="headerlink" title="一、连接问题"></a>一、连接问题</h2><h3 id="1-SSH-连接超时-无法连接"><a href="#1-SSH-连接超时-无法连接" class="headerlink" title="1. SSH 连接超时 &#x2F; 无法连接"></a>1. SSH 连接超时 &#x2F; 无法连接</h3><p><strong>现象：</strong> <code>ssh root@your_ip</code> 一直卡着，或者报 <code>Connection timed out</code>。</p>
+<p><strong>原因排查：</strong></p>
+<ul>
+<li>服务商防火墙&#x2F;安全组没有开放 22 端口</li>
+<li>VPS 系统未正常启动</li>
+<li>本地网络被限制</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查本地能否 ping 通</span></span><br><span class="line">ping your_ip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 telnet 测试端口是否开放</span></span><br><span class="line">telnet your_ip 22</span><br></pre></td></tr></table></figure>
+
+<p>登录 VPS 控制面板，检查”安全组&#x2F;防火墙规则”，确保入站规则允许 TCP 22 端口。如果是国内机器，还需确认没有被运营商封端口。</p>
+<hr>
+<h3 id="2-SSH-密钥认证失败"><a href="#2-SSH-密钥认证失败" class="headerlink" title="2. SSH 密钥认证失败"></a>2. SSH 密钥认证失败</h3><p><strong>现象：</strong> 提示 <code>Permission denied (publickey)</code>。</p>
+<p><strong>原因：</strong> 公钥没有正确写入服务器，或权限设置不对。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器上检查权限（必须严格）</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将本地公钥追加到服务器</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub | ssh root@your_ip <span class="string">&quot;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>同时确认 <code>/etc/ssh/sshd_config</code> 中以下配置已开启：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>修改后重启 SSH：<code>systemctl restart sshd</code></p>
+<hr>
+<h3 id="3-SSH-频繁断开-超时断连"><a href="#3-SSH-频繁断开-超时断连" class="headerlink" title="3. SSH 频繁断开 &#x2F; 超时断连"></a>3. SSH 频繁断开 &#x2F; 超时断连</h3><p><strong>现象：</strong> 几分钟不操作就掉线。</p>
+<p><strong>解决方法（客户端配置）：</strong></p>
+<p>编辑 <code>~/.ssh/config</code>，添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host *</span><br><span class="line">  ServerAliveInterval 60</span><br><span class="line">  ServerAliveCountMax 3</span><br></pre></td></tr></table></figure>
+
+<p>或在服务端 <code>/etc/ssh/sshd_config</code> 中设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 3</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、系统与环境配置"><a href="#二、系统与环境配置" class="headerlink" title="二、系统与环境配置"></a>二、系统与环境配置</h2><h3 id="4-apt-yum-更新极慢，下载包超时"><a href="#4-apt-yum-更新极慢，下载包超时" class="headerlink" title="4. apt&#x2F;yum 更新极慢，下载包超时"></a>4. apt&#x2F;yum 更新极慢，下载包超时</h3><p><strong>现象：</strong> <code>apt update</code> 卡死或速度 1KB&#x2F;s。</p>
+<p><strong>解决方法（以 Ubuntu&#x2F;Debian 为例，换国内镜像源）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原始源</span></span><br><span class="line"><span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换为阿里云镜像（Ubuntu 22.04 示例）</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/apt/sources.list &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">apt update</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-时区错误，时间对不上"><a href="#5-时区错误，时间对不上" class="headerlink" title="5. 时区错误，时间对不上"></a>5. 时区错误，时间对不上</h3><p><strong>现象：</strong> 服务器时间比本地早&#x2F;晚几小时，日志时间戳混乱。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看当前时区</span></span><br><span class="line">timedatectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置为中国时区</span></span><br><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line"><span class="built_in">date</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-磁盘空间莫名被占满"><a href="#6-磁盘空间莫名被占满" class="headerlink" title="6. 磁盘空间莫名被占满"></a>6. 磁盘空间莫名被占满</h3><p><strong>现象：</strong> 明明没装多少东西，<code>df -h</code> 显示磁盘快满了。</p>
+<p><strong>排查方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 找出占用最大的目录</span></span><br><span class="line"><span class="built_in">du</span> -sh /* 2&gt;/dev/null | <span class="built_in">sort</span> -rh | <span class="built_in">head</span> -20</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常见罪魁祸首：系统日志</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/log/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理旧日志</span></span><br><span class="line">journalctl --vacuum-size=100M</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、Web-服务相关"><a href="#三、Web-服务相关" class="headerlink" title="三、Web 服务相关"></a>三、Web 服务相关</h2><h3 id="7-Nginx-启动报错：端口被占用"><a href="#7-Nginx-启动报错：端口被占用" class="headerlink" title="7. Nginx 启动报错：端口被占用"></a>7. Nginx 启动报错：端口被占用</h3><p><strong>现象：</strong> <code>nginx -t</code> 通过，但 <code>systemctl start nginx</code> 失败，报 <code>Address already in use</code>。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看谁在占用 80/443</span></span><br><span class="line">lsof -i :80</span><br><span class="line">lsof -i :443</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到 PID 后 kill 掉</span></span><br><span class="line"><span class="built_in">kill</span> -9 &lt;PID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或直接</span></span><br><span class="line">fuser -k 80/tcp</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="8-网站可以访问但-HTTPS-证书申请失败"><a href="#8-网站可以访问但-HTTPS-证书申请失败" class="headerlink" title="8. 网站可以访问但 HTTPS 证书申请失败"></a>8. 网站可以访问但 HTTPS 证书申请失败</h3><p><strong>现象：</strong> 用 Certbot 申请 Let’s Encrypt 证书时报错 <code>Connection refused</code> 或 <code>Timeout</code>。</p>
+<p><strong>常见原因与解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 确保 80 端口对外开放（Let&#x27;s Encrypt 验证需要）</span></span><br><span class="line">curl -I http://your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 申请时指定 webroot 方式（更稳定）</span></span><br><span class="line">certbot certonly --webroot -w /var/www/html -d your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是 standalone 模式，先停掉 nginx</span></span><br><span class="line">systemctl stop nginx</span><br><span class="line">certbot certonly --standalone -d your_domain.com</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<p>检查域名 DNS 是否已正确解析到服务器 IP：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nslookup your_domain.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="9-反向代理后获取不到真实-IP"><a href="#9-反向代理后获取不到真实-IP" class="headerlink" title="9. 反向代理后获取不到真实 IP"></a>9. 反向代理后获取不到真实 IP</h3><p><strong>现象：</strong> 后端应用拿到的 IP 全是 <code>127.0.0.1</code>。</p>
+<p><strong>Nginx 配置修复：</strong></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、安全相关"><a href="#四、安全相关" class="headerlink" title="四、安全相关"></a>四、安全相关</h2><h3 id="10-服务器被暴力破解-SSH，日志里全是失败登录"><a href="#10-服务器被暴力破解-SSH，日志里全是失败登录" class="headerlink" title="10. 服务器被暴力破解 SSH，日志里全是失败登录"></a>10. 服务器被暴力破解 SSH，日志里全是失败登录</h3><p><strong>现象：</strong> <code>lastb</code> 或 <code>cat /var/log/auth.log | grep Failed</code> 看到大量陌生 IP 的登录尝试。</p>
+<p><strong>加固方案：</strong></p>
+<p><strong>① 禁止密码登录，只允许密钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line">PermitRootLogin prohibit-password</span><br></pre></td></tr></table></figure>
+
+<p><strong>② 修改默认 SSH 端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">Port 2222   <span class="comment"># 改成非常用端口</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>③ 安装 Fail2Ban 自动封 IP</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install fail2ban -y</span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban --now</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="11-iptables-规则重启后丢失"><a href="#11-iptables-规则重启后丢失" class="headerlink" title="11. iptables 规则重启后丢失"></a>11. iptables 规则重启后丢失</h3><p><strong>现象：</strong> 手动配置的防火墙规则，重启后全没了。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装持久化工具</span></span><br><span class="line">apt install iptables-persistent -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存当前规则</span></span><br><span class="line">netfilter-persistent save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者手动保存</span></span><br><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-save &gt; /etc/iptables/rules.v6</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Docker-相关"><a href="#五、Docker-相关" class="headerlink" title="五、Docker 相关"></a>五、Docker 相关</h2><h3 id="12-Docker-拉取镜像失败-极慢"><a href="#12-Docker-拉取镜像失败-极慢" class="headerlink" title="12. Docker 拉取镜像失败 &#x2F; 极慢"></a>12. Docker 拉取镜像失败 &#x2F; 极慢</h3><p><strong>现象：</strong> <code>docker pull</code> 卡死，或者报 <code>Error response from daemon: Get ... timeout</code>。</p>
+<p><strong>解决方法（配置国内镜像加速）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑 Docker 配置</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="13-Docker-容器启动后立即退出"><a href="#13-Docker-容器启动后立即退出" class="headerlink" title="13. Docker 容器启动后立即退出"></a>13. Docker 容器启动后立即退出</h3><p><strong>现象：</strong> <code>docker ps</code> 看不到容器，<code>docker ps -a</code> 显示状态为 <code>Exited</code>。</p>
+<p><strong>排查方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;container_id&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以交互模式启动排查</span></span><br><span class="line">docker run -it --entrypoint /bin/sh your_image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查容器退出码</span></span><br><span class="line">docker inspect &lt;container_id&gt; | grep ExitCode</span><br></pre></td></tr></table></figure>
+
+<p>常见原因：入口命令路径错误、环境变量缺失、端口冲突。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>VPS 折腾之路永无止境，踩坑才是成长。遇到问题不要慌，按这个思路排查：</p>
+<ol>
+<li><strong>看日志</strong> — <code>journalctl -xe</code>、<code>/var/log/</code> 目录是好朋友</li>
+<li><strong>测连通性</strong> — <code>ping</code>、<code>curl</code>、<code>telnet</code> 先确认网络</li>
+<li><strong>看端口</strong> — <code>ss -tlnp</code> 或 <code>netstat -tlnp</code></li>
+<li><strong>看权限</strong> — Linux 很多问题都是权限导致的</li>
+<li><strong>重启服务</strong> — 改完配置别忘了 <code>systemctl restart</code></li>
+</ol>
+<p>有什么没覆盖到的问题，欢迎留言交流！</p>
+<hr>
+<p><em>本文持续更新，遇到新坑会第一时间补充。</em></p>
+]]></content>
       <categories>
-          
-          <category> 技术教程 </category>
-          
+        <category>技术笔记</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> macOS </tag>
-            
-            <tag> MDM </tag>
-            
-            <tag> 系统工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>VPS</tag>
+        <tag>Linux</tag>
+        <tag>运维</tag>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">
+    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>
+    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>
+    <div style="display: flex; gap: 10px;">
+        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>
+        <a href="/docs/ssh-tool/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>
+    </div>
+</div>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>MDM</tag>
+        <tag>系统工具</tag>
+      </tags>
+  </entry>
 </search>
