@@ -1,36 +1,56 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>零基础搭建 OpenCLAW 并接入 Claude API 详细教程 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="手把手教你从零开始搭建 OpenCLAW，接入 Anthropic Claude API，包含环境准备、安装配置、API Key 获取、反向代理、常见报错解决全流程。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="OpenClaw教程,OpenClaw搭建,OpenAI API,Claude API,Gemini API,OpenRouter API,AI厂商API接入"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 2026 年 3 月 26 日官方文档整理，手把手教新手从零安装 OpenClaw，并接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商 API。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零基础搭建 OpenCLAW 并接入 Claude API 详细教程">
-<meta property="og:url" content="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/index.html">
+<meta property="og:title" content="新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API">
+<meta property="og:url" content="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/">
 <meta property="og:site_name" content="Skyline Blog">
-<meta property="og:description" content="手把手教你从零开始搭建 OpenCLAW，接入 Anthropic Claude API，包含环境准备、安装配置、API Key 获取、反向代理、常见报错解决全流程。">
+<meta property="og:description" content="按 2026 年 3 月 26 日官方文档整理，手把手教新手从零安装 OpenClaw，并接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商 API。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2025-07-01T02:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-26T04:00:00.000Z">
 <meta property="article:author" content="sky">
 <meta property="article:tag" content="AI工具">
-<meta property="article:tag" content="Claude API">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="OpenCLAW">
-<meta property="article:tag" content="教程">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="Gemini">
+<meta property="article:tag" content="OpenAI">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="OpenRouter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2025-07-01T02:00:00.000Z"><meta property="article:modified_time" content="2026-03-26T04:00:00.000Z"><meta property="article:section" content="AI工具"><meta property="article:tag" content="AI工具"><meta property="article:tag" content="OpenClaw"><meta property="article:tag" content="OpenAI"><meta property="article:tag" content="Claude"><meta property="article:tag" content="Gemini"><meta property="article:tag" content="OpenRouter"><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "零基础搭建 OpenCLAW 并接入 Claude API 详细教程",
+  "headline": "新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API",
+  "description": "按 2026 年 3 月 26 日官方文档整理，手把手教新手从零安装 OpenClaw，并接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商 API。",
   "url": "https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/",
   "image": "https://skylink9119.github.io/img/icon.jpg",
   "datePublished": "2025-07-01T02:00:00.000Z",
-  "dateModified": "2025-07-01T02:00:00.000Z",
+  "dateModified": "2026-03-26T04:00:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/"
+  },
   "author": [
     {
       "@type": "Person",
       "name": "sky",
       "url": "https://github.com/skylink9119"
     }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "OpenClaw教程,OpenClaw搭建,OpenAI API,Claude API,Gemini API,OpenRouter API,AI厂商API接入",
+  "articleSection": [
+    "AI工具"
   ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
     (() => {
       
     const saveToLocal = {
@@ -177,11 +197,11 @@
   },
   autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '零基础搭建 OpenCLAW 并接入 Claude API 详细教程',
+  title: '新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API',
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/skyline-widget.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+}</script><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><link rel="stylesheet" href="/css/homepage-posts.css"><link rel="stylesheet" href="/css/skyline-widget.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
   restartOnPushState: false
 }
 
@@ -189,181 +209,316 @@ btf.addGlobalFn('pjaxSend', () => {
   Pace.restart()
 }, 'pace_restart')
 
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">零基础搭建 OpenCLAW 并接入 Claude API 详细教程</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">零基础搭建 OpenCLAW 并接入 Claude API 详细教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-01T02:00:00.000Z" title="发表于 2025-07-01 10:00:00">2025-07-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-01T02:00:00.000Z" title="更新于 2025-07-01 10:00:00">2025-07-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2025-07-01 10:00:00&quot;}" hidden></div><blockquote>
-<p><strong>前言：</strong> OpenCLAW 是一个轻量的 Claude API 前端面板，让你不借助 ChatBox 等第三方客户端，就能在浏览器里直接对话 Claude 各系列模型。本文面向<strong>零基础用户</strong>，从申请 API Key 到跑通第一条对话，每步都有截图说明。</p>
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #111827 0%, #4f46e5 30%, #06b6d4 62%, #7c3aed 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-01T02:00:00.000Z" title="发表于 2025-07-01 10:00:00">2025-07-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-26T04:00:00.000Z" title="更新于 2026-03-26 12:00:00">2026-03-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-03-26 12:00:00&quot;}" hidden></div><blockquote>
+<p>本文按 2026 年 3 月 26 日可查到的 OpenClaw 官方文档思路整理，目标只有一个：让你从零把 OpenClaw 跑起来，并且能切换接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商接口。</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
-<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
-<li><a href="#%E7%94%B3%E8%AF%B7-anthropic-api-key">申请 Anthropic API Key</a></li>
-<li><a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">服务器环境准备</a></li>
-<li><a href="#%E5%AE%89%E8%A3%85-openclaw">安装 OpenCLAW</a></li>
-<li><a href="#%E6%8E%A5%E5%85%A5-claude-api-%E9%85%8D%E7%BD%AE">接入 Claude API 配置</a></li>
-<li><a href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%8F%AF%E9%80%89">反向代理（可选）</a></li>
-<li><a href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E8%B7%91%E9%80%9A">验证是否跑通</a></li>
-<li><a href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E4%B8%8E%E8%A7%A3%E5%86%B3">常见报错与解决</a></li>
-<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
-</ol>
+<h2 id="OpenClaw-是什么"><a href="#OpenClaw-是什么" class="headerlink" title="OpenClaw 是什么"></a>OpenClaw 是什么</h2><p>OpenClaw 可以理解成一个自托管 AI 网关和控制面板。它的核心作用不是“单独提供模型”，而是把你自己的模型 API Key 接进来，再通过一个统一的界面和工作流去使用。</p>
+<p>对新手来说，它有几个明显优点：</p>
+<ul>
+<li>统一管理多个厂商 API，不用每次换平台都重新折腾</li>
+<li>可以在同一个环境里切换模型</li>
+<li>支持本地或服务器部署</li>
+<li>后续扩展聊天、网关和自动化能力更方便</li>
+</ul>
+<p>如果你以前只用过网页版 ChatGPT、Claude 或 Gemini，那么可以把 OpenClaw 理解为“你自己的 AI 控制台”。</p>
 <hr>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始之前，确保你手头有：</p>
+<h2 id="这篇教程适合谁"><a href="#这篇教程适合谁" class="headerlink" title="这篇教程适合谁"></a>这篇教程适合谁</h2><p>这篇文章适合：</p>
+<ul>
+<li>第一次接触 OpenClaw</li>
+<li>会基础 SSH，但没独立部署过 AI 面板</li>
+<li>想一套环境同时接入多家模型</li>
+<li>想把 API Key 放在自己的机器或 VPS 上管理</li>
+</ul>
+<p>如果你完全不会 Linux，也没关系，照着命令一步一步执行就可以。</p>
+<hr>
+<h2 id="部署前准备"><a href="#部署前准备" class="headerlink" title="部署前准备"></a>部署前准备</h2><p>建议你先准备好下面这些：</p>
 <table>
 <thead>
 <tr>
 <th>项目</th>
-<th>要求</th>
+<th>建议</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>服务器</td>
-<td>一台能访问 Anthropic API 的 VPS（境外或有出口代理）</td>
-</tr>
-<tr>
 <td>系统</td>
-<td>Ubuntu 20.04 &#x2F; 22.04 &#x2F; Debian 11+ 均可</td>
+<td>macOS &#x2F; Linux &#x2F; Windows（有 WSL 也可以）</td>
 </tr>
 <tr>
-<td>权限</td>
-<td>root 或具备 sudo 权限的账户</td>
+<td>服务器</td>
+<td>推荐 2 核 2G 以上 VPS，系统建议 Ubuntu 22.04+&#x2F;Debian 12+</td>
+</tr>
+<tr>
+<td>Node 环境</td>
+<td>按官方思路，建议 Node.js 20 或更高</td>
 </tr>
 <tr>
 <td>网络</td>
-<td>服务器能正常 <code>curl https://api.anthropic.com</code></td>
+<td>服务器需要能访问对应厂商 API</td>
 </tr>
 <tr>
-<td>域名（可选）</td>
-<td>如需 HTTPS 访问，准备一个解析好的域名</td>
+<td>域名</td>
+<td>非必须；如果你要公网长期使用，建议配域名和 HTTPS</td>
+</tr>
+<tr>
+<td>API Key</td>
+<td>至少准备一家，推荐先准备 OpenAI 或 OpenRouter</td>
 </tr>
 </tbody></table>
-<blockquote>
-<p><strong>⚠ 注意：</strong> Anthropic API 在中国大陆无法直连，请确保服务器在境外（如香港、美国、日本等节点）。</p>
-</blockquote>
-<hr>
-<h2 id="申请-Anthropic-API-Key"><a href="#申请-Anthropic-API-Key" class="headerlink" title="申请 Anthropic API Key"></a>申请 Anthropic API Key</h2><h3 id="第一步：注册-Anthropic-账号"><a href="#第一步：注册-Anthropic-账号" class="headerlink" title="第一步：注册 Anthropic 账号"></a>第一步：注册 Anthropic 账号</h3><p>访问 <a target="_blank" rel="noopener" href="https://console.anthropic.com/">https://console.anthropic.com</a>，使用邮箱注册账号并完成邮件验证。</p>
-<h3 id="第二步：充值额度"><a href="#第二步：充值额度" class="headerlink" title="第二步：充值额度"></a>第二步：充值额度</h3><p>Anthropic 采用<strong>预付费</strong>模式，新账号需要先充值才能调用 API：</p>
-<ol>
-<li>登录后进入控制台 → <strong>Billing</strong> → <strong>Add credits</strong></li>
-<li>最低充值 $5，支持信用卡&#x2F;借记卡</li>
-<li>充值完成后自动获得对应 token 额度</li>
-</ol>
-<blockquote>
-<p>💡 <strong>小提示：</strong> 新账号注册后可能有少量免费额度用于测试，但正式使用仍需充值。</p>
-</blockquote>
-<h3 id="第三步：生成-API-Key"><a href="#第三步：生成-API-Key" class="headerlink" title="第三步：生成 API Key"></a>第三步：生成 API Key</h3><ol>
-<li>进入 <strong>API Keys</strong> 页面</li>
-<li>点击 <strong>Create Key</strong> 按钮</li>
-<li>输入一个便于识别的名称，如 <code>openclaw-server</code></li>
-<li>点击确认，<strong>立即复制并保存</strong>显示的 Key（格式：<code>sk-ant-api03-xxxxxxxx</code>）</li>
-</ol>
-<blockquote>
-<p><strong>⚠ 重要：</strong> API Key 只在创建时显示一次，请立刻保存到安全的地方（如密码管理器）。</p>
-</blockquote>
-<hr>
-<h2 id="服务器环境准备"><a href="#服务器环境准备" class="headerlink" title="服务器环境准备"></a>服务器环境准备</h2><p>SSH 登录服务器后，依次执行以下命令：</p>
-<h3 id="更新系统"><a href="#更新系统" class="headerlink" title="更新系统"></a>更新系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装必要依赖"><a href="#安装必要依赖" class="headerlink" title="安装必要依赖"></a>安装必要依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Node.js 18+（推荐 LTS 版本）</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_18.x | bash -</span><br><span class="line">apt install -y nodejs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证版本</span></span><br><span class="line">node -v   <span class="comment"># 应输出 v18.x.x 或更高</span></span><br><span class="line">npm -v    <span class="comment"># 应输出 9.x.x 或更高</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装其他工具</span></span><br><span class="line">apt install -y git curl wget unzip</span><br></pre></td></tr></table></figure>
-
-<h3 id="检查网络连通性"><a href="#检查网络连通性" class="headerlink" title="检查网络连通性"></a>检查网络连通性</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://api.anthropic.com</span><br><span class="line"><span class="comment"># 正常应返回 HTTP/2 200 或 404，说明能连通</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 <code>curl</code> 超时或连接被拒，说明服务器无法访问 Anthropic，需要先解决网络问题。</p>
-<hr>
-<h2 id="安装-OpenCLAW"><a href="#安装-OpenCLAW" class="headerlink" title="安装 OpenCLAW"></a>安装 OpenCLAW</h2><h3 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入工作目录</span></span><br><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆 OpenCLAW 仓库</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/OpenCLAW/openclaw.git</span><br><span class="line"><span class="built_in">cd</span> openclaw</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果 git clone 速度慢，可以先挂代理或使用镜像地址。</p>
-</blockquote>
-<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>安装过程通常需要 1~3 分钟，取决于服务器网速。</p>
-<h3 id="复制配置文件"><a href="#复制配置文件" class="headerlink" title="复制配置文件"></a>复制配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="接入-Claude-API-配置"><a href="#接入-Claude-API-配置" class="headerlink" title="接入 Claude API 配置"></a>接入 Claude API 配置</h2><p>用你喜欢的编辑器打开 <code>.env</code> 文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
-
-<p>找到并修改以下关键字段：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># ===== Claude API 配置 =====</span><br><span class="line"></span><br><span class="line"># 你的 Anthropic API Key</span><br><span class="line">ANTHROPIC_API_KEY=sk-ant-api03-你的key填这里</span><br><span class="line"></span><br><span class="line"># 默认使用的模型（可选，推荐最新 claude-3-5-sonnet）</span><br><span class="line">DEFAULT_MODEL=claude-3-5-sonnet-20241022</span><br><span class="line"></span><br><span class="line"># 服务监听端口（默认 3000，可按需修改）</span><br><span class="line">PORT=3000</span><br><span class="line"></span><br><span class="line"># 访问密码（强烈建议设置，防止他人盗用）</span><br><span class="line">ACCESS_PASSWORD=你的访问密码</span><br><span class="line"></span><br><span class="line"># 是否启用流式输出（推荐开启）</span><br><span class="line">STREAM_RESPONSE=true</span><br></pre></td></tr></table></figure>
-
-<p>按 <code>Ctrl + X</code>，然后 <code>Y</code>，<code>Enter</code> 保存退出。</p>
-<h3 id="可选：配置模型列表"><a href="#可选：配置模型列表" class="headerlink" title="可选：配置模型列表"></a>可选：配置模型列表</h3><p>如果你想在前端切换多个模型，可以在 <code>.env</code> 中添加：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AVAILABLE_MODELS=claude-3-5-sonnet-20241022,claude-3-5-haiku-20241022,claude-3-opus-20240229</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><h3 id="直接启动（测试用）"><a href="#直接启动（测试用）" class="headerlink" title="直接启动（测试用）"></a>直接启动（测试用）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
-
-<p>看到以下输出说明启动成功：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">✅ OpenCLAW server running on port 3000</span><br><span class="line">🔗 http://localhost:3000</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-PM2-守护进程（推荐生产使用）"><a href="#使用-PM2-守护进程（推荐生产使用）" class="headerlink" title="使用 PM2 守护进程（推荐生产使用）"></a>使用 PM2 守护进程（推荐生产使用）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局安装 PM2</span></span><br><span class="line">npm install -g pm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 PM2 启动</span></span><br><span class="line">pm2 start npm --name <span class="string">&quot;openclaw&quot;</span> -- start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机自启</span></span><br><span class="line">pm2 startup</span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure>
-
-<p>常用 PM2 命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pm2 status          <span class="comment"># 查看运行状态</span></span><br><span class="line">pm2 logs openclaw    <span class="comment"># 查看日志</span></span><br><span class="line">pm2 restart openclaw <span class="comment"># 重启服务</span></span><br><span class="line">pm2 stop openclaw    <span class="comment"># 停止服务</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="反向代理（可选）"><a href="#反向代理（可选）" class="headerlink" title="反向代理（可选）"></a>反向代理（可选）</h2><p>如果你有域名且希望通过 HTTPS 访问，可以用 Nginx 做反向代理。</p>
-<h3 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y nginx</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建站点配置"><a href="#创建站点配置" class="headerlink" title="创建站点配置"></a>创建站点配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/nginx/sites-available/openclaw</span><br></pre></td></tr></table></figure>
-
-<p>粘贴以下内容（把 <code>your-domain.com</code> 替换为你的域名）：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> your-domain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自动跳转 HTTPS（配置 SSL 后取消注释）</span></span><br><span class="line">    <span class="comment"># return 301 https://$host$request_uri;</span></span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 支持流式输出（SSE）</span></span><br><span class="line">        <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_cache</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">300s</span>;</span><br><span class="line">        <span class="attribute">chunked_transfer_encoding</span> <span class="literal">on</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="启用配置"><a href="#启用配置" class="headerlink" title="启用配置"></a>启用配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /etc/nginx/sites-available/openclaw /etc/nginx/sites-enabled/</span><br><span class="line">nginx -t          <span class="comment"># 检查语法</span></span><br><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
-
-<h3 id="申请-SSL-证书（Let’s-Encrypt）"><a href="#申请-SSL-证书（Let’s-Encrypt）" class="headerlink" title="申请 SSL 证书（Let’s Encrypt）"></a>申请 SSL 证书（Let’s Encrypt）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install -y certbot python3-certbot-nginx</span><br><span class="line">certbot --nginx -d your-domain.com</span><br></pre></td></tr></table></figure>
-
-<p>按提示输入邮箱并同意协议，完成后 Nginx 会自动配置 HTTPS 跳转。</p>
-<hr>
-<h2 id="验证是否跑通"><a href="#验证是否跑通" class="headerlink" title="验证是否跑通"></a>验证是否跑通</h2><h3 id="方式一：浏览器访问"><a href="#方式一：浏览器访问" class="headerlink" title="方式一：浏览器访问"></a>方式一：浏览器访问</h3><p>打开 <code>http://你的服务器IP:3000</code>（或配置了域名则访问 <code>https://your-domain.com</code>），能看到 OpenCLAW 的聊天界面。</p>
-<p>输入访问密码登录后，在输入框里发一条消息，如果 Claude 正常回复，说明全部配置成功。</p>
-<h3 id="方式二：命令行直接测-API"><a href="#方式二：命令行直接测-API" class="headerlink" title="方式二：命令行直接测 API"></a>方式二：命令行直接测 API</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl https://api.anthropic.com/v1/messages \</span><br><span class="line">  -H <span class="string">&quot;x-api-key: 你的API_KEY&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;anthropic-version: 2023-06-01&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;content-type: application/json&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">    &quot;model&quot;: &quot;claude-3-5-sonnet-20241022&quot;,</span></span><br><span class="line"><span class="string">    &quot;max_tokens&quot;: 64,</span></span><br><span class="line"><span class="string">    &quot;messages&quot;: [&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好，请用一句话介绍你自己。&quot;&#125;]</span></span><br><span class="line"><span class="string">  &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>正常返回示例：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你好！我是 Claude，Anthropic 开发的 AI 助手……&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;usage&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;input_tokens&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">,</span> <span class="attr">&quot;output_tokens&quot;</span><span class="punctuation">:</span> <span class="number">30</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="常见报错与解决"><a href="#常见报错与解决" class="headerlink" title="常见报错与解决"></a>常见报错与解决</h2><h3 id="401-Unauthorized"><a href="#401-Unauthorized" class="headerlink" title="401 Unauthorized"></a><code>401 Unauthorized</code></h3><p><strong>原因：</strong> API Key 填写有误，或 Key 前后有多余空格。</p>
-<p><strong>解决：</strong> 重新检查 <code>.env</code> 中的 <code>ANTHROPIC_API_KEY</code>，确保无空格、无换行。</p>
-<hr>
-<h3 id="403-Forbidden-permission-error"><a href="#403-Forbidden-permission-error" class="headerlink" title="403 Forbidden &#x2F; permission_error"></a><code>403 Forbidden</code> &#x2F; <code>permission_error</code></h3><p><strong>原因：</strong> 账户未充值或额度耗尽。</p>
-<p><strong>解决：</strong> 登录 <a target="_blank" rel="noopener" href="https://console.anthropic.com/">console.anthropic.com</a> → Billing，检查余额并充值。</p>
-<hr>
-<h3 id="connection-timeout-curl-28"><a href="#connection-timeout-curl-28" class="headerlink" title="connection timeout &#x2F; curl: (28)"></a><code>connection timeout</code> &#x2F; <code>curl: (28)</code></h3><p><strong>原因：</strong> 服务器无法访问 Anthropic API（被墙或网络问题）。</p>
-<p><strong>解决：</strong></p>
-<ol>
-<li>确认服务器在境外节点</li>
-<li>检查服务器防火墙是否拦截了出站 443 端口</li>
-<li>可临时测试：<code>curl -v https://api.anthropic.com --max-time 10</code></li>
-</ol>
-<hr>
-<h3 id="npm-install-卡住不动"><a href="#npm-install-卡住不动" class="headerlink" title="npm install 卡住不动"></a><code>npm install</code> 卡住不动</h3><p><strong>原因：</strong> npm 默认源在境外，速度慢。</p>
-<p><strong>解决：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到淘宝镜像（境内服务器适用）</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="流式输出中断-打字卡顿"><a href="#流式输出中断-打字卡顿" class="headerlink" title="流式输出中断 &#x2F; 打字卡顿"></a>流式输出中断 &#x2F; 打字卡顿</h3><p><strong>原因：</strong> Nginx 默认缓冲导致 SSE 流被截断。</p>
-<p><strong>解决：</strong> 检查 Nginx 配置中是否已加入 <code>proxy_buffering off;</code>（参考上方反向代理配置）。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>完成本教程后，你已经：</p>
+<p>建议新手的最低组合：</p>
 <ul>
-<li>✅ 申请了 Anthropic API Key</li>
-<li>✅ 在服务器上部署了 OpenCLAW 面板</li>
-<li>✅ 成功接入 Claude API 并完成对话验证</li>
-<li>✅ （可选）配置了 Nginx + HTTPS 反向代理</li>
+<li>一台 Ubuntu 服务器</li>
+<li>一个 OpenAI 或 OpenRouter Key</li>
+<li>一个能 SSH 登录服务器的终端工具</li>
 </ul>
-<p><strong>后续可以探索的方向：</strong></p>
-<ul>
-<li>在 <code>.env</code> 中添加更多模型，按场景切换</li>
-<li>结合 <a target="_blank" rel="noopener" href="https://n8n.io/">n8n</a> 或 <a target="_blank" rel="noopener" href="https://dify.ai/">Dify</a> 做自动化工作流</li>
-<li>配置 Fail2Ban + 强密码，加固面板安全性</li>
-</ul>
-<p>如有疑问欢迎评论区留言，或通过 <a target="_blank" rel="noopener" href="https://github.com/skylink9119/skylink9119.github.io/issues">GitHub Issues</a> 反馈。</p>
 <hr>
-<p><em>本文首发于 <a href="https://skylink9119.github.io/">Skyline Blog</a>，转载请注明出处，遵循 CC BY-NC-SA 4.0 协议。</em></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/">https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/Claude-API/">Claude API</a><a class="post-meta__tags" href="/tags/OpenCLAW/">OpenCLAW</a><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</div></div><div class="info-2"><div class="info-item-1">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">VPS搭建过程中遇到的问题及具体解决方法</div></div><div class="info-2"><div class="info-item-1">VPS搭建过程中遇到的问题及具体解决方法买了人生第一台VPS，满怀期待地开始折腾，结果一路踩坑。这篇文章记录了我在搭建过程中遇到的真实问题和解决方法，希望能帮到同样踩坑的你。  一、连接问题1. SSH 连接超时 &#x2F; 无法连接现象： ssh root@your_ip 一直卡着，或者报 Connection timed out。 原因排查：  服务商防火墙&#x2F;安全组没有开放 22 端口 VPS 系统未正常启动 本地网络被限制  解决方法： 12345# 检查本地能否 ping 通ping your_ip# 用 telnet 测试端口是否开放telnet your_ip 2...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/skylink9119"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/skylink9119" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div class="skyline-widget">
+<h2 id="先准备系统环境"><a href="#先准备系统环境" class="headerlink" title="先准备系统环境"></a>先准备系统环境</h2><p>如果你是在全新的 Ubuntu &#x2F; Debian 服务器上部署，先执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br><span class="line"><span class="built_in">sudo</span> apt install -y curl git ca-certificates build-essential</span><br></pre></td></tr></table></figure>
+
+<p>安装 Node.js：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://deb.nodesource.com/setup_20.x | <span class="built_in">sudo</span> -E bash -</span><br><span class="line"><span class="built_in">sudo</span> apt install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<p>检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>只要 <code>node -v</code> 输出是 <code>v20.x</code> 或更高，一般就可以继续。</p>
+<hr>
+<h2 id="安装-OpenClaw"><a href="#安装-OpenClaw" class="headerlink" title="安装 OpenClaw"></a>安装 OpenClaw</h2><p>官方文档当前推荐的思路是使用安装脚本，然后通过 <code>openclaw onboard</code> 进行初始化。</p>
+<p>执行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，检查是否成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw --version</span><br></pre></td></tr></table></figure>
+
+<p>如果提示命令不存在，先执行一次：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>如果你用的是 <code>zsh</code>，就执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第一次初始化-OpenClaw"><a href="#第一次初始化-OpenClaw" class="headerlink" title="第一次初始化 OpenClaw"></a>第一次初始化 OpenClaw</h2><p>接下来运行官方推荐的引导命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会带你完成首次配置。新手建议按下面的思路选：</p>
+<ol>
+<li>先选择本机或服务器作为运行环境</li>
+<li>先启用一个最熟悉的模型提供商</li>
+<li>网关地址和端口先保持默认</li>
+<li>如果提示是否安装守护进程，建议同意</li>
+</ol>
+<p>如果你希望它作为后台服务运行，更稳妥的方式是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>启动后，通常可以再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw open</span><br></pre></td></tr></table></figure>
+
+<p>它会打开控制界面。如果你在纯服务器环境，没有图形界面，可以记住它监听的地址和端口，再通过浏览器访问。</p>
+<hr>
+<h2 id="OpenClaw-的核心思路"><a href="#OpenClaw-的核心思路" class="headerlink" title="OpenClaw 的核心思路"></a>OpenClaw 的核心思路</h2><p>很多人第一次接触时最容易混淆一件事：</p>
+<p>OpenClaw 本身不是模型厂商，它更像一个统一接入层。</p>
+<p>也就是说：</p>
+<ul>
+<li>OpenClaw 负责把界面、配置、路由和调用管理起来</li>
+<li>真正回答问题的，是你接入的 OpenAI、Claude、Gemini、OpenRouter 等模型</li>
+</ul>
+<p>所以你后面要做的事情，本质上就是把不同厂商的 Key 填进去，再选默认模型。</p>
+<hr>
+<h2 id="接入-OpenAI-API"><a href="#接入-OpenAI-API" class="headerlink" title="接入 OpenAI API"></a>接入 OpenAI API</h2><p>如果你已经在 OpenAI 平台创建好了 API Key，可以直接在 OpenClaw 初始化时接入，或者后续补加。</p>
+<p>常见做法是设置环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;你的OpenAI_API_Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你希望当前终端立刻生效，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export OPENAI_API_KEY=&quot;你的OpenAI_API_Key&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>然后重新跑一遍引导，或者在配置中将默认提供商切到 OpenAI。</p>
+<p>适合新手先用 OpenAI 的原因：</p>
+<ul>
+<li>文档相对完善</li>
+<li>大多数工具兼容性好</li>
+<li>模型切换逻辑清晰</li>
+</ul>
+<hr>
+<h2 id="接入-Anthropic-Claude-API"><a href="#接入-Anthropic-Claude-API" class="headerlink" title="接入 Anthropic Claude API"></a>接入 Anthropic Claude API</h2><p>如果你要用 Claude，先在 Anthropic 控制台创建 API Key。</p>
+<p>环境变量一般这样设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ANTHROPIC_API_KEY=<span class="string">&quot;你的Anthropic_API_Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>写入 shell 配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export ANTHROPIC_API_KEY=&quot;你的Anthropic_API_Key&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>随后在 OpenClaw 里把默认模型切到 Claude 系列即可。</p>
+<p>建议：</p>
+<ul>
+<li>用 Claude 做长文本、写作、解释类任务体验通常不错</li>
+<li>如果服务器无法访问 Anthropic 接口，要先解决网络出口问题</li>
+</ul>
+<hr>
+<h2 id="接入-Google-Gemini-API"><a href="#接入-Google-Gemini-API" class="headerlink" title="接入 Google Gemini API"></a>接入 Google Gemini API</h2><p>Gemini 的接入思路也类似，先去 Google AI Studio 或对应控制台创建 Key。</p>
+<p>常见环境变量写法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GEMINI_API_KEY=<span class="string">&quot;你的Gemini_API_Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者部分工具也会使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOOGLE_API_KEY=<span class="string">&quot;你的Gemini_API_Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你发现某个配置没有读到 <code>GEMINI_API_KEY</code>，可以两个都写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export GEMINI_API_KEY=&quot;你的Gemini_API_Key&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export GOOGLE_API_KEY=&quot;你的Gemini_API_Key&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>Gemini 比较适合：</p>
+<ul>
+<li>多模态场景</li>
+<li>速度优先的日常问答</li>
+<li>Google 生态相关工作流</li>
+</ul>
+<hr>
+<h2 id="接入-OpenRouter"><a href="#接入-OpenRouter" class="headerlink" title="接入 OpenRouter"></a>接入 OpenRouter</h2><p>如果你不想分别去接很多家，最省事的方案之一就是 OpenRouter。</p>
+<p>它的优势是：</p>
+<ul>
+<li>一个 Key 对接多个模型来源</li>
+<li>兼容很多 OpenAI 风格调用方式</li>
+<li>切模型很方便</li>
+</ul>
+<p>先设置环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> OPENROUTER_API_KEY=<span class="string">&quot;你的OpenRouter_API_Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>写入配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export OPENROUTER_API_KEY=&quot;你的OpenRouter_API_Key&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>按官方文档，CLI 方式可以直接这样初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --auth-choice apiKey --token-provider openrouter --token <span class="string">&quot;<span class="variable">$OPENROUTER_API_KEY</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你是新手，我非常建议先从 OpenRouter 入手，因为它能让你用一个入口测试多家模型，排错成本低很多。</p>
+<hr>
+<h2 id="其他厂商怎么接"><a href="#其他厂商怎么接" class="headerlink" title="其他厂商怎么接"></a>其他厂商怎么接</h2><p>除了上面几家，很多厂商都提供了 OpenAI-compatible 接口。常见思路是：</p>
+<ul>
+<li>准备对应平台的 API Key</li>
+<li>找到它的 Base URL</li>
+<li>在 OpenClaw 中按兼容 OpenAI 的方式配置</li>
+</ul>
+<p>这一类通常包括：</p>
+<ul>
+<li>DeepSeek</li>
+<li>Groq</li>
+<li>SiliconFlow</li>
+<li>Together AI</li>
+<li>火山方舟</li>
+<li>Azure OpenAI</li>
+</ul>
+<p>如果某个平台文档写明“兼容 OpenAI API”，你就重点看两样：</p>
+<ul>
+<li>API Key</li>
+<li>Base URL</li>
+</ul>
+<p>然后在 OpenClaw 里把它当成兼容提供商接入即可。</p>
+<hr>
+<h2 id="推荐的新手接入顺序"><a href="#推荐的新手接入顺序" class="headerlink" title="推荐的新手接入顺序"></a>推荐的新手接入顺序</h2><p>如果你是第一次搭，建议不要一上来就接 5 家。</p>
+<p>最稳妥的顺序是：</p>
+<ol>
+<li>先装好 OpenClaw 并确认控制台能打开</li>
+<li>先接 OpenAI 或 OpenRouter，确保第一条对话成功</li>
+<li>再接 Claude</li>
+<li>最后再接 Gemini 和其他兼容厂商</li>
+</ol>
+<p>这样做的好处是，一旦报错，你更容易知道问题出在哪一层：</p>
+<ul>
+<li>是 OpenClaw 没装好</li>
+<li>是网络问题</li>
+<li>是 Key 错了</li>
+<li>是某家厂商的接口配置不对</li>
+</ul>
+<hr>
+<h2 id="如何切换默认模型"><a href="#如何切换默认模型" class="headerlink" title="如何切换默认模型"></a>如何切换默认模型</h2><p>当你接入多家厂商后，最常见需求就是切换默认模型。</p>
+<p>通常有两种方式：</p>
+<ul>
+<li>在 OpenClaw 的控制界面里切换</li>
+<li>在配置文件里设置默认模型引用</li>
+</ul>
+<p>如果你用的是 OpenRouter，模型名通常会带上提供商前缀，例如文档中的这种写法：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;OPENROUTER_API_KEY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sk-or-xxx&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;agents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;defaults&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;primary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openrouter/anthropic/claude-sonnet-4-5&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你后面想稳定长期使用，建议固定一主一备两套模型：</p>
+<ul>
+<li>主力模型：日常最常用</li>
+<li>备用模型：主模型限流、报错时快速切换</li>
+</ul>
+<hr>
+<h2 id="服务器长期运行建议"><a href="#服务器长期运行建议" class="headerlink" title="服务器长期运行建议"></a>服务器长期运行建议</h2><p>如果你是 VPS 常驻部署，建议至少做这几件事：</p>
+<h3 id="1-使用守护进程"><a href="#1-使用守护进程" class="headerlink" title="1. 使用守护进程"></a>1. 使用守护进程</h3><p>优先使用官方 <code>--install-daemon</code> 方案，避免手动开着终端。</p>
+<h3 id="2-只开放必要端口"><a href="#2-只开放必要端口" class="headerlink" title="2. 只开放必要端口"></a>2. 只开放必要端口</h3><p>如果你用 UFW：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 22/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw allow 3000/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你不是直接对外暴露 OpenClaw，而是走 Nginx 反向代理，那就只开放 <code>80</code> 和 <code>443</code>。</p>
+<h3 id="3-API-Key-不要硬编码在公开仓库"><a href="#3-API-Key-不要硬编码在公开仓库" class="headerlink" title="3. API Key 不要硬编码在公开仓库"></a>3. API Key 不要硬编码在公开仓库</h3><p>不要把 Key 直接写进 Git 仓库、截图或教程页面里。最稳妥的方式依然是环境变量。</p>
+<h3 id="4-建议加反向代理和-HTTPS"><a href="#4-建议加反向代理和-HTTPS" class="headerlink" title="4. 建议加反向代理和 HTTPS"></a>4. 建议加反向代理和 HTTPS</h3><p>如果你要公网长期访问，建议配 Nginx：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> your-domain.com;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>确认没问题后，再配 SSL。</p>
+<hr>
+<h2 id="常见报错与解决方法"><a href="#常见报错与解决方法" class="headerlink" title="常见报错与解决方法"></a>常见报错与解决方法</h2><h2 id="1-openclaw-command-not-found"><a href="#1-openclaw-command-not-found" class="headerlink" title="1. openclaw: command not found"></a>1. <code>openclaw: command not found</code></h2><p>原因通常是安装后 PATH 没刷新。</p>
+<p>解决：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>或者重新登录 SSH。</p>
+<h2 id="2-控制台打不开"><a href="#2-控制台打不开" class="headerlink" title="2. 控制台打不开"></a>2. 控制台打不开</h2><p>优先检查：</p>
+<ul>
+<li>服务是否真正启动</li>
+<li>监听端口是否开放</li>
+<li>VPS 防火墙是否拦截</li>
+</ul>
+<p>可以先看本机监听：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tulpn | grep 3000</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-模型调用时报-401"><a href="#3-模型调用时报-401" class="headerlink" title="3. 模型调用时报 401"></a>3. 模型调用时报 401</h2><p>这通常就是 API Key 有误、复制不完整，或者环境变量没有生效。</p>
+<p>先检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$OPENAI_API_KEY</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$ANTHROPIC_API_KEY</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$GEMINI_API_KEY</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$OPENROUTER_API_KEY</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出为空，说明当前 shell 根本没加载到。</p>
+<h2 id="4-Claude-或-Gemini-连不上"><a href="#4-Claude-或-Gemini-连不上" class="headerlink" title="4. Claude 或 Gemini 连不上"></a>4. Claude 或 Gemini 连不上</h2><p>这更常见的是网络出口问题，不一定是 OpenClaw 本身有问题。</p>
+<p>可以先分别测试目标接口连通性。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://api.openai.com</span><br><span class="line">curl -I https://api.anthropic.com</span><br><span class="line">curl -I https://generativelanguage.googleapis.com</span><br></pre></td></tr></table></figure>
+
+<p>如果某个域名超时，优先排查 VPS 线路或区域限制。</p>
+<h2 id="5-接了很多家之后越来越乱"><a href="#5-接了很多家之后越来越乱" class="headerlink" title="5. 接了很多家之后越来越乱"></a>5. 接了很多家之后越来越乱</h2><p>这是很常见的新手问题。</p>
+<p>建议你用统一命名方式：</p>
+<ul>
+<li><code>OPENAI_API_KEY</code></li>
+<li><code>ANTHROPIC_API_KEY</code></li>
+<li><code>GEMINI_API_KEY</code></li>
+<li><code>OPENROUTER_API_KEY</code></li>
+</ul>
+<p>并且把默认主力模型单独记下来，不要今天改这里、明天改那里。</p>
+<hr>
+<h2 id="我给新手的实际建议"><a href="#我给新手的实际建议" class="headerlink" title="我给新手的实际建议"></a>我给新手的实际建议</h2><p>如果你问我，第一次搭 OpenClaw 最推荐的路线是什么，我会建议：</p>
+<ol>
+<li>先在一台干净的 Ubuntu 服务器上安装 OpenClaw</li>
+<li>先只接 OpenRouter</li>
+<li>跑通第一条对话</li>
+<li>再单独补接 OpenAI、Claude、Gemini</li>
+<li>最后再做反向代理、HTTPS、长期运行优化</li>
+</ol>
+<p>这样成功率最高，也最不容易被一堆配置同时绊住。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在你只要记住一件事就够了：</p>
+<p>OpenClaw 负责“统一管理”，真正提供能力的是你接入的各家模型 API。</p>
+<p>所以最合理的搭建思路就是：</p>
+<ul>
+<li>先把 OpenClaw 装好</li>
+<li>再接一家最容易成功的 API</li>
+<li>跑通后再逐步增加厂商</li>
+</ul>
+<p>如果你照着这篇做，最少可以完成这三件事：</p>
+<ul>
+<li>成功安装并打开 OpenClaw</li>
+<li>接入至少一家主流 AI 厂商 API</li>
+<li>后续继续扩展到 OpenAI、Claude、Gemini、OpenRouter 等多模型环境</li>
+</ul>
+<p>后面如果你愿意，我还可以继续帮你把这篇文章再升级两步：</p>
+<ul>
+<li>加上“OpenClaw 配置文件逐项解释版”</li>
+<li>加上“OpenAI、Claude、Gemini、OpenRouter 四家实战截图版”</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/">https://skylink9119.github.io/2025/07/01/opencla-claude-api-tutorial/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/OpenAI/">OpenAI</a><a class="post-meta__tags" href="/tags/Claude/">Claude</a><a class="post-meta__tags" href="/tags/Gemini/">Gemini</a><a class="post-meta__tags" href="/tags/OpenRouter/">OpenRouter</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #475569 26%, #94a3b8 58%, #e2e8f0 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</div></div><div class="info-2"><div class="info-item-1">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方卸载文档整理，手把手说明 macOS、Windows、Linux 本地电脑如何完整卸载 OpenClaw、删除网关服务、清理配置和工作区。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #0f766e 34%, #22d3ee 68%, #a855f7 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明 Windows 和 macOS 本地电脑如何安装 OpenClaw、完成初始化，并验证本地网关是否正常运行。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div class="cover" style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">新手零基础入门 Canva 到精通详细教程</div></div><div class="info-2"><div class="info-item-1">手把手带新手从零认识 Canva，学习模板、排版、图片、视频、协作和 AI 功能，逐步掌握从入门到熟练使用 Canva 的完整方法。</div></div></div></a><a class="pagination-related" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div class="cover" style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日主流工具能力整理，手把手讲解如何用 AI 完成短视频脚本、分镜、生成画面、自动配音、字幕和无缝剪辑，适合新手快速上手。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div class="skyline-widget">
   <div class="sw-header">
     <div class="sw-title-wrap">
       <div class="sw-dot-group">
@@ -408,7 +563,7 @@ btf.addGlobalFn('pjaxSend', () => {
     <a href="https://sky9119.cc" target="_blank" rel="noopener">↗ 返回 sky9119.cc 导航站</a>
   </div>
 </div>
-</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7-Anthropic-API-Key"><span class="toc-number">3.</span> <span class="toc-text">申请 Anthropic API Key</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%B3%A8%E5%86%8C-Anthropic-%E8%B4%A6%E5%8F%B7"><span class="toc-number">3.1.</span> <span class="toc-text">第一步：注册 Anthropic 账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%85%85%E5%80%BC%E9%A2%9D%E5%BA%A6"><span class="toc-number">3.2.</span> <span class="toc-text">第二步：充值额度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%94%9F%E6%88%90-API-Key"><span class="toc-number">3.3.</span> <span class="toc-text">第三步：生成 API Key</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">服务器环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.1.</span> <span class="toc-text">更新系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E4%BE%9D%E8%B5%96"><span class="toc-number">4.2.</span> <span class="toc-text">安装必要依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%BD%91%E7%BB%9C%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="toc-number">4.3.</span> <span class="toc-text">检查网络连通性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-OpenCLAW"><span class="toc-number">5.</span> <span class="toc-text">安装 OpenCLAW</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">5.1.</span> <span class="toc-text">克隆项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">5.2.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text">复制配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5-Claude-API-%E9%85%8D%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">接入 Claude API 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%88%97%E8%A1%A8"><span class="toc-number">6.1.</span> <span class="toc-text">可选：配置模型列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">7.</span> <span class="toc-text">启动服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8%EF%BC%88%E6%B5%8B%E8%AF%95%E7%94%A8%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">直接启动（测试用）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-PM2-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%9F%E4%BA%A7%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">使用 PM2 守护进程（推荐生产使用）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">反向代理（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Nginx"><span class="toc-number">8.1.</span> <span class="toc-text">安装 Nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">8.2.</span> <span class="toc-text">创建站点配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">8.3.</span> <span class="toc-text">启用配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7-SSL-%E8%AF%81%E4%B9%A6%EF%BC%88Let%E2%80%99s-Encrypt%EF%BC%89"><span class="toc-number">8.4.</span> <span class="toc-text">申请 SSL 证书（Let’s Encrypt）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E8%B7%91%E9%80%9A"><span class="toc-number">9.</span> <span class="toc-text">验证是否跑通</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE"><span class="toc-number">9.1.</span> <span class="toc-text">方式一：浏览器访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9B%B4%E6%8E%A5%E6%B5%8B-API"><span class="toc-number">9.2.</span> <span class="toc-text">方式二：命令行直接测 API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E4%B8%8E%E8%A7%A3%E5%86%B3"><span class="toc-number">10.</span> <span class="toc-text">常见报错与解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#401-Unauthorized"><span class="toc-number">10.1.</span> <span class="toc-text">401 Unauthorized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#403-Forbidden-permission-error"><span class="toc-number">10.2.</span> <span class="toc-text">403 Forbidden &#x2F; permission_error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#connection-timeout-curl-28"><span class="toc-number">10.3.</span> <span class="toc-text">connection timeout &#x2F; curl: (28)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#npm-install-%E5%8D%A1%E4%BD%8F%E4%B8%8D%E5%8A%A8"><span class="toc-number">10.4.</span> <span class="toc-text">npm install 卡住不动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E4%B8%AD%E6%96%AD-%E6%89%93%E5%AD%97%E5%8D%A1%E9%A1%BF"><span class="toc-number">10.5.</span> <span class="toc-text">流式输出中断 &#x2F; 打字卡顿</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">11.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法">VPS搭建过程中遇到的问题及具体解决方法</a><time datetime="2026-03-25T16:00:00.000Z" title="发表于 2026-03-26 00:00:00">2026-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操">🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</a><time datetime="2026-03-04T11:08:02.000Z" title="发表于 2026-03-04 19:08:02">2026-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</a><time datetime="2026-03-03T16:00:00.000Z" title="发表于 2026-03-04 00:00:00">2026-03-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/01/opencla-claude-api-tutorial/" title="零基础搭建 OpenCLAW 并接入 Claude API 详细教程"><div style="background: /img/"></div></a><div class="content"><a class="title" href="/2025/07/01/opencla-claude-api-tutorial/" title="零基础搭建 OpenCLAW 并接入 Claude API 详细教程">零基础搭建 OpenCLAW 并接入 Claude API 详细教程</a><time datetime="2025-07-01T02:00:00.000Z" title="发表于 2025-07-01 10:00:00">2025-07-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/skyline-widget.js"></script><script src="/js/auto-theme-switcher.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenClaw-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">OpenClaw 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%95%99%E7%A8%8B%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">2.</span> <span class="toc-text">这篇教程适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">3.</span> <span class="toc-text">部署前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%87%86%E5%A4%87%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">4.</span> <span class="toc-text">先准备系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-OpenClaw"><span class="toc-number">5.</span> <span class="toc-text">安装 OpenClaw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%88%9D%E5%A7%8B%E5%8C%96-OpenClaw"><span class="toc-number">6.</span> <span class="toc-text">第一次初始化 OpenClaw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenClaw-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-number">7.</span> <span class="toc-text">OpenClaw 的核心思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5-OpenAI-API"><span class="toc-number">8.</span> <span class="toc-text">接入 OpenAI API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5-Anthropic-Claude-API"><span class="toc-number">9.</span> <span class="toc-text">接入 Anthropic Claude API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5-Google-Gemini-API"><span class="toc-number">10.</span> <span class="toc-text">接入 Google Gemini API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5-OpenRouter"><span class="toc-number">11.</span> <span class="toc-text">接入 OpenRouter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8E%82%E5%95%86%E6%80%8E%E4%B9%88%E6%8E%A5"><span class="toc-number">12.</span> <span class="toc-text">其他厂商怎么接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E7%9A%84%E6%96%B0%E6%89%8B%E6%8E%A5%E5%85%A5%E9%A1%BA%E5%BA%8F"><span class="toc-number">13.</span> <span class="toc-text">推荐的新手接入顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E9%BB%98%E8%AE%A4%E6%A8%A1%E5%9E%8B"><span class="toc-number">14.</span> <span class="toc-text">如何切换默认模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%95%BF%E6%9C%9F%E8%BF%90%E8%A1%8C%E5%BB%BA%E8%AE%AE"><span class="toc-number">15.</span> <span class="toc-text">服务器长期运行建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-number">15.1.</span> <span class="toc-text">1. 使用守护进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%AA%E5%BC%80%E6%94%BE%E5%BF%85%E8%A6%81%E7%AB%AF%E5%8F%A3"><span class="toc-number">15.2.</span> <span class="toc-text">2. 只开放必要端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-API-Key-%E4%B8%8D%E8%A6%81%E7%A1%AC%E7%BC%96%E7%A0%81%E5%9C%A8%E5%85%AC%E5%BC%80%E4%BB%93%E5%BA%93"><span class="toc-number">15.3.</span> <span class="toc-text">3. API Key 不要硬编码在公开仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BB%BA%E8%AE%AE%E5%8A%A0%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C-HTTPS"><span class="toc-number">15.4.</span> <span class="toc-text">4. 建议加反向代理和 HTTPS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">16.</span> <span class="toc-text">常见报错与解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-openclaw-command-not-found"><span class="toc-number">17.</span> <span class="toc-text">1. openclaw: command not found</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%89%93%E4%B8%8D%E5%BC%80"><span class="toc-number">18.</span> <span class="toc-text">2. 控制台打不开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8%E6%97%B6%E6%8A%A5-401"><span class="toc-number">19.</span> <span class="toc-text">3. 模型调用时报 401</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Claude-%E6%88%96-Gemini-%E8%BF%9E%E4%B8%8D%E4%B8%8A"><span class="toc-number">20.</span> <span class="toc-text">4. Claude 或 Gemini 连不上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8E%A5%E4%BA%86%E5%BE%88%E5%A4%9A%E5%AE%B6%E4%B9%8B%E5%90%8E%E8%B6%8A%E6%9D%A5%E8%B6%8A%E4%B9%B1"><span class="toc-number">21.</span> <span class="toc-text">5. 接了很多家之后越来越乱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%BB%99%E6%96%B0%E6%89%8B%E7%9A%84%E5%AE%9E%E9%99%85%E5%BB%BA%E8%AE%AE"><span class="toc-number">22.</span> <span class="toc-text">我给新手的实际建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">23.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程">新手零基础入门 Canva 到精通详细教程</a><time datetime="2026-03-26T15:35:00.000Z" title="发表于 2026-03-26 23:35:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</a><time datetime="2026-03-26T15:10:00.000Z" title="发表于 2026-03-26 23:10:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南"><div style="background: linear-gradient(135deg, #111827 0%, #0f766e 34%, #22d3ee 68%, #a855f7 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</a><time datetime="2026-03-26T14:45:00.000Z" title="发表于 2026-03-26 22:45:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</a><time datetime="2026-03-26T14:10:00.000Z" title="发表于 2026-03-26 22:10:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法"><div style="background: linear-gradient(135deg, #1f2937 0%, #334155 34%, #f97316 68%, #fb7185 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法">VPS搭建过程中遇到的问题及具体解决方法</a><time datetime="2026-03-25T16:00:00.000Z" title="发表于 2026-03-26 00:00:00">2026-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/skyline-widget.js"></script><script src="/js/auto-theme-switcher.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
   const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
   window.pjax = new Pjax({
@@ -458,7 +613,7 @@ btf.addGlobalFn('pjaxSend', () => {
   document.addEventListener('pjax:error', e => {
     if (e.request.status === 404) {
       true
-        ? pjax.loadUrl('/404.html')
+        ? pjax.loadUrl('/404')
         : window.location.href = e.request.responseURL
     }
   })

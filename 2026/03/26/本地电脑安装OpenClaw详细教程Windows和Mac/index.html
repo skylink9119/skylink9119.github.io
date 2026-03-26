@@ -1,0 +1,543 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="安装OpenClaw,OpenClaw教程,Windows安装OpenClaw,Mac安装OpenClaw,OpenClaw本地安装"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明 Windows 和 macOS 本地电脑如何安装 OpenClaw、完成初始化，并验证本地网关是否正常运行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南">
+<meta property="og:url" content="https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明 Windows 和 macOS 本地电脑如何安装 OpenClaw、完成初始化，并验证本地网关是否正常运行。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-03-26T14:45:00.000Z">
+<meta property="article:modified_time" content="2026-03-26T14:45:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="AI工具">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="安装教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-03-26T14:45:00.000Z"><meta property="article:modified_time" content="2026-03-26T14:45:00.000Z"><meta property="article:section" content="AI工具"><meta property="article:tag" content="AI工具"><meta property="article:tag" content="OpenClaw"><meta property="article:tag" content="macOS"><meta property="article:tag" content="安装教程"><meta property="article:tag" content="Windows"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南",
+  "description": "按 2026 年 3 月 26 日 OpenClaw 官方文档整理，手把手说明 Windows 和 macOS 本地电脑如何安装 OpenClaw、完成初始化，并验证本地网关是否正常运行。",
+  "url": "https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-03-26T14:45:00.000Z",
+  "dateModified": "2026-03-26T14:45:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "安装OpenClaw,OpenClaw教程,Windows安装OpenClaw,Mac安装OpenClaw,OpenClaw本地安装",
+  "articleSection": [
+    "AI工具"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><link rel="stylesheet" href="/css/homepage-posts.css"><link rel="stylesheet" href="/css/skyline-widget.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #111827 0%, #0f766e 34%, #22d3ee 68%, #a855f7 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-26T14:45:00.000Z" title="发表于 2026-03-26 22:45:00">2026-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-26T14:45:00.000Z" title="更新于 2026-03-26 22:45:00">2026-03-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-03-26 22:45:00&quot;}" hidden></div><blockquote>
+<p>本文基于 2026 年 3 月 26 日可查到的 OpenClaw 官方安装文档整理。当前官方建议环境是 <code>Node 24</code>，<code>Node 22.16+</code> 仍然兼容；而在 Windows 上，官方明确更推荐使用 <code>WSL2</code> 安装 OpenClaw。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="先说最推荐的安装方式"><a href="#先说最推荐的安装方式" class="headerlink" title="先说最推荐的安装方式"></a>先说最推荐的安装方式</h2><p>如果你只想知道“我到底该怎么装最稳”，那答案是：</p>
+<ul>
+<li><code>macOS</code>：直接用官方安装脚本</li>
+<li><code>Windows</code>：优先用 <code>WSL2 + Ubuntu</code> 安装</li>
+</ul>
+<p>虽然 OpenClaw 也提供了 Windows PowerShell 安装脚本，但按官方文档目前的建议，Windows 原生环境不如 WSL2 稳定。</p>
+<p>所以这篇文章我会分成两部分：</p>
+<ol>
+<li>macOS 安装 OpenClaw</li>
+<li>Windows 安装 OpenClaw</li>
+</ol>
+<p>另外我也会顺手写上“安装后怎么验证是否成功”。</p>
+<hr>
+<h2 id="安装前你需要准备什么"><a href="#安装前你需要准备什么" class="headerlink" title="安装前你需要准备什么"></a>安装前你需要准备什么</h2><p>建议先确认下面这些条件：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络</td>
+<td>能访问 <code>openclaw.ai</code>、npm 和对应模型厂商 API</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>官方当前推荐 <code>Node 24</code>，最低兼容 <code>Node 22.16+</code></td>
+</tr>
+<tr>
+<td>包管理器</td>
+<td>默认走 <code>npm</code> 即可，<code>pnpm</code> 适合有经验用户</td>
+</tr>
+<tr>
+<td>磁盘空间</td>
+<td>至少预留 2GB 以上，避免后续构建或缓存报错</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>本地电脑建议使用当前用户安装，不建议乱用 root&#x2F;管理员装一切</td>
+</tr>
+</tbody></table>
+<p>如果你是纯新手，我建议：</p>
+<ul>
+<li>macOS：直接跑官方脚本</li>
+<li>Windows：先安装 WSL2，再在 Ubuntu 里跑官方脚本</li>
+</ul>
+<hr>
+<h2 id="macOS-安装-OpenClaw-详细步骤"><a href="#macOS-安装-OpenClaw-详细步骤" class="headerlink" title="macOS 安装 OpenClaw 详细步骤"></a>macOS 安装 OpenClaw 详细步骤</h2><h2 id="第一步：打开终端"><a href="#第一步：打开终端" class="headerlink" title="第一步：打开终端"></a>第一步：打开终端</h2><p>你可以使用：</p>
+<ul>
+<li>自带 <code>Terminal</code></li>
+<li><code>iTerm2</code></li>
+</ul>
+<p>先检查系统里有没有 Node：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果没有也没关系，因为 OpenClaw 官方安装脚本会自动处理。</p>
+<hr>
+<h2 id="第二步：执行官方安装脚本"><a href="#第二步：执行官方安装脚本" class="headerlink" title="第二步：执行官方安装脚本"></a>第二步：执行官方安装脚本</h2><p>在 macOS 上，官方推荐命令是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>这个脚本通常会自动完成这些事情：</p>
+<ul>
+<li>检测系统环境</li>
+<li>如有需要安装 Homebrew</li>
+<li>检查并安装合适版本的 Node</li>
+<li>安装 Git</li>
+<li>通过 npm 安装 OpenClaw</li>
+<li>进入首次初始化流程</li>
+</ul>
+<p>如果你只想安装，不想立刻进入引导流程，可以这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash -s -- --no-onboard</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第三步：执行首次初始化"><a href="#第三步：执行首次初始化" class="headerlink" title="第三步：执行首次初始化"></a>第三步：执行首次初始化</h2><p>如果安装脚本没有自动带你进入初始化，就手动执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会完成几件事：</p>
+<ul>
+<li>配置认证方式</li>
+<li>初始化本地 Gateway</li>
+<li>安装后台服务</li>
+<li>生成基础运行配置</li>
+</ul>
+<p>对新手来说，直接按默认建议一路选下去通常就够了。</p>
+<hr>
+<h2 id="第四步：验证-macOS-安装是否成功"><a href="#第四步：验证-macOS-安装是否成功" class="headerlink" title="第四步：验证 macOS 安装是否成功"></a>第四步：验证 macOS 安装是否成功</h2><p>安装完成后，建议依次执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openclaw doctor</span><br><span class="line">openclaw status</span><br><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<p>它们分别用于：</p>
+<ul>
+<li><code>openclaw doctor</code>：检查配置和环境问题</li>
+<li><code>openclaw status</code>：看网关是否正常</li>
+<li><code>openclaw dashboard</code>：打开浏览器控制台</li>
+</ul>
+<p>如果浏览器成功打开，或者你能访问：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:18789/</span><br></pre></td></tr></table></figure>
+
+<p>通常就说明本地安装已经跑起来了。</p>
+<hr>
+<h2 id="macOS-常见问题"><a href="#macOS-常见问题" class="headerlink" title="macOS 常见问题"></a>macOS 常见问题</h2><h2 id="1-安装后提示-openclaw-command-not-found"><a href="#1-安装后提示-openclaw-command-not-found" class="headerlink" title="1. 安装后提示 openclaw: command not found"></a>1. 安装后提示 <code>openclaw: command not found</code></h2><p>这通常是 <code>PATH</code> 没刷新。</p>
+<p>先检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm prefix -g</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果全局 npm 路径没有进 PATH，可以把这行加入 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="subst">$(npm prefix -g)</span>/bin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>或者重开终端。</p>
+<h2 id="2-安装-sharp-时报错"><a href="#2-安装-sharp-时报错" class="headerlink" title="2. 安装 sharp 时报错"></a>2. 安装 <code>sharp</code> 时报错</h2><p>官方文档提到，如果你本机装过全局 <code>libvips</code>，可能会导致 <code>sharp</code> 构建失败。</p>
+<p>可以改用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g openclaw@latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-node-gyp-报错"><a href="#3-node-gyp-报错" class="headerlink" title="3. node-gyp 报错"></a>3. <code>node-gyp</code> 报错</h2><p>可以先装 Xcode Command Line Tools：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+
+<p>必要时再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g node-gyp</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Windows-安装-OpenClaw：官方推荐方案"><a href="#Windows-安装-OpenClaw：官方推荐方案" class="headerlink" title="Windows 安装 OpenClaw：官方推荐方案"></a>Windows 安装 OpenClaw：官方推荐方案</h2><p>按 OpenClaw 文档当前建议，Windows 最推荐的方式是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WSL2 + Ubuntu + OpenClaw</span><br></pre></td></tr></table></figure>
+
+<p>也就是说：</p>
+<ul>
+<li>OpenClaw CLI 和 Gateway 跑在 Linux 子系统里</li>
+<li>浏览器和日常使用仍然可以在 Windows 侧完成</li>
+</ul>
+<p>这样做的好处是：</p>
+<ul>
+<li>运行环境更接近官方主要支持平台</li>
+<li>Node、pnpm、Linux 工具链兼容性更好</li>
+<li>后续排错更容易</li>
+</ul>
+<hr>
+<h2 id="Windows-第一步：安装-WSL2"><a href="#Windows-第一步：安装-WSL2" class="headerlink" title="Windows 第一步：安装 WSL2"></a>Windows 第一步：安装 WSL2</h2><p>用管理员权限打开 PowerShell，执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
+
+<p>装好后重启电脑。</p>
+<p>第一次启动时，推荐安装并进入 <code>Ubuntu</code>。</p>
+<p>然后在 Ubuntu 终端里执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br><span class="line"><span class="built_in">sudo</span> apt install -y curl git ca-certificates build-essential</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Windows-第二步：在-WSL2-里安装-OpenClaw"><a href="#Windows-第二步：在-WSL2-里安装-OpenClaw" class="headerlink" title="Windows 第二步：在 WSL2 里安装 OpenClaw"></a>Windows 第二步：在 WSL2 里安装 OpenClaw</h2><p>进入 Ubuntu 后，直接运行官方安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>如果你只想安装本体，跳过初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash -s -- --no-onboard</span><br></pre></td></tr></table></figure>
+
+<p>装好后，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>如果你后面希望手动安装网关服务，也可以用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway install</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Windows-第三步：验证-WSL2-里的-OpenClaw-是否正常"><a href="#Windows-第三步：验证-WSL2-里的-OpenClaw-是否正常" class="headerlink" title="Windows 第三步：验证 WSL2 里的 OpenClaw 是否正常"></a>Windows 第三步：验证 WSL2 里的 OpenClaw 是否正常</h2><p>在 WSL2 的 Ubuntu 里执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openclaw doctor</span><br><span class="line">openclaw status</span><br><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下，浏览器可以从 Windows 侧访问本地控制台。</p>
+<p>如果 <code>dashboard</code> 没自动打开，也可以尝试手动访问：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:18789/</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Windows-原生-PowerShell-安装方法"><a href="#Windows-原生-PowerShell-安装方法" class="headerlink" title="Windows 原生 PowerShell 安装方法"></a>Windows 原生 PowerShell 安装方法</h2><p>虽然官方更推荐 WSL2，但如果你就是想在 Windows PowerShell 里直接装，也有官方脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">iwr</span> <span class="literal">-useb</span> https://openclaw.ai/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你只想安装，不想自动初始化：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp; ([<span class="type">scriptblock</span>]::Create((<span class="built_in">iwr</span> <span class="literal">-useb</span> https://openclaw.ai/install.ps1))) <span class="literal">-NoOnboard</span></span><br></pre></td></tr></table></figure>
+
+<p>不过这里我还是要提醒一下：</p>
+<p>按官方当前文档，Windows 原生环境并不是首推路线。如果你后面遇到兼容性问题，优先切回 WSL2 会更省时间。</p>
+<hr>
+<h2 id="Windows-常见问题"><a href="#Windows-常见问题" class="headerlink" title="Windows 常见问题"></a>Windows 常见问题</h2><h2 id="1-openclaw-命令找不到"><a href="#1-openclaw-命令找不到" class="headerlink" title="1. openclaw 命令找不到"></a>1. <code>openclaw</code> 命令找不到</h2><p>先检查：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node <span class="literal">-v</span></span><br><span class="line">npm <span class="literal">-v</span></span><br><span class="line">npm prefix <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 npm 全局目录没有加进 PATH，就把 <code>npm prefix -g</code> 的输出路径加入系统环境变量 <code>Path</code>。</p>
+<h2 id="2-装好了但服务没起来"><a href="#2-装好了但服务没起来" class="headerlink" title="2. 装好了但服务没起来"></a>2. 装好了但服务没起来</h2><p>如果你是在 WSL2 环境里，先重新执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway install</span><br></pre></td></tr></table></figure>
+
+<p>再查看状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw status</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-浏览器打不开-Dashboard"><a href="#3-浏览器打不开-Dashboard" class="headerlink" title="3. 浏览器打不开 Dashboard"></a>3. 浏览器打不开 Dashboard</h2><p>优先排查：</p>
+<ul>
+<li>WSL2 里的 Gateway 是否真的启动了</li>
+<li>本地端口是否被拦截</li>
+<li>你是不是在错误的环境里打开了地址</li>
+</ul>
+<hr>
+<h2 id="如果你已经有-Node，能不能不用安装脚本"><a href="#如果你已经有-Node，能不能不用安装脚本" class="headerlink" title="如果你已经有 Node，能不能不用安装脚本"></a>如果你已经有 Node，能不能不用安装脚本</h2><p>可以。</p>
+<p>如果你本机已经自己管理 Node 环境，而且版本符合要求，也可以直接安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g openclaw@latest</span><br><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>如果你用的是 <code>pnpm</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pnpm add -g openclaw@latest</span><br><span class="line">pnpm approve-builds -g</span><br><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>不过对普通用户来说，还是官方安装脚本最省心。</p>
+<hr>
+<h2 id="安装成功后建议马上做的事"><a href="#安装成功后建议马上做的事" class="headerlink" title="安装成功后建议马上做的事"></a>安装成功后建议马上做的事</h2><p>装完不要立刻关终端，建议先做这几步：</p>
+<ol>
+<li>跑一次 <code>openclaw doctor</code></li>
+<li>确认 <code>openclaw status</code> 正常</li>
+<li>打开 <code>openclaw dashboard</code></li>
+<li>先做一次最基础的本地对话测试</li>
+<li>再去接 OpenAI、Claude、Gemini 或 OpenRouter</li>
+</ol>
+<p>这样你后面如果出问题，会更容易判断到底是“安装问题”还是“模型 API 接入问题”。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你是本地电脑安装 OpenClaw，我给你的建议非常明确：</p>
+<ul>
+<li><code>macOS</code>：直接用官方安装脚本</li>
+<li><code>Windows</code>：优先走 <code>WSL2 + Ubuntu</code></li>
+</ul>
+<p>这是 2026 年 3 月 26 日官方文档下最稳妥的路线。</p>
+<p>安装时最关键的几个命令就是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br><span class="line">openclaw onboard --install-daemon</span><br><span class="line">openclaw doctor</span><br><span class="line">openclaw status</span><br><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<p>如果你愿意，我下一步还可以继续帮你补一篇配套文章：</p>
+<ul>
+<li>《本地电脑安装 OpenClaw 后如何接入 OpenAI、Claude、Gemini、OpenRouter》</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/">https://skylink9119.github.io/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/macOS/">macOS</a><a class="post-meta__tags" href="/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div class="cover" style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日主流工具能力整理，手把手讲解如何用 AI 完成短视频脚本、分镜、生成画面、自动配音、字幕和无缝剪辑，适合新手快速上手。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方卸载文档整理，手把手说明 macOS、Windows、Linux 本地电脑如何完整卸载 OpenClaw、删除网关服务、清理配置和工作区。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日 OpenClaw 官方卸载文档整理，手把手说明 macOS、Windows、Linux 本地电脑如何完整卸载 OpenClaw、删除网关服务、清理配置和工作区。</div></div></div></a><a class="pagination-related" href="/2025/07/01/opencla-claude-api-tutorial/" title="新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #4f46e5 30%, #06b6d4 62%, #7c3aed 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-01</div><div class="info-item-2">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日官方文档整理，手把手教新手从零安装 OpenClaw，并接入 OpenAI、Anthropic Claude、Google Gemini、OpenRouter 等主流 AI 厂商 API。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div class="cover" style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">新手零基础入门 Canva 到精通详细教程</div></div><div class="info-2"><div class="info-item-1">手把手带新手从零认识 Canva，学习模板、排版、图片、视频、协作和 AI 功能，逐步掌握从入门到熟练使用 Canva 的完整方法。</div></div></div></a><a class="pagination-related" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div class="cover" style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日主流工具能力整理，手把手讲解如何用 AI 完成短视频脚本、分镜、生成画面、自动配音、字幕和无缝剪辑，适合新手快速上手。</div></div></div></a><a class="pagination-related" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1&#x2F;M2&#x2F;M3&#x2F;M4 及 Intel 芯片"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #475569 26%, #94a3b8 58%, #e2e8f0 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-04</div><div class="info-item-2">2026 最新 macOS MDM 远程管理绕过教程：支持 M1&#x2F;M2&#x2F;M3&#x2F;M4 及 Intel 芯片</div></div><div class="info-2"><div class="info-item-1">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div class="skyline-widget">
+  <div class="sw-header">
+    <div class="sw-title-wrap">
+      <div class="sw-dot-group">
+        <div class="sw-dot sw-dot-r"></div>
+        <div class="sw-dot sw-dot-y"></div>
+        <div class="sw-dot sw-dot-g"></div>
+      </div>
+      <span class="sw-title">Skyline</span>
+    </div>
+    <span class="sw-badge">VPS 测评</span>
+  </div>
+  <div class="sw-body">
+    <div class="sw-tags">
+      <span class="sw-tag">⚡ 网络测速</span>
+      <span class="sw-tag">🌐 IP解锁</span>
+      <span class="sw-tag">🎬 流媒体</span>
+    </div>
+    <div class="sw-cmd-box">
+      <div class="sw-prompt">root@skyline:~#</div>
+      <div class="sw-cmd-text">curl -sL https://tinyurl.com/Skyline9119 | bash</div>
+    </div>
+    <button class="sw-copy-btn" id="swCopyBtn" onclick="swCopy()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+      </svg>
+      <span id="swBtnTxt">一键复制命令</span>
+    </button>
+    <div class="sw-checks">
+      <div class="sw-check">
+        <span class="sw-check-icon sw-ci-net">◈</span>三网测速 · 上下行带宽 · 延迟
+      </div>
+      <div class="sw-check">
+        <span class="sw-check-icon sw-ci-ip">◈</span>IP归属 · ASN · 黑名单检测
+      </div>
+      <div class="sw-check">
+        <span class="sw-check-icon sw-ci-media">◈</span>Netflix · Disney+ · ChatGPT 解锁
+      </div>
+    </div>
+  </div>
+  <div class="sw-footer">
+    <a href="https://sky9119.cc" target="_blank" rel="noopener">↗ 返回 sky9119.cc 导航站</a>
+  </div>
+</div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E6%9C%80%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">先说最推荐的安装方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E5%87%86%E5%A4%87%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">安装前你需要准备什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%AE%89%E8%A3%85-OpenClaw-%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">macOS 安装 OpenClaw 详细步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="toc-number">4.</span> <span class="toc-text">第一步：打开终端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E5%AE%98%E6%96%B9%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">第二步：执行官方安装脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E9%A6%96%E6%AC%A1%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">6.</span> <span class="toc-text">第三步：执行首次初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E9%AA%8C%E8%AF%81-macOS-%E5%AE%89%E8%A3%85%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="toc-number">7.</span> <span class="toc-text">第四步：验证 macOS 安装是否成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">macOS 常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%90%8E%E6%8F%90%E7%A4%BA-openclaw-command-not-found"><span class="toc-number">9.</span> <span class="toc-text">1. 安装后提示 openclaw: command not found</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85-sharp-%E6%97%B6%E6%8A%A5%E9%94%99"><span class="toc-number">10.</span> <span class="toc-text">2. 安装 sharp 时报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-node-gyp-%E6%8A%A5%E9%94%99"><span class="toc-number">11.</span> <span class="toc-text">3. node-gyp 报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E5%AE%89%E8%A3%85-OpenClaw%EF%BC%9A%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E6%96%B9%E6%A1%88"><span class="toc-number">12.</span> <span class="toc-text">Windows 安装 OpenClaw：官方推荐方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-WSL2"><span class="toc-number">13.</span> <span class="toc-text">Windows 第一步：安装 WSL2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%9C%A8-WSL2-%E9%87%8C%E5%AE%89%E8%A3%85-OpenClaw"><span class="toc-number">14.</span> <span class="toc-text">Windows 第二步：在 WSL2 里安装 OpenClaw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E9%AA%8C%E8%AF%81-WSL2-%E9%87%8C%E7%9A%84-OpenClaw-%E6%98%AF%E5%90%A6%E6%AD%A3%E5%B8%B8"><span class="toc-number">15.</span> <span class="toc-text">Windows 第三步：验证 WSL2 里的 OpenClaw 是否正常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E5%8E%9F%E7%94%9F-PowerShell-%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="toc-number">16.</span> <span class="toc-text">Windows 原生 PowerShell 安装方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">17.</span> <span class="toc-text">Windows 常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-openclaw-%E5%91%BD%E4%BB%A4%E6%89%BE%E4%B8%8D%E5%88%B0"><span class="toc-number">18.</span> <span class="toc-text">1. openclaw 命令找不到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A3%85%E5%A5%BD%E4%BA%86%E4%BD%86%E6%9C%8D%E5%8A%A1%E6%B2%A1%E8%B5%B7%E6%9D%A5"><span class="toc-number">19.</span> <span class="toc-text">2. 装好了但服务没起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80-Dashboard"><span class="toc-number">20.</span> <span class="toc-text">3. 浏览器打不开 Dashboard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E5%B7%B2%E7%BB%8F%E6%9C%89-Node%EF%BC%8C%E8%83%BD%E4%B8%8D%E8%83%BD%E4%B8%8D%E7%94%A8%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="toc-number">21.</span> <span class="toc-text">如果你已经有 Node，能不能不用安装脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E5%90%8E%E5%BB%BA%E8%AE%AE%E9%A9%AC%E4%B8%8A%E5%81%9A%E7%9A%84%E4%BA%8B"><span class="toc-number">22.</span> <span class="toc-text">安装成功后建议马上做的事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">23.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程">新手零基础入门 Canva 到精通详细教程</a><time datetime="2026-03-26T15:35:00.000Z" title="发表于 2026-03-26 23:35:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</a><time datetime="2026-03-26T15:10:00.000Z" title="发表于 2026-03-26 23:10:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南"><div style="background: linear-gradient(135deg, #111827 0%, #0f766e 34%, #22d3ee 68%, #a855f7 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</a><time datetime="2026-03-26T14:45:00.000Z" title="发表于 2026-03-26 22:45:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南"><div style="background: linear-gradient(135deg, #0f172a 0%, #14532d 40%, #84cc16 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</a><time datetime="2026-03-26T14:10:00.000Z" title="发表于 2026-03-26 22:10:00">2026-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法"><div style="background: linear-gradient(135deg, #1f2937 0%, #334155 34%, #f97316 68%, #fb7185 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法">VPS搭建过程中遇到的问题及具体解决方法</a><time datetime="2026-03-25T16:00:00.000Z" title="发表于 2026-03-26 00:00:00">2026-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/skyline-widget.js"></script><script src="/js/auto-theme-switcher.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
