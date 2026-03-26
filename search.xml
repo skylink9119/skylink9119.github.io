@@ -221,6 +221,125 @@
       </tags>
   </entry>
   <entry>
+    <title>VPS搭建过程中遇到的问题及具体解决方法</title>
+    <url>/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="VPS搭建过程中遇到的问题及具体解决方法"><a href="#VPS搭建过程中遇到的问题及具体解决方法" class="headerlink" title="VPS搭建过程中遇到的问题及具体解决方法"></a>VPS搭建过程中遇到的问题及具体解决方法</h1><p>买了人生第一台VPS，满怀期待地开始折腾，结果一路踩坑。这篇文章记录了我在搭建过程中遇到的真实问题和解决方法，希望能帮到同样踩坑的你。</p>
+<hr>
+<h2 id="一、连接问题"><a href="#一、连接问题" class="headerlink" title="一、连接问题"></a>一、连接问题</h2><h3 id="1-SSH-连接超时-无法连接"><a href="#1-SSH-连接超时-无法连接" class="headerlink" title="1. SSH 连接超时 &#x2F; 无法连接"></a>1. SSH 连接超时 &#x2F; 无法连接</h3><p><strong>现象：</strong> <code>ssh root@your_ip</code> 一直卡着，或者报 <code>Connection timed out</code>。</p>
+<p><strong>原因排查：</strong></p>
+<ul>
+<li>服务商防火墙&#x2F;安全组没有开放 22 端口</li>
+<li>VPS 系统未正常启动</li>
+<li>本地网络被限制</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查本地能否 ping 通</span></span><br><span class="line">ping your_ip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 telnet 测试端口是否开放</span></span><br><span class="line">telnet your_ip 22</span><br></pre></td></tr></table></figure>
+
+<p>登录 VPS 控制面板，检查”安全组&#x2F;防火墙规则”，确保入站规则允许 TCP 22 端口。如果是国内机器，还需确认没有被运营商封端口。</p>
+<hr>
+<h3 id="2-SSH-密钥认证失败"><a href="#2-SSH-密钥认证失败" class="headerlink" title="2. SSH 密钥认证失败"></a>2. SSH 密钥认证失败</h3><p><strong>现象：</strong> 提示 <code>Permission denied (publickey)</code>。</p>
+<p><strong>原因：</strong> 公钥没有正确写入服务器，或权限设置不对。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器上检查权限（必须严格）</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将本地公钥追加到服务器</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub | ssh root@your_ip <span class="string">&quot;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>同时确认 <code>/etc/ssh/sshd_config</code> 中以下配置已开启：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>修改后重启 SSH：<code>systemctl restart sshd</code></p>
+<hr>
+<h3 id="3-SSH-频繁断开-超时断连"><a href="#3-SSH-频繁断开-超时断连" class="headerlink" title="3. SSH 频繁断开 &#x2F; 超时断连"></a>3. SSH 频繁断开 &#x2F; 超时断连</h3><p><strong>现象：</strong> 几分钟不操作就掉线。</p>
+<p><strong>解决方法（客户端配置）：</strong></p>
+<p>编辑 <code>~/.ssh/config</code>，添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host *</span><br><span class="line">  ServerAliveInterval 60</span><br><span class="line">  ServerAliveCountMax 3</span><br></pre></td></tr></table></figure>
+
+<p>或在服务端 <code>/etc/ssh/sshd_config</code> 中设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 3</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、系统与环境配置"><a href="#二、系统与环境配置" class="headerlink" title="二、系统与环境配置"></a>二、系统与环境配置</h2><h3 id="4-apt-yum-更新极慢，下载包超时"><a href="#4-apt-yum-更新极慢，下载包超时" class="headerlink" title="4. apt&#x2F;yum 更新极慢，下载包超时"></a>4. apt&#x2F;yum 更新极慢，下载包超时</h3><p><strong>现象：</strong> <code>apt update</code> 卡死或速度 1KB&#x2F;s。</p>
+<p><strong>解决方法（以 Ubuntu&#x2F;Debian 为例，换国内镜像源）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原始源</span></span><br><span class="line"><span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换为阿里云镜像（Ubuntu 22.04 示例）</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/apt/sources.list &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">apt update</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-时区错误，时间对不上"><a href="#5-时区错误，时间对不上" class="headerlink" title="5. 时区错误，时间对不上"></a>5. 时区错误，时间对不上</h3><p><strong>现象：</strong> 服务器时间比本地早&#x2F;晚几小时，日志时间戳混乱。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看当前时区</span></span><br><span class="line">timedatectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置为中国时区</span></span><br><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line"><span class="built_in">date</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-磁盘空间莫名被占满"><a href="#6-磁盘空间莫名被占满" class="headerlink" title="6. 磁盘空间莫名被占满"></a>6. 磁盘空间莫名被占满</h3><p><strong>现象：</strong> 明明没装多少东西，<code>df -h</code> 显示磁盘快满了。</p>
+<p><strong>排查方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 找出占用最大的目录</span></span><br><span class="line"><span class="built_in">du</span> -sh /* 2&gt;/dev/null | <span class="built_in">sort</span> -rh | <span class="built_in">head</span> -20</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常见罪魁祸首：系统日志</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/log/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理旧日志</span></span><br><span class="line">journalctl --vacuum-size=100M</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、Web-服务相关"><a href="#三、Web-服务相关" class="headerlink" title="三、Web 服务相关"></a>三、Web 服务相关</h2><h3 id="7-Nginx-启动报错：端口被占用"><a href="#7-Nginx-启动报错：端口被占用" class="headerlink" title="7. Nginx 启动报错：端口被占用"></a>7. Nginx 启动报错：端口被占用</h3><p><strong>现象：</strong> <code>nginx -t</code> 通过，但 <code>systemctl start nginx</code> 失败，报 <code>Address already in use</code>。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看谁在占用 80/443</span></span><br><span class="line">lsof -i :80</span><br><span class="line">lsof -i :443</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到 PID 后 kill 掉</span></span><br><span class="line"><span class="built_in">kill</span> -9 &lt;PID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或直接</span></span><br><span class="line">fuser -k 80/tcp</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="8-网站可以访问但-HTTPS-证书申请失败"><a href="#8-网站可以访问但-HTTPS-证书申请失败" class="headerlink" title="8. 网站可以访问但 HTTPS 证书申请失败"></a>8. 网站可以访问但 HTTPS 证书申请失败</h3><p><strong>现象：</strong> 用 Certbot 申请 Let’s Encrypt 证书时报错 <code>Connection refused</code> 或 <code>Timeout</code>。</p>
+<p><strong>常见原因与解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 确保 80 端口对外开放（Let&#x27;s Encrypt 验证需要）</span></span><br><span class="line">curl -I http://your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 申请时指定 webroot 方式（更稳定）</span></span><br><span class="line">certbot certonly --webroot -w /var/www/html -d your_domain.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是 standalone 模式，先停掉 nginx</span></span><br><span class="line">systemctl stop nginx</span><br><span class="line">certbot certonly --standalone -d your_domain.com</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<p>检查域名 DNS 是否已正确解析到服务器 IP：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nslookup your_domain.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="9-反向代理后获取不到真实-IP"><a href="#9-反向代理后获取不到真实-IP" class="headerlink" title="9. 反向代理后获取不到真实 IP"></a>9. 反向代理后获取不到真实 IP</h3><p><strong>现象：</strong> 后端应用拿到的 IP 全是 <code>127.0.0.1</code>。</p>
+<p><strong>Nginx 配置修复：</strong></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、安全相关"><a href="#四、安全相关" class="headerlink" title="四、安全相关"></a>四、安全相关</h2><h3 id="10-服务器被暴力破解-SSH，日志里全是失败登录"><a href="#10-服务器被暴力破解-SSH，日志里全是失败登录" class="headerlink" title="10. 服务器被暴力破解 SSH，日志里全是失败登录"></a>10. 服务器被暴力破解 SSH，日志里全是失败登录</h3><p><strong>现象：</strong> <code>lastb</code> 或 <code>cat /var/log/auth.log | grep Failed</code> 看到大量陌生 IP 的登录尝试。</p>
+<p><strong>加固方案：</strong></p>
+<p><strong>① 禁止密码登录，只允许密钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line">PermitRootLogin prohibit-password</span><br></pre></td></tr></table></figure>
+
+<p><strong>② 修改默认 SSH 端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/ssh/sshd_config</span></span><br><span class="line">Port 2222   <span class="comment"># 改成非常用端口</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>③ 安装 Fail2Ban 自动封 IP</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install fail2ban -y</span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban --now</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="11-iptables-规则重启后丢失"><a href="#11-iptables-规则重启后丢失" class="headerlink" title="11. iptables 规则重启后丢失"></a>11. iptables 规则重启后丢失</h3><p><strong>现象：</strong> 手动配置的防火墙规则，重启后全没了。</p>
+<p><strong>解决方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装持久化工具</span></span><br><span class="line">apt install iptables-persistent -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存当前规则</span></span><br><span class="line">netfilter-persistent save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者手动保存</span></span><br><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-save &gt; /etc/iptables/rules.v6</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Docker-相关"><a href="#五、Docker-相关" class="headerlink" title="五、Docker 相关"></a>五、Docker 相关</h2><h3 id="12-Docker-拉取镜像失败-极慢"><a href="#12-Docker-拉取镜像失败-极慢" class="headerlink" title="12. Docker 拉取镜像失败 &#x2F; 极慢"></a>12. Docker 拉取镜像失败 &#x2F; 极慢</h3><p><strong>现象：</strong> <code>docker pull</code> 卡死，或者报 <code>Error response from daemon: Get ... timeout</code>。</p>
+<p><strong>解决方法（配置国内镜像加速）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑 Docker 配置</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="13-Docker-容器启动后立即退出"><a href="#13-Docker-容器启动后立即退出" class="headerlink" title="13. Docker 容器启动后立即退出"></a>13. Docker 容器启动后立即退出</h3><p><strong>现象：</strong> <code>docker ps</code> 看不到容器，<code>docker ps -a</code> 显示状态为 <code>Exited</code>。</p>
+<p><strong>排查方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;container_id&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以交互模式启动排查</span></span><br><span class="line">docker run -it --entrypoint /bin/sh your_image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查容器退出码</span></span><br><span class="line">docker inspect &lt;container_id&gt; | grep ExitCode</span><br></pre></td></tr></table></figure>
+
+<p>常见原因：入口命令路径错误、环境变量缺失、端口冲突。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>VPS 折腾之路永无止境，踩坑才是成长。遇到问题不要慌，按这个思路排查：</p>
+<ol>
+<li><strong>看日志</strong> — <code>journalctl -xe</code>、<code>/var/log/</code> 目录是好朋友</li>
+<li><strong>测连通性</strong> — <code>ping</code>、<code>curl</code>、<code>telnet</code> 先确认网络</li>
+<li><strong>看端口</strong> — <code>ss -tlnp</code> 或 <code>netstat -tlnp</code></li>
+<li><strong>看权限</strong> — Linux 很多问题都是权限导致的</li>
+<li><strong>重启服务</strong> — 改完配置别忘了 <code>systemctl restart</code></li>
+</ol>
+<p>有什么没覆盖到的问题，欢迎留言交流！</p>
+<hr>
+<p><em>本文持续更新，遇到新坑会第一时间补充。</em></p>
+]]></content>
+      <categories>
+        <category>技术笔记</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>Linux</tag>
+        <tag>运维</tag>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
     <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
