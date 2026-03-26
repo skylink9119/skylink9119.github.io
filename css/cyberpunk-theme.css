@@ -12,10 +12,18 @@
   --cp-pink: #f472b6;
   --cp-lime: #a3e635;
   --cp-text: #d9e4ff;
+  --cp-text-h1: #f2f7ff;
+  --cp-text-h2: #e3eeff;
+  --cp-text-h3: #c9dbf6;
   --cp-text-heading: #ecf3ff;
   --cp-text-body: #c9d7ef;
   --cp-text-soft: #9eb3d4;
   --cp-muted: #8fa3c7;
+  --cp-list-link: #d6e8ff;
+  --cp-list-link-sub: #b9cde8;
+  --cp-marker: #96badf;
+  --cp-quote-text: #c8ddf9;
+  --cp-em: #8bd5ff;
   --cp-link: #74d4ff;
   --cp-link-hover: #9fe5ff;
   --cp-shadow: 0 24px 70px rgba(2, 6, 23, 0.45);
@@ -29,10 +37,18 @@
   --cp-line: rgba(14, 165, 233, 0.18);
   --cp-line-strong: rgba(217, 70, 239, 0.24);
   --cp-text: #10203b;
+  --cp-text-h1: #0f2745;
+  --cp-text-h2: #16365a;
+  --cp-text-h3: #23527b;
   --cp-text-heading: #0f2745;
   --cp-text-body: #233b5b;
   --cp-text-soft: #4b6280;
   --cp-muted: #54657f;
+  --cp-list-link: #26486e;
+  --cp-list-link-sub: #40648f;
+  --cp-marker: #6787aa;
+  --cp-quote-text: #335781;
+  --cp-em: #0f79b8;
   --cp-link: #0b63a3;
   --cp-link-hover: #0a7bc5;
   --cp-shadow: 0 20px 60px rgba(30, 41, 59, 0.12);
@@ -441,28 +457,39 @@ a:hover {
 #article-container li,
 #article-container td {
   color: var(--cp-text-body);
-  font-size: 1.04rem;
-  line-height: 1.86;
+  font-size: 1rem;
+  line-height: 1.82;
 }
 
 #article-container strong,
 #article-container b {
-  color: var(--cp-text-heading);
+  color: var(--cp-text-h2);
+}
+
+#article-container em {
+  color: var(--cp-em);
+  font-style: normal;
 }
 
 #article-container h1 {
-  font-size: clamp(1.9rem, 2.3vw, 2.35rem);
+  margin: 1.2em 0 0.5em;
+  font-size: clamp(1.72rem, 2.05vw, 2.08rem);
+  color: var(--cp-text-h1);
   line-height: 1.3;
 }
 
 #article-container h2 {
-  font-size: clamp(1.55rem, 1.95vw, 1.95rem);
-  line-height: 1.34;
+  margin: 1.05em 0 0.48em;
+  font-size: clamp(1.34rem, 1.62vw, 1.62rem);
+  color: var(--cp-text-h2);
+  line-height: 1.4;
 }
 
 #article-container h3 {
-  font-size: clamp(1.26rem, 1.45vw, 1.5rem);
-  line-height: 1.42;
+  margin: 0.9em 0 0.42em;
+  font-size: clamp(1.14rem, 1.28vw, 1.34rem);
+  color: var(--cp-text-h3);
+  line-height: 1.46;
 }
 
 #article-container a {
@@ -476,25 +503,24 @@ a:hover {
   text-shadow: none;
 }
 
-#article-container h2::before,
-#article-container h3::before {
+#article-container h2::before {
   content: "";
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 10px;
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
   border: 1px solid rgba(34, 211, 238, 0.55);
-  box-shadow: 0 0 16px rgba(34, 211, 238, 0.16);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.13);
   transform: rotate(45deg) translateY(1px);
 }
 
 #article-container ul li > a,
 #article-container ol li > a {
   display: inline-block;
-  color: var(--cp-text) !important;
-  font-size: clamp(1.02rem, 1.25vw, 1.32rem);
-  font-weight: 700;
-  line-height: 1.58;
+  color: var(--cp-list-link) !important;
+  font-size: clamp(0.95rem, 1.05vw, 1.08rem);
+  font-weight: 650;
+  line-height: 1.66;
   text-decoration: none !important;
   text-shadow: none;
 }
@@ -507,14 +533,20 @@ a:hover {
 
 #article-container li ul li > a,
 #article-container li ol li > a {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.78;
+  font-size: 0.98rem;
+  font-weight: 560;
+  color: var(--cp-list-link-sub) !important;
+  line-height: 1.72;
 }
 
 #article-container ul li,
 #article-container ol li {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.56rem;
+}
+
+#article-container ul li::marker,
+#article-container ol li::marker {
+  color: var(--cp-marker);
 }
 
 [data-theme="light"] #article-container ul li > a,
@@ -538,6 +570,11 @@ a:hover {
   border-left: 4px solid var(--cp-cyan);
   background: rgba(34, 211, 238, 0.08);
   box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.08);
+}
+
+#article-container blockquote p,
+#article-container blockquote li {
+  color: var(--cp-quote-text);
 }
 
 #article-container code,
@@ -724,19 +761,19 @@ button,
   #article-container p,
   #article-container li,
   #article-container td {
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: 0.98rem;
+    line-height: 1.76;
   }
 
   #article-container h1 {
-    font-size: 1.7rem;
+    font-size: 1.56rem;
   }
 
   #article-container h2 {
-    font-size: 1.45rem;
+    font-size: 1.3rem;
   }
 
   #article-container h3 {
-    font-size: 1.22rem;
+    font-size: 1.12rem;
   }
 }

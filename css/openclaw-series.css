@@ -124,25 +124,33 @@
 }
 
 .series-reading-list li {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.75rem;
   padding-left: 0.3rem;
   color: #dbeafe;
-  font-size: clamp(1.02rem, 1.25vw, 1.26rem);
-  font-weight: 700;
-  line-height: 1.62;
+  font-size: clamp(0.96rem, 1.02vw, 1.1rem);
+  font-weight: 650;
+  line-height: 1.58;
 }
 
 .series-reading-list li::marker {
   color: #e2e8f0;
-  font-weight: 700;
+  font-weight: 650;
 }
 
 .series-reading-list a {
   color: #f8fbff !important;
-  font-weight: 700;
+  font-weight: 650;
   text-decoration: none !important;
-  text-shadow: 0 0 18px rgba(34, 211, 238, 0.12);
+  text-shadow: none;
   transition: color 0.18s ease, text-shadow 0.18s ease;
+}
+
+.series-reading-list li:nth-child(odd) > a {
+  color: #deebff !important;
+}
+
+.series-reading-list li:nth-child(even) > a {
+  color: #c8defd !important;
 }
 
 .series-reading-list a:hover {
@@ -163,6 +171,14 @@
   text-shadow: none;
 }
 
+[data-theme="light"] .series-reading-list li:nth-child(odd) > a {
+  color: #1f456f !important;
+}
+
+[data-theme="light"] .series-reading-list li:nth-child(even) > a {
+  color: #2f5d8c !important;
+}
+
 [data-theme="light"] .series-reading-list a:hover {
   color: #0f79b8 !important;
   text-shadow: none;
@@ -176,8 +192,8 @@
   }
 
   .series-reading-list li {
-    margin-bottom: 0.9rem;
-    font-size: 1rem;
-    line-height: 1.5;
+    margin-bottom: 0.72rem;
+    font-size: 0.95rem;
+    line-height: 1.48;
   }
 }
