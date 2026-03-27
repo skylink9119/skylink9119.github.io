@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-03-27T03:30:00.000Z</updated>
+  <updated>2026-03-27T15:40:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -17,29 +17,31 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hexo博客性能优化终极指南（2026版）</title>
-    <link href="https://skylink9119.github.io/2026/03/27/Hexo%E5%8D%9A%E5%AE%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/"/>
-    <id>https://skylink9119.github.io/2026/03/27/Hexo%E5%8D%9A%E5%AE%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/</id>
-    <published>2026-03-27T03:30:00.000Z</published>
-    <updated>2026-03-27T03:30:00.000Z</updated>
+    <title>本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</title>
+    <link href="https://skylink9119.github.io/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/"/>
+    <id>https://skylink9119.github.io/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/</id>
+    <published>2026-03-27T10:05:00.000Z</published>
+    <updated>2026-03-27T15:40:00.000Z</updated>
     
     
-    <summary type="html">全面解析Hexo博客性能优化方案，从图片压缩、CDN加速到代码优化，让你的博客加载速度提升300%以上。</summary>
+    <summary type="html">按 2026 年 3 月 27 日可查到的 OpenClaw 官方 Install、Onboarding、Control UI、Windows WSL2、Channels 与 Message 文档整理，手把手说明 Windows 和 Mac 如何从零安装 OpenClaw，并讲清楚 Select channel 的实际运用。</summary>
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="Hexo" scheme="https://skylink9119.github.io/tags/Hexo/"/>
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
     
-    <category term="性能优化" scheme="https://skylink9119.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
-    <category term="博客优化" scheme="https://skylink9119.github.io/tags/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/"/>
+    <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
-    <category term="Butterfly主题" scheme="https://skylink9119.github.io/tags/Butterfly%E4%B8%BB%E9%A2%98/"/>
+    <category term="安装教程" scheme="https://skylink9119.github.io/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
     
-    <category term="前端优化" scheme="https://skylink9119.github.io/tags/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/"/>
+    <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+    <category term="Windows" scheme="https://skylink9119.github.io/tags/Windows/"/>
     
   </entry>
   

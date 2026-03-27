@@ -33,6 +33,8 @@
 .openclaw-series-inline h3 {
   margin: 0;
   color: #f8fbff !important;
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  font-weight: 760;
   text-shadow: 0 0 24px rgba(34, 211, 238, 0.14);
   line-height: 1.25;
 }
@@ -118,31 +120,72 @@
   margin-top: 0.4rem;
 }
 
-.series-reading-list ol {
+#article-container > h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  font-size: clamp(1.34rem, 1.6vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+}
+
+.series-reading-list ol,
+.series-reading-list ul {
   margin: 0;
-  padding-left: 1.5rem;
+  padding-left: 1.9rem;
+}
+
+.series-reading-list ul {
+  list-style: disc;
+}
+
+#article-container .series-reading-list--bullets ul {
+  padding-left: 2.15rem;
 }
 
 .series-reading-list li {
-  margin: 0 0 0.75rem;
-  padding-left: 0.3rem;
+  margin: 0 0 1rem;
+  padding-left: 0.45rem;
   color: #dbeafe;
-  font-size: clamp(0.96rem, 1.02vw, 1.1rem);
-  font-weight: 650;
-  line-height: 1.58;
+  font-size: clamp(1.36rem, 2.12vw, 2rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+#article-container .series-reading-list--bullets li {
+  margin: 0 0 1.1rem;
+  padding-left: 0.5rem;
+  font-size: clamp(1.18rem, 1.52vw, 1.46rem) !important;
+  font-weight: 720;
+  line-height: 1.32;
 }
 
 .series-reading-list li::marker {
   color: #e2e8f0;
-  font-weight: 650;
+  font-weight: 700;
+  font-size: 0.92em;
+}
+
+#article-container .series-reading-list--bullets li::marker {
+  font-size: 0.98em;
 }
 
 .series-reading-list a {
+  display: inline-block;
   color: #f8fbff !important;
-  font-weight: 650;
+  font-size: inherit;
+  font-weight: 700;
+  letter-spacing: -0.018em;
   text-decoration: none !important;
   text-shadow: none;
-  transition: color 0.18s ease, text-shadow 0.18s ease;
+  line-height: inherit;
+  transition: color 0.18s ease, text-shadow 0.18s ease, transform 0.18s ease;
+}
+
+#article-container .series-reading-list--bullets li > a {
+  font-size: inherit !important;
+  font-weight: 720 !important;
+  letter-spacing: -0.014em;
 }
 
 .series-reading-list li:nth-child(odd) > a {
@@ -156,6 +199,7 @@
 .series-reading-list a:hover {
   color: #67e8f9 !important;
   text-shadow: 0 0 24px rgba(34, 211, 238, 0.2);
+  transform: translateX(4px);
 }
 
 [data-theme="light"] .series-reading-list li {
@@ -191,9 +235,25 @@
     border-radius: 20px;
   }
 
+  .openclaw-series-banner h1,
+  .openclaw-series-inline h3 {
+    font-size: 1.56rem;
+    line-height: 1.22;
+  }
+
+  #article-container > h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  #article-container .series-reading-list--bullets li {
+    font-size: 1.08rem !important;
+    line-height: 1.34;
+  }
+
   .series-reading-list li {
-    margin-bottom: 0.72rem;
-    font-size: 0.95rem;
-    line-height: 1.48;
+    margin-bottom: 0.82rem;
+    font-size: 1.16rem;
+    line-height: 1.34;
   }
 }
