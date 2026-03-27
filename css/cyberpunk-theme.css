@@ -350,15 +350,21 @@ body {
 
 .home-hero-actions__btn--primary {
   color: #f8fbff !important;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 12px 26px rgba(2, 6, 23, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
 }
 
 .home-hero-actions__btn--primary:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    0 14px 30px rgba(2, 6, 23, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 #page-header.home-image-hero #scroll-down {
