@@ -319,85 +319,6 @@
     0 0 80px rgba(34, 211, 238, 0.3);
 }
 
-/* 文章卡片 - 粒子悬浮效果 */
-.home .recent-post-item {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-/* 卡片粒子光晕 */
-.home .recent-post-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(
-      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(34, 211, 238, 0.2) 0%,
-      transparent 50%
-    );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.home .recent-post-item:hover::before {
-  opacity: 1;
-}
-
-/* 卡片悬浮效果 */
-.home .recent-post-item:hover {
-  transform: translateY(-12px) scale(1.03);
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(34, 211, 238, 0.2),
-    inset 0 0 40px rgba(34, 211, 238, 0.1);
-}
-
-/* 卡片标题粒子效果 */
-.home .recent-post-item .post-title {
-  color: #ffffff;
-  font-weight: 700;
-  position: relative;
-  display: inline-block;
-  transition: all 0.3s ease;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.home .recent-post-item .post-title::after {
-  content: '•';
-  position: absolute;
-  right: -20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #22d3ee;
-  opacity: 0;
-  transition: all 0.3s ease;
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-.home .recent-post-item:hover .post-title {
-  color: #22d3ee;
-  text-shadow: 
-    0 0 20px rgba(34, 211, 238, 0.5),
-    0 0 40px rgba(34, 211, 238, 0.3);
-}
-
-.home .recent-post-item:hover .post-title::after {
-  opacity: 1;
-  right: -25px;
-}
-
 /* 导航栏粒子效果 */
 #nav {
   background: rgba(10, 14, 26, 0.9) !important;
@@ -503,10 +424,6 @@
     animation: gentleFloat 60s ease-in-out infinite;
     opacity: 0.3;
     filter: blur(40px);
-  }
-  
-  .home .recent-post-item:hover {
-    transform: translateY(-6px) scale(1.02);
   }
   
   /* 移动端减少粒子效果 */
