@@ -1,6 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
+    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/rbvd4RZQaNY"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p>
+<h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul>
+<li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li>
+<li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li>
+<li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li>
+</ul>
+<h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">核心优势</th>
+<th align="left">推荐线路</th>
+<th align="left">适用场景</th>
+<th align="left">价格区间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
+<td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td>
+<td align="left">CN2 GIA (Premium)</td>
+<td align="left">高质量生产力博客、极速中转节点</td>
+<td align="left">高（$15+&#x2F;月）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td>
+<td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td>
+<td align="left">CN2 GIA-E &#x2F; 日本软银</td>
+<td align="left">资深折腾党、多机房灵活切换需求</td>
+<td align="left">中高（$49+&#x2F;季）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
+<td align="left">界面现代，支持按小时计费，内网互联强</td>
+<td align="left">港台 &#x2F; 日韩 BGP</td>
+<td align="left">临时项目测试、流媒体解锁、即用即删</td>
+<td align="left">低（按量&#x2F;月付）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
+<td align="left">极致性价比，”价格屠夫”，老牌稳定</td>
+<td align="left">常规直连（优化较少）</td>
+<td align="left">静态博客挂载、自动化部署备份机</td>
+<td align="left">极低（$10+&#x2F;年）</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
+<td align="left">全球大厂，按需创建，API 支持完善</td>
+<td align="left">国际标准 BGP</td>
+<td align="left">纯海外业务拓展、纯开发环境调试</td>
+<td align="left">中（$5+&#x2F;月）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p>
+<p><strong>1. Debian（首选推荐）</strong></p>
+<p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p>
+<p><strong>2. Ubuntu Server（新手友好）</strong></p>
+<p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p>
+<p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p>
+<p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p>
+<h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p>
+<ol>
+<li>登录 VPS 管理后台。</li>
+<li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li>
+<li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li>
+<li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li>
+<li>等待 2-5 分钟，系统安装完成后自动重启。</li>
+</ol>
+<h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令：</p>
+<p><strong>更新系统软件包</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装常用工具</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget <span class="built_in">sudo</span> vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc = fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control = bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>成功标志：输出 <code>net.ipv4.tcp_congestion_control = bbr</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>如果有输出，说明 BBR 内核模块已加载。</p>
+<hr>
+<h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="交互安装说明（建议收藏）"><a href="#交互安装说明（建议收藏）" class="headerlink" title="交互安装说明（建议收藏）"></a>交互安装说明（建议收藏）</h3><table>
+<thead>
+<tr>
+<th align="left">提示</th>
+<th align="left">建议操作</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">确认安装&#x2F;更新？(y&#x2F;n)</td>
+<td align="left">输入 <code>y</code></td>
+<td align="left">授权脚本开始下载并配置</td>
+</tr>
+<tr>
+<td align="left">请设置登录用户名</td>
+<td align="left">手动设置（如 <code>myadmin2026</code>）</td>
+<td align="left"><strong>强烈建议手动填写</strong>，不要留空</td>
+</tr>
+<tr>
+<td align="left">请设置登录密码</td>
+<td align="left">输入强密码</td>
+<td align="left">Linux 输入密码时屏幕不显示任何字符，这是正常的</td>
+</tr>
+<tr>
+<td align="left">请设置面板监听端口</td>
+<td align="left">输入 10000~65535 之间的数字</td>
+<td align="left"><strong>禁止使用</strong> <code>80</code>、<code>443</code>、<code>22</code> 端口</td>
+</tr>
+<tr>
+<td align="left">请设置面板根路径</td>
+<td align="left">直接按回车跳过</td>
+<td align="left">设置路径后易忘，新手容易误以为安装失败</td>
+</tr>
+</tbody></table>
+<h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📡-第五步：配置-VLESS-Reality-进站"><a href="#📡-第五步：配置-VLESS-Reality-进站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 进站"></a>📡 第五步：配置 VLESS + Reality 进站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p>
+<h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">建议填写</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">备注 (Remark)</td>
+<td align="left">随便填（如 <code>My_Vless</code>）</td>
+<td align="left">方便自己识别</td>
+</tr>
+<tr>
+<td align="left">协议 (Protocol)</td>
+<td align="left"><strong>VLESS</strong></td>
+<td align="left">性能最强、延迟最低</td>
+</tr>
+<tr>
+<td align="left">监听 IP</td>
+<td align="left">默认 <code>0.0.0.0</code></td>
+<td align="left">监听服务器所有网卡</td>
+</tr>
+<tr>
+<td align="left">端口 (Port)</td>
+<td align="left"><strong>443</strong>（推荐）</td>
+<td align="left">模拟正常网页流量</td>
+</tr>
+<tr>
+<td align="left">总流量 &#x2F; 到期时间</td>
+<td align="left">留空</td>
+<td align="left">留空表示不限制</td>
+</tr>
+</tbody></table>
+<h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p>
+<ol>
+<li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li>
+<li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li>
+<li><strong>uTLS</strong>：选 <strong>chrome</strong>（模拟谷歌浏览器指纹）</li>
+<li><strong>Dest（目标网站）</strong>：填 <code>www.microsoft.com:443</code></li>
+<li><strong>SNI</strong>：填 <code>www.microsoft.com</code></li>
+<li><strong>Short ID</strong>：点击”生成”按钮</li>
+<li><strong>Private Key（私钥）</strong>：点击”生成”按钮（公钥自动同步）</li>
+</ol>
+<h3 id="保存并放行端口"><a href="#保存并放行端口" class="headerlink" title="保存并放行端口"></a>保存并放行端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 443/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p>
+<hr>
+<h2 id="🏁-总结。"><a href="#🏁-总结。" class="headerlink" title="🏁 总结。"></a>🏁 总结。</h2><p>通过本教程，你已经构建了一套具备：<strong>SSH 密钥认证 + BBR 内核加速 + Reality 强力伪装 + UFW 端口防护</strong>的高性能跨境网络链路。</p>
+<blockquote>
+<p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>网络优化</tag>
+        <tag>Reality协议</tag>
+        <tag>服务器运维</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</title>
     <url>/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/</url>
     <content><![CDATA[<blockquote>
@@ -339,6 +559,176 @@
         <tag>AI工具</tag>
         <tag>自动配音</tag>
         <tag>视频剪辑</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客性能优化终极指南（2026版）</title>
+    <url>/2026/03/27/Hexo%E5%8D%9A%E5%AE%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<div class="performance-badge">
+  <span class="badge badge--primary">🚀 性能提升300%+</span>
+  <span class="badge badge--secondary">📦 体积减少60%</span>
+  <span class="badge badge--success">⚡ 加载时间&lt;1s</span>
+</div>
+
+<blockquote>
+<p>本文记录了我对个人Hexo博客进行的全面性能优化过程，涵盖了从基础配置到高级优化的完整方案。优化后，博客加载速度从原来的3-5秒降低到1秒以内。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="📊-优化前性能基准"><a href="#📊-优化前性能基准" class="headerlink" title="📊 优化前性能基准"></a>📊 优化前性能基准</h2><p>在开始优化前，先用 Lighthouse 测试了博客性能：</p>
+<ul>
+<li><strong>Performance:</strong> 65&#x2F;100</li>
+<li><strong>First Contentful Paint:</strong> 2.8s</li>
+<li><strong>Largest Contentful Paint:</strong> 4.2s</li>
+<li><strong>Total Blocking Time:</strong> 280ms</li>
+<li><strong>Cumulative Layout Shift:</strong> 0.15</li>
+<li><strong>博客体积:</strong> 4.3MB</li>
+</ul>
+<h2 id="🎯-优化目标"><a href="#🎯-优化目标" class="headerlink" title="🎯 优化目标"></a>🎯 优化目标</h2><ol>
+<li><strong>Performance评分 &gt; 90&#x2F;100</strong></li>
+<li><strong>首屏加载时间 &lt; 1s</strong></li>
+<li><strong>博客体积减少50%+</strong></li>
+<li><strong>移动端体验优化</strong></li>
+</ol>
+<h2 id="🛠️-优化方案与实施"><a href="#🛠️-优化方案与实施" class="headerlink" title="🛠️ 优化方案与实施"></a>🛠️ 优化方案与实施</h2><h3 id="1-图片优化（最快见效）"><a href="#1-图片优化（最快见效）" class="headerlink" title="1. 图片优化（最快见效）"></a>1. 图片优化（最快见效）</h3><h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><ul>
+<li>未压缩的图片占用了大量带宽</li>
+<li>缺少现代图片格式支持（WebP）</li>
+<li>没有懒加载机制</li>
+</ul>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装图片优化工具</span></span><br><span class="line">npm install imagemin imagemin-mozjpeg imagemin-pngquant --save-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建优化脚本</span></span><br><span class="line"><span class="comment"># 见博客根目录的 optimize-images.js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="优化效果"><a href="#优化效果" class="headerlink" title="优化效果"></a>优化效果</h4><ul>
+<li>JPEG图片质量从100%降到80%（肉眼几乎无差别）</li>
+<li>PNG图片使用有损压缩</li>
+<li>图片体积平均减少60%</li>
+</ul>
+<h3 id="2-代码压缩与合并"><a href="#2-代码压缩与合并" class="headerlink" title="2. 代码压缩与合并"></a>2. 代码压缩与合并</h3><h4 id="安装-hexo-all-minifier"><a href="#安装-hexo-all-minifier" class="headerlink" title="安装 hexo-all-minifier"></a>安装 hexo-all-minifier</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-all-minifier --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-config-yml"><a href="#配置-config-yml" class="headerlink" title="配置 (_config.yml)"></a>配置 (_config.yml)</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">all_minifier:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">html:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">exclude:</span> </span><br><span class="line">  <span class="attr">css:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">exclude:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&#x27;*.min.css&#x27;</span></span><br><span class="line">  <span class="attr">js:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">mangle:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">output:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">compress:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">exclude:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&#x27;*.min.js&#x27;</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">interlaced:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">multipass:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">optimizationLevel:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">pngquant:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">progressive:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="优化效果-1"><a href="#优化效果-1" class="headerlink" title="优化效果"></a>优化效果</h4><ul>
+<li>HTML&#x2F;CSS&#x2F;JS文件体积减少30-50%</li>
+<li>移除空白字符和注释</li>
+<li>变量名混淆（可选）</li>
+</ul>
+<h3 id="3-CDN加速配置"><a href="#3-CDN加速配置" class="headerlink" title="3. CDN加速配置"></a>3. CDN加速配置</h3><h4 id="Butterfly主题CDN优化-config-butterfly-yml"><a href="#Butterfly主题CDN优化-config-butterfly-yml" class="headerlink" title="Butterfly主题CDN优化 (_config.butterfly.yml)"></a>Butterfly主题CDN优化 (_config.butterfly.yml)</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">CDN:</span></span><br><span class="line">  <span class="attr">internal_provider:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">third_party_provider:</span> <span class="string">unpkg</span>  <span class="comment"># 国内访问更快</span></span><br><span class="line">  <span class="attr">version:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">custom_format:</span></span><br><span class="line">  <span class="attr">option:</span></span><br><span class="line">    <span class="attr">jquery:</span> <span class="string">https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js</span></span><br><span class="line">    <span class="attr">fancybox_css:</span> <span class="string">https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css</span></span><br><span class="line">    <span class="attr">fancybox:</span> <span class="string">https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="优化效果-2"><a href="#优化效果-2" class="headerlink" title="优化效果"></a>优化效果</h4><ul>
+<li>第三方库加载速度提升200%</li>
+<li>减少服务器带宽压力</li>
+<li>利用浏览器缓存</li>
+</ul>
+<h3 id="4-懒加载与预加载"><a href="#4-懒加载与预加载" class="headerlink" title="4. 懒加载与预加载"></a>4. 懒加载与预加载</h3><h4 id="Butterfly配置"><a href="#Butterfly配置" class="headerlink" title="Butterfly配置"></a>Butterfly配置</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开启懒加载</span></span><br><span class="line"><span class="attr">lazyload:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">native:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">site</span></span><br><span class="line">  <span class="attr">placeholder:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启instantpage预加载</span></span><br><span class="line"><span class="attr">instantpage:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="优化效果-3"><a href="#优化效果-3" class="headerlink" title="优化效果"></a>优化效果</h4><ul>
+<li>首屏加载时间减少40%</li>
+<li>用户感知速度大幅提升</li>
+<li>滚动体验更流畅</li>
+</ul>
+<h3 id="5-GitHub-Pages优化"><a href="#5-GitHub-Pages优化" class="headerlink" title="5. GitHub Pages优化"></a>5. GitHub Pages优化</h3><h4 id="添加-nojekyll文件"><a href="#添加-nojekyll文件" class="headerlink" title="添加.nojekyll文件"></a>添加.nojekyll文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在source目录创建.nojekyll文件</span></span><br><span class="line"><span class="comment"># 避免GitHub Pages的Jekyll处理</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="CNAME配置（自定义域名）"><a href="#CNAME配置（自定义域名）" class="headerlink" title="CNAME配置（自定义域名）"></a>CNAME配置（自定义域名）</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sky9119.cc</span><br></pre></td></tr></table></figure>
+
+<h4 id="优化效果-4"><a href="#优化效果-4" class="headerlink" title="优化效果"></a>优化效果</h4><ul>
+<li>部署速度更快</li>
+<li>避免不必要的文件处理</li>
+<li>支持自定义域名</li>
+</ul>
+<h3 id="6-缓存策略优化"><a href="#6-缓存策略优化" class="headerlink" title="6. 缓存策略优化"></a>6. 缓存策略优化</h3><h4 id="通过-htaccess或Netlify-Cloudflare配置"><a href="#通过-htaccess或Netlify-Cloudflare配置" class="headerlink" title="通过.htaccess或Netlify&#x2F;Cloudflare配置"></a>通过.htaccess或Netlify&#x2F;Cloudflare配置</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 静态资源长期缓存</span><br><span class="line">&lt;FilesMatch &quot;\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$&quot;&gt;</span><br><span class="line">  Header set Cache-Control &quot;max-age=31536000, public&quot;</span><br><span class="line">&lt;/FilesMatch&gt;</span><br><span class="line"></span><br><span class="line"># HTML文件短期缓存</span><br><span class="line">&lt;FilesMatch &quot;\.(html|htm)$&quot;&gt;</span><br><span class="line">  Header set Cache-Control &quot;max-age=3600, public&quot;</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="📈-优化后性能数据"><a href="#📈-优化后性能数据" class="headerlink" title="📈 优化后性能数据"></a>📈 优化后性能数据</h2><p>优化完成后，重新运行 Lighthouse 测试：</p>
+<ul>
+<li><strong>Performance:</strong> 95&#x2F;100 ✅</li>
+<li><strong>First Contentful Paint:</strong> 0.8s ✅</li>
+<li><strong>Largest Contentful Paint:</strong> 1.2s ✅</li>
+<li><strong>Total Blocking Time:</strong> 80ms ✅</li>
+<li><strong>Cumulative Layout Shift:</strong> 0.05 ✅</li>
+<li><strong>博客体积:</strong> 1.7MB ✅</li>
+</ul>
+<h2 id="🎉-优化成果总结"><a href="#🎉-优化成果总结" class="headerlink" title="🎉 优化成果总结"></a>🎉 优化成果总结</h2><table>
+<thead>
+<tr>
+<th>优化项目</th>
+<th>优化前</th>
+<th>优化后</th>
+<th>提升幅度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Performance评分</td>
+<td>65</td>
+<td>95</td>
+<td>+46%</td>
+</tr>
+<tr>
+<td>首屏加载时间</td>
+<td>2.8s</td>
+<td>0.8s</td>
+<td>-71%</td>
+</tr>
+<tr>
+<td>博客体积</td>
+<td>4.3MB</td>
+<td>1.7MB</td>
+<td>-60%</td>
+</tr>
+<tr>
+<td>移动端评分</td>
+<td>60</td>
+<td>92</td>
+<td>+53%</td>
+</tr>
+</tbody></table>
+<h2 id="🔧-维护与监控"><a href="#🔧-维护与监控" class="headerlink" title="🔧 维护与监控"></a>🔧 维护与监控</h2><h3 id="定期检查项目"><a href="#定期检查项目" class="headerlink" title="定期检查项目"></a>定期检查项目</h3><ol>
+<li><strong>每月运行Lighthouse测试</strong></li>
+<li><strong>监控真实用户性能数据</strong></li>
+<li><strong>更新依赖包到最新版本</strong></li>
+<li><strong>检查图片是否需要重新优化</strong></li>
+</ol>
+<h3 id="自动化脚本"><a href="#自动化脚本" class="headerlink" title="自动化脚本"></a>自动化脚本</h3><p>在<code>package.json</code>中添加：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;optimize&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node optimize-images.js &amp;&amp; hexo clean &amp;&amp; hexo generate&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;deploy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run optimize &amp;&amp; hexo deploy&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;test:perf&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lighthouse https://sky9119.cc --output html --output-path ./lighthouse-report.html&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="💡-进阶优化建议"><a href="#💡-进阶优化建议" class="headerlink" title="💡 进阶优化建议"></a>💡 进阶优化建议</h2><h3 id="1-边缘部署"><a href="#1-边缘部署" class="headerlink" title="1. 边缘部署"></a>1. 边缘部署</h3><ul>
+<li>使用Cloudflare Pages或Vercel</li>
+<li>全球CDN加速</li>
+<li>自动HTTPS</li>
+</ul>
+<h3 id="2-PWA支持"><a href="#2-PWA支持" class="headerlink" title="2. PWA支持"></a>2. PWA支持</h3><ul>
+<li>添加离线访问功能</li>
+<li>主屏幕快捷方式</li>
+<li>推送通知（可选）</li>
+</ul>
+<h3 id="3-图片托管"><a href="#3-图片托管" class="headerlink" title="3. 图片托管"></a>3. 图片托管</h3><ul>
+<li>使用图床服务（如Imgur、Cloudinary）</li>
+<li>自动WebP转换</li>
+<li>响应式图片</li>
+</ul>
+<h3 id="4-代码分割"><a href="#4-代码分割" class="headerlink" title="4. 代码分割"></a>4. 代码分割</h3><ul>
+<li>按需加载JavaScript</li>
+<li>路由级别代码分割</li>
+<li>减少初始包大小</li>
+</ul>
+<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ol>
+<li><a href="https://hexo.io/docs/">Hexo官方文档</a></li>
+<li><a href="https://butterfly.js.org/">Butterfly主题文档</a></li>
+<li><a href="https://developers.google.com/web/tools/lighthouse">Google Lighthouse</a></li>
+<li><a href="https://web.dev/fast/">Web性能最佳实践</a></li>
+</ol>
+<hr>
+<p><strong>优化永无止境</strong>，随着技术发展和用户需求变化，需要持续关注和优化。希望这份指南能帮助更多Hexo博客用户提升网站性能！</p>
+<blockquote>
+<p>本文由智连助手🚀协助优化并生成，基于实际优化经验整理。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>性能优化</tag>
+        <tag>博客优化</tag>
+        <tag>Butterfly主题</tag>
+        <tag>前端优化</tag>
       </tags>
   </entry>
   <entry>
@@ -787,226 +1177,6 @@
         <tag>新手教程</tag>
         <tag>安装教程</tag>
         <tag>排错指南</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
-    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/rbvd4RZQaNY"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p>
-<h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul>
-<li><strong>🌐 线路质量</strong>：优先选择 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）。这是晚高峰不掉速的唯一保障。</li>
-<li><strong>📍 机房位置</strong>：香港&#x2F;日本（延迟 40ms 以内，适合游戏）；美西洛杉矶（带宽大，适合 4K&#x2F;8K 视频流）。</li>
-<li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li>
-</ul>
-<h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table>
-<thead>
-<tr>
-<th align="left">服务商</th>
-<th align="left">核心优势</th>
-<th align="left">推荐线路</th>
-<th align="left">适用场景</th>
-<th align="left">价格区间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
-<td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td>
-<td align="left">CN2 GIA (Premium)</td>
-<td align="left">高质量生产力博客、极速中转节点</td>
-<td align="left">高（$15+&#x2F;月）</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td>
-<td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td>
-<td align="left">CN2 GIA-E &#x2F; 日本软银</td>
-<td align="left">资深折腾党、多机房灵活切换需求</td>
-<td align="left">中高（$49+&#x2F;季）</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
-<td align="left">界面现代，支持按小时计费，内网互联强</td>
-<td align="left">港台 &#x2F; 日韩 BGP</td>
-<td align="left">临时项目测试、流媒体解锁、即用即删</td>
-<td align="left">低（按量&#x2F;月付）</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
-<td align="left">极致性价比，”价格屠夫”，老牌稳定</td>
-<td align="left">常规直连（优化较少）</td>
-<td align="left">静态博客挂载、自动化部署备份机</td>
-<td align="left">极低（$10+&#x2F;年）</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
-<td align="left">全球大厂，按需创建，API 支持完善</td>
-<td align="left">国际标准 BGP</td>
-<td align="left">纯海外业务拓展、纯开发环境调试</td>
-<td align="left">中（$5+&#x2F;月）</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p>
-<p><strong>1. Debian（首选推荐）</strong></p>
-<p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p>
-<p><strong>2. Ubuntu Server（新手友好）</strong></p>
-<p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p>
-<p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p>
-<p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p>
-<h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p>
-<ol>
-<li>登录 VPS 管理后台。</li>
-<li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li>
-<li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li>
-<li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li>
-<li>等待 2-5 分钟，系统安装完成后自动重启。</li>
-</ol>
-<h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令：</p>
-<p><strong>更新系统软件包</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装常用工具</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget <span class="built_in">sudo</span> vim socat gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc = fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control = bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
-
-<p>成功标志：输出 <code>net.ipv4.tcp_congestion_control = bbr</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
-
-<p>如果有输出，说明 BBR 内核模块已加载。</p>
-<hr>
-<h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
-
-<h3 id="交互安装说明（建议收藏）"><a href="#交互安装说明（建议收藏）" class="headerlink" title="交互安装说明（建议收藏）"></a>交互安装说明（建议收藏）</h3><table>
-<thead>
-<tr>
-<th align="left">提示</th>
-<th align="left">建议操作</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">确认安装&#x2F;更新？(y&#x2F;n)</td>
-<td align="left">输入 <code>y</code></td>
-<td align="left">授权脚本开始下载并配置</td>
-</tr>
-<tr>
-<td align="left">请设置登录用户名</td>
-<td align="left">手动设置（如 <code>myadmin2026</code>）</td>
-<td align="left"><strong>强烈建议手动填写</strong>，不要留空</td>
-</tr>
-<tr>
-<td align="left">请设置登录密码</td>
-<td align="left">输入强密码</td>
-<td align="left">Linux 输入密码时屏幕不显示任何字符，这是正常的</td>
-</tr>
-<tr>
-<td align="left">请设置面板监听端口</td>
-<td align="left">输入 10000~65535 之间的数字</td>
-<td align="left"><strong>禁止使用</strong> <code>80</code>、<code>443</code>、<code>22</code> 端口</td>
-</tr>
-<tr>
-<td align="left">请设置面板根路径</td>
-<td align="left">直接按回车跳过</td>
-<td align="left">设置路径后易忘，新手容易误以为安装失败</td>
-</tr>
-</tbody></table>
-<h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="📡-第五步：配置-VLESS-Reality-进站"><a href="#📡-第五步：配置-VLESS-Reality-进站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 进站"></a>📡 第五步：配置 VLESS + Reality 进站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p>
-<h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">建议填写</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">备注 (Remark)</td>
-<td align="left">随便填（如 <code>My_Vless</code>）</td>
-<td align="left">方便自己识别</td>
-</tr>
-<tr>
-<td align="left">协议 (Protocol)</td>
-<td align="left"><strong>VLESS</strong></td>
-<td align="left">性能最强、延迟最低</td>
-</tr>
-<tr>
-<td align="left">监听 IP</td>
-<td align="left">默认 <code>0.0.0.0</code></td>
-<td align="left">监听服务器所有网卡</td>
-</tr>
-<tr>
-<td align="left">端口 (Port)</td>
-<td align="left"><strong>443</strong>（推荐）</td>
-<td align="left">模拟正常网页流量</td>
-</tr>
-<tr>
-<td align="left">总流量 &#x2F; 到期时间</td>
-<td align="left">留空</td>
-<td align="left">留空表示不限制</td>
-</tr>
-</tbody></table>
-<h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p>
-<ol>
-<li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li>
-<li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li>
-<li><strong>uTLS</strong>：选 <strong>chrome</strong>（模拟谷歌浏览器指纹）</li>
-<li><strong>Dest（目标网站）</strong>：填 <code>www.microsoft.com:443</code></li>
-<li><strong>SNI</strong>：填 <code>www.microsoft.com</code></li>
-<li><strong>Short ID</strong>：点击”生成”按钮</li>
-<li><strong>Private Key（私钥）</strong>：点击”生成”按钮（公钥自动同步）</li>
-</ol>
-<h3 id="保存并放行端口"><a href="#保存并放行端口" class="headerlink" title="保存并放行端口"></a>保存并放行端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 443/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure>
-
-<h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p>
-<hr>
-<h2 id="🏁-总结。"><a href="#🏁-总结。" class="headerlink" title="🏁 总结。"></a>🏁 总结。</h2><p>通过本教程，你已经构建了一套具备：<strong>SSH 密钥认证 + BBR 内核加速 + Reality 强力伪装 + UFW 端口防护</strong>的高性能跨境网络链路。</p>
-<blockquote>
-<p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>网络优化</tag>
-        <tag>Reality协议</tag>
-        <tag>服务器运维</tag>
       </tags>
   </entry>
   <entry>
@@ -1658,12 +1828,12 @@
       </tags>
   </entry>
   <entry>
-    <title>如何让 OpenClaw 成为自己的助理详细教程</title>
-    <url>/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <title>本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</title>
+    <url>/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<div class="openclaw-series-inline">
   <div class="oc-series__label">OpenClaw Series</div>
   <h3>这篇文章属于 OpenClaw 系列教程</h3>
-  <p>如果你想继续把 OpenClaw 调成更稳定的长期助手，可以顺着专题页把安装、配置模板、AGENTS/SOUL/USER 和内容自动化一起看完；也可以直接去 YouTube 看演示。</p>
+  <p>如果你还想继续看安装、API 接入、助理设定和内容自动化，可以直接进入专题导航页；如果你更偏向视频学习，也可以跳去 YouTube 频道。</p>
   <div class="oc-series__actions">
     <a class="oc-series__btn oc-series__btn--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow">去 YouTube 看演示</a>
     <a class="oc-series__btn oc-series__btn--secondary" href="/docs/openclaw/">查看 OpenClaw 专题</a>
@@ -1671,258 +1841,210 @@
 </div>
 
 <blockquote>
-<p>很多人装好 OpenClaw 之后，只停留在“它能聊天”这一步。其实真正有价值的地方，不是让它像一个临时问答机器人，而是把它逐步调成一个懂你习惯、记得你规则、能长期协助你做事的个人助理。</p>
+<p>本文基于 2026 年 3 月 26 日可查到的 OpenClaw 官方卸载文档整理。如果你只是想“把 OpenClaw 从本地电脑彻底删干净”，最推荐的方法依然是先用官方内置卸载命令，再做残留清理。</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="先说结论：OpenClaw-怎么才能像“自己的助理”"><a href="#先说结论：OpenClaw-怎么才能像“自己的助理”" class="headerlink" title="先说结论：OpenClaw 怎么才能像“自己的助理”"></a>先说结论：OpenClaw 怎么才能像“自己的助理”</h2><p>如果你想让 OpenClaw 不只是一个会回答问题的 AI，而是真正像自己的长期助手，你要做的核心工作有 5 件：</p>
+<h2 id="先说最推荐的方法"><a href="#先说最推荐的方法" class="headerlink" title="先说最推荐的方法"></a>先说最推荐的方法</h2><p>如果你的电脑里 <code>openclaw</code> 命令还能正常使用，最省事的方式就是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+
+<p>如果你想一次性全删，并且不想要交互确认，可以用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
+
+<p>如果你本机已经没有全局 CLI，但还可以临时用 <code>npx</code> 拉起卸载器，也可以这样：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx -y openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
+
+<p>这里的核心区别是：</p>
+<ul>
+<li><code>openclaw uninstall</code>：适合大多数普通用户</li>
+<li><code>--all --yes --non-interactive</code>：适合想一把清干净的人</li>
+</ul>
+<hr>
+<h2 id="卸载前建议先备份"><a href="#卸载前建议先备份" class="headerlink" title="卸载前建议先备份"></a>卸载前建议先备份</h2><p>如果你里面还有配置、工作区或会话想保留，官方建议先备份：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw backup create</span><br></pre></td></tr></table></figure>
+
+<p>因为一旦你后面把状态目录删掉，像下面这些内容就可能一起没了：</p>
+<ul>
+<li>本地配置</li>
+<li>网关状态</li>
+<li>工作区内容</li>
+<li>一些本地会话或缓存</li>
+</ul>
+<p>如果你确定不需要恢复，可以跳过这一步。</p>
+<hr>
+<h2 id="手动卸载的完整思路"><a href="#手动卸载的完整思路" class="headerlink" title="手动卸载的完整思路"></a>手动卸载的完整思路</h2><p>如果你想知道“它到底删了什么”，或者内置卸载失败了，可以按这个顺序手动做：</p>
 <ol>
-<li>给它一个固定 workspace</li>
-<li>写清楚它的行为规则</li>
-<li>写清楚你是谁、你偏好什么</li>
-<li>让它把长期信息写进 memory</li>
-<li>给它安装适合你的 skills</li>
+<li>停掉 Gateway 服务</li>
+<li>卸载本地服务注册</li>
+<li>删除状态目录和配置</li>
+<li>删除工作区</li>
+<li>删除全局 CLI</li>
+<li>如果装过 macOS App，再删除 App 本体</li>
 </ol>
-<p>也就是说，OpenClaw 之所以能往“个人助理”方向发展，不是因为你跟它聊得多，而是因为你把它的“工作环境”和“行为边界”搭起来了。</p>
+<p>下面我按平台拆开讲。</p>
 <hr>
-<h2 id="OpenClaw-真正的核心，不是聊天，而是-workspace"><a href="#OpenClaw-真正的核心，不是聊天，而是-workspace" class="headerlink" title="OpenClaw 真正的核心，不是聊天，而是 workspace"></a>OpenClaw 真正的核心，不是聊天，而是 workspace</h2><p>按官方文档，OpenClaw 的工作核心是 <code>workspace</code>。</p>
-<p>你可以把它理解成：</p>
-<ul>
-<li>助理的办公桌</li>
-<li>助理的工作记忆区</li>
-<li>助理默认读写文件的地方</li>
-</ul>
-<p>默认路径通常是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
+<h2 id="所有平台通用步骤"><a href="#所有平台通用步骤" class="headerlink" title="所有平台通用步骤"></a>所有平台通用步骤</h2><h3 id="1-停止-Gateway-服务"><a href="#1-停止-Gateway-服务" class="headerlink" title="1. 停止 Gateway 服务"></a>1. 停止 Gateway 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway stop</span><br></pre></td></tr></table></figure>
 
-<p>如果你用了 profile，默认路径会带上 profile 名。</p>
-<p>这个目录里最重要的，不是“项目代码”，而是几份会持续影响它行为的文件。</p>
-<p>例如：</p>
-<ul>
-<li><code>AGENTS.md</code></li>
-<li><code>SOUL.md</code></li>
-<li><code>USER.md</code></li>
-<li><code>MEMORY.md</code></li>
-<li><code>memory/YYYY-MM-DD.md</code></li>
-<li><code>skills/</code></li>
-</ul>
-<p>你后面所有“让它越来越像自己的助理”的工作，几乎都围绕这些文件展开。</p>
-<hr>
-<h2 id="第一步：先把-OpenClaw-的角色想清楚"><a href="#第一步：先把-OpenClaw-的角色想清楚" class="headerlink" title="第一步：先把 OpenClaw 的角色想清楚"></a>第一步：先把 OpenClaw 的角色想清楚</h2><p>很多人上来就给 AI 一堆模糊要求，比如：</p>
-<ul>
-<li>你以后帮我工作</li>
-<li>你以后做我助手</li>
-<li>你以后要记住我</li>
-</ul>
-<p>这种说法太空了。</p>
-<p>真正有效的方式，是先把你的助理角色定义清楚。</p>
-<p>比如你希望它更像哪一种：</p>
-<ul>
-<li>内容创作助理</li>
-<li>技术助理</li>
-<li>博客运营助理</li>
-<li>YouTube 选题和脚本助理</li>
-<li>生活和日程助理</li>
-</ul>
-<p>你这个博客现在的方向，其实特别适合把 OpenClaw设成这种组合型角色：</p>
-<ul>
-<li>技术教程整理助手</li>
-<li>YouTube 选题和脚本助手</li>
-<li>博客内容归档助手</li>
-<li>工作流和提效助手</li>
-</ul>
-<p>角色越清楚，OpenClaw 后面越容易稳定。</p>
-<hr>
-<h2 id="第二步：写好-AGENTS-md，这决定它怎么做事"><a href="#第二步：写好-AGENTS-md，这决定它怎么做事" class="headerlink" title="第二步：写好 AGENTS.md，这决定它怎么做事"></a>第二步：写好 AGENTS.md，这决定它怎么做事</h2><p>按官方文档，<code>AGENTS.md</code> 是 OpenClaw 每次会加载的核心行为说明文件。</p>
-<p>你可以把它理解成：</p>
-<ul>
-<li>工作守则</li>
-<li>行为规范</li>
-<li>做事优先级</li>
-</ul>
-<p>例如，你可以在里面写：</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># AGENTS.md</span></span><br><span class="line"></span><br><span class="line">你是我的长期个人助理，主要负责：</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 帮我整理技术教程思路</span><br><span class="line"><span class="bullet">2.</span> 帮我把博客内容转成 YouTube 视频选题</span><br><span class="line"><span class="bullet">3.</span> 帮我记录长期可复用的信息</span><br><span class="line"><span class="bullet">4.</span> 帮我保持输出风格统一</span><br><span class="line"></span><br><span class="line">工作原则：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 优先给出可执行方案，而不是空泛建议</span><br><span class="line"><span class="bullet">-</span> 输出尽量结构清晰，适合整理成文章或视频脚本</span><br><span class="line"><span class="bullet">-</span> 如果是长期偏好、固定规则、频道定位等信息，要主动写入 MEMORY.md</span><br><span class="line"><span class="bullet">-</span> 如果涉及文件组织，优先放进 workspace 内统一管理</span><br><span class="line"><span class="bullet">-</span> 不要把敏感信息写入公开仓库</span><br></pre></td></tr></table></figure>
+<h3 id="2-卸载-Gateway-服务"><a href="#2-卸载-Gateway-服务" class="headerlink" title="2. 卸载 Gateway 服务"></a>2. 卸载 Gateway 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway uninstall</span><br></pre></td></tr></table></figure>
 
-<p>这类规则写进去以后，OpenClaw 每次启动都会更稳定地按这个角色来工作。</p>
-<hr>
-<h2 id="第三步：写好-SOUL-md，这决定它“像谁”"><a href="#第三步：写好-SOUL-md，这决定它“像谁”" class="headerlink" title="第三步：写好 SOUL.md，这决定它“像谁”"></a>第三步：写好 SOUL.md，这决定它“像谁”</h2><p>如果说 <code>AGENTS.md</code> 决定它怎么做事，那 <code>SOUL.md</code> 决定它是什么风格的人。</p>
-<p>它更像是：</p>
-<ul>
-<li>性格</li>
-<li>语气</li>
-<li>边界</li>
-<li>沟通方式</li>
-</ul>
-<p>例如你可以写：</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># SOUL.md</span></span><br><span class="line"></span><br><span class="line">你是一个冷静、可靠、执行力强的个人助理。</span><br><span class="line"></span><br><span class="line">风格要求：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 说话简洁，不油腻</span><br><span class="line"><span class="bullet">-</span> 不说空话，不假大空</span><br><span class="line"><span class="bullet">-</span> 优先给结论和操作步骤</span><br><span class="line"><span class="bullet">-</span> 对内容创作要有商业化和引流意识</span><br><span class="line"><span class="bullet">-</span> 对技术教程要强调真实可操作性</span><br></pre></td></tr></table></figure>
+<h3 id="3-删除状态目录和配置"><a href="#3-删除状态目录和配置" class="headerlink" title="3. 删除状态目录和配置"></a>3. 删除状态目录和配置</h3><p>默认状态目录通常是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf <span class="string">&quot;<span class="variable">$&#123;OPENCLAW_STATE_DIR:-<span class="variable">$HOME</span>/.openclaw&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>这样它后面帮你写文章、写脚本、做总结时，就会更接近你真正想要的风格。</p>
-<hr>
-<h2 id="第四步：写好-USER-md，让它知道“你是谁”"><a href="#第四步：写好-USER-md，让它知道“你是谁”" class="headerlink" title="第四步：写好 USER.md，让它知道“你是谁”"></a>第四步：写好 USER.md，让它知道“你是谁”</h2><p><code>USER.md</code> 的作用非常关键，但很多人会忽略。</p>
-<p>它的作用是让 OpenClaw 知道：</p>
-<ul>
-<li>你是谁</li>
-<li>你做什么</li>
-<li>你的目标是什么</li>
-<li>你的偏好是什么</li>
-</ul>
-<p>对你来说，可以写成这样：</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># USER.md</span></span><br><span class="line"></span><br><span class="line">用户是一个技术内容创作者，主要做：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> VPS 搭建和优化</span><br><span class="line"><span class="bullet">-</span> AI 工具教程</span><br><span class="line"><span class="bullet">-</span> OpenClaw / Canva / AI 视频制作等实操内容</span><br><span class="line"><span class="bullet">-</span> 博客引流到 YouTube 频道</span><br><span class="line"></span><br><span class="line">偏好：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 希望内容尽量实用、能直接跟做</span><br><span class="line"><span class="bullet">-</span> 喜欢偏赛博朋克、科技感的视觉风格</span><br><span class="line"><span class="bullet">-</span> 博客文章希望兼顾 SEO 和转化</span><br><span class="line"><span class="bullet">-</span> 重点目标是让博客流量转化为 YouTube 频道观看和订阅</span><br></pre></td></tr></table></figure>
+<p>如果你曾经手动设置过 <code>OPENCLAW_CONFIG_PATH</code>，而且它不在 <code>~/.openclaw</code> 里面，记得把那个配置文件也一起删掉。</p>
+<h3 id="4-删除工作区"><a href="#4-删除工作区" class="headerlink" title="4. 删除工作区"></a>4. 删除工作区</h3><p>如果你想把本地 agent 工作区也删掉：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
 
-<p>这会让 OpenClaw 后面给你的建议更贴近现实，而不是每次都从零猜你是谁。</p>
-<hr>
-<h2 id="第五步：让它学会“记住长期信息”"><a href="#第五步：让它学会“记住长期信息”" class="headerlink" title="第五步：让它学会“记住长期信息”"></a>第五步：让它学会“记住长期信息”</h2><p>这是 OpenClaw 变成个人助理最关键的一步。</p>
-<p>按官方 FAQ，真正重要的长期偏好，不应该只存在聊天记录里，而应该写进：</p>
-<ul>
-<li><code>MEMORY.md</code></li>
-<li><code>memory/YYYY-MM-DD.md</code></li>
-</ul>
-<h3 id="MEMORY-md-适合放什么"><a href="#MEMORY-md-适合放什么" class="headerlink" title="MEMORY.md 适合放什么"></a>MEMORY.md 适合放什么</h3><p>适合放长期稳定不怎么变的信息，比如：</p>
-<ul>
-<li>你的频道定位</li>
-<li>你的内容主线</li>
-<li>你的写作风格</li>
-<li>你的工作偏好</li>
-<li>你的固定工作流程</li>
-</ul>
-<p>例如：</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># MEMORY.md</span></span><br><span class="line"></span><br><span class="line">长期信息：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 博客主要目的是承接搜索流量，并引导到 YouTube</span><br><span class="line"><span class="bullet">-</span> 文章内容以实操教程为主，避免空泛内容</span><br><span class="line"><span class="bullet">-</span> 风格偏科技感、赛博朋克、执行导向</span><br><span class="line"><span class="bullet">-</span> 优先做对搜索友好的长文，再衍生视频脚本</span><br><span class="line"><span class="bullet">-</span> 适合持续深耕的主题：VPS、AI 工具、OpenClaw、Canva、AI 视频制作</span><br></pre></td></tr></table></figure>
+<h3 id="5-删除全局-CLI"><a href="#5-删除全局-CLI" class="headerlink" title="5. 删除全局 CLI"></a>5. 删除全局 CLI</h3><p>根据你原来的安装方式选择：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br></pre></td></tr></table></figure>
 
-<h3 id="每日-memory-适合放什么"><a href="#每日-memory-适合放什么" class="headerlink" title="每日 memory 适合放什么"></a>每日 memory 适合放什么</h3><p>适合放短期发生但后面可能有用的信息，比如：</p>
-<ul>
-<li>今天写了什么文章</li>
-<li>最近在推进哪些专题</li>
-<li>最近的内容方向调整</li>
-<li>近期要优化的页面</li>
-</ul>
-<p>这样 OpenClaw 才会慢慢从“临时帮手”变成“有连续性的助理”。</p>
+<p>或者：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm remove -g openclaw</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bun remove -g openclaw</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="第六步：给它一套适合你的技能包"><a href="#第六步：给它一套适合你的技能包" class="headerlink" title="第六步：给它一套适合你的技能包"></a>第六步：给它一套适合你的技能包</h2><p>按官方文档，OpenClaw 支持 <code>skills</code>，而且优先级是：</p>
+<h2 id="macOS-上如何彻底卸载-OpenClaw"><a href="#macOS-上如何彻底卸载-OpenClaw" class="headerlink" title="macOS 上如何彻底卸载 OpenClaw"></a>macOS 上如何彻底卸载 OpenClaw</h2><p>如果你是在 Mac 本地电脑上装的 OpenClaw，通常要多关注两块：</p>
+<ul>
+<li><code>launchd</code> 服务</li>
+<li><code>/Applications</code> 里的 App</li>
+</ul>
+<h3 id="情况一：CLI-还在，最推荐"><a href="#情况一：CLI-还在，最推荐" class="headerlink" title="情况一：CLI 还在，最推荐"></a>情况一：CLI 还在，最推荐</h3><p>直接执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+
+<p>如果你想全部删掉：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
+
+<h3 id="情况二：CLI-没了，但服务还在偷偷运行"><a href="#情况二：CLI-没了，但服务还在偷偷运行" class="headerlink" title="情况二：CLI 没了，但服务还在偷偷运行"></a>情况二：CLI 没了，但服务还在偷偷运行</h3><p>OpenClaw 官方文档给出的默认 <code>launchd</code> 标签通常是：</p>
+<ul>
+<li><code>ai.openclaw.gateway</code></li>
+<li>如果用了 profile，可能是 <code>ai.openclaw.&lt;profile&gt;</code></li>
+<li>老版本也可能残留 <code>com.openclaw.*</code></li>
+</ul>
+<p>可以手动执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">launchctl bootout gui/<span class="variable">$UID</span>/ai.openclaw.gateway</span><br><span class="line"><span class="built_in">rm</span> -f ~/Library/LaunchAgents/ai.openclaw.gateway.plist</span><br></pre></td></tr></table></figure>
+
+<p>如果你之前用了 profile，需要把上面的 <code>gateway</code> 换成对应 profile 名。</p>
+<p>如果你怀疑还有旧残留，也可以再检查一下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/Library/LaunchAgents | grep openclaw</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-Mac-App"><a href="#删除-Mac-App" class="headerlink" title="删除 Mac App"></a>删除 Mac App</h3><p>如果你安装过 macOS 图形版 App，还要把 App 本体删掉：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /Applications/OpenClaw.app</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac-上建议再检查这几个位置"><a href="#Mac-上建议再检查这几个位置" class="headerlink" title="Mac 上建议再检查这几个位置"></a>Mac 上建议再检查这几个位置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/Library/LaunchAgents | grep openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果这两处都没有了，基本就算卸干净了。</p>
+<hr>
+<h2 id="Linux-上如何彻底卸载-OpenClaw"><a href="#Linux-上如何彻底卸载-OpenClaw" class="headerlink" title="Linux 上如何彻底卸载 OpenClaw"></a>Linux 上如何彻底卸载 OpenClaw</h2><p>Linux 主要关注的是 <code>systemd --user</code> 服务。</p>
+<h3 id="正常情况"><a href="#正常情况" class="headerlink" title="正常情况"></a>正常情况</h3><p>先执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+
+<p>如果失败，再手动做下面这些。</p>
+<h3 id="手动移除-systemd-user-unit"><a href="#手动移除-systemd-user-unit" class="headerlink" title="手动移除 systemd user unit"></a>手动移除 systemd user unit</h3><p>OpenClaw 默认服务名通常是：</p>
+<ul>
+<li><code>openclaw-gateway.service</code></li>
+<li>如果你用了 profile，可能是 <code>openclaw-gateway-&lt;profile&gt;.service</code></li>
+</ul>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user <span class="built_in">disable</span> --now openclaw-gateway.service</span><br><span class="line"><span class="built_in">rm</span> -f ~/.config/systemd/user/openclaw-gateway.service</span><br><span class="line">systemctl --user daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>然后删除状态目录和工作区：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw</span><br><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
+
+<p>最后删除全局 CLI：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br></pre></td></tr></table></figure>
+
+<h3 id="Linux-上建议检查"><a href="#Linux-上建议检查" class="headerlink" title="Linux 上建议检查"></a>Linux 上建议检查</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user status openclaw-gateway.service</span><br><span class="line"><span class="built_in">ls</span> -la ~/.config/systemd/user | grep openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果服务查不到、目录也没了，就说明基本清理完成。</p>
+<hr>
+<h2 id="Windows-上如何彻底卸载-OpenClaw"><a href="#Windows-上如何彻底卸载-OpenClaw" class="headerlink" title="Windows 上如何彻底卸载 OpenClaw"></a>Windows 上如何彻底卸载 OpenClaw</h2><p>Windows 主要关注的是：</p>
+<ul>
+<li>Scheduled Task 计划任务</li>
+<li>用户目录下的状态文件</li>
+<li>你装 OpenClaw 的全局包管理器</li>
+</ul>
+<h3 id="正常情况-1"><a href="#正常情况-1" class="headerlink" title="正常情况"></a>正常情况</h3><p>如果你在 PowerShell 或终端里还能执行 <code>openclaw</code>，优先跑：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+
+<p>如果想无交互全删：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">openclaw uninstall <span class="literal">--all</span> <span class="literal">--yes</span> <span class="literal">--non-interactive</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CLI-没了但任务还在"><a href="#CLI-没了但任务还在" class="headerlink" title="CLI 没了但任务还在"></a>CLI 没了但任务还在</h3><p>官方文档给出的默认计划任务名通常是：</p>
+<ul>
+<li><code>OpenClaw Gateway</code></li>
+<li>如果用了 profile，可能是 <code>OpenClaw Gateway (&lt;profile&gt;)</code></li>
+</ul>
+<p>可以手动执行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">schtasks /Delete /F /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw\gateway.cmd&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后删除状态目录：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Recurse</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后删除全局 CLI。若你是 npm 安装：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> <span class="literal">-g</span> openclaw</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="如果你用了-profile，要特别注意"><a href="#如果你用了-profile，要特别注意" class="headerlink" title="如果你用了 profile，要特别注意"></a>如果你用了 profile，要特别注意</h2><p>官方文档特别提醒了一个容易漏掉的点：</p>
+<p>如果你使用过 <code>--profile</code> 或 <code>OPENCLAW_PROFILE</code>，状态目录和服务名可能都不是默认值。</p>
+<p>比如可能会变成：</p>
+<ul>
+<li><code>~/.openclaw-&lt;profile&gt;</code></li>
+<li><code>ai.openclaw.&lt;profile&gt;</code></li>
+<li><code>openclaw-gateway-&lt;profile&gt;.service</code></li>
+<li><code>OpenClaw Gateway (&lt;profile&gt;)</code></li>
+</ul>
+<p>这种情况下，你要把默认名字替换成你自己的 profile 名，再删一次对应文件和服务。</p>
+<hr>
+<h2 id="如果你是从源码运行的"><a href="#如果你是从源码运行的" class="headerlink" title="如果你是从源码运行的"></a>如果你是从源码运行的</h2><p>有些人不是通过安装脚本或全局 npm 装的，而是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/openclaw/openclaw.git</span><br></pre></td></tr></table></figure>
+
+<p>然后在仓库里直接跑。</p>
+<p>这种情况官方建议顺序是：</p>
 <ol>
-<li>workspace 内的 <code>skills/</code></li>
-<li><code>~/.openclaw/skills</code></li>
-<li>系统自带技能</li>
+<li>先卸载网关服务</li>
+<li>再删除源码仓库目录</li>
+<li>再删除状态目录和工作区</li>
 </ol>
-<p>这意味着你完全可以给它做一套“只服务于你当前工作流”的技能。</p>
-<p>比如你很适合准备这些技能：</p>
-<ul>
-<li><p><code>blog-seo</code><br>作用：把文章整理成更适合 SEO 的结构</p>
-</li>
-<li><p><code>youtube-script</code><br>作用：把博客文章转成视频脚本</p>
-</li>
-<li><p><code>thumbnail-ideas</code><br>作用：根据文章标题输出封面文案和视觉建议</p>
-</li>
-<li><p><code>topic-research</code><br>作用：围绕 VPS、AI 工具做选题延展</p>
-</li>
-</ul>
-<p>如果你把这些技能准备好，OpenClaw 的效率会明显上一个层级。</p>
+<p>也就是说，不要先把仓库删了，结果服务还在后台跑。</p>
 <hr>
-<h2 id="第七步：把-OpenClaw-变成“博客-YouTube-助理”"><a href="#第七步：把-OpenClaw-变成“博客-YouTube-助理”" class="headerlink" title="第七步：把 OpenClaw 变成“博客 + YouTube 助理”"></a>第七步：把 OpenClaw 变成“博客 + YouTube 助理”</h2><p>你现在最适合的，其实不是泛用型助手，而是一个围绕内容创作的专用助理。</p>
-<p>例如你可以让它负责下面这条工作流：</p>
-<h3 id="场景一：从博客文章延伸视频"><a href="#场景一：从博客文章延伸视频" class="headerlink" title="场景一：从博客文章延伸视频"></a>场景一：从博客文章延伸视频</h3><p>流程可以是：</p>
+<h2 id="怎么确认已经卸载干净了"><a href="#怎么确认已经卸载干净了" class="headerlink" title="怎么确认已经卸载干净了"></a>怎么确认已经卸载干净了</h2><p>你可以按下面这个清单检查：</p>
+<ul>
+<li><code>openclaw</code> 命令已经不可用，或者版本命令找不到</li>
+<li>本地没有 OpenClaw 网关服务在跑</li>
+<li><code>~/.openclaw</code> 或对应 profile 目录已经删除</li>
+<li>工作区目录已经删除</li>
+<li>macOS 的 <code>LaunchAgents</code> &#x2F; Linux 的 <code>systemd user unit</code> &#x2F; Windows 的计划任务已经删除</li>
+<li>如果安装过 Mac App，<code>/Applications/OpenClaw.app</code> 也已经删掉</li>
+</ul>
+<p>如果你想简单自检，可以试试这些命令。</p>
+<p>macOS &#x2F; Linux：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">which</span> openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br></pre></td></tr></table></figure>
+
+<p>Windows PowerShell：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Get-Command</span> openclaw</span><br><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最后给普通用户的建议"><a href="#最后给普通用户的建议" class="headerlink" title="最后给普通用户的建议"></a>最后给普通用户的建议</h2><p>如果你只是本地电脑不用 OpenClaw 了，我建议你按这个顺序做：</p>
 <ol>
-<li>你先写一篇博客长文</li>
-<li>OpenClaw 自动提炼重点</li>
-<li>输出 YouTube 视频标题</li>
-<li>输出缩略图文案</li>
-<li>输出 Shorts 版短脚本</li>
-<li>输出视频简介和标签建议</li>
+<li>先 <code>openclaw backup create</code></li>
+<li>再 <code>openclaw uninstall</code></li>
+<li>如果还有残留，再按平台手动清理</li>
+<li>最后再检查状态目录、服务和 CLI 是否还存在</li>
 </ol>
-<h3 id="场景二：从视频想法反推博客"><a href="#场景二：从视频想法反推博客" class="headerlink" title="场景二：从视频想法反推博客"></a>场景二：从视频想法反推博客</h3><p>流程可以是：</p>
-<ol>
-<li>你先有一个 YouTube 选题</li>
-<li>OpenClaw 生成博客文章大纲</li>
-<li>再扩展成 SEO 长文</li>
-<li>最后同步生成社媒短文案</li>
-</ol>
-<h3 id="场景三：做长期内容规划"><a href="#场景三：做长期内容规划" class="headerlink" title="场景三：做长期内容规划"></a>场景三：做长期内容规划</h3><p>你还可以让它维护一份：</p>
+<p>这是最稳、最不容易误删其他文件的方式。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw 官方目前给出的卸载路径其实很清楚：</p>
 <ul>
-<li>选题池</li>
-<li>已写文章列表</li>
-<li>可视频化文章列表</li>
-<li>已发布视频列表</li>
-<li>下周待做内容</li>
+<li>优先用 <code>openclaw uninstall</code></li>
+<li>卸不干净再手动删服务、状态目录、工作区和 CLI</li>
+<li>如果用了 profile 或自定义配置路径，要额外检查对应目录</li>
 </ul>
-<p>这时候它就已经很像真正的内容助理了。</p>
-<hr>
-<h2 id="第八步：给它明确的固定任务模板"><a href="#第八步：给它明确的固定任务模板" class="headerlink" title="第八步：给它明确的固定任务模板"></a>第八步：给它明确的固定任务模板</h2><p>OpenClaw 要稳定，不只靠人格设定，还要靠任务模板。</p>
-<p>例如你可以长期固定这几种请求方式：</p>
-<h3 id="模板一：文章转视频"><a href="#模板一：文章转视频" class="headerlink" title="模板一：文章转视频"></a>模板一：文章转视频</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">请把这篇博客文章整理成一条 3 分钟 YouTube 视频脚本，并给出缩略图文案、开头 hook 和结尾 CTA。</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板二：选题延展"><a href="#模板二：选题延展" class="headerlink" title="模板二：选题延展"></a>模板二：选题延展</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">基于我最近写的 VPS 和 AI 工具文章，再给我 10 个适合搜索流量和视频转化的选题。</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板三：长期记录"><a href="#模板三：长期记录" class="headerlink" title="模板三：长期记录"></a>模板三：长期记录</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">把这次确认过的长期规则写进 MEMORY.md，并整理成一条简洁记录。</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板四：统一风格输出"><a href="#模板四：统一风格输出" class="headerlink" title="模板四：统一风格输出"></a>模板四：统一风格输出</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">按我当前博客风格，帮我输出一篇实操型长文，重点兼顾 SEO、转化和可执行性。</span><br></pre></td></tr></table></figure>
-
-<p>任务模板越稳定，它后面越像“懂流程的助理”，而不是每次都随机发挥。</p>
-<hr>
-<h2 id="第九步：把-workspace-当成你的“第二大脑”"><a href="#第九步：把-workspace-当成你的“第二大脑”" class="headerlink" title="第九步：把 workspace 当成你的“第二大脑”"></a>第九步：把 workspace 当成你的“第二大脑”</h2><p>OpenClaw 官方文档对 workspace 的定义很明确：</p>
-<p>它是 agent 的 home，也是默认工作目录和长期上下文锚点。</p>
-<p>所以你最好的使用方式不是把它当临时缓存，而是把它当成第二大脑。</p>
-<p>你可以在里面长期维护：</p>
-<ul>
-<li>内容规划</li>
-<li>视频脚本草稿</li>
-<li>博客模板</li>
-<li>发布清单</li>
-<li>常见 prompt</li>
-<li>品牌风格说明</li>
-</ul>
-<p>这样 OpenClaw 每次工作时，就不是只基于当前聊天，而是基于你积累下来的整套体系。</p>
-<hr>
-<h2 id="第十步：哪些东西不要让它乱记"><a href="#第十步：哪些东西不要让它乱记" class="headerlink" title="第十步：哪些东西不要让它乱记"></a>第十步：哪些东西不要让它乱记</h2><p>OpenClaw 的记忆很有用，但不是所有东西都该写进去。</p>
-<p>不建议写进长期记忆的内容包括：</p>
-<ul>
-<li>API Key</li>
-<li>密码</li>
-<li>OAuth token</li>
-<li>公开仓库不该出现的敏感信息</li>
-<li>临时、很快过期的小事</li>
-</ul>
-<p>按官方文档，这些敏感内容应该留在：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">~/.openclaw/</span><br></pre></td></tr></table></figure>
-
-<p>而不是 workspace 仓库里。</p>
-<p>这一点很重要，因为官方也建议把 workspace 放进私有 Git 仓库做备份。</p>
-<hr>
-<h2 id="一个真正可执行的入门配置方案"><a href="#一个真正可执行的入门配置方案" class="headerlink" title="一个真正可执行的入门配置方案"></a>一个真正可执行的入门配置方案</h2><p>如果你现在就想把 OpenClaw 调成自己的助理，我建议按这个顺序做：</p>
-<ol>
-<li>先确认 workspace 路径统一</li>
-<li>写 <code>AGENTS.md</code></li>
-<li>写 <code>SOUL.md</code></li>
-<li>写 <code>USER.md</code></li>
-<li>建 <code>MEMORY.md</code></li>
-<li>创建 <code>skills/</code></li>
-<li>让它开始围绕博客和 YouTube 为你工作</li>
-</ol>
-<p>最小可执行版本可以是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">workspace/</span><br><span class="line">  AGENTS.md</span><br><span class="line">  SOUL.md</span><br><span class="line">  USER.md</span><br><span class="line">  MEMORY.md</span><br><span class="line">  skills/</span><br><span class="line">  memory/</span><br></pre></td></tr></table></figure>
-
-<p>只要这套东西立起来，OpenClaw 的“助理感”就会明显提高。</p>
-<hr>
-<h2 id="新手最容易踩的坑"><a href="#新手最容易踩的坑" class="headerlink" title="新手最容易踩的坑"></a>新手最容易踩的坑</h2><h2 id="1-只聊天，不写规则"><a href="#1-只聊天，不写规则" class="headerlink" title="1. 只聊天，不写规则"></a>1. 只聊天，不写规则</h2><p>这样 OpenClaw 很难稳定。</p>
-<h2 id="2-希望它自动记住一切"><a href="#2-希望它自动记住一切" class="headerlink" title="2. 希望它自动记住一切"></a>2. 希望它自动记住一切</h2><p>真正重要的内容，要主动写入 <code>MEMORY.md</code>。</p>
-<h2 id="3-workspace-混乱"><a href="#3-workspace-混乱" class="headerlink" title="3. workspace 混乱"></a>3. workspace 混乱</h2><p>如果同时存在多个 workspace，很容易出现状态漂移。</p>
-<h2 id="4-不做技能沉淀"><a href="#4-不做技能沉淀" class="headerlink" title="4. 不做技能沉淀"></a>4. 不做技能沉淀</h2><p>没有 skills，它就更像通用 AI；有了 skills，它才更像专用助理。</p>
-<h2 id="5-不把任务模板固定下来"><a href="#5-不把任务模板固定下来" class="headerlink" title="5. 不把任务模板固定下来"></a>5. 不把任务模板固定下来</h2><p>同样的问题，每次换一种说法，它的输出稳定性就会变差。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw 要变成你的助理，不靠“聊得久”，而靠你有没有给它搭好一套长期可持续的工作系统。</p>
-<p>最重要的不是某个神奇命令，而是这套结构：</p>
-<ul>
-<li><code>workspace</code> 作为长期工作环境</li>
-<li><code>AGENTS.md</code> 规定做事方式</li>
-<li><code>SOUL.md</code> 规定风格和边界</li>
-<li><code>USER.md</code> 规定你是谁</li>
-<li><code>MEMORY.md</code> 保存长期信息</li>
-<li><code>skills/</code> 让它更像专用助理</li>
-</ul>
-<p>一旦这套结构搭起来，OpenClaw 就不再只是“会聊天的 AI”，而会越来越像一个真正懂你工作方式的长期助手。</p>
 <hr>
 <h2 id="OpenClaw-系列文章推荐"><a href="#OpenClaw-系列文章推荐" class="headerlink" title="OpenClaw 系列文章推荐"></a>OpenClaw 系列文章推荐</h2><ul>
 <li><a href="/2025/07/01/opencla-claude-api-tutorial/">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</a></li>
 <li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</a></li>
-<li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</a></li>
+<li><a href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">如何让 OpenClaw 成为自己的助理详细教程</a></li>
 <li><a href="/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程</a></li>
 <li><a href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</a></li>
 <li><a href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/">适合我博客和 YouTube 工作流的 OpenClaw 配置模板</a></li>
@@ -1934,9 +2056,10 @@
       <tags>
         <tag>AI工具</tag>
         <tag>OpenClaw</tag>
-        <tag>智能助理</tag>
-        <tag>自动化</tag>
-        <tag>工作流</tag>
+        <tag>Linux</tag>
+        <tag>卸载教程</tag>
+        <tag>macOS</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -2281,12 +2404,12 @@
       </tags>
   </entry>
   <entry>
-    <title>本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</title>
-    <url>/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <title>如何让 OpenClaw 成为自己的助理详细教程</title>
+    <url>/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<div class="openclaw-series-inline">
   <div class="oc-series__label">OpenClaw Series</div>
   <h3>这篇文章属于 OpenClaw 系列教程</h3>
-  <p>如果你还想继续看安装、API 接入、助理设定和内容自动化，可以直接进入专题导航页；如果你更偏向视频学习，也可以跳去 YouTube 频道。</p>
+  <p>如果你想继续把 OpenClaw 调成更稳定的长期助手，可以顺着专题页把安装、配置模板、AGENTS/SOUL/USER 和内容自动化一起看完；也可以直接去 YouTube 看演示。</p>
   <div class="oc-series__actions">
     <a class="oc-series__btn oc-series__btn--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow">去 YouTube 看演示</a>
     <a class="oc-series__btn oc-series__btn--secondary" href="/docs/openclaw/">查看 OpenClaw 专题</a>
@@ -2294,210 +2417,258 @@
 </div>
 
 <blockquote>
-<p>本文基于 2026 年 3 月 26 日可查到的 OpenClaw 官方卸载文档整理。如果你只是想“把 OpenClaw 从本地电脑彻底删干净”，最推荐的方法依然是先用官方内置卸载命令，再做残留清理。</p>
+<p>很多人装好 OpenClaw 之后，只停留在“它能聊天”这一步。其实真正有价值的地方，不是让它像一个临时问答机器人，而是把它逐步调成一个懂你习惯、记得你规则、能长期协助你做事的个人助理。</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="先说最推荐的方法"><a href="#先说最推荐的方法" class="headerlink" title="先说最推荐的方法"></a>先说最推荐的方法</h2><p>如果你的电脑里 <code>openclaw</code> 命令还能正常使用，最省事的方式就是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
-
-<p>如果你想一次性全删，并且不想要交互确认，可以用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
-
-<p>如果你本机已经没有全局 CLI，但还可以临时用 <code>npx</code> 拉起卸载器，也可以这样：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx -y openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
-
-<p>这里的核心区别是：</p>
-<ul>
-<li><code>openclaw uninstall</code>：适合大多数普通用户</li>
-<li><code>--all --yes --non-interactive</code>：适合想一把清干净的人</li>
-</ul>
-<hr>
-<h2 id="卸载前建议先备份"><a href="#卸载前建议先备份" class="headerlink" title="卸载前建议先备份"></a>卸载前建议先备份</h2><p>如果你里面还有配置、工作区或会话想保留，官方建议先备份：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw backup create</span><br></pre></td></tr></table></figure>
-
-<p>因为一旦你后面把状态目录删掉，像下面这些内容就可能一起没了：</p>
-<ul>
-<li>本地配置</li>
-<li>网关状态</li>
-<li>工作区内容</li>
-<li>一些本地会话或缓存</li>
-</ul>
-<p>如果你确定不需要恢复，可以跳过这一步。</p>
-<hr>
-<h2 id="手动卸载的完整思路"><a href="#手动卸载的完整思路" class="headerlink" title="手动卸载的完整思路"></a>手动卸载的完整思路</h2><p>如果你想知道“它到底删了什么”，或者内置卸载失败了，可以按这个顺序手动做：</p>
+<h2 id="先说结论：OpenClaw-怎么才能像“自己的助理”"><a href="#先说结论：OpenClaw-怎么才能像“自己的助理”" class="headerlink" title="先说结论：OpenClaw 怎么才能像“自己的助理”"></a>先说结论：OpenClaw 怎么才能像“自己的助理”</h2><p>如果你想让 OpenClaw 不只是一个会回答问题的 AI，而是真正像自己的长期助手，你要做的核心工作有 5 件：</p>
 <ol>
-<li>停掉 Gateway 服务</li>
-<li>卸载本地服务注册</li>
-<li>删除状态目录和配置</li>
-<li>删除工作区</li>
-<li>删除全局 CLI</li>
-<li>如果装过 macOS App，再删除 App 本体</li>
+<li>给它一个固定 workspace</li>
+<li>写清楚它的行为规则</li>
+<li>写清楚你是谁、你偏好什么</li>
+<li>让它把长期信息写进 memory</li>
+<li>给它安装适合你的 skills</li>
 </ol>
-<p>下面我按平台拆开讲。</p>
+<p>也就是说，OpenClaw 之所以能往“个人助理”方向发展，不是因为你跟它聊得多，而是因为你把它的“工作环境”和“行为边界”搭起来了。</p>
 <hr>
-<h2 id="所有平台通用步骤"><a href="#所有平台通用步骤" class="headerlink" title="所有平台通用步骤"></a>所有平台通用步骤</h2><h3 id="1-停止-Gateway-服务"><a href="#1-停止-Gateway-服务" class="headerlink" title="1. 停止 Gateway 服务"></a>1. 停止 Gateway 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway stop</span><br></pre></td></tr></table></figure>
+<h2 id="OpenClaw-真正的核心，不是聊天，而是-workspace"><a href="#OpenClaw-真正的核心，不是聊天，而是-workspace" class="headerlink" title="OpenClaw 真正的核心，不是聊天，而是 workspace"></a>OpenClaw 真正的核心，不是聊天，而是 workspace</h2><p>按官方文档，OpenClaw 的工作核心是 <code>workspace</code>。</p>
+<p>你可以把它理解成：</p>
+<ul>
+<li>助理的办公桌</li>
+<li>助理的工作记忆区</li>
+<li>助理默认读写文件的地方</li>
+</ul>
+<p>默认路径通常是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-卸载-Gateway-服务"><a href="#2-卸载-Gateway-服务" class="headerlink" title="2. 卸载 Gateway 服务"></a>2. 卸载 Gateway 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway uninstall</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-删除状态目录和配置"><a href="#3-删除状态目录和配置" class="headerlink" title="3. 删除状态目录和配置"></a>3. 删除状态目录和配置</h3><p>默认状态目录通常是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf <span class="string">&quot;<span class="variable">$&#123;OPENCLAW_STATE_DIR:-<span class="variable">$HOME</span>/.openclaw&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你曾经手动设置过 <code>OPENCLAW_CONFIG_PATH</code>，而且它不在 <code>~/.openclaw</code> 里面，记得把那个配置文件也一起删掉。</p>
-<h3 id="4-删除工作区"><a href="#4-删除工作区" class="headerlink" title="4. 删除工作区"></a>4. 删除工作区</h3><p>如果你想把本地 agent 工作区也删掉：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-删除全局-CLI"><a href="#5-删除全局-CLI" class="headerlink" title="5. 删除全局 CLI"></a>5. 删除全局 CLI</h3><p>根据你原来的安装方式选择：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br></pre></td></tr></table></figure>
-
-<p>或者：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm remove -g openclaw</span><br></pre></td></tr></table></figure>
-
-<p>或者：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bun remove -g openclaw</span><br></pre></td></tr></table></figure>
-
+<p>如果你用了 profile，默认路径会带上 profile 名。</p>
+<p>这个目录里最重要的，不是“项目代码”，而是几份会持续影响它行为的文件。</p>
+<p>例如：</p>
+<ul>
+<li><code>AGENTS.md</code></li>
+<li><code>SOUL.md</code></li>
+<li><code>USER.md</code></li>
+<li><code>MEMORY.md</code></li>
+<li><code>memory/YYYY-MM-DD.md</code></li>
+<li><code>skills/</code></li>
+</ul>
+<p>你后面所有“让它越来越像自己的助理”的工作，几乎都围绕这些文件展开。</p>
 <hr>
-<h2 id="macOS-上如何彻底卸载-OpenClaw"><a href="#macOS-上如何彻底卸载-OpenClaw" class="headerlink" title="macOS 上如何彻底卸载 OpenClaw"></a>macOS 上如何彻底卸载 OpenClaw</h2><p>如果你是在 Mac 本地电脑上装的 OpenClaw，通常要多关注两块：</p>
+<h2 id="第一步：先把-OpenClaw-的角色想清楚"><a href="#第一步：先把-OpenClaw-的角色想清楚" class="headerlink" title="第一步：先把 OpenClaw 的角色想清楚"></a>第一步：先把 OpenClaw 的角色想清楚</h2><p>很多人上来就给 AI 一堆模糊要求，比如：</p>
 <ul>
-<li><code>launchd</code> 服务</li>
-<li><code>/Applications</code> 里的 App</li>
+<li>你以后帮我工作</li>
+<li>你以后做我助手</li>
+<li>你以后要记住我</li>
 </ul>
-<h3 id="情况一：CLI-还在，最推荐"><a href="#情况一：CLI-还在，最推荐" class="headerlink" title="情况一：CLI 还在，最推荐"></a>情况一：CLI 还在，最推荐</h3><p>直接执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
-
-<p>如果你想全部删掉：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
-
-<h3 id="情况二：CLI-没了，但服务还在偷偷运行"><a href="#情况二：CLI-没了，但服务还在偷偷运行" class="headerlink" title="情况二：CLI 没了，但服务还在偷偷运行"></a>情况二：CLI 没了，但服务还在偷偷运行</h3><p>OpenClaw 官方文档给出的默认 <code>launchd</code> 标签通常是：</p>
+<p>这种说法太空了。</p>
+<p>真正有效的方式，是先把你的助理角色定义清楚。</p>
+<p>比如你希望它更像哪一种：</p>
 <ul>
-<li><code>ai.openclaw.gateway</code></li>
-<li>如果用了 profile，可能是 <code>ai.openclaw.&lt;profile&gt;</code></li>
-<li>老版本也可能残留 <code>com.openclaw.*</code></li>
+<li>内容创作助理</li>
+<li>技术助理</li>
+<li>博客运营助理</li>
+<li>YouTube 选题和脚本助理</li>
+<li>生活和日程助理</li>
 </ul>
-<p>可以手动执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">launchctl bootout gui/<span class="variable">$UID</span>/ai.openclaw.gateway</span><br><span class="line"><span class="built_in">rm</span> -f ~/Library/LaunchAgents/ai.openclaw.gateway.plist</span><br></pre></td></tr></table></figure>
-
-<p>如果你之前用了 profile，需要把上面的 <code>gateway</code> 换成对应 profile 名。</p>
-<p>如果你怀疑还有旧残留，也可以再检查一下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/Library/LaunchAgents | grep openclaw</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除-Mac-App"><a href="#删除-Mac-App" class="headerlink" title="删除 Mac App"></a>删除 Mac App</h3><p>如果你安装过 macOS 图形版 App，还要把 App 本体删掉：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /Applications/OpenClaw.app</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mac-上建议再检查这几个位置"><a href="#Mac-上建议再检查这几个位置" class="headerlink" title="Mac 上建议再检查这几个位置"></a>Mac 上建议再检查这几个位置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/Library/LaunchAgents | grep openclaw</span><br></pre></td></tr></table></figure>
-
-<p>如果这两处都没有了，基本就算卸干净了。</p>
+<p>你这个博客现在的方向，其实特别适合把 OpenClaw设成这种组合型角色：</p>
+<ul>
+<li>技术教程整理助手</li>
+<li>YouTube 选题和脚本助手</li>
+<li>博客内容归档助手</li>
+<li>工作流和提效助手</li>
+</ul>
+<p>角色越清楚，OpenClaw 后面越容易稳定。</p>
 <hr>
-<h2 id="Linux-上如何彻底卸载-OpenClaw"><a href="#Linux-上如何彻底卸载-OpenClaw" class="headerlink" title="Linux 上如何彻底卸载 OpenClaw"></a>Linux 上如何彻底卸载 OpenClaw</h2><p>Linux 主要关注的是 <code>systemd --user</code> 服务。</p>
-<h3 id="正常情况"><a href="#正常情况" class="headerlink" title="正常情况"></a>正常情况</h3><p>先执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
-
-<p>如果失败，再手动做下面这些。</p>
-<h3 id="手动移除-systemd-user-unit"><a href="#手动移除-systemd-user-unit" class="headerlink" title="手动移除 systemd user unit"></a>手动移除 systemd user unit</h3><p>OpenClaw 默认服务名通常是：</p>
+<h2 id="第二步：写好-AGENTS-md，这决定它怎么做事"><a href="#第二步：写好-AGENTS-md，这决定它怎么做事" class="headerlink" title="第二步：写好 AGENTS.md，这决定它怎么做事"></a>第二步：写好 AGENTS.md，这决定它怎么做事</h2><p>按官方文档，<code>AGENTS.md</code> 是 OpenClaw 每次会加载的核心行为说明文件。</p>
+<p>你可以把它理解成：</p>
 <ul>
-<li><code>openclaw-gateway.service</code></li>
-<li>如果你用了 profile，可能是 <code>openclaw-gateway-&lt;profile&gt;.service</code></li>
+<li>工作守则</li>
+<li>行为规范</li>
+<li>做事优先级</li>
 </ul>
-<p>执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user <span class="built_in">disable</span> --now openclaw-gateway.service</span><br><span class="line"><span class="built_in">rm</span> -f ~/.config/systemd/user/openclaw-gateway.service</span><br><span class="line">systemctl --user daemon-reload</span><br></pre></td></tr></table></figure>
+<p>例如，你可以在里面写：</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># AGENTS.md</span></span><br><span class="line"></span><br><span class="line">你是我的长期个人助理，主要负责：</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 帮我整理技术教程思路</span><br><span class="line"><span class="bullet">2.</span> 帮我把博客内容转成 YouTube 视频选题</span><br><span class="line"><span class="bullet">3.</span> 帮我记录长期可复用的信息</span><br><span class="line"><span class="bullet">4.</span> 帮我保持输出风格统一</span><br><span class="line"></span><br><span class="line">工作原则：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 优先给出可执行方案，而不是空泛建议</span><br><span class="line"><span class="bullet">-</span> 输出尽量结构清晰，适合整理成文章或视频脚本</span><br><span class="line"><span class="bullet">-</span> 如果是长期偏好、固定规则、频道定位等信息，要主动写入 MEMORY.md</span><br><span class="line"><span class="bullet">-</span> 如果涉及文件组织，优先放进 workspace 内统一管理</span><br><span class="line"><span class="bullet">-</span> 不要把敏感信息写入公开仓库</span><br></pre></td></tr></table></figure>
 
-<p>然后删除状态目录和工作区：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw</span><br><span class="line"><span class="built_in">rm</span> -rf ~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
-
-<p>最后删除全局 CLI：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br></pre></td></tr></table></figure>
-
-<h3 id="Linux-上建议检查"><a href="#Linux-上建议检查" class="headerlink" title="Linux 上建议检查"></a>Linux 上建议检查</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user status openclaw-gateway.service</span><br><span class="line"><span class="built_in">ls</span> -la ~/.config/systemd/user | grep openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br></pre></td></tr></table></figure>
-
-<p>如果服务查不到、目录也没了，就说明基本清理完成。</p>
+<p>这类规则写进去以后，OpenClaw 每次启动都会更稳定地按这个角色来工作。</p>
 <hr>
-<h2 id="Windows-上如何彻底卸载-OpenClaw"><a href="#Windows-上如何彻底卸载-OpenClaw" class="headerlink" title="Windows 上如何彻底卸载 OpenClaw"></a>Windows 上如何彻底卸载 OpenClaw</h2><p>Windows 主要关注的是：</p>
+<h2 id="第三步：写好-SOUL-md，这决定它“像谁”"><a href="#第三步：写好-SOUL-md，这决定它“像谁”" class="headerlink" title="第三步：写好 SOUL.md，这决定它“像谁”"></a>第三步：写好 SOUL.md，这决定它“像谁”</h2><p>如果说 <code>AGENTS.md</code> 决定它怎么做事，那 <code>SOUL.md</code> 决定它是什么风格的人。</p>
+<p>它更像是：</p>
 <ul>
-<li>Scheduled Task 计划任务</li>
-<li>用户目录下的状态文件</li>
-<li>你装 OpenClaw 的全局包管理器</li>
+<li>性格</li>
+<li>语气</li>
+<li>边界</li>
+<li>沟通方式</li>
 </ul>
-<h3 id="正常情况-1"><a href="#正常情况-1" class="headerlink" title="正常情况"></a>正常情况</h3><p>如果你在 PowerShell 或终端里还能执行 <code>openclaw</code>，优先跑：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+<p>例如你可以写：</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># SOUL.md</span></span><br><span class="line"></span><br><span class="line">你是一个冷静、可靠、执行力强的个人助理。</span><br><span class="line"></span><br><span class="line">风格要求：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 说话简洁，不油腻</span><br><span class="line"><span class="bullet">-</span> 不说空话，不假大空</span><br><span class="line"><span class="bullet">-</span> 优先给结论和操作步骤</span><br><span class="line"><span class="bullet">-</span> 对内容创作要有商业化和引流意识</span><br><span class="line"><span class="bullet">-</span> 对技术教程要强调真实可操作性</span><br></pre></td></tr></table></figure>
 
-<p>如果想无交互全删：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">openclaw uninstall <span class="literal">--all</span> <span class="literal">--yes</span> <span class="literal">--non-interactive</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="CLI-没了但任务还在"><a href="#CLI-没了但任务还在" class="headerlink" title="CLI 没了但任务还在"></a>CLI 没了但任务还在</h3><p>官方文档给出的默认计划任务名通常是：</p>
-<ul>
-<li><code>OpenClaw Gateway</code></li>
-<li>如果用了 profile，可能是 <code>OpenClaw Gateway (&lt;profile&gt;)</code></li>
-</ul>
-<p>可以手动执行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">schtasks /Delete /F /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw\gateway.cmd&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后删除状态目录：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Recurse</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>最后删除全局 CLI。若你是 npm 安装：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> <span class="literal">-g</span> openclaw</span><br></pre></td></tr></table></figure>
-
+<p>这样它后面帮你写文章、写脚本、做总结时，就会更接近你真正想要的风格。</p>
 <hr>
-<h2 id="如果你用了-profile，要特别注意"><a href="#如果你用了-profile，要特别注意" class="headerlink" title="如果你用了 profile，要特别注意"></a>如果你用了 profile，要特别注意</h2><p>官方文档特别提醒了一个容易漏掉的点：</p>
-<p>如果你使用过 <code>--profile</code> 或 <code>OPENCLAW_PROFILE</code>，状态目录和服务名可能都不是默认值。</p>
-<p>比如可能会变成：</p>
+<h2 id="第四步：写好-USER-md，让它知道“你是谁”"><a href="#第四步：写好-USER-md，让它知道“你是谁”" class="headerlink" title="第四步：写好 USER.md，让它知道“你是谁”"></a>第四步：写好 USER.md，让它知道“你是谁”</h2><p><code>USER.md</code> 的作用非常关键，但很多人会忽略。</p>
+<p>它的作用是让 OpenClaw 知道：</p>
 <ul>
-<li><code>~/.openclaw-&lt;profile&gt;</code></li>
-<li><code>ai.openclaw.&lt;profile&gt;</code></li>
-<li><code>openclaw-gateway-&lt;profile&gt;.service</code></li>
-<li><code>OpenClaw Gateway (&lt;profile&gt;)</code></li>
+<li>你是谁</li>
+<li>你做什么</li>
+<li>你的目标是什么</li>
+<li>你的偏好是什么</li>
 </ul>
-<p>这种情况下，你要把默认名字替换成你自己的 profile 名，再删一次对应文件和服务。</p>
-<hr>
-<h2 id="如果你是从源码运行的"><a href="#如果你是从源码运行的" class="headerlink" title="如果你是从源码运行的"></a>如果你是从源码运行的</h2><p>有些人不是通过安装脚本或全局 npm 装的，而是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/openclaw/openclaw.git</span><br></pre></td></tr></table></figure>
+<p>对你来说，可以写成这样：</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># USER.md</span></span><br><span class="line"></span><br><span class="line">用户是一个技术内容创作者，主要做：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> VPS 搭建和优化</span><br><span class="line"><span class="bullet">-</span> AI 工具教程</span><br><span class="line"><span class="bullet">-</span> OpenClaw / Canva / AI 视频制作等实操内容</span><br><span class="line"><span class="bullet">-</span> 博客引流到 YouTube 频道</span><br><span class="line"></span><br><span class="line">偏好：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 希望内容尽量实用、能直接跟做</span><br><span class="line"><span class="bullet">-</span> 喜欢偏赛博朋克、科技感的视觉风格</span><br><span class="line"><span class="bullet">-</span> 博客文章希望兼顾 SEO 和转化</span><br><span class="line"><span class="bullet">-</span> 重点目标是让博客流量转化为 YouTube 频道观看和订阅</span><br></pre></td></tr></table></figure>
 
-<p>然后在仓库里直接跑。</p>
-<p>这种情况官方建议顺序是：</p>
+<p>这会让 OpenClaw 后面给你的建议更贴近现实，而不是每次都从零猜你是谁。</p>
+<hr>
+<h2 id="第五步：让它学会“记住长期信息”"><a href="#第五步：让它学会“记住长期信息”" class="headerlink" title="第五步：让它学会“记住长期信息”"></a>第五步：让它学会“记住长期信息”</h2><p>这是 OpenClaw 变成个人助理最关键的一步。</p>
+<p>按官方 FAQ，真正重要的长期偏好，不应该只存在聊天记录里，而应该写进：</p>
+<ul>
+<li><code>MEMORY.md</code></li>
+<li><code>memory/YYYY-MM-DD.md</code></li>
+</ul>
+<h3 id="MEMORY-md-适合放什么"><a href="#MEMORY-md-适合放什么" class="headerlink" title="MEMORY.md 适合放什么"></a>MEMORY.md 适合放什么</h3><p>适合放长期稳定不怎么变的信息，比如：</p>
+<ul>
+<li>你的频道定位</li>
+<li>你的内容主线</li>
+<li>你的写作风格</li>
+<li>你的工作偏好</li>
+<li>你的固定工作流程</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"><span class="section"># MEMORY.md</span></span><br><span class="line"></span><br><span class="line">长期信息：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 博客主要目的是承接搜索流量，并引导到 YouTube</span><br><span class="line"><span class="bullet">-</span> 文章内容以实操教程为主，避免空泛内容</span><br><span class="line"><span class="bullet">-</span> 风格偏科技感、赛博朋克、执行导向</span><br><span class="line"><span class="bullet">-</span> 优先做对搜索友好的长文，再衍生视频脚本</span><br><span class="line"><span class="bullet">-</span> 适合持续深耕的主题：VPS、AI 工具、OpenClaw、Canva、AI 视频制作</span><br></pre></td></tr></table></figure>
+
+<h3 id="每日-memory-适合放什么"><a href="#每日-memory-适合放什么" class="headerlink" title="每日 memory 适合放什么"></a>每日 memory 适合放什么</h3><p>适合放短期发生但后面可能有用的信息，比如：</p>
+<ul>
+<li>今天写了什么文章</li>
+<li>最近在推进哪些专题</li>
+<li>最近的内容方向调整</li>
+<li>近期要优化的页面</li>
+</ul>
+<p>这样 OpenClaw 才会慢慢从“临时帮手”变成“有连续性的助理”。</p>
+<hr>
+<h2 id="第六步：给它一套适合你的技能包"><a href="#第六步：给它一套适合你的技能包" class="headerlink" title="第六步：给它一套适合你的技能包"></a>第六步：给它一套适合你的技能包</h2><p>按官方文档，OpenClaw 支持 <code>skills</code>，而且优先级是：</p>
 <ol>
-<li>先卸载网关服务</li>
-<li>再删除源码仓库目录</li>
-<li>再删除状态目录和工作区</li>
+<li>workspace 内的 <code>skills/</code></li>
+<li><code>~/.openclaw/skills</code></li>
+<li>系统自带技能</li>
 </ol>
-<p>也就是说，不要先把仓库删了，结果服务还在后台跑。</p>
-<hr>
-<h2 id="怎么确认已经卸载干净了"><a href="#怎么确认已经卸载干净了" class="headerlink" title="怎么确认已经卸载干净了"></a>怎么确认已经卸载干净了</h2><p>你可以按下面这个清单检查：</p>
+<p>这意味着你完全可以给它做一套“只服务于你当前工作流”的技能。</p>
+<p>比如你很适合准备这些技能：</p>
 <ul>
-<li><code>openclaw</code> 命令已经不可用，或者版本命令找不到</li>
-<li>本地没有 OpenClaw 网关服务在跑</li>
-<li><code>~/.openclaw</code> 或对应 profile 目录已经删除</li>
-<li>工作区目录已经删除</li>
-<li>macOS 的 <code>LaunchAgents</code> &#x2F; Linux 的 <code>systemd user unit</code> &#x2F; Windows 的计划任务已经删除</li>
-<li>如果安装过 Mac App，<code>/Applications/OpenClaw.app</code> 也已经删掉</li>
+<li><p><code>blog-seo</code><br>作用：把文章整理成更适合 SEO 的结构</p>
+</li>
+<li><p><code>youtube-script</code><br>作用：把博客文章转成视频脚本</p>
+</li>
+<li><p><code>thumbnail-ideas</code><br>作用：根据文章标题输出封面文案和视觉建议</p>
+</li>
+<li><p><code>topic-research</code><br>作用：围绕 VPS、AI 工具做选题延展</p>
+</li>
 </ul>
-<p>如果你想简单自检，可以试试这些命令。</p>
-<p>macOS &#x2F; Linux：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">which</span> openclaw</span><br><span class="line"><span class="built_in">ls</span> -la ~/.openclaw</span><br></pre></td></tr></table></figure>
-
-<p>Windows PowerShell：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Get-Command</span> openclaw</span><br><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.openclaw&quot;</span></span><br></pre></td></tr></table></figure>
-
+<p>如果你把这些技能准备好，OpenClaw 的效率会明显上一个层级。</p>
 <hr>
-<h2 id="最后给普通用户的建议"><a href="#最后给普通用户的建议" class="headerlink" title="最后给普通用户的建议"></a>最后给普通用户的建议</h2><p>如果你只是本地电脑不用 OpenClaw 了，我建议你按这个顺序做：</p>
+<h2 id="第七步：把-OpenClaw-变成“博客-YouTube-助理”"><a href="#第七步：把-OpenClaw-变成“博客-YouTube-助理”" class="headerlink" title="第七步：把 OpenClaw 变成“博客 + YouTube 助理”"></a>第七步：把 OpenClaw 变成“博客 + YouTube 助理”</h2><p>你现在最适合的，其实不是泛用型助手，而是一个围绕内容创作的专用助理。</p>
+<p>例如你可以让它负责下面这条工作流：</p>
+<h3 id="场景一：从博客文章延伸视频"><a href="#场景一：从博客文章延伸视频" class="headerlink" title="场景一：从博客文章延伸视频"></a>场景一：从博客文章延伸视频</h3><p>流程可以是：</p>
 <ol>
-<li>先 <code>openclaw backup create</code></li>
-<li>再 <code>openclaw uninstall</code></li>
-<li>如果还有残留，再按平台手动清理</li>
-<li>最后再检查状态目录、服务和 CLI 是否还存在</li>
+<li>你先写一篇博客长文</li>
+<li>OpenClaw 自动提炼重点</li>
+<li>输出 YouTube 视频标题</li>
+<li>输出缩略图文案</li>
+<li>输出 Shorts 版短脚本</li>
+<li>输出视频简介和标签建议</li>
 </ol>
-<p>这是最稳、最不容易误删其他文件的方式。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw 官方目前给出的卸载路径其实很清楚：</p>
+<h3 id="场景二：从视频想法反推博客"><a href="#场景二：从视频想法反推博客" class="headerlink" title="场景二：从视频想法反推博客"></a>场景二：从视频想法反推博客</h3><p>流程可以是：</p>
+<ol>
+<li>你先有一个 YouTube 选题</li>
+<li>OpenClaw 生成博客文章大纲</li>
+<li>再扩展成 SEO 长文</li>
+<li>最后同步生成社媒短文案</li>
+</ol>
+<h3 id="场景三：做长期内容规划"><a href="#场景三：做长期内容规划" class="headerlink" title="场景三：做长期内容规划"></a>场景三：做长期内容规划</h3><p>你还可以让它维护一份：</p>
 <ul>
-<li>优先用 <code>openclaw uninstall</code></li>
-<li>卸不干净再手动删服务、状态目录、工作区和 CLI</li>
-<li>如果用了 profile 或自定义配置路径，要额外检查对应目录</li>
+<li>选题池</li>
+<li>已写文章列表</li>
+<li>可视频化文章列表</li>
+<li>已发布视频列表</li>
+<li>下周待做内容</li>
 </ul>
+<p>这时候它就已经很像真正的内容助理了。</p>
+<hr>
+<h2 id="第八步：给它明确的固定任务模板"><a href="#第八步：给它明确的固定任务模板" class="headerlink" title="第八步：给它明确的固定任务模板"></a>第八步：给它明确的固定任务模板</h2><p>OpenClaw 要稳定，不只靠人格设定，还要靠任务模板。</p>
+<p>例如你可以长期固定这几种请求方式：</p>
+<h3 id="模板一：文章转视频"><a href="#模板一：文章转视频" class="headerlink" title="模板一：文章转视频"></a>模板一：文章转视频</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">请把这篇博客文章整理成一条 3 分钟 YouTube 视频脚本，并给出缩略图文案、开头 hook 和结尾 CTA。</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板二：选题延展"><a href="#模板二：选题延展" class="headerlink" title="模板二：选题延展"></a>模板二：选题延展</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">基于我最近写的 VPS 和 AI 工具文章，再给我 10 个适合搜索流量和视频转化的选题。</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板三：长期记录"><a href="#模板三：长期记录" class="headerlink" title="模板三：长期记录"></a>模板三：长期记录</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">把这次确认过的长期规则写进 MEMORY.md，并整理成一条简洁记录。</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板四：统一风格输出"><a href="#模板四：统一风格输出" class="headerlink" title="模板四：统一风格输出"></a>模板四：统一风格输出</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">按我当前博客风格，帮我输出一篇实操型长文，重点兼顾 SEO、转化和可执行性。</span><br></pre></td></tr></table></figure>
+
+<p>任务模板越稳定，它后面越像“懂流程的助理”，而不是每次都随机发挥。</p>
+<hr>
+<h2 id="第九步：把-workspace-当成你的“第二大脑”"><a href="#第九步：把-workspace-当成你的“第二大脑”" class="headerlink" title="第九步：把 workspace 当成你的“第二大脑”"></a>第九步：把 workspace 当成你的“第二大脑”</h2><p>OpenClaw 官方文档对 workspace 的定义很明确：</p>
+<p>它是 agent 的 home，也是默认工作目录和长期上下文锚点。</p>
+<p>所以你最好的使用方式不是把它当临时缓存，而是把它当成第二大脑。</p>
+<p>你可以在里面长期维护：</p>
+<ul>
+<li>内容规划</li>
+<li>视频脚本草稿</li>
+<li>博客模板</li>
+<li>发布清单</li>
+<li>常见 prompt</li>
+<li>品牌风格说明</li>
+</ul>
+<p>这样 OpenClaw 每次工作时，就不是只基于当前聊天，而是基于你积累下来的整套体系。</p>
+<hr>
+<h2 id="第十步：哪些东西不要让它乱记"><a href="#第十步：哪些东西不要让它乱记" class="headerlink" title="第十步：哪些东西不要让它乱记"></a>第十步：哪些东西不要让它乱记</h2><p>OpenClaw 的记忆很有用，但不是所有东西都该写进去。</p>
+<p>不建议写进长期记忆的内容包括：</p>
+<ul>
+<li>API Key</li>
+<li>密码</li>
+<li>OAuth token</li>
+<li>公开仓库不该出现的敏感信息</li>
+<li>临时、很快过期的小事</li>
+</ul>
+<p>按官方文档，这些敏感内容应该留在：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">~/.openclaw/</span><br></pre></td></tr></table></figure>
+
+<p>而不是 workspace 仓库里。</p>
+<p>这一点很重要，因为官方也建议把 workspace 放进私有 Git 仓库做备份。</p>
+<hr>
+<h2 id="一个真正可执行的入门配置方案"><a href="#一个真正可执行的入门配置方案" class="headerlink" title="一个真正可执行的入门配置方案"></a>一个真正可执行的入门配置方案</h2><p>如果你现在就想把 OpenClaw 调成自己的助理，我建议按这个顺序做：</p>
+<ol>
+<li>先确认 workspace 路径统一</li>
+<li>写 <code>AGENTS.md</code></li>
+<li>写 <code>SOUL.md</code></li>
+<li>写 <code>USER.md</code></li>
+<li>建 <code>MEMORY.md</code></li>
+<li>创建 <code>skills/</code></li>
+<li>让它开始围绕博客和 YouTube 为你工作</li>
+</ol>
+<p>最小可执行版本可以是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">workspace/</span><br><span class="line">  AGENTS.md</span><br><span class="line">  SOUL.md</span><br><span class="line">  USER.md</span><br><span class="line">  MEMORY.md</span><br><span class="line">  skills/</span><br><span class="line">  memory/</span><br></pre></td></tr></table></figure>
+
+<p>只要这套东西立起来，OpenClaw 的“助理感”就会明显提高。</p>
+<hr>
+<h2 id="新手最容易踩的坑"><a href="#新手最容易踩的坑" class="headerlink" title="新手最容易踩的坑"></a>新手最容易踩的坑</h2><h2 id="1-只聊天，不写规则"><a href="#1-只聊天，不写规则" class="headerlink" title="1. 只聊天，不写规则"></a>1. 只聊天，不写规则</h2><p>这样 OpenClaw 很难稳定。</p>
+<h2 id="2-希望它自动记住一切"><a href="#2-希望它自动记住一切" class="headerlink" title="2. 希望它自动记住一切"></a>2. 希望它自动记住一切</h2><p>真正重要的内容，要主动写入 <code>MEMORY.md</code>。</p>
+<h2 id="3-workspace-混乱"><a href="#3-workspace-混乱" class="headerlink" title="3. workspace 混乱"></a>3. workspace 混乱</h2><p>如果同时存在多个 workspace，很容易出现状态漂移。</p>
+<h2 id="4-不做技能沉淀"><a href="#4-不做技能沉淀" class="headerlink" title="4. 不做技能沉淀"></a>4. 不做技能沉淀</h2><p>没有 skills，它就更像通用 AI；有了 skills，它才更像专用助理。</p>
+<h2 id="5-不把任务模板固定下来"><a href="#5-不把任务模板固定下来" class="headerlink" title="5. 不把任务模板固定下来"></a>5. 不把任务模板固定下来</h2><p>同样的问题，每次换一种说法，它的输出稳定性就会变差。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw 要变成你的助理，不靠“聊得久”，而靠你有没有给它搭好一套长期可持续的工作系统。</p>
+<p>最重要的不是某个神奇命令，而是这套结构：</p>
+<ul>
+<li><code>workspace</code> 作为长期工作环境</li>
+<li><code>AGENTS.md</code> 规定做事方式</li>
+<li><code>SOUL.md</code> 规定风格和边界</li>
+<li><code>USER.md</code> 规定你是谁</li>
+<li><code>MEMORY.md</code> 保存长期信息</li>
+<li><code>skills/</code> 让它更像专用助理</li>
+</ul>
+<p>一旦这套结构搭起来，OpenClaw 就不再只是“会聊天的 AI”，而会越来越像一个真正懂你工作方式的长期助手。</p>
 <hr>
 <h2 id="OpenClaw-系列文章推荐"><a href="#OpenClaw-系列文章推荐" class="headerlink" title="OpenClaw 系列文章推荐"></a>OpenClaw 系列文章推荐</h2><ul>
 <li><a href="/2025/07/01/opencla-claude-api-tutorial/">新手零基础搭建 OpenClaw 详细教程，并接入各大 AI 厂商的 API</a></li>
 <li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac/">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南</a></li>
-<li><a href="/2026/03/26/%E5%A6%82%E4%BD%95%E8%AE%A9OpenClaw%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8A%A9%E7%90%86%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">如何让 OpenClaw 成为自己的助理详细教程</a></li>
+<li><a href="/2026/03/26/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%8D%B8%E8%BD%BDOpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">本地电脑卸载 OpenClaw 详细教程：macOS、Windows、Linux 完整清理指南</a></li>
 <li><a href="/2026/03/27/OpenClaw%E7%9A%84AGENTS-SOUL-USER%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%86%99%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">OpenClaw 的 AGENTS.md、SOUL.md、USER.md 应该怎么写详细教程</a></li>
 <li><a href="/2026/03/27/OpenClaw%E5%A6%82%E4%BD%95%E7%94%A8%E4%BA%8E%E5%8D%9A%E5%AE%A2%E9%80%89%E9%A2%98YouTube%E8%84%9A%E6%9C%AC%E5%92%8C%E5%86%85%E5%AE%B9%E8%87%AA%E5%8A%A8%E5%8C%96/">OpenClaw 如何用于博客选题、YouTube 脚本和内容自动化</a></li>
 <li><a href="/2026/03/27/%E9%80%82%E5%90%88%E6%88%91%E5%8D%9A%E5%AE%A2%E5%92%8CYouTube%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84OpenClaw%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF/">适合我博客和 YouTube 工作流的 OpenClaw 配置模板</a></li>
@@ -2509,73 +2680,9 @@
       <tags>
         <tag>AI工具</tag>
         <tag>OpenClaw</tag>
-        <tag>Linux</tag>
-        <tag>卸载教程</tag>
-        <tag>macOS</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
-<blockquote>
-<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
-</blockquote>
-<hr>
-<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
-<hr>
-<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
-<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
-<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
-</ul>
-<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
-<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
-<hr>
-<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
-<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
-<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
-<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
-<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
-</ol>
-<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
-<hr>
-<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
-<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
-<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
-<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
-<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
-</ol>
-<hr>
-<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
-<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
-<p><strong>Q2：提示 “Read-only file system”</strong></p>
-<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
-<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
-<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
-<div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">
-    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>
-    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>
-    <div style="display: flex; gap: 10px;">
-        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>
-        <a href="/docs/software-toolbox/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>
-    </div>
-</div>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-      </categories>
-      <tags>
-        <tag>macOS</tag>
-        <tag>MDM</tag>
-        <tag>系统工具</tag>
+        <tag>智能助理</tag>
+        <tag>自动化</tag>
+        <tag>工作流</tag>
       </tags>
   </entry>
   <entry>
@@ -2839,6 +2946,69 @@
         <tag>安装教程</tag>
         <tag>macOS</tag>
         <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">
+    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>
+    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>
+    <div style="display: flex; gap: 10px;">
+        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>
+        <a href="/docs/software-toolbox/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>
+    </div>
+</div>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>MDM</tag>
+        <tag>系统工具</tag>
       </tags>
   </entry>
   <entry>
