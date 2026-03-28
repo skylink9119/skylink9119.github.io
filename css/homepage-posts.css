@@ -224,6 +224,12 @@
 @media (max-width: 768px) {
   #recent-posts .recent-post-item {
     border-radius: 22px !important;
+    box-shadow:
+      0 12px 26px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    will-change: auto;
   }
 
   #recent-posts .recent-post-item > .recent-post-info,
@@ -244,5 +250,26 @@
 
   #recent-posts .recent-post-item > .recent-post-info > .content {
     font-size: 0.89rem !important;
+  }
+}
+
+@media (max-width: 900px), (pointer: coarse) {
+  #recent-posts .recent-post-item {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+    will-change: auto;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  #recent-posts .recent-post-item::before,
+  #recent-posts .recent-post-item::after {
+    opacity: 0.7;
+  }
+
+  #recent-posts .recent-post-item:hover {
+    transform: none !important;
   }
 }

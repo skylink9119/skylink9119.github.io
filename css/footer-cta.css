@@ -2,9 +2,13 @@
 
 #footer {
   background:
-    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.16), transparent 24%),
-    radial-gradient(circle at 85% 10%, rgba(244, 114, 182, 0.18), transparent 24%),
-    linear-gradient(180deg, #08101f 0%, #04070f 100%) !important;
+    radial-gradient(circle at 15% 0%, rgba(244, 114, 182, 0.14), transparent 24%),
+    radial-gradient(circle at 85% 10%, rgba(245, 158, 11, 0.14), transparent 24%),
+    linear-gradient(180deg, #120d0c 0%, #070505 100%) !important;
+}
+
+[data-theme="light"] #footer {
+  background: #ffffff !important;
 }
 
 #footer .footer-cta {
@@ -19,12 +23,56 @@
   inset: 28px 18px 0;
   border-radius: 28px;
   background:
-    linear-gradient(135deg, rgba(34, 211, 238, 0.12), rgba(168, 85, 247, 0.08) 48%, rgba(244, 114, 182, 0.12)),
-    rgba(6, 10, 20, 0.82);
-  border: 1px solid rgba(34, 211, 238, 0.14);
+    linear-gradient(135deg, rgba(244, 114, 182, 0.12), rgba(245, 158, 11, 0.08) 48%, rgba(255, 236, 214, 0.08)),
+    rgba(24, 16, 16, 0.84);
+  border: 1px solid rgba(245, 158, 11, 0.14);
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.34),
     inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="light"] #footer .footer-cta__glow {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.96)),
+    rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="light"] #footer .footer-cta__eyebrow {
+  color: #64748b;
+}
+
+[data-theme="light"] #footer .footer-cta__title {
+  color: #0f172a;
+}
+
+[data-theme="light"] #footer .footer-cta__desc {
+  color: #475569;
+}
+
+[data-theme="light"] #footer .footer-cta__meta-item {
+  border-color: rgba(15, 23, 42, 0.08);
+  background: rgba(148, 163, 184, 0.08);
+  color: #475569;
+}
+
+[data-theme="light"] #footer .footer-cta__button--secondary {
+  color: #334155;
+  border-color: rgba(15, 23, 42, 0.08);
+  background: rgba(148, 163, 184, 0.12);
+}
+
+[data-theme="light"] #footer .footer-cta__button--secondary:hover {
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(148, 163, 184, 0.18);
+}
+
+[data-theme="light"] #footer .footer-cta__hint {
+  color: #64748b;
 }
 
 #footer .footer-cta__content {

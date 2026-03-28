@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-03-27T15:40:00.000Z</updated>
+  <updated>2026-03-28T15:18:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</title>
+    <link href="https://skylink9119.github.io/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/"/>
+    <id>https://skylink9119.github.io/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/</id>
+    <published>2026-03-28T15:18:00.000Z</published>
+    <updated>2026-03-28T15:18:00.000Z</updated>
+    
+    
+    <summary type="html">一篇专门给 Mac 新手看的 OpenClaw 排错教程，解决 Safari 无法打开 127.0.0.1:18789、Control UI 能开但聊天发不出去、会话模型被错误覆盖等常见问题。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
+    
+    <category term="Safari" scheme="https://skylink9119.github.io/tags/Safari/"/>
+    
+    <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南</title>
+    <link href="https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/"/>
+    <id>https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/</id>
+    <published>2026-03-28T11:28:00.000Z</published>
+    <updated>2026-03-28T11:28:00.000Z</updated>
+    
+    
+    <summary type="html">按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明本地电脑怎样把 OpenClaw 服务、状态、工作区、CLI 与残留配置清理干净。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+    <category term="卸载教程" scheme="https://skylink9119.github.io/tags/%E5%8D%B8%E8%BD%BD%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="Windows" scheme="https://skylink9119.github.io/tags/Windows/"/>
+    
+  </entry>
   
   <entry>
     <title>本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</title>
@@ -31,9 +89,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
-    
     <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -60,9 +118,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
-    
     <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -114,11 +172,11 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
     <category term="AI视频" scheme="https://skylink9119.github.io/tags/AI%E8%A7%86%E9%A2%91/"/>
     
     <category term="短视频制作" scheme="https://skylink9119.github.io/tags/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C/"/>
-    
-    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
     
     <category term="自动配音" scheme="https://skylink9119.github.io/tags/%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3/"/>
     
@@ -183,7 +241,7 @@
     <link href="https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
     <id>https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</id>
     <published>2026-03-03T16:00:00.000Z</published>
-    <updated>2026-03-26T15:28:21.143Z</updated>
+    <updated>2026-03-28T15:31:18.978Z</updated>
     
     
     <summary type="html">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</summary>

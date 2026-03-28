@@ -1,0 +1,588 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="OpenClaw卸载教程,OpenClaw完全卸载,OpenClaw删除干净,OpenClaw Windows卸载,OpenClaw Mac卸载,OpenClaw清理残留"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明本地电脑怎样把 OpenClaw 服务、状态、工作区、CLI 与残留配置清理干净。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南">
+<meta property="og:url" content="https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明本地电脑怎样把 OpenClaw 服务、状态、工作区、CLI 与残留配置清理干净。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-03-28T11:28:00.000Z">
+<meta property="article:modified_time" content="2026-03-28T11:28:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="AI工具">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="卸载教程">
+<meta property="article:tag" content="新手教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-03-28T11:28:00.000Z"><meta property="article:modified_time" content="2026-03-28T11:28:00.000Z"><meta property="article:section" content="AI工具"><meta property="article:tag" content="OpenClaw"><meta property="article:tag" content="AI工具"><meta property="article:tag" content="新手教程"><meta property="article:tag" content="macOS"><meta property="article:tag" content="卸载教程"><meta property="article:tag" content="Windows"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南",
+  "description": "按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明本地电脑怎样把 OpenClaw 服务、状态、工作区、CLI 与残留配置清理干净。",
+  "url": "https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-03-28T11:28:00.000Z",
+  "dateModified": "2026-03-28T11:28:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "OpenClaw卸载教程,OpenClaw完全卸载,OpenClaw删除干净,OpenClaw Windows卸载,OpenClaw Mac卸载,OpenClaw清理残留",
+  "articleSection": [
+    "AI工具"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #140b10 0%, #4a1022 28%, #b91c1c 58%, #f59e0b 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-28T11:28:00.000Z" title="发表于 2026-03-28 19:28:00">2026-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-28T11:28:00.000Z" title="更新于 2026-03-28 19:28:00">2026-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-03-28 19:28:00&quot;}" hidden></div><div class="openclaw-series-inline">
+  <div class="oc-series__label">OpenClaw Series</div>
+  <h3>这篇文章属于 OpenClaw 维护与清理实战篇</h3>
+  <p>如果你准备重装、换机器，或者想把本机上的 OpenClaw 痕迹彻底清掉，这篇就按“先备份、再停服务、再删残留、最后验收”的顺序带你做。</p>
+  <div class="oc-series__actions">
+    <a class="oc-series__btn oc-series__btn--primary" href="/docs/openclaw/">查看 OpenClaw 专题</a>
+    <a class="oc-series__btn oc-series__btn--secondary" href="/archives/">返回文章归档</a>
+  </div>
+</div>
+
+<blockquote>
+<p>本文按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI <code>uninstall</code>、<code>backup</code>、Environment、FAQ 与 Windows 文档整理。为了避免“命令执行了但机器上还残留服务、状态目录、工作区或 CLI”的情况，本文把“普通卸载”和“真正完全卸载干净”分开讲。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="先说结论：真正“卸载干净”不是只跑一条命令"><a href="#先说结论：真正“卸载干净”不是只跑一条命令" class="headerlink" title="先说结论：真正“卸载干净”不是只跑一条命令"></a>先说结论：真正“卸载干净”不是只跑一条命令</h2><p>很多人以为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw uninstall</span><br></pre></td></tr></table></figure>
+
+<p>执行完就算彻底卸载了。</p>
+<p>但截至 2026 年 3 月 28 日，官方文档需要连起来看才完整：</p>
+<ul>
+<li>CLI <code>uninstall</code> 命令页把它定义为“卸载 Gateway 服务 + 本地数据”，并明确说明 <code>CLI remains</code></li>
+<li>安装维护页的“Uninstall”又把完整离场拆成服务、状态目录、工作区、CLI 安装、macOS App 这几层</li>
+</ul>
+<p>也就是说，如果你的目标只是“把当前 Gateway 和本地数据清掉”，<code>openclaw uninstall</code> 很有用。<br>但如果你的目标是“以后这台机器上基本不再留 OpenClaw 痕迹”，你至少要清理 4 层：</p>
+<ul>
+<li>Gateway 服务和后台进程</li>
+<li>状态目录、配置文件、<code>.env</code>、登录态、会话、插件和渠道残留</li>
+<li>工作区里的 agent 文件，例如 <code>MEMORY.md</code>、<code>USER.md</code>、skills 笔记等</li>
+<li>CLI 本体、macOS App，或者你自己 <code>git clone</code> 下来的源码目录</li>
+</ul>
+<p>如果这 4 层你只清了前 1 层，后面经常会出现：</p>
+<ul>
+<li>重装后还是读到旧配置</li>
+<li>端口又被旧服务占住</li>
+<li>浏览器里还是连到旧 Gateway</li>
+<li>Telegram &#x2F; Discord &#x2F; WhatsApp 登录态没真正清掉</li>
+<li>命令行里还可以执行 <code>openclaw</code></li>
+</ul>
+<p>所以这篇文章的目标不是“告诉你一条命令”，而是让你做完以后，真的能确认这台电脑已经卸干净。</p>
+<hr>
+<h2 id="卸载前先做-2-件事：备份和找路径"><a href="#卸载前先做-2-件事：备份和找路径" class="headerlink" title="卸载前先做 2 件事：备份和找路径"></a>卸载前先做 2 件事：备份和找路径</h2><p>如果你只是想重装，不想丢掉历史配置、聊天上下文、渠道登录和工作区内容，先备份。</p>
+<h3 id="1-先备份，别把可恢复的数据一起删了"><a href="#1-先备份，别把可恢复的数据一起删了" class="headerlink" title="1. 先备份，别把可恢复的数据一起删了"></a>1. 先备份，别把可恢复的数据一起删了</h3><p>官方当前提供了内置备份命令，最稳的是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw backup create --verify</span><br></pre></td></tr></table></figure>
+
+<p>如果你只想备份配置，不想把工作区一并打包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw backup create --only-config</span><br></pre></td></tr></table></figure>
+
+<p>如果你的配置已经坏了，但你还想先把状态和凭据保住：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw backup create --no-include-workspace</span><br></pre></td></tr></table></figure>
+
+<p>这一步尤其适合这几类人：</p>
+<ul>
+<li>你后面还要重新安装 OpenClaw</li>
+<li>你配过 API key、provider、channel</li>
+<li>你不想丢聊天记录或 agent 记忆</li>
+<li>你准备换电脑</li>
+</ul>
+<h3 id="2-先确认-OpenClaw-实际把东西放在哪里"><a href="#2-先确认-OpenClaw-实际把东西放在哪里" class="headerlink" title="2. 先确认 OpenClaw 实际把东西放在哪里"></a>2. 先确认 OpenClaw 实际把东西放在哪里</h3><p>默认情况下，官方多数文档都按下面这套路径讲：</p>
+<ul>
+<li>状态目录：<code>~/.openclaw</code></li>
+<li>配置文件：<code>~/.openclaw/openclaw.json</code></li>
+<li>默认工作区：<code>~/.openclaw/workspace</code></li>
+</ul>
+<p>但真正容易漏删的地方恰恰在这里：</p>
+<ul>
+<li>你用了 <code>--profile &lt;name&gt;</code></li>
+<li>你设置过 <code>OPENCLAW_STATE_DIR</code></li>
+<li>你设置过 <code>OPENCLAW_CONFIG_PATH</code></li>
+<li>你设置过 <code>OPENCLAW_HOME</code></li>
+<li>你的工作区不是默认路径</li>
+</ul>
+<p>先跑下面这组检查最稳：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">openclaw status</span><br><span class="line">openclaw config file</span><br><span class="line">openclaw config get agents.defaults.workspace</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$OPENCLAW_HOME</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$OPENCLAW_STATE_DIR</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$OPENCLAW_CONFIG_PATH</span>&quot;</span></span><br><span class="line">find <span class="string">&quot;<span class="variable">$HOME</span>&quot;</span> -<span class="built_in">type</span> d -name <span class="string">&#x27;.openclaw*&#x27;</span> -prune 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>这里要特别注意一个实用细节：</p>
+<ul>
+<li>如果你用了 <code>--profile demo</code>，状态目录通常会变成 <code>~/.openclaw-demo</code></li>
+<li>如果你设置了 <code>OPENCLAW_CONFIG_PATH</code>，配置文件可能根本不在 <code>~/.openclaw/openclaw.json</code></li>
+<li>按官方环境变量规则推断，如果你设置过 <code>OPENCLAW_HOME</code>，OpenClaw 的内部默认路径会跟着那个“替代 home”走，而不一定还是当前用户的 <code>~/.openclaw</code></li>
+</ul>
+<p>如果你连真实路径都没确认，后面很容易“以为删完了”，其实只是删掉了默认目录。</p>
+<hr>
+<h2 id="方案-A：CLI-还在，这是最快也最稳的卸载路线"><a href="#方案-A：CLI-还在，这是最快也最稳的卸载路线" class="headerlink" title="方案 A：CLI 还在，这是最快也最稳的卸载路线"></a>方案 A：CLI 还在，这是最快也最稳的卸载路线</h2><p>如果你现在终端里还能执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw --version</span><br></pre></td></tr></table></figure>
+
+<p>那就优先走官方推荐路径。</p>
+<h3 id="第-1-步：先看一遍即将删除什么"><a href="#第-1-步：先看一遍即将删除什么" class="headerlink" title="第 1 步：先看一遍即将删除什么"></a>第 1 步：先看一遍即将删除什么</h3><p>先不要直接删，建议先 dry-run：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw uninstall --dry-run</span><br></pre></td></tr></table></figure>
+
+<p>这样你能先确认：</p>
+<ul>
+<li>会不会删服务</li>
+<li>会不会删状态目录</li>
+<li>会不会删工作区</li>
+<li>有没有 app scope</li>
+</ul>
+<h3 id="第-2-步：执行内置卸载"><a href="#第-2-步：执行内置卸载" class="headerlink" title="第 2 步：执行内置卸载"></a>第 2 步：执行内置卸载</h3><p>如果你就是要彻底清本地数据，最省事的是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br></pre></td></tr></table></figure>
+
+<p>这一步的意义是先把 OpenClaw 自己认识的本地内容清掉，尤其是：</p>
+<ul>
+<li>Gateway service</li>
+<li>state</li>
+<li>workspace</li>
+<li>app scope</li>
+</ul>
+<p>但为了“完全卸载干净”，你还不能在这里停下。</p>
+<h3 id="第-3-步：把-CLI-本体也删掉"><a href="#第-3-步：把-CLI-本体也删掉" class="headerlink" title="第 3 步：把 CLI 本体也删掉"></a>第 3 步：把 CLI 本体也删掉</h3><p>如果你当时是用 npm 全局安装的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果你当时用的是 pnpm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm remove -g openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果你当时用的是 bun：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bun remove -g openclaw</span><br></pre></td></tr></table></figure>
+
+<p>很多人会漏这一步，结果服务虽然没了，但终端里 <code>openclaw</code> 还在，这就不算真正卸干净。</p>
+<h3 id="第-4-步：如果装过-macOS-App，把-App-也删掉"><a href="#第-4-步：如果装过-macOS-App，把-App-也删掉" class="headerlink" title="第 4 步：如果装过 macOS App，把 App 也删掉"></a>第 4 步：如果装过 macOS App，把 App 也删掉</h3><p>如果你在 Mac 上还装过官方 App，再补一步：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /Applications/OpenClaw.app</span><br></pre></td></tr></table></figure>
+
+<h3 id="第-5-步：如果你是从源码跑的，再删源码目录"><a href="#第-5-步：如果你是从源码跑的，再删源码目录" class="headerlink" title="第 5 步：如果你是从源码跑的，再删源码目录"></a>第 5 步：如果你是从源码跑的，再删源码目录</h3><p>如果你不是普通全局安装，而是自己：</p>
+<ul>
+<li><code>git clone</code> 了 OpenClaw 仓库</li>
+<li>然后用 <code>openclaw ...</code>、<code>pnpm openclaw ...</code> 或 <code>bun run ...</code> 在源码目录里跑</li>
+</ul>
+<p>那你还要再做两件事：</p>
+<ol>
+<li>先确认 Gateway 服务已经卸掉  </li>
+<li>再删除 OpenClaw 的源码目录</li>
+</ol>
+<p>否则你虽然删了状态目录，但本地还是保留一整套源码和构建产物。</p>
+<hr>
+<h2 id="Mac-用户最省心的完整命令顺序"><a href="#Mac-用户最省心的完整命令顺序" class="headerlink" title="Mac 用户最省心的完整命令顺序"></a>Mac 用户最省心的完整命令顺序</h2><p>如果你是 Mac，且 CLI 还在，照这个顺序做最不容易漏：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">openclaw backup create --verify</span><br><span class="line">openclaw uninstall --dry-run</span><br><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br><span class="line"><span class="built_in">rm</span> -rf /Applications/OpenClaw.app</span><br><span class="line"><span class="built_in">rehash</span></span><br><span class="line"><span class="built_in">which</span> openclaw</span><br><span class="line">find <span class="string">&quot;<span class="variable">$HOME</span>&quot;</span> -<span class="built_in">type</span> d -name <span class="string">&#x27;.openclaw*&#x27;</span> -prune 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>说明一下：</p>
+<ul>
+<li><code>rehash</code> 是为了刷新 zsh 的命令缓存</li>
+<li>如果你不是 npm 装的，就把 <code>npm rm -g openclaw</code> 换成 pnpm 或 bun 对应命令</li>
+<li><code>which openclaw</code> 最好应该没有输出，或者明确提示找不到</li>
+<li>如果你本机有多个 profile，<code>~/.openclaw-demo</code> 这种目录也要一起检查</li>
+</ul>
+<hr>
+<h2 id="Windows-用户要分清-2-种情况"><a href="#Windows-用户要分清-2-种情况" class="headerlink" title="Windows 用户要分清 2 种情况"></a>Windows 用户要分清 2 种情况</h2><p>OpenClaw 官方当前仍然优先推荐 Windows 走 <code>WSL2</code>。<br>所以 Windows 的“彻底卸载”最常见其实有两条路线。</p>
+<h3 id="情况-1：你是按官方推荐，用-WSL2-里的-Ubuntu-装的"><a href="#情况-1：你是按官方推荐，用-WSL2-里的-Ubuntu-装的" class="headerlink" title="情况 1：你是按官方推荐，用 WSL2 里的 Ubuntu 装的"></a>情况 1：你是按官方推荐，用 WSL2 里的 Ubuntu 装的</h3><p>这种情况下，真正运行 CLI 和 Gateway 的地方是 WSL2 里的 Linux 环境，而不是 Windows 原生 PowerShell。</p>
+<p>所以正确做法是：</p>
+<ol>
+<li>打开你的 Ubuntu &#x2F; WSL2 终端</li>
+<li>在 WSL2 里执行卸载</li>
+<li>最后再决定要不要删除 Windows 侧保存的源码目录或快捷方式</li>
+</ol>
+<p>WSL2 里可以直接这样做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">openclaw backup create --verify</span><br><span class="line">openclaw uninstall --dry-run</span><br><span class="line">openclaw uninstall --all --<span class="built_in">yes</span> --non-interactive</span><br><span class="line">npm <span class="built_in">rm</span> -g openclaw</span><br><span class="line"><span class="built_in">which</span> openclaw</span><br><span class="line">find <span class="string">&quot;<span class="variable">$HOME</span>&quot;</span> -<span class="built_in">type</span> d -name <span class="string">&#x27;.openclaw*&#x27;</span> -prune 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>如果你当初是在某个 Git 仓库目录里用源码方式跑的，记得最后把那个仓库目录也删掉。</p>
+<h3 id="情况-2：CLI-已经不见了，但-Windows-计划任务还在"><a href="#情况-2：CLI-已经不见了，但-Windows-计划任务还在" class="headerlink" title="情况 2：CLI 已经不见了，但 Windows 计划任务还在"></a>情况 2：CLI 已经不见了，但 Windows 计划任务还在</h3><p>官方卸载文档给了原生 Windows 残留服务的处理方法。<br>如果你遇到的是“命令已经没了，但开机后好像还在跑 Gateway”，可以在 PowerShell 里执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">schtasks /Delete /F /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$</span>&#123;env:USERPROFILE&#125;\.openclaw\gateway.cmd&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你当初用了 profile，比如 <code>demo</code>，那计划任务名通常会变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenClaw Gateway (demo)</span><br></pre></td></tr></table></figure>
+
+<p>这时你要删掉匹配的任务名，以及对应的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;env:USERPROFILE&#125;\.openclaw-demo\gateway.cmd</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="方案-B：CLI-已经没了，但后台服务还在自启"><a href="#方案-B：CLI-已经没了，但后台服务还在自启" class="headerlink" title="方案 B：CLI 已经没了，但后台服务还在自启"></a>方案 B：CLI 已经没了，但后台服务还在自启</h2><p>这是最容易把人搞烦的一种情况：</p>
+<ul>
+<li>你把 CLI 删了</li>
+<li>甚至把目录也手动删了一部分</li>
+<li>但开机后还有服务自启</li>
+<li>或者端口还是被占着</li>
+</ul>
+<p>这时候不要急着重装，先把服务层彻底拆掉。</p>
+<h3 id="1-macOS：手动清-launchd"><a href="#1-macOS：手动清-launchd" class="headerlink" title="1. macOS：手动清 launchd"></a>1. macOS：手动清 launchd</h3><p>官方当前给出的默认 label 是：</p>
+<ul>
+<li><code>ai.openclaw.gateway</code></li>
+<li>或者 <code>ai.openclaw.&lt;profile&gt;</code></li>
+</ul>
+<p>Mac 上可以这样处理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">launchctl bootout gui/<span class="variable">$UID</span>/ai.openclaw.gateway</span><br><span class="line"><span class="built_in">rm</span> -f ~/Library/LaunchAgents/ai.openclaw.gateway.plist</span><br></pre></td></tr></table></figure>
+
+<p>如果你用过 profile，把 <code>gateway</code> 替换成对应 profile 名即可。</p>
+<p>另外，官方还特别提醒了一个很实用的兼容点：</p>
+<ul>
+<li>老版本残留里，可能还存在 <code>com.openclaw.*</code></li>
+</ul>
+<p>所以你最好再检查一遍：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/Library/LaunchAgents | grep -i openclaw</span><br><span class="line">launchctl list | grep -i openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果还能看到旧 plist 或旧 label，就继续删。</p>
+<h3 id="2-Linux-WSL2：手动清-systemd-user-unit"><a href="#2-Linux-WSL2：手动清-systemd-user-unit" class="headerlink" title="2. Linux &#x2F; WSL2：手动清 systemd user unit"></a>2. Linux &#x2F; WSL2：手动清 systemd user unit</h3><p>如果你的 OpenClaw 是跑在 Linux 或 WSL2 里，默认最常见的是 user unit：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user <span class="built_in">disable</span> --now openclaw-gateway.service</span><br><span class="line"><span class="built_in">rm</span> -f ~/.config/systemd/user/openclaw-gateway.service</span><br><span class="line">systemctl --user daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>如果你用过 profile，就把 service 名换成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw-gateway-&lt;profile&gt;.service</span><br></pre></td></tr></table></figure>
+
+<p>然后再检查一次：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user list-units | grep -i openclaw</span><br><span class="line">systemctl --user list-unit-files | grep -i openclaw</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Windows：手动清计划任务"><a href="#3-Windows：手动清计划任务" class="headerlink" title="3. Windows：手动清计划任务"></a>3. Windows：手动清计划任务</h3><p>如果你走的是 Windows 原生计划任务路线，就按官方文档删：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">schtasks /Delete /F /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Remove-Item</span> <span class="literal">-Force</span> <span class="string">&quot;<span class="variable">$</span>&#123;env:USERPROFILE&#125;\.openclaw\gateway.cmd&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>删完之后最好再查一次：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">schtasks /Query /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;<span class="variable">$</span>&#123;env:USERPROFILE&#125;\.openclaw\gateway.cmd&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果任务查询不到、脚本文件也不存在，服务层基本就干净了。</p>
+<hr>
+<h2 id="这几个残留，最容易被漏掉"><a href="#这几个残留，最容易被漏掉" class="headerlink" title="这几个残留，最容易被漏掉"></a>这几个残留，最容易被漏掉</h2><p>真正让人“明明卸载过，怎么还像没卸”的，通常不是主命令，而是下面这些细节。</p>
+<h3 id="1-你用了多个-profile"><a href="#1-你用了多个-profile" class="headerlink" title="1. 你用了多个 profile"></a>1. 你用了多个 profile</h3><p>官方 Gateway 文档明确提到，多 profile 的状态目录常常会变成：</p>
+<ul>
+<li><code>~/.openclaw</code></li>
+<li><code>~/.openclaw-&lt;profile&gt;</code></li>
+</ul>
+<p>所以你不能只删默认目录，还要把所有 profile 都检查一遍：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find <span class="string">&quot;<span class="variable">$HOME</span>&quot;</span> -<span class="built_in">type</span> d -name <span class="string">&#x27;.openclaw*&#x27;</span> -prune 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-你把配置文件放到了状态目录外面"><a href="#2-你把配置文件放到了状态目录外面" class="headerlink" title="2. 你把配置文件放到了状态目录外面"></a>2. 你把配置文件放到了状态目录外面</h3><p>这是最经典的“看起来删干净了，实际没删完”。</p>
+<p>如果你设置过：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$OPENCLAW_CONFIG_PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>而它指向的不是默认 <code>~/.openclaw/openclaw.json</code>，那你必须单独删除那个配置文件。<br>因为官方卸载说明已经明确提到：自定义 <code>OPENCLAW_CONFIG_PATH</code> 在状态目录之外时，要手动清掉。</p>
+<h3 id="3-你设置过-OPENCLAW-HOME"><a href="#3-你设置过-OPENCLAW-HOME" class="headerlink" title="3. 你设置过 OPENCLAW_HOME"></a>3. 你设置过 <code>OPENCLAW_HOME</code></h3><p>这个点特别容易漏。</p>
+<p>按官方环境变量文档的路径优先级来理解，如果你设置了 <code>OPENCLAW_HOME</code>，OpenClaw 的内部路径会先跟着它走。<br>所以你以为默认目录在当前用户 <code>~/.openclaw</code>，但真正的数据可能其实落在另一个 home 根下。</p>
+<p>如果你曾经把 OpenClaw 跑成某个专门服务账号，这一步一定要检查。</p>
+<h3 id="4-你还有默认工作区以外的-agent-文件"><a href="#4-你还有默认工作区以外的-agent-文件" class="headerlink" title="4. 你还有默认工作区以外的 agent 文件"></a>4. 你还有默认工作区以外的 agent 文件</h3><p>很多人以为删掉 <code>~/.openclaw</code> 就结束了，但你的工作区未必在那里。</p>
+<p>先看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw config get agents.defaults.workspace</span><br></pre></td></tr></table></figure>
+
+<p>如果这个工作区是你自己指定的项目目录，那就别无脑 <code>rm -rf</code>。<br>先确认里面是不是还有你要保留的内容，例如：</p>
+<ul>
+<li><code>MEMORY.md</code></li>
+<li><code>USER.md</code></li>
+<li>自己写的 prompt</li>
+<li>skills 笔记</li>
+<li>自动化脚本</li>
+</ul>
+<p>如果你要的是“完全清干净”，那这个工作区也要处理。<br>如果你只是想重装 OpenClaw，但还想保留这些文件，就先备份。</p>
+<h3 id="5-你在远程模式里只删了本机，没有删网关主机"><a href="#5-你在远程模式里只删了本机，没有删网关主机" class="headerlink" title="5. 你在远程模式里只删了本机，没有删网关主机"></a>5. 你在远程模式里只删了本机，没有删网关主机</h3><p>官方 FAQ 和会话管理文档都强调了一点：</p>
+<ul>
+<li>远程模式下，真正的状态存储在 Gateway host 上，不在你本地笔记本上</li>
+</ul>
+<p>所以如果你以前是：</p>
+<ul>
+<li>本地浏览器 &#x2F; Mac App 连接远程 Gateway</li>
+<li>或者把 OpenClaw 主实例跑在另一台 VPS &#x2F; mini PC &#x2F; NAS 上</li>
+</ul>
+<p>那你在当前电脑上删完以后，还要去真正的 Gateway 主机上再做一次服务、状态目录和工作区清理。<br>否则只是把“客户端入口”删了，不是把 OpenClaw 真卸载了。</p>
+<hr>
+<h2 id="怎么确认已经“卸载干净”"><a href="#怎么确认已经“卸载干净”" class="headerlink" title="怎么确认已经“卸载干净”"></a>怎么确认已经“卸载干净”</h2><p>做完以后，不要靠感觉，直接验收。</p>
+<h3 id="Mac-Linux-WSL2-验收清单"><a href="#Mac-Linux-WSL2-验收清单" class="headerlink" title="Mac &#x2F; Linux &#x2F; WSL2 验收清单"></a>Mac &#x2F; Linux &#x2F; WSL2 验收清单</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> openclaw</span><br><span class="line">find <span class="string">&quot;<span class="variable">$HOME</span>&quot;</span> -<span class="built_in">type</span> d -name <span class="string">&#x27;.openclaw*&#x27;</span> -prune 2&gt;/dev/null</span><br><span class="line">lsof -iTCP:18789 -sTCP:LISTEN</span><br><span class="line">pgrep -fal openclaw</span><br></pre></td></tr></table></figure>
+
+<p>理想结果应该是：</p>
+<ul>
+<li><code>which openclaw</code> 没有可执行路径</li>
+<li><code>~/.openclaw</code> 和 <code>~/.openclaw-&lt;profile&gt;</code> 不再存在</li>
+<li>默认 Gateway 端口没有监听</li>
+<li>进程列表里没有还在跑的 OpenClaw 后台进程</li>
+</ul>
+<p>如果你是 Mac，再补一眼：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl list | grep -i openclaw</span><br></pre></td></tr></table></figure>
+
+<p>如果你是 Linux &#x2F; WSL2，再补一眼：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user list-units | grep -i openclaw</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-验收清单"><a href="#Windows-验收清单" class="headerlink" title="Windows 验收清单"></a>Windows 验收清单</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Command</span> openclaw <span class="literal">-ErrorAction</span> SilentlyContinue</span><br><span class="line">schtasks /Query /TN <span class="string">&quot;OpenClaw Gateway&quot;</span></span><br><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;<span class="variable">$</span>&#123;env:USERPROFILE&#125;\.openclaw&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>理想结果是：</p>
+<ul>
+<li><code>Get-Command openclaw</code> 没有返回有效命令</li>
+<li><code>OpenClaw Gateway</code> 计划任务查询不到</li>
+<li><code>~\.openclaw</code> 或对应 profile 目录已经不存在</li>
+</ul>
+<h3 id="还有一个很实用的小提示"><a href="#还有一个很实用的小提示" class="headerlink" title="还有一个很实用的小提示"></a>还有一个很实用的小提示</h3><p>如果你刚执行完全局卸载，当前终端有时还会因为命令缓存，看起来像是 <code>openclaw</code> 还在。<br>这时可以：</p>
+<ul>
+<li>zsh 运行 <code>rehash</code></li>
+<li>bash 运行 <code>hash -r</code></li>
+<li>或者直接关掉终端重新打开</li>
+</ul>
+<p>不要因为缓存没刷新，就误判成“卸载失败”。</p>
+<hr>
+<h2 id="一套最适合新手照抄的完整流程"><a href="#一套最适合新手照抄的完整流程" class="headerlink" title="一套最适合新手照抄的完整流程"></a>一套最适合新手照抄的完整流程</h2><p>如果你不想自己组合命令，直接按下面逻辑走：</p>
+<ol>
+<li>先备份：<code>openclaw backup create --verify</code></li>
+<li>找路径：<code>openclaw config file</code>、<code>openclaw config get agents.defaults.workspace</code>、<code>echo &quot;$OPENCLAW_STATE_DIR&quot;</code></li>
+<li>预演：<code>openclaw uninstall --dry-run</code></li>
+<li>正式删：<code>openclaw uninstall --all --yes --non-interactive</code></li>
+<li>删除 CLI：<code>npm rm -g openclaw</code> 或对应包管理器命令</li>
+<li>删除 App 或源码目录</li>
+<li>删除额外 profile、自定义 config、额外 workspace</li>
+<li>做最终验收：命令不存在、服务不存在、端口没监听、目录没残留</li>
+</ol>
+<p>你只要按这个顺序做，基本不会出现“服务删了但 CLI 还在”或者“CLI 删了但后台还在跑”的半吊子状态。</p>
+<hr>
+<h2 id="最后给你一句最实用的判断标准"><a href="#最后给你一句最实用的判断标准" class="headerlink" title="最后给你一句最实用的判断标准"></a>最后给你一句最实用的判断标准</h2><p><strong>如果你做完以后，终端里找不到 <code>openclaw</code>、系统里没有 OpenClaw 自启服务、<code>~/.openclaw</code> 及 profile 目录都不存在、默认端口也没有监听，这才叫真正卸载干净。</strong></p>
+<p>只做到其中一半，通常都不算。</p>
+<p>尤其是想重新安装的人，越是把旧状态清理彻底，后面重装越不容易继续吃旧配置和旧残留的亏。</p>
+<hr>
+<h2 id="OpenClaw-系列文章推荐"><a href="#OpenClaw-系列文章推荐" class="headerlink" title="OpenClaw 系列文章推荐"></a>OpenClaw 系列文章推荐</h2><ul>
+<li><a href="/docs/openclaw/">返回 OpenClaw 专题导航</a></li>
+<li><a href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</a></li>
+<li><a href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/">OpenClaw 新手第一次安装后最容易踩的 10 个坑</a></li>
+</ul>
+<hr>
+<h2 id="参考资料（2026-03-28-核对）"><a href="#参考资料（2026-03-28-核对）" class="headerlink" title="参考资料（2026-03-28 核对）"></a>参考资料（2026-03-28 核对）</h2><ul>
+<li>官方卸载文档：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/install/uninstall">https://docs.openclaw.ai/install/uninstall</a></li>
+<li>CLI <code>uninstall</code>：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/cli/uninstall">https://docs.openclaw.ai/cli/uninstall</a></li>
+<li>CLI <code>backup</code>：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/cli/backup">https://docs.openclaw.ai/cli/backup</a></li>
+<li>官方安装文档：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/install">https://docs.openclaw.ai/install</a></li>
+<li>Environment Variables：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/help/environment">https://docs.openclaw.ai/help/environment</a></li>
+<li>FAQ：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/help/faq">https://docs.openclaw.ai/help/faq</a></li>
+<li>Windows（WSL2）：<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/windows">https://docs.openclaw.ai/windows</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/">https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/">新手教程</a><a class="post-meta__tags" href="/tags/macOS/">macOS</a><a class="post-meta__tags" href="/tags/%E5%8D%B8%E8%BD%BD%E6%95%99%E7%A8%8B/">卸载教程</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div class="cover" style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</div></div><div class="info-2"><div class="info-item-1">一篇专门给 Mac 新手看的 OpenClaw 排错教程，解决 Safari 无法打开 127.0.0.1:18789、Control UI 能开但聊天发不出去、会话模型被错误覆盖等常见问题。</div></div></div></a><a class="pagination-related" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程"><div class="cover" style="background: linear-gradient(135deg, #06121f 0%, #0f4c75 30%, #2563eb 62%, #22c55e 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 27 日可查到的 OpenClaw 官方 Install、Onboarding、Control UI、Windows WSL2、Channels 与 Message 文档整理，手把手说明 Windows 和 Mac 如何从零安装 OpenClaw，并讲清楚 Select channel 的实际运用。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程"><div class="cover" style="background: linear-gradient(135deg, #06121f 0%, #0f4c75 30%, #2563eb 62%, #22c55e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 27 日可查到的 OpenClaw 官方 Install、Onboarding、Control UI、Windows WSL2、Channels 与 Message 文档整理，手把手说明 Windows 和 Mac 如何从零安装 OpenClaw，并讲清楚 Select channel 的实际运用。</div></div></div></a><a class="pagination-related" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div class="cover" style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-28</div><div class="info-item-2">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</div></div><div class="info-2"><div class="info-item-1">一篇专门给 Mac 新手看的 OpenClaw 排错教程，解决 Safari 无法打开 127.0.0.1:18789、Control UI 能开但聊天发不出去、会话模型被错误覆盖等常见问题。</div></div></div></a><a class="pagination-related" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑"><div class="cover" style="background: linear-gradient(135deg, #09111f 0%, #0f4c75 28%, #2563eb 58%, #f43f5e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">OpenClaw 新手第一次安装后最容易踩的 10 个坑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日可查到的 OpenClaw 官方 FAQ、Control UI 和 Troubleshooting 文档整理，总结新手第一次安装 OpenClaw 后最常遇到的 10 个坑与解决思路。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div class="cover" style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">新手零基础入门 Canva 到精通详细教程</div></div><div class="info-2"><div class="info-item-1">手把手带新手从零认识 Canva，学习模板、排版、图片、视频、协作和 AI 功能，逐步掌握从入门到熟练使用 Canva 的完整方法。</div></div></div></a><a class="pagination-related" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1&#x2F;M2&#x2F;M3&#x2F;M4 及 Intel 芯片"><div class="cover" style="background: linear-gradient(135deg, #111827 0%, #475569 26%, #94a3b8 58%, #e2e8f0 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-04</div><div class="info-item-2">2026 最新 macOS MDM 远程管理绕过教程：支持 M1&#x2F;M2&#x2F;M3&#x2F;M4 及 Intel 芯片</div></div><div class="info-2"><div class="info-item-1">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</div></div></div></a><a class="pagination-related" href="/2026/03/26/AI%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B%E7%9F%AD%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3%E6%97%A0%E7%BC%9D%E5%89%AA%E8%BE%91/" title="AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑"><div class="cover" style="background: linear-gradient(135deg, #0b1020 0%, #0f766e 34%, #2563eb 68%, #ec4899 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">AI 视频制作教程：如何利用 AI 生成短视频、自动配音并进行无缝剪辑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日主流工具能力整理，手把手讲解如何用 AI 完成短视频脚本、分镜、生成画面、自动配音、字幕和无缝剪辑，适合新手快速上手。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">这篇文章属于 OpenClaw 维护与清理实战篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E7%9C%9F%E6%AD%A3%E2%80%9C%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80%E2%80%9D%E4%B8%8D%E6%98%AF%E5%8F%AA%E8%B7%91%E4%B8%80%E6%9D%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">先说结论：真正“卸载干净”不是只跑一条命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E5%89%8D%E5%85%88%E5%81%9A-2-%E4%BB%B6%E4%BA%8B%EF%BC%9A%E5%A4%87%E4%BB%BD%E5%92%8C%E6%89%BE%E8%B7%AF%E5%BE%84"><span class="toc-number">3.</span> <span class="toc-text">卸载前先做 2 件事：备份和找路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%88%E5%A4%87%E4%BB%BD%EF%BC%8C%E5%88%AB%E6%8A%8A%E5%8F%AF%E6%81%A2%E5%A4%8D%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%80%E8%B5%B7%E5%88%A0%E4%BA%86"><span class="toc-number">3.1.</span> <span class="toc-text">1. 先备份，别把可恢复的数据一起删了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%88%E7%A1%AE%E8%AE%A4-OpenClaw-%E5%AE%9E%E9%99%85%E6%8A%8A%E4%B8%9C%E8%A5%BF%E6%94%BE%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">3.2.</span> <span class="toc-text">2. 先确认 OpenClaw 实际把东西放在哪里</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-A%EF%BC%9ACLI-%E8%BF%98%E5%9C%A8%EF%BC%8C%E8%BF%99%E6%98%AF%E6%9C%80%E5%BF%AB%E4%B9%9F%E6%9C%80%E7%A8%B3%E7%9A%84%E5%8D%B8%E8%BD%BD%E8%B7%AF%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">方案 A：CLI 还在，这是最快也最稳的卸载路线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%EF%BC%9A%E5%85%88%E7%9C%8B%E4%B8%80%E9%81%8D%E5%8D%B3%E5%B0%86%E5%88%A0%E9%99%A4%E4%BB%80%E4%B9%88"><span class="toc-number">4.1.</span> <span class="toc-text">第 1 步：先看一遍即将删除什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E5%86%85%E7%BD%AE%E5%8D%B8%E8%BD%BD"><span class="toc-number">4.2.</span> <span class="toc-text">第 2 步：执行内置卸载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%EF%BC%9A%E6%8A%8A-CLI-%E6%9C%AC%E4%BD%93%E4%B9%9F%E5%88%A0%E6%8E%89"><span class="toc-number">4.3.</span> <span class="toc-text">第 3 步：把 CLI 本体也删掉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%EF%BC%9A%E5%A6%82%E6%9E%9C%E8%A3%85%E8%BF%87-macOS-App%EF%BC%8C%E6%8A%8A-App-%E4%B9%9F%E5%88%A0%E6%8E%89"><span class="toc-number">4.4.</span> <span class="toc-text">第 4 步：如果装过 macOS App，把 App 也删掉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%EF%BC%9A%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%98%AF%E4%BB%8E%E6%BA%90%E7%A0%81%E8%B7%91%E7%9A%84%EF%BC%8C%E5%86%8D%E5%88%A0%E6%BA%90%E7%A0%81%E7%9B%AE%E5%BD%95"><span class="toc-number">4.5.</span> <span class="toc-text">第 5 步：如果你是从源码跑的，再删源码目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-%E7%94%A8%E6%88%B7%E6%9C%80%E7%9C%81%E5%BF%83%E7%9A%84%E5%AE%8C%E6%95%B4%E5%91%BD%E4%BB%A4%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.</span> <span class="toc-text">Mac 用户最省心的完整命令顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E7%94%A8%E6%88%B7%E8%A6%81%E5%88%86%E6%B8%85-2-%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">6.</span> <span class="toc-text">Windows 用户要分清 2 种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-1%EF%BC%9A%E4%BD%A0%E6%98%AF%E6%8C%89%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%EF%BC%8C%E7%94%A8-WSL2-%E9%87%8C%E7%9A%84-Ubuntu-%E8%A3%85%E7%9A%84"><span class="toc-number">6.1.</span> <span class="toc-text">情况 1：你是按官方推荐，用 WSL2 里的 Ubuntu 装的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-2%EF%BC%9ACLI-%E5%B7%B2%E7%BB%8F%E4%B8%8D%E8%A7%81%E4%BA%86%EF%BC%8C%E4%BD%86-Windows-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E8%BF%98%E5%9C%A8"><span class="toc-number">6.2.</span> <span class="toc-text">情况 2：CLI 已经不见了，但 Windows 计划任务还在</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-B%EF%BC%9ACLI-%E5%B7%B2%E7%BB%8F%E6%B2%A1%E4%BA%86%EF%BC%8C%E4%BD%86%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E8%BF%98%E5%9C%A8%E8%87%AA%E5%90%AF"><span class="toc-number">7.</span> <span class="toc-text">方案 B：CLI 已经没了，但后台服务还在自启</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-macOS%EF%BC%9A%E6%89%8B%E5%8A%A8%E6%B8%85-launchd"><span class="toc-number">7.1.</span> <span class="toc-text">1. macOS：手动清 launchd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Linux-WSL2%EF%BC%9A%E6%89%8B%E5%8A%A8%E6%B8%85-systemd-user-unit"><span class="toc-number">7.2.</span> <span class="toc-text">2. Linux &#x2F; WSL2：手动清 systemd user unit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Windows%EF%BC%9A%E6%89%8B%E5%8A%A8%E6%B8%85%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="toc-number">7.3.</span> <span class="toc-text">3. Windows：手动清计划任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E5%87%A0%E4%B8%AA%E6%AE%8B%E7%95%99%EF%BC%8C%E6%9C%80%E5%AE%B9%E6%98%93%E8%A2%AB%E6%BC%8F%E6%8E%89"><span class="toc-number">8.</span> <span class="toc-text">这几个残留，最容易被漏掉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%A0%E7%94%A8%E4%BA%86%E5%A4%9A%E4%B8%AA-profile"><span class="toc-number">8.1.</span> <span class="toc-text">1. 你用了多个 profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%A0%E6%8A%8A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%94%BE%E5%88%B0%E4%BA%86%E7%8A%B6%E6%80%81%E7%9B%AE%E5%BD%95%E5%A4%96%E9%9D%A2"><span class="toc-number">8.2.</span> <span class="toc-text">2. 你把配置文件放到了状态目录外面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%A0%E8%AE%BE%E7%BD%AE%E8%BF%87-OPENCLAW-HOME"><span class="toc-number">8.3.</span> <span class="toc-text">3. 你设置过 OPENCLAW_HOME</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%A0%E8%BF%98%E6%9C%89%E9%BB%98%E8%AE%A4%E5%B7%A5%E4%BD%9C%E5%8C%BA%E4%BB%A5%E5%A4%96%E7%9A%84-agent-%E6%96%87%E4%BB%B6"><span class="toc-number">8.4.</span> <span class="toc-text">4. 你还有默认工作区以外的 agent 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%A0%E5%9C%A8%E8%BF%9C%E7%A8%8B%E6%A8%A1%E5%BC%8F%E9%87%8C%E5%8F%AA%E5%88%A0%E4%BA%86%E6%9C%AC%E6%9C%BA%EF%BC%8C%E6%B2%A1%E6%9C%89%E5%88%A0%E7%BD%91%E5%85%B3%E4%B8%BB%E6%9C%BA"><span class="toc-number">8.5.</span> <span class="toc-text">5. 你在远程模式里只删了本机，没有删网关主机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%A1%AE%E8%AE%A4%E5%B7%B2%E7%BB%8F%E2%80%9C%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80%E2%80%9D"><span class="toc-number">9.</span> <span class="toc-text">怎么确认已经“卸载干净”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mac-Linux-WSL2-%E9%AA%8C%E6%94%B6%E6%B8%85%E5%8D%95"><span class="toc-number">9.1.</span> <span class="toc-text">Mac &#x2F; Linux &#x2F; WSL2 验收清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-%E9%AA%8C%E6%94%B6%E6%B8%85%E5%8D%95"><span class="toc-number">9.2.</span> <span class="toc-text">Windows 验收清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E4%B8%80%E4%B8%AA%E5%BE%88%E5%AE%9E%E7%94%A8%E7%9A%84%E5%B0%8F%E6%8F%90%E7%A4%BA"><span class="toc-number">9.3.</span> <span class="toc-text">还有一个很实用的小提示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%A5%97%E6%9C%80%E9%80%82%E5%90%88%E6%96%B0%E6%89%8B%E7%85%A7%E6%8A%84%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">10.</span> <span class="toc-text">一套最适合新手照抄的完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%BB%99%E4%BD%A0%E4%B8%80%E5%8F%A5%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84%E5%88%A4%E6%96%AD%E6%A0%87%E5%87%86"><span class="toc-number">11.</span> <span class="toc-text">最后给你一句最实用的判断标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenClaw-%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90"><span class="toc-number">12.</span> <span class="toc-text">OpenClaw 系列文章推荐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%882026-03-28-%E6%A0%B8%E5%AF%B9%EF%BC%89"><span class="toc-number">13.</span> <span class="toc-text">参考资料（2026-03-28 核对）</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div></a><div class="content"><a class="title" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</a><time datetime="2026-03-28T15:18:00.000Z" title="发表于 2026-03-28 23:18:00">2026-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南"><div style="background: linear-gradient(135deg, #140b10 0%, #4a1022 28%, #b91c1c 58%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南">本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南</a><time datetime="2026-03-28T11:28:00.000Z" title="发表于 2026-03-28 19:28:00">2026-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程"><div style="background: linear-gradient(135deg, #06121f 0%, #0f4c75 30%, #2563eb 62%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</a><time datetime="2026-03-27T10:05:00.000Z" title="发表于 2026-03-27 18:05:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑"><div style="background: linear-gradient(135deg, #09111f 0%, #0f4c75 28%, #2563eb 58%, #f43f5e 100%)"></div></a><div class="content"><a class="title" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑">OpenClaw 新手第一次安装后最容易踩的 10 个坑</a><time datetime="2026-03-26T17:40:00.000Z" title="发表于 2026-03-27 01:40:00">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div></a><div class="content"><a class="title" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程">新手零基础入门 Canva 到精通详细教程</a><time datetime="2026-03-26T15:35:00.000Z" title="发表于 2026-03-26 23:35:00">2026-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
