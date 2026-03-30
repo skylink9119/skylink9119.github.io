@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-03-28T15:18:00.000Z</updated>
+  <updated>2026-03-30T13:15:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</title>
+    <link href="https://skylink9119.github.io/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/"/>
+    <id>https://skylink9119.github.io/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/</id>
+    <published>2026-03-30T13:15:00.000Z</published>
+    <updated>2026-03-30T13:15:00.000Z</updated>
+    
+    
+    <summary type="html">结合实测截图整理一套在 DMIT VPS 上使用 Cloudflare WARP 的 WireProxy socks5 出口，为 3x-ui/X-ui 配置 Disney+ 分流的实战方案，缓解 Error Code 73。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
+    
+    <category term="DMIT" scheme="https://skylink9119.github.io/tags/DMIT/"/>
+    
+    <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
+    
+    <category term="Disney+" scheme="https://skylink9119.github.io/tags/Disney/"/>
+    
+    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    
+    <category term="X-ui" scheme="https://skylink9119.github.io/tags/X-ui/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版</title>
+    <link href="https://skylink9119.github.io/2026/03/29/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E8%AE%BE%E7%BD%AE%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%89%88/"/>
+    <id>https://skylink9119.github.io/2026/03/29/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E8%AE%BE%E7%BD%AE%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%89%88/</id>
+    <published>2026-03-29T10:35:40.000Z</published>
+    <updated>2026-03-29T10:35:40.000Z</updated>
+    
+    
+    <summary type="html">按 2026 年 3 月 29 日可查到的 OpenClaw 官方安装、Control UI、Tailscale、Logging 和 Updating 文档整理，适合新手一步一步完成安装、验证、面板访问与安全配置。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="安装教程" scheme="https://skylink9119.github.io/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="控制面板" scheme="https://skylink9119.github.io/tags/%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF/"/>
+    
+    <category term="Dashboard" scheme="https://skylink9119.github.io/tags/Dashboard/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</title>
@@ -46,14 +106,14 @@
   </entry>
   
   <entry>
-    <title>本地电脑如何完全卸载干净 OpenClaw：Windows 和 Mac 实操清理指南</title>
+    <title>OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南</title>
     <link href="https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/"/>
     <id>https://skylink9119.github.io/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/</id>
     <published>2026-03-28T11:28:00.000Z</published>
-    <updated>2026-03-28T11:28:00.000Z</updated>
+    <updated>2026-03-29T10:35:40.000Z</updated>
     
     
-    <summary type="html">按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明本地电脑怎样把 OpenClaw 服务、状态、工作区、CLI 与残留配置清理干净。</summary>
+    <summary type="html">按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明怎样把 OpenClaw 服务、状态、工作区、CLI 和残留配置真正清理干净。</summary>
     
     
     
