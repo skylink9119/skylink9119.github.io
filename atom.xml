@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-03-30T13:15:00.000Z</updated>
+  <updated>2026-04-01T01:20:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard</title>
+    <link href="https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/"/>
+    <id>https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/</id>
+    <published>2026-04-01T01:20:00.000Z</published>
+    <updated>2026-04-01T01:20:00.000Z</updated>
+    
+    
+    <summary type="html">按 2026 年 4 月 1 日可查到的 OpenClaw 官方 Getting Started、Onboarding Wizard、Dashboard、FAQ 与 doctor 文档整理，手把手教你在 macOS 上完成 OpenClaw 安装、CLI onboarding、Gateway 配置、Dashboard 打开与常见报错排查，适合零基础新手。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="安装教程" scheme="https://skylink9119.github.io/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+    <category term="CLI" scheme="https://skylink9119.github.io/tags/CLI/"/>
+    
+  </entry>
   
   <entry>
     <title>DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</title>
@@ -62,9 +91,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
-    
     <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -91,17 +120,17 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
-    
     <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
     <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
     
-    <category term="Safari" scheme="https://skylink9119.github.io/tags/Safari/"/>
-    
     <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+    <category term="Safari" scheme="https://skylink9119.github.io/tags/Safari/"/>
     
   </entry>
   
@@ -120,9 +149,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
-    
     <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -149,9 +178,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
-    
     <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -178,9 +207,9 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
-    
     <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
@@ -232,11 +261,11 @@
     <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
-    
     <category term="AI视频" scheme="https://skylink9119.github.io/tags/AI%E8%A7%86%E9%A2%91/"/>
     
     <category term="短视频制作" scheme="https://skylink9119.github.io/tags/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C/"/>
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
     
     <category term="自动配音" scheme="https://skylink9119.github.io/tags/%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3/"/>
     

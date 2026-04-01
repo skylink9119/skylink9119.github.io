@@ -1,0 +1,579 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="OpenClaw Mac安装教程,OpenClaw macOS安装,OpenClaw Mac,OpenClaw dashboard,OpenClaw Gateway,OpenClaw CLI onboarding,open claw安装"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 2026 年 4 月 1 日可查到的 OpenClaw 官方 Getting Started、Onboarding Wizard、Dashboard、FAQ 与 doctor 文档整理，手把手教你在 macOS 上完成 OpenClaw 安装、CLI onboarding、Gateway 配置、Dashboa...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard">
+<meta property="og:url" content="https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="按 2026 年 4 月 1 日可查到的 OpenClaw 官方 Getting Started、Onboarding Wizard、Dashboard、FAQ 与 doctor 文档整理，手把手教你在 macOS 上完成 OpenClaw 安装、CLI onboarding、Gateway 配置、Dashboa...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-04-01T01:20:00.000Z">
+<meta property="article:modified_time" content="2026-04-01T01:20:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="AI工具">
+<meta property="article:tag" content="CLI">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="安装教程">
+<meta property="article:tag" content="新手教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-04-01T01:20:00.000Z"><meta property="article:modified_time" content="2026-04-01T01:20:00.000Z"><meta property="article:section" content="AI工具"><meta property="article:tag" content="AI工具"><meta property="article:tag" content="OpenClaw"><meta property="article:tag" content="新手教程"><meta property="article:tag" content="安装教程"><meta property="article:tag" content="macOS"><meta property="article:tag" content="CLI"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard",
+  "description": "按 2026 年 4 月 1 日可查到的 OpenClaw 官方 Getting Started、Onboarding Wizard、Dashboard、FAQ 与 doctor 文档整理，手把手教你在 macOS 上完成 OpenClaw 安装、CLI onboarding、Gateway 配置、Dashboard 打开与常见报错排查，适合零基础新手。",
+  "url": "https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-04-01T01:20:00.000Z",
+  "dateModified": "2026-04-01T01:20:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "OpenClaw Mac安装教程,OpenClaw macOS安装,OpenClaw Mac,OpenClaw dashboard,OpenClaw Gateway,OpenClaw CLI onboarding,open claw安装",
+  "articleSection": [
+    "AI工具"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 56%, #14b8a6 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-01T01:20:00.000Z" title="发表于 2026-04-01 09:20:00">2026-04-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-01T01:20:00.000Z" title="更新于 2026-04-01 09:20:00">2026-04-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-04-01 09:20:00&quot;}" hidden></div><div class="openclaw-series-inline">
+  <div class="oc-series__label">OpenClaw Series</div>
+  <h3>这篇文章属于 OpenClaw 的 macOS 新手安装细化篇</h3>
+  <p>如果你想看最细的 Mac 安装步骤，这篇最适合；如果你想回到整个系列的总入口，可以先去专题页，再按自己的阶段继续往下看。</p>
+  <div class="oc-series__actions">
+    <a class="oc-series__btn oc-series__btn--primary" href="/docs/openclaw/">查看 OpenClaw 专题</a>
+    <a class="oc-series__btn oc-series__btn--secondary" href="/archives/">返回文章归档</a>
+  </div>
+</div>
+
+<blockquote>
+<p>本文按 2026 年 4 月 1 日可查到的 OpenClaw 官方 <a target="_blank" rel="noopener" href="https://docs.openclaw.ai/start/getting-started">Getting Started</a>、<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/start/wizard">Onboarding Wizard</a>、<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/dashboard">Dashboard</a>、<a target="_blank" rel="noopener" href="https://docs.openclaw.ai/help/faq">FAQ</a> 与 <a target="_blank" rel="noopener" href="https://docs.openclaw.ai/cli/doctor">doctor</a> 文档整理。由于不同版本的界面文字可能略有变化，本文采用“看见什么就选什么”的方式，尽量让零基础新手也能直接照着做。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="先说结论：Mac-新手第一次安装，最稳的路线只有这一条"><a href="#先说结论：Mac-新手第一次安装，最稳的路线只有这一条" class="headerlink" title="先说结论：Mac 新手第一次安装，最稳的路线只有这一条"></a>先说结论：Mac 新手第一次安装，最稳的路线只有这一条</h2><p>如果你是第一次接触 OpenClaw，不要一开始就研究 Docker、源码安装、Telegram、Tailscale 或公网访问。</p>
+<p>最稳的顺序是：</p>
+<ol>
+<li>用官方安装脚本安装 <code>OpenClaw</code></li>
+<li>运行 <code>openclaw onboard --install-daemon</code></li>
+<li>按向导把本地 Gateway 配好</li>
+<li>用 <code>openclaw gateway status</code> 确认服务正常</li>
+<li>用 <code>openclaw dashboard</code> 打开浏览器并完成第一次聊天</li>
+</ol>
+<p>先把这 5 步跑通，你后面再接手机聊天渠道、做远程访问、配技能和自动化，排错难度都会低很多。</p>
+<hr>
+<h2 id="这篇教程适合谁"><a href="#这篇教程适合谁" class="headerlink" title="这篇教程适合谁"></a>这篇教程适合谁</h2><p>这篇文章特别适合下面这几种情况：</p>
+<ul>
+<li>你用的是 <code>macOS</code></li>
+<li>你几乎没有命令行经验</li>
+<li>你想按官方推荐方式先把 OpenClaw 装起来</li>
+<li>你不想一上来就接 Telegram、Discord 或 WhatsApp</li>
+<li>你想要的是“每一步点什么、输什么、看到什么算正常”</li>
+</ul>
+<p>如果你现在的目标只是“先在这台 Mac 上把浏览器聊天跑通”，那这篇就是最适合你的版本。</p>
+<hr>
+<h2 id="开始前要准备什么"><a href="#开始前要准备什么" class="headerlink" title="开始前要准备什么"></a>开始前要准备什么</h2><p>正式开始前，你只需要准备 3 样东西：</p>
+<h3 id="1-一台能正常联网的-Mac"><a href="#1-一台能正常联网的-Mac" class="headerlink" title="1. 一台能正常联网的 Mac"></a>1. 一台能正常联网的 Mac</h3><ul>
+<li>建议你使用自己的管理员账号</li>
+<li>安装过程中可能会弹出系统权限确认</li>
+<li>网络需要能访问 OpenClaw 官方安装脚本和你使用的模型服务</li>
+</ul>
+<h3 id="2-一个可用的模型-API-Key"><a href="#2-一个可用的模型-API-Key" class="headerlink" title="2. 一个可用的模型 API Key"></a>2. 一个可用的模型 API Key</h3><p>OpenClaw 本身不是模型提供商，它只是 Gateway 和控制层。<br>所以你至少要准备一种可用的模型接入方式。</p>
+<p>对零基础新手来说，第一次最省事的是：</p>
+<ul>
+<li>你已经有 <code>OpenAI API Key</code></li>
+<li>或者你已经有 <code>Anthropic API Key</code></li>
+</ul>
+<p>如果你没有 API Key，也不是完全不能安装，但最后大概率会卡在“界面能打开，却聊不起来”。</p>
+<h3 id="3-一个打开终端的方法"><a href="#3-一个打开终端的方法" class="headerlink" title="3. 一个打开终端的方法"></a>3. 一个打开终端的方法</h3><p>按下面操作：</p>
+<ol>
+<li>键盘按 <code>Command + Space</code></li>
+<li>输入 <code>Terminal</code></li>
+<li>回车打开</li>
+</ol>
+<p>后面的命令都在这个窗口里执行。</p>
+<hr>
+<h2 id="第一步：运行官方安装命令"><a href="#第一步：运行官方安装命令" class="headerlink" title="第一步：运行官方安装命令"></a>第一步：运行官方安装命令</h2><p>把下面这条命令完整复制到终端里，然后回车：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>这是截至 2026 年 4 月 1 日，官方 <code>Getting Started</code> 页面给出的 <code>macOS / Linux</code> 快速安装命令。</p>
+<h3 id="这一步正常会发生什么"><a href="#这一步正常会发生什么" class="headerlink" title="这一步正常会发生什么"></a>这一步正常会发生什么</h3><p>安装脚本运行后，你可能会看到这些提示：</p>
+<ul>
+<li>检测系统环境</li>
+<li>检测 <code>Node</code></li>
+<li>检测 <code>Git</code></li>
+<li>检测或安装 <code>Homebrew</code></li>
+<li>检测或安装 <code>OpenClaw CLI</code></li>
+</ul>
+<p>只要没有看到明确的报错中断，就继续等它跑完。</p>
+<h3 id="Node-版本要不要自己先装"><a href="#Node-版本要不要自己先装" class="headerlink" title="Node 版本要不要自己先装"></a>Node 版本要不要自己先装</h3><p>官方当前文档里写的是：</p>
+<ul>
+<li><code>Node 24</code> 为推荐版本</li>
+<li><code>Node 22.14+</code> 仍支持</li>
+</ul>
+<p>对新手来说，最简单的做法不是自己先折腾 Node，而是让安装脚本自动处理。</p>
+<hr>
+<h2 id="第二步：如果没有自动进入向导，就手动启动-onboarding"><a href="#第二步：如果没有自动进入向导，就手动启动-onboarding" class="headerlink" title="第二步：如果没有自动进入向导，就手动启动 onboarding"></a>第二步：如果没有自动进入向导，就手动启动 onboarding</h2><p>如果安装脚本跑完后没有自动进入新手引导，就手动执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>这条命令的作用是：</p>
+<ul>
+<li>打开官方推荐的 CLI onboarding 向导</li>
+<li>让你选择模型、Gateway 和工作区</li>
+<li>顺便把后台服务也装好</li>
+</ul>
+<p>你可以把它理解成“把 OpenClaw 真正配置成可用状态”的那一步。</p>
+<hr>
+<h2 id="第三步：向导里每一屏怎么选"><a href="#第三步：向导里每一屏怎么选" class="headerlink" title="第三步：向导里每一屏怎么选"></a>第三步：向导里每一屏怎么选</h2><p>这里是整篇文章最重要的部分。<br>界面文字可能会因版本略有不同，但大方向基本一致。</p>
+<h3 id="1-如果出现-Existing-config-Keep-Modify-Reset"><a href="#1-如果出现-Existing-config-Keep-Modify-Reset" class="headerlink" title="1. 如果出现 Existing config / Keep / Modify / Reset"></a>1. 如果出现 <code>Existing config / Keep / Modify / Reset</code></h3><p>第一次安装通常不会看到这一步。<br>如果你看到了，说明这台 Mac 以前装过 OpenClaw 或留下过旧配置。</p>
+<p>你可以这样选：</p>
+<ul>
+<li>想认真重装一次，选 <code>Reset</code></li>
+<li>想保留原来的配置再调整，选 <code>Modify</code></li>
+<li>不想改现有配置，选 <code>Keep</code></li>
+</ul>
+<p>如果你完全不确定自己以前配过什么，我建议选 <code>Reset</code>，这样后面最省心。</p>
+<h3 id="2-出现-QuickStart-vs-Advanced"><a href="#2-出现-QuickStart-vs-Advanced" class="headerlink" title="2. 出现 QuickStart vs Advanced"></a>2. 出现 <code>QuickStart vs Advanced</code></h3><p>选 <code>QuickStart</code>。</p>
+<p>原因很简单：</p>
+<ul>
+<li>官方把最适合新手的默认值放在这里</li>
+<li>第一次安装没必要一开始就改太多参数</li>
+<li>先让本地 Gateway 正常工作，比“完全自定义”更重要</li>
+</ul>
+<h3 id="3-出现-Local-or-Remote-或-This-Mac-or-Remote"><a href="#3-出现-Local-or-Remote-或-This-Mac-or-Remote" class="headerlink" title="3. 出现 Local or Remote 或 This Mac or Remote"></a>3. 出现 <code>Local or Remote</code> 或 <code>This Mac or Remote</code></h3><p>选 <code>Local</code> 或 <code>This Mac</code>。</p>
+<p>你现在的目标，是先把这台 Mac 跑通。<br>不要第一次就选远程，不要一开始就把问题复杂化。</p>
+<h3 id="4-出现-Model-Auth"><a href="#4-出现-Model-Auth" class="headerlink" title="4. 出现 Model / Auth"></a>4. 出现 <code>Model / Auth</code></h3><p>这是整个流程里最关键的一屏。</p>
+<p>你应该选“你现在已经有凭证的那个提供商”。</p>
+<p>对大多数新手来说，优先顺序可以这样理解：</p>
+<ul>
+<li>你有 <code>OpenAI API Key</code>，就选 <code>OpenAI API key</code></li>
+<li>你有 <code>Anthropic API Key</code>，就选 <code>Anthropic API key</code></li>
+<li>你非常明确自己正在使用 OpenAI Code &#x2F; Codex 登录体系，再选对应选项</li>
+<li>你现在只想先装，不准备立刻聊天，才选 <code>Skip</code></li>
+</ul>
+<p>选完后，向导会让你粘贴密钥。<br>这时候把你的 <code>API Key</code> 粘进去就可以。</p>
+<h3 id="5-出现-Default-model"><a href="#5-出现-Default-model" class="headerlink" title="5. 出现 Default model"></a>5. 出现 <code>Default model</code></h3><p>这一步的原则很简单：</p>
+<ul>
+<li>选你账户里当前能用的模型</li>
+<li>优先选推荐项</li>
+<li>不要第一次就手填自定义模型名</li>
+</ul>
+<p>如果你看不懂型号差异，就直接选默认推荐模型。<br>第一次安装的目标是先跑通，不是先做模型评测。</p>
+<h3 id="6-出现-Workspace"><a href="#6-出现-Workspace" class="headerlink" title="6. 出现 Workspace"></a>6. 出现 <code>Workspace</code></h3><p>直接保留默认值：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/.openclaw/workspace</span><br></pre></td></tr></table></figure>
+
+<p>新手第一次不要改。<br>官方 FAQ 也把它当作默认工作区路径。你后面查配置、看日志、做排错时，默认路径会省掉很多麻烦。</p>
+<h3 id="7-出现-Gateway"><a href="#7-出现-Gateway" class="headerlink" title="7. 出现 Gateway"></a>7. 出现 <code>Gateway</code></h3><p>这一屏按下面选：</p>
+<ul>
+<li><code>Port</code>：<code>18789</code></li>
+<li><code>Bind</code>：<code>loopback</code> 或本机访问</li>
+<li><code>Auth mode</code>：<code>token</code></li>
+<li><code>Token storage</code>：默认自动生成</li>
+<li><code>Tailscale</code>：<code>off</code></li>
+</ul>
+<p>这里最重要的两点一定要记住：</p>
+<ul>
+<li>不要第一次就改成公网绑定</li>
+<li>不要关闭认证</li>
+</ul>
+<p>官方 <code>Dashboard</code> 文档明确提醒：控制面板本质上是管理入口，不适合直接公开暴露。</p>
+<h3 id="8-出现-Channels"><a href="#8-出现-Channels" class="headerlink" title="8. 出现 Channels"></a>8. 出现 <code>Channels</code></h3><p>这一屏先全部 <code>Skip</code>。</p>
+<p>第一次安装不要接：</p>
+<ul>
+<li><code>Telegram</code></li>
+<li><code>Discord</code></li>
+<li><code>WhatsApp</code></li>
+<li>其他聊天渠道</li>
+</ul>
+<p>原因不是它们不能配，而是你现在先要确认：</p>
+<ul>
+<li>OpenClaw 已经装好</li>
+<li>Gateway 确实在跑</li>
+<li>浏览器聊天先成功</li>
+</ul>
+<p>先把本地最小闭环跑通，再加渠道，排错会容易很多。</p>
+<h3 id="9-出现-Web-Search"><a href="#9-出现-Web-Search" class="headerlink" title="9. 出现 Web Search"></a>9. 出现 <code>Web Search</code></h3><p>如果你已经有搜索服务的 API Key，就按向导填写。<br>如果没有，直接 <code>Skip</code>。</p>
+<p>这一步不会影响你先完成第一轮本地聊天。</p>
+<h3 id="10-出现-Daemon"><a href="#10-出现-Daemon" class="headerlink" title="10. 出现 Daemon"></a>10. 出现 <code>Daemon</code></h3><p>选 <code>Install</code>。</p>
+<p>在 macOS 上，这一步通常会把服务注册成 <code>LaunchAgent</code>。<br>这样以后你不需要每次都手动启动 Gateway。</p>
+<p>如果它还问 runtime，优先选：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Node</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-出现-Health-Check"><a href="#11-出现-Health-Check" class="headerlink" title="11. 出现 Health Check"></a>11. 出现 <code>Health Check</code></h3><p>这一屏基本不用做选择，等它跑完就行。</p>
+<p>你看到下面这些信号，通常就说明主流程已经成功：</p>
+<ul>
+<li>Gateway 启动成功</li>
+<li>健康检查通过</li>
+<li>没有关键错误中断</li>
+</ul>
+<h3 id="12-出现-Skills"><a href="#12-出现-Skills" class="headerlink" title="12. 出现 Skills"></a>12. 出现 <code>Skills</code></h3><p>选 <code>Recommended</code> 就可以。</p>
+<p>如果它追问包管理器，优先选：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm</span><br></pre></td></tr></table></figure>
+
+<p>原因也很简单：默认安装脚本本身就是沿着 npm 路线来的，第一次不要再引入额外变量。</p>
+<h3 id="13-出现完成页-Finish-Summary"><a href="#13-出现完成页-Finish-Summary" class="headerlink" title="13. 出现完成页 Finish / Summary"></a>13. 出现完成页 <code>Finish / Summary</code></h3><p>正常情况下，向导结束时会做两件事：</p>
+<ul>
+<li>给你一份安装总结</li>
+<li>尝试自动打开浏览器 dashboard</li>
+</ul>
+<p>如果浏览器没有自动打开，不用慌，下一步手动执行就行。</p>
+<hr>
+<h2 id="第四步：安装完成后，马上做这-5-个验收动作"><a href="#第四步：安装完成后，马上做这-5-个验收动作" class="headerlink" title="第四步：安装完成后，马上做这 5 个验收动作"></a>第四步：安装完成后，马上做这 5 个验收动作</h2><p>很多人装完就结束了，但真正重要的是“验收”。</p>
+<h3 id="1-先确认命令已经可用"><a href="#1-先确认命令已经可用" class="headerlink" title="1. 先确认命令已经可用"></a>1. 先确认命令已经可用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw --version</span><br></pre></td></tr></table></figure>
+
+<p>如果它能正常输出版本号，说明 CLI 至少已经装上了。</p>
+<h3 id="2-确认-Gateway-正在运行"><a href="#2-确认-Gateway-正在运行" class="headerlink" title="2. 确认 Gateway 正在运行"></a>2. 确认 Gateway 正在运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway status</span><br></pre></td></tr></table></figure>
+
+<p>按官方 <code>Getting Started</code> 文档，正常情况下你应该看到 Gateway 在 <code>18789</code> 端口监听。</p>
+<h3 id="3-打开浏览器控制台"><a href="#3-打开浏览器控制台" class="headerlink" title="3. 打开浏览器控制台"></a>3. 打开浏览器控制台</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<p>这条命令会尝试：</p>
+<ul>
+<li>打开浏览器</li>
+<li>给出 dashboard 链接</li>
+<li>在需要时带上 token 化链接</li>
+</ul>
+<h3 id="4-在浏览器里发第一条测试消息"><a href="#4-在浏览器里发第一条测试消息" class="headerlink" title="4. 在浏览器里发第一条测试消息"></a>4. 在浏览器里发第一条测试消息</h3><p>你可以直接发这句：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你好，请先做个自我介绍，并告诉我你现在已经连接了哪些能力。</span><br></pre></td></tr></table></figure>
+
+<p>只要它能正常回复，说明你已经跑通了最小闭环。</p>
+<h3 id="5-做一次巡检"><a href="#5-做一次巡检" class="headerlink" title="5. 做一次巡检"></a>5. 做一次巡检</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw doctor</span><br></pre></td></tr></table></figure>
+
+<p>官方 <code>doctor</code> 文档把它定位成“健康检查 + 快速修复入口”。<br>第一次安装后跑一遍，很有必要。</p>
+<hr>
+<h2 id="第五步：如果中间出错，优先按这个顺序排查"><a href="#第五步：如果中间出错，优先按这个顺序排查" class="headerlink" title="第五步：如果中间出错，优先按这个顺序排查"></a>第五步：如果中间出错，优先按这个顺序排查</h2><p>下面这些是新手最容易遇到的情况。</p>
+<h3 id="情况-1：终端提示-openclaw-command-not-found"><a href="#情况-1：终端提示-openclaw-command-not-found" class="headerlink" title="情况 1：终端提示 openclaw: command not found"></a>情况 1：终端提示 <code>openclaw: command not found</code></h3><p>先别急着重装，按这个顺序处理：</p>
+<ol>
+<li>关掉当前终端</li>
+<li>重新打开一个新的终端窗口</li>
+<li>再执行一次：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw --version</span><br></pre></td></tr></table></figure>
+
+<p>如果还是不行，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="subst">$(npm prefix -g)</span>/bin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后把这一行写进 <code>~/.zshrc</code>，再开新终端。</p>
+<h3 id="情况-2：浏览器里出现-unauthorized-或-1008"><a href="#情况-2：浏览器里出现-unauthorized-或-1008" class="headerlink" title="情况 2：浏览器里出现 unauthorized 或 1008"></a>情况 2：浏览器里出现 <code>unauthorized</code> 或 <code>1008</code></h3><p>这是新手很常见的问题，但通常不是安装失败。</p>
+<p>官方 <code>Dashboard</code> 和 <code>FAQ</code> 文档给出的优先处理方法是：</p>
+<ol>
+<li>重新执行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用它打印出来的带 token 的链接</li>
+</ol>
+<p>如果还不行，再取出当前 token：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw config get gateway.auth.token</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个 token 粘到 dashboard 的设置里。</p>
+<p>如果根本没有 token，官方 FAQ 允许你直接生成一个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw doctor --generate-gateway-token</span><br></pre></td></tr></table></figure>
+
+<h3 id="情况-3：明明-token-改过了，还是一直认证失败"><a href="#情况-3：明明-token-改过了，还是一直认证失败" class="headerlink" title="情况 3：明明 token 改过了，还是一直认证失败"></a>情况 3：明明 token 改过了，还是一直认证失败</h3><p>官方 <code>doctor</code> 文档专门提到过一个 macOS 常见坑：</p>
+<ul>
+<li>你以前通过 <code>launchctl setenv</code> 设置过旧 token</li>
+<li>系统环境变量把当前配置覆盖掉了</li>
+</ul>
+<p>先检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">launchctl getenv OPENCLAW_GATEWAY_TOKEN</span><br><span class="line">launchctl getenv OPENCLAW_GATEWAY_PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>如果查到了旧值，再清掉：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">launchctl unsetenv OPENCLAW_GATEWAY_TOKEN</span><br><span class="line">launchctl unsetenv OPENCLAW_GATEWAY_PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>然后重新执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway status</span><br><span class="line">openclaw dashboard</span><br></pre></td></tr></table></figure>
+
+<h3 id="情况-4：Gateway-看起来在跑，但页面还是不正常"><a href="#情况-4：Gateway-看起来在跑，但页面还是不正常" class="headerlink" title="情况 4：Gateway 看起来在跑，但页面还是不正常"></a>情况 4：Gateway 看起来在跑，但页面还是不正常</h3><p>这时候不要只盯着“有没有进程”。</p>
+<p>按官方排错思路，至少一起看这几项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway status</span><br><span class="line">openclaw doctor</span><br><span class="line">openclaw logs --follow</span><br></pre></td></tr></table></figure>
+
+<p>尤其要注意：</p>
+<ul>
+<li>Gateway 是否真的能被当前认证方式访问</li>
+<li>当前连接的是本地 Gateway，还是不小心指向了 remote</li>
+<li>是否存在旧配置、旧认证、旧服务残留</li>
+</ul>
+<hr>
+<h2 id="第六步：怎样才算你已经真的装成功了"><a href="#第六步：怎样才算你已经真的装成功了" class="headerlink" title="第六步：怎样才算你已经真的装成功了"></a>第六步：怎样才算你已经真的装成功了</h2><p>对零基础新手来说，最实用的成功标准不是“命令跑完了”，而是下面这 4 条同时成立：</p>
+<ol>
+<li><code>openclaw gateway status</code> 正常</li>
+<li><code>openclaw dashboard</code> 能打开浏览器界面</li>
+<li>你在浏览器里发消息能收到回复</li>
+<li><code>openclaw doctor</code> 没有关键错误</li>
+</ol>
+<p>只要这 4 条成立，你就已经完成了一次合格的本地部署。</p>
+<hr>
+<h2 id="第七步：第一次跑通后，下一步应该做什么"><a href="#第七步：第一次跑通后，下一步应该做什么" class="headerlink" title="第七步：第一次跑通后，下一步应该做什么"></a>第七步：第一次跑通后，下一步应该做什么</h2><p>很多新手装成功后，会马上想做更多事情。<br>我的建议是按这个顺序继续：</p>
+<ol>
+<li>先熟悉 dashboard 里的基本聊天和设置</li>
+<li>再只接入一个聊天渠道，例如 <code>Telegram</code></li>
+<li>再考虑技能、自动化、远程访问</li>
+<li>最后再研究 <code>Tailscale</code>、<code>SSH tunnel</code> 或公网方案</li>
+</ol>
+<p>原因很简单：每次只增加一个变量，你后面才容易定位问题。</p>
+<hr>
+<h2 id="一份适合保存的极简命令清单"><a href="#一份适合保存的极简命令清单" class="headerlink" title="一份适合保存的极简命令清单"></a>一份适合保存的极简命令清单</h2><p>如果你只想留一版最核心的命令，可以保存下面这组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://openclaw.ai/install.sh | bash</span><br><span class="line">openclaw onboard --install-daemon</span><br><span class="line">openclaw gateway status</span><br><span class="line">openclaw dashboard</span><br><span class="line">openclaw doctor</span><br></pre></td></tr></table></figure>
+
+<p>如果安装后网页提示 <code>unauthorized</code>，优先再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openclaw dashboard</span><br><span class="line">openclaw config get gateway.auth.token</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最后再提醒一次：新手第一次不要做的-4-件事"><a href="#最后再提醒一次：新手第一次不要做的-4-件事" class="headerlink" title="最后再提醒一次：新手第一次不要做的 4 件事"></a>最后再提醒一次：新手第一次不要做的 4 件事</h2><ul>
+<li>不要一开始就选 <code>Remote</code></li>
+<li>不要一开始就接多个聊天渠道</li>
+<li>不要把 dashboard 直接暴露到公网</li>
+<li>不要还没跑通本地聊天，就先折腾高级配置</li>
+</ul>
+<p>你第一次安装的目标只有一个：</p>
+<p>把本地浏览器聊天先跑通。</p>
+<p>只要这一步成功，后面的事情就都好办了。</p>
+<hr>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/start/getting-started">Getting Started</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/start/wizard">Onboarding Wizard (CLI)</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/cli">CLI Reference</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/dashboard">Dashboard</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/help/faq">FAQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/cli/doctor">doctor</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/gateway/troubleshooting">Troubleshooting</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/">https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/">新手教程</a><a class="post-meta__tags" href="/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><a class="post-meta__tags" href="/tags/macOS/">macOS</a><a class="post-meta__tags" href="/tags/CLI/">CLI</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 32%, #06b6d4 68%, #f8fafc 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</div></div><div class="info-2"><div class="info-item-1">结合实测截图整理一套在 DMIT VPS 上使用 Cloudflare WARP 的 WireProxy socks5 出口，为 3x-ui/X-ui 配置 Disney+ 分流的实战方案，缓解 Error Code 73。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程"><div class="cover" style="background: linear-gradient(135deg, #06121f 0%, #0f4c75 30%, #2563eb 62%, #22c55e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 27 日可查到的 OpenClaw 官方 Install、Onboarding、Control UI、Windows WSL2、Channels 与 Message 文档整理，手把手说明 Windows 和 Mac 如何从零安装 OpenClaw，并讲清楚 Select channel 的实际运用。</div></div></div></a><a class="pagination-related" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南"><div class="cover" style="background: linear-gradient(135deg, #140b10 0%, #4a1022 28%, #b91c1c 58%, #f59e0b 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-28</div><div class="info-item-2">OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明怎样把 OpenClaw 服务、状态、工作区、CLI 和残留配置真正清理干净。</div></div></div></a><a class="pagination-related" href="/2026/03/27/OpenClaw%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%90%8E%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%8410%E4%B8%AA%E5%9D%91/" title="OpenClaw 新手第一次安装后最容易踩的 10 个坑"><div class="cover" style="background: linear-gradient(135deg, #09111f 0%, #0f4c75 28%, #2563eb 58%, #f43f5e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">OpenClaw 新手第一次安装后最容易踩的 10 个坑</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 26 日可查到的 OpenClaw 官方 FAQ、Control UI 和 Troubleshooting 文档整理，总结新手第一次安装 OpenClaw 后最常遇到的 10 个坑与解决思路。</div></div></div></a><a class="pagination-related" href="/2026/03/29/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E8%AE%BE%E7%BD%AE%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%89%88/" title="OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版"><div class="cover" style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 26%, #2563eb 56%, #22c55e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-29</div><div class="info-item-2">OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 29 日可查到的 OpenClaw 官方安装、Control UI、Tailscale、Logging 和 Updating 文档整理，适合新手一步一步完成安装、验证、面板访问与安全配置。</div></div></div></a><a class="pagination-related" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div class="cover" style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-28</div><div class="info-item-2">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</div></div><div class="info-2"><div class="info-item-1">一篇专门给 Mac 新手看的 OpenClaw 排错教程，解决 Safari 无法打开 127.0.0.1:18789、Control UI 能开但聊天发不出去、会话模型被错误覆盖等常见问题。</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E6%96%B0%E6%89%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8canva%E5%88%B0%E7%B2%BE%E9%80%9A%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="新手零基础入门 Canva 到精通详细教程"><div class="cover" style="background: linear-gradient(135deg, #081120 0%, #0f766e 30%, #06b6d4 62%, #8b5cf6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">新手零基础入门 Canva 到精通详细教程</div></div><div class="info-2"><div class="info-item-1">手把手带新手从零认识 Canva，学习模板、排版、图片、视频、协作和 AI 功能，逐步掌握从入门到熟练使用 Canva 的完整方法。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">这篇文章属于 OpenClaw 的 macOS 新手安装细化篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9AMac-%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%EF%BC%8C%E6%9C%80%E7%A8%B3%E7%9A%84%E8%B7%AF%E7%BA%BF%E5%8F%AA%E6%9C%89%E8%BF%99%E4%B8%80%E6%9D%A1"><span class="toc-number">2.</span> <span class="toc-text">先说结论：Mac 新手第一次安装，最稳的路线只有这一条</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%95%99%E7%A8%8B%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">3.</span> <span class="toc-text">这篇教程适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%89%8D%E8%A6%81%E5%87%86%E5%A4%87%E4%BB%80%E4%B9%88"><span class="toc-number">4.</span> <span class="toc-text">开始前要准备什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%80%E5%8F%B0%E8%83%BD%E6%AD%A3%E5%B8%B8%E8%81%94%E7%BD%91%E7%9A%84-Mac"><span class="toc-number">4.1.</span> <span class="toc-text">1. 一台能正常联网的 Mac</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%80%E4%B8%AA%E5%8F%AF%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9E%8B-API-Key"><span class="toc-number">4.2.</span> <span class="toc-text">2. 一个可用的模型 API Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%80%E4%B8%AA%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">3. 一个打开终端的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E8%BF%90%E8%A1%8C%E5%AE%98%E6%96%B9%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">第一步：运行官方安装命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E4%B8%80%E6%AD%A5%E6%AD%A3%E5%B8%B8%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88"><span class="toc-number">5.1.</span> <span class="toc-text">这一步正常会发生什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-%E7%89%88%E6%9C%AC%E8%A6%81%E4%B8%8D%E8%A6%81%E8%87%AA%E5%B7%B1%E5%85%88%E8%A3%85"><span class="toc-number">5.2.</span> <span class="toc-text">Node 版本要不要自己先装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%E8%87%AA%E5%8A%A8%E8%BF%9B%E5%85%A5%E5%90%91%E5%AF%BC%EF%BC%8C%E5%B0%B1%E6%89%8B%E5%8A%A8%E5%90%AF%E5%8A%A8-onboarding"><span class="toc-number">6.</span> <span class="toc-text">第二步：如果没有自动进入向导，就手动启动 onboarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%90%91%E5%AF%BC%E9%87%8C%E6%AF%8F%E4%B8%80%E5%B1%8F%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">7.</span> <span class="toc-text">第三步：向导里每一屏怎么选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E6%9E%9C%E5%87%BA%E7%8E%B0-Existing-config-Keep-Modify-Reset"><span class="toc-number">7.1.</span> <span class="toc-text">1. 如果出现 Existing config &#x2F; Keep &#x2F; Modify &#x2F; Reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%BA%E7%8E%B0-QuickStart-vs-Advanced"><span class="toc-number">7.2.</span> <span class="toc-text">2. 出现 QuickStart vs Advanced</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%87%BA%E7%8E%B0-Local-or-Remote-%E6%88%96-This-Mac-or-Remote"><span class="toc-number">7.3.</span> <span class="toc-text">3. 出现 Local or Remote 或 This Mac or Remote</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%87%BA%E7%8E%B0-Model-Auth"><span class="toc-number">7.4.</span> <span class="toc-text">4. 出现 Model &#x2F; Auth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%87%BA%E7%8E%B0-Default-model"><span class="toc-number">7.5.</span> <span class="toc-text">5. 出现 Default model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%87%BA%E7%8E%B0-Workspace"><span class="toc-number">7.6.</span> <span class="toc-text">6. 出现 Workspace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%87%BA%E7%8E%B0-Gateway"><span class="toc-number">7.7.</span> <span class="toc-text">7. 出现 Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%87%BA%E7%8E%B0-Channels"><span class="toc-number">7.8.</span> <span class="toc-text">8. 出现 Channels</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%87%BA%E7%8E%B0-Web-Search"><span class="toc-number">7.9.</span> <span class="toc-text">9. 出现 Web Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E5%87%BA%E7%8E%B0-Daemon"><span class="toc-number">7.10.</span> <span class="toc-text">10. 出现 Daemon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E5%87%BA%E7%8E%B0-Health-Check"><span class="toc-number">7.11.</span> <span class="toc-text">11. 出现 Health Check</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%87%BA%E7%8E%B0-Skills"><span class="toc-number">7.12.</span> <span class="toc-text">12. 出现 Skills</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%87%BA%E7%8E%B0%E5%AE%8C%E6%88%90%E9%A1%B5-Finish-Summary"><span class="toc-number">7.13.</span> <span class="toc-text">13. 出现完成页 Finish &#x2F; Summary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E9%A9%AC%E4%B8%8A%E5%81%9A%E8%BF%99-5-%E4%B8%AA%E9%AA%8C%E6%94%B6%E5%8A%A8%E4%BD%9C"><span class="toc-number">8.</span> <span class="toc-text">第四步：安装完成后，马上做这 5 个验收动作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%88%E7%A1%AE%E8%AE%A4%E5%91%BD%E4%BB%A4%E5%B7%B2%E7%BB%8F%E5%8F%AF%E7%94%A8"><span class="toc-number">8.1.</span> <span class="toc-text">1. 先确认命令已经可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%A1%AE%E8%AE%A4-Gateway-%E6%AD%A3%E5%9C%A8%E8%BF%90%E8%A1%8C"><span class="toc-number">8.2.</span> <span class="toc-text">2. 确认 Gateway 正在运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8E%A7%E5%88%B6%E5%8F%B0"><span class="toc-number">8.3.</span> <span class="toc-text">3. 打开浏览器控制台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8C%E5%8F%91%E7%AC%AC%E4%B8%80%E6%9D%A1%E6%B5%8B%E8%AF%95%E6%B6%88%E6%81%AF"><span class="toc-number">8.4.</span> <span class="toc-text">4. 在浏览器里发第一条测试消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%81%9A%E4%B8%80%E6%AC%A1%E5%B7%A1%E6%A3%80"><span class="toc-number">8.5.</span> <span class="toc-text">5. 做一次巡检</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E5%A6%82%E6%9E%9C%E4%B8%AD%E9%97%B4%E5%87%BA%E9%94%99%EF%BC%8C%E4%BC%98%E5%85%88%E6%8C%89%E8%BF%99%E4%B8%AA%E9%A1%BA%E5%BA%8F%E6%8E%92%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">第五步：如果中间出错，优先按这个顺序排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-1%EF%BC%9A%E7%BB%88%E7%AB%AF%E6%8F%90%E7%A4%BA-openclaw-command-not-found"><span class="toc-number">9.1.</span> <span class="toc-text">情况 1：终端提示 openclaw: command not found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-2%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8C%E5%87%BA%E7%8E%B0-unauthorized-%E6%88%96-1008"><span class="toc-number">9.2.</span> <span class="toc-text">情况 2：浏览器里出现 unauthorized 或 1008</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-3%EF%BC%9A%E6%98%8E%E6%98%8E-token-%E6%94%B9%E8%BF%87%E4%BA%86%EF%BC%8C%E8%BF%98%E6%98%AF%E4%B8%80%E7%9B%B4%E8%AE%A4%E8%AF%81%E5%A4%B1%E8%B4%A5"><span class="toc-number">9.3.</span> <span class="toc-text">情况 3：明明 token 改过了，还是一直认证失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-4%EF%BC%9AGateway-%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%9C%A8%E8%B7%91%EF%BC%8C%E4%BD%86%E9%A1%B5%E9%9D%A2%E8%BF%98%E6%98%AF%E4%B8%8D%E6%AD%A3%E5%B8%B8"><span class="toc-number">9.4.</span> <span class="toc-text">情况 4：Gateway 看起来在跑，但页面还是不正常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E6%80%8E%E6%A0%B7%E6%89%8D%E7%AE%97%E4%BD%A0%E5%B7%B2%E7%BB%8F%E7%9C%9F%E7%9A%84%E8%A3%85%E6%88%90%E5%8A%9F%E4%BA%86"><span class="toc-number">10.</span> <span class="toc-text">第六步：怎样才算你已经真的装成功了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B7%91%E9%80%9A%E5%90%8E%EF%BC%8C%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">11.</span> <span class="toc-text">第七步：第一次跑通后，下一步应该做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BB%BD%E9%80%82%E5%90%88%E4%BF%9D%E5%AD%98%E7%9A%84%E6%9E%81%E7%AE%80%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95"><span class="toc-number">12.</span> <span class="toc-text">一份适合保存的极简命令清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%86%8D%E6%8F%90%E9%86%92%E4%B8%80%E6%AC%A1%EF%BC%9A%E6%96%B0%E6%89%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%8D%E8%A6%81%E5%81%9A%E7%9A%84-4-%E4%BB%B6%E4%BA%8B"><span class="toc-number">13.</span> <span class="toc-text">最后再提醒一次：新手第一次不要做的 4 件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-number">14.</span> <span class="toc-text">参考文档</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/" title="OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 56%, #14b8a6 100%)"></div></a><div class="content"><a class="title" href="/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/" title="OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard">OpenClaw Mac 安装教程：macOS 零基础从安装到跑通 Dashboard</a><time datetime="2026-04-01T01:20:00.000Z" title="发表于 2026-04-01 09:20:00">2026-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战"><div style="background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 32%, #06b6d4 68%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战">DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</a><time datetime="2026-03-30T13:15:00.000Z" title="发表于 2026-03-30 21:15:00">2026-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/29/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E8%AE%BE%E7%BD%AE%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%89%88/" title="OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版"><div style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 26%, #2563eb 56%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/03/29/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E8%AE%BE%E7%BD%AE%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%89%88/" title="OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版">OpenClaw 完整安装教程和控制面板设置详细指南：按官方文档整理的新手版</a><time datetime="2026-03-29T10:35:40.000Z" title="发表于 2026-03-29 18:35:40">2026-03-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div></a><div class="content"><a class="title" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</a><time datetime="2026-03-28T15:18:00.000Z" title="发表于 2026-03-28 23:18:00">2026-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南"><div style="background: linear-gradient(135deg, #140b10 0%, #4a1022 28%, #b91c1c 58%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南">OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南</a><time datetime="2026-03-28T11:28:00.000Z" title="发表于 2026-03-28 19:28:00">2026-03-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
