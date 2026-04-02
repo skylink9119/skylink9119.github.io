@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/</loc>
+    <loc>https://skylink9119.github.io/docs/openclaw/</loc>
     
     <lastmod>2026-04-02</lastmod>
     
@@ -11,9 +11,18 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/docs/openclaw/</loc>
+    <loc>https://skylink9119.github.io/2026/04/02/OpenClaw%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5%E5%92%8C%E6%8E%A5%E5%85%A5%E5%90%84%E5%A4%A7%E4%B8%BB%E6%B5%81%E5%BA%94%E7%94%A8%E6%95%99%E7%A8%8B/</loc>
     
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-04-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/</loc>
+    
+    <lastmod>2026-04-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -209,34 +218,6 @@
 
   
   <url>
-    <loc>https://skylink9119.github.io/tags/VPS/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://skylink9119.github.io/tags/AI%E8%A7%86%E9%A2%91/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -266,6 +247,34 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/VPS/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -342,13 +351,6 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://skylink9119.github.io/tags/macOS/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -357,6 +359,13 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/CLI/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -391,6 +400,20 @@
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/tags/%E5%8D%B8%E8%BD%BD%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/Windows/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/tags/Canva/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -412,20 +435,6 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/%E5%8D%B8%E8%BD%BD%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/Windows/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://skylink9119.github.io/tags/MDM/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -439,17 +448,45 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://skylink9119.github.io/tags/Telegram/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/tags/Discord/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/Slack/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/WhatsApp/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
     <loc>https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

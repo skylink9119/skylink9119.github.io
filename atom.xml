@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-04-02T02:20:00.000Z</updated>
+  <updated>2026-04-02T12:30:36.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenClaw 错误排查和接入各大主流应用教程：Telegram、Discord、Slack、WhatsApp 一篇讲清</title>
+    <link href="https://skylink9119.github.io/2026/04/02/OpenClaw%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5%E5%92%8C%E6%8E%A5%E5%85%A5%E5%90%84%E5%A4%A7%E4%B8%BB%E6%B5%81%E5%BA%94%E7%94%A8%E6%95%99%E7%A8%8B/"/>
+    <id>https://skylink9119.github.io/2026/04/02/OpenClaw%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5%E5%92%8C%E6%8E%A5%E5%85%A5%E5%90%84%E5%A4%A7%E4%B8%BB%E6%B5%81%E5%BA%94%E7%94%A8%E6%95%99%E7%A8%8B/</id>
+    <published>2026-04-02T12:30:36.000Z</published>
+    <updated>2026-04-02T12:30:36.000Z</updated>
+    
+    
+    <summary type="html">按 2026 年 4 月 2 日可查到的 OpenClaw 官方 Channels、Pairing、Troubleshooting 与 Message 文档整理，讲清本地排错顺序，以及 Telegram、Discord、Slack、WhatsApp 四大主流应用的接入思路。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
+    
+    <category term="Telegram" scheme="https://skylink9119.github.io/tags/Telegram/"/>
+    
+    <category term="Discord" scheme="https://skylink9119.github.io/tags/Discord/"/>
+    
+    <category term="Slack" scheme="https://skylink9119.github.io/tags/Slack/"/>
+    
+    <category term="WhatsApp" scheme="https://skylink9119.github.io/tags/WhatsApp/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenClaw Mac 安装详细教程：macOS 零基础 CLI Onboarding 看图操作版</title>
@@ -126,9 +157,9 @@
     
     <category term="新手教程" scheme="https://skylink9119.github.io/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/"/>
     
-    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
-    
     <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    
+    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
     
     <category term="Safari" scheme="https://skylink9119.github.io/tags/Safari/"/>
     
