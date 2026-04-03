@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-04-02T12:30:36.000Z</updated>
+  <updated>2026-04-03T14:20:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析</title>
+    <link href="https://skylink9119.github.io/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/"/>
+    <id>https://skylink9119.github.io/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/</id>
+    <published>2026-04-03T14:20:00.000Z</published>
+    <updated>2026-04-03T14:20:00.000Z</updated>
+    
+    
+    <summary type="html">按 2026 年 4 月 3 日可查到的 OpenClaw、OpenAI、Anthropic 与 Ollama 官方资料整理，详细分析 OpenClaw、Codex、Claude Code 与本地大模型的定位差异、适用场景和真实支出。</summary>
+    
+    
+    
+    <category term="AI工具" scheme="https://skylink9119.github.io/categories/AI%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
+    
+    <category term="Codex" scheme="https://skylink9119.github.io/tags/Codex/"/>
+    
+    <category term="Claude Code" scheme="https://skylink9119.github.io/tags/Claude-Code/"/>
+    
+    <category term="本地大模型" scheme="https://skylink9119.github.io/tags/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+    <category term="AI工具对比" scheme="https://skylink9119.github.io/tags/AI%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/"/>
+    
+    <category term="成本分析" scheme="https://skylink9119.github.io/tags/%E6%88%90%E6%9C%AC%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenClaw 错误排查和接入各大主流应用教程：Telegram、Discord、Slack、WhatsApp 一篇讲清</title>
