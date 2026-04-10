@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="DMIT Grok 教程, Cloudflare WARP Proxy Mode, sing-box WARP 分流, Xray Grok 精准分流, fscarmen warp"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="这篇文章演示如何在 DMIT VPS 上通过 fscarmen 脚本安装 Cloudflare WARP 原生客户端，并用 sing-box 或 Xray 仅让 grok.com 相关流量走 WARP，避免全局绕路拖慢整体速度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box&#x2F;Xray">
+<meta property="og:url" content="https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="这篇文章演示如何在 DMIT VPS 上通过 fscarmen 脚本安装 Cloudflare WARP 原生客户端，并用 sing-box 或 Xray 仅让 grok.com 相关流量走 WARP，避免全局绕路拖慢整体速度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-04-04T07:30:00.000Z">
+<meta property="article:modified_time" content="2026-04-04T07:30:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="Cloudflare WARP">
+<meta property="article:tag" content="DMIT">
+<meta property="article:tag" content="Grok">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="Xray">
+<meta property="article:tag" content="sing-box">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-04-04T07:30:00.000Z"><meta property="article:modified_time" content="2026-04-04T07:30:00.000Z"><meta property="article:section" content="技术教程"><meta property="article:tag" content="VPS"><meta property="article:tag" content="DMIT"><meta property="article:tag" content="Cloudflare WARP"><meta property="article:tag" content="Grok"><meta property="article:tag" content="sing-box"><meta property="article:tag" content="Xray"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray",
+  "description": "这篇文章演示如何在 DMIT VPS 上通过 fscarmen 脚本安装 Cloudflare WARP 原生客户端，并用 sing-box 或 Xray 仅让 grok.com 相关流量走 WARP，避免全局绕路拖慢整体速度。",
+  "url": "https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-04-04T07:30:00.000Z",
+  "dateModified": "2026-04-04T07:30:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "DMIT Grok 教程, Cloudflare WARP Proxy Mode, sing-box WARP 分流, Xray Grok 精准分流, fscarmen warp",
+  "articleSection": [
+    "技术教程",
+    "VPS网络"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #0b1220 0%, #0f766e 32%, #38bdf8 68%, #f8fafc 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-04T07:30:00.000Z" title="发表于 2026-04-04 15:30:00">2026-04-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-04T07:30:00.000Z" title="更新于 2026-04-04 15:30:00">2026-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/">VPS网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-04-04 15:30:00&quot;}" hidden></div><h1 id="DMIT-搭配-Cloudflare-WARP-实现-Grok-精准分流教程：原生-Client-Proxy-Mode-sing-box-Xray"><a href="#DMIT-搭配-Cloudflare-WARP-实现-Grok-精准分流教程：原生-Client-Proxy-Mode-sing-box-Xray" class="headerlink" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box&#x2F;Xray"></a>DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box&#x2F;Xray</h1><p>很多人手里的 <code>DMIT</code> 线路本身没问题，平时跑 <code>SSH</code>、<code>GitHub</code>、下载、面板都很稳，但一到 <code>grok.com</code> 这类站点，就可能遇到打不开、访问慢、或者区域判断异常。</p>
+<p>这时候最容易想到的办法，是把整台 VPS 全局切进 <code>WARP</code>。但这样做往往副作用也很明显：</p>
+<ul>
+<li>你原本已经很顺的主线路会被整体绕远</li>
+<li>日常代理、面板和脚本任务都会一起受影响</li>
+<li>一不小心还会把现有网络环境和 SSH 使用习惯弄乱</li>
+</ul>
+<p>更稳妥的思路通常是：</p>
+<blockquote>
+<p>只让 <code>grok.com</code> 相关流量走 <code>WARP</code>，其他流量继续走原来的出口。</p>
+</blockquote>
+<p>本文就按这个思路来做，而且依旧用对新手比较友好的 <code>fscarmen/warp</code> 脚本作为入口。</p>
+<h2 id="这篇教程适合什么场景"><a href="#这篇教程适合什么场景" class="headerlink" title="这篇教程适合什么场景"></a>这篇教程适合什么场景</h2><p>下面这套写法比较适合：</p>
+<ol>
+<li>你已经有一台能正常 <code>SSH</code> 登录的 <code>DMIT VPS</code></li>
+<li>你已经跑着 <code>sing-box</code>、<code>Xray/V2Ray</code>、<code>3x-ui</code> 或 <code>X-ui</code></li>
+<li>你不想让整台机器全局走 <code>WARP</code></li>
+<li>你只想把 <code>grok.com</code> 单独分流出去</li>
+</ol>
+<p>如果你现在连基础节点都还没搭好，建议先把主线路跑通，再来做这一步。</p>
+<h2 id="为什么这里选原生-Client-的-Proxy-Mode"><a href="#为什么这里选原生-Client-的-Proxy-Mode" class="headerlink" title="为什么这里选原生 Client 的 Proxy Mode"></a>为什么这里选原生 Client 的 Proxy Mode</h2><p>这次不走“全局网卡模式”，也不直接改系统默认路由，而是使用 <code>Cloudflare WARP</code> 原生客户端的 <code>Proxy Mode</code>。</p>
+<p>这么做的好处是：</p>
+<ul>
+<li><code>WARP</code> 只在本机监听一个本地代理端口</li>
+<li>只有命中路由规则的流量才会送进这个端口</li>
+<li>现有 <code>SSH</code>、面板和大部分正常流量都不会被改写</li>
+</ul>
+<p>根据 Cloudflare 官方文档，<code>Local proxy mode</code> 默认监听在 <code>127.0.0.1:40000</code>，并且只处理明确送进本地代理的流量。这也是它适合做“精准分流”的原因。  </p>
+<p>不过这里也要提前说清楚一个限制：</p>
+<ul>
+<li>Cloudflare 官方文档同时提到，<code>Local proxy mode</code> 对单个请求存在 <code>10 秒</code> 超时限制</li>
+</ul>
+<p>这意味着如果你后面实际使用 <code>Grok</code> 时，遇到长回复流式输出被中断，优先怀疑这一层限制。那种场景下，更适合换成 <code>WireProxy socks5</code> 或完整 <code>WARP interface</code> 方案，而不是死磕 <code>Proxy Mode</code>。</p>
+<h2 id="第一步：在-DMIT-终端安装-WARP"><a href="#第一步：在-DMIT-终端安装-WARP" class="headerlink" title="第一步：在 DMIT 终端安装 WARP"></a>第一步：在 DMIT 终端安装 WARP</h2><p>先在你的 <code>DMIT</code> 终端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh &amp;&amp; bash menu.sh</span><br></pre></td></tr></table></figure>
+
+<p>这个脚本会弹出交互菜单。这里建议你按下面思路选择：</p>
+<ul>
+<li>选择安装 <code>WARP</code> 原生客户端</li>
+<li>模式选择 <code>代理模式 (Proxy Mode)</code></li>
+<li>端口保持默认 <code>40000</code></li>
+</ul>
+<p>如果你只是想快速进入 Client 安装分支，也可以用脚本里提供的快捷方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash menu.sh c</span><br></pre></td></tr></table></figure>
+
+<p>这样做的核心目的不是“让 VPS 全局翻过去”，而是让本机多出来一个可被 <code>sing-box</code> 或 <code>Xray</code> 调用的本地代理入口。</p>
+<h2 id="第二步：确认本地代理已经起来"><a href="#第二步：确认本地代理已经起来" class="headerlink" title="第二步：确认本地代理已经起来"></a>第二步：确认本地代理已经起来</h2><p>安装完成后，先在 VPS 上确认 <code>40000</code> 端口真的在监听：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -nltp | grep 40000</span><br></pre></td></tr></table></figure>
+
+<p>如果有输出，再继续用 <code>curl</code> 测试一下。这里建议显式使用 <code>socks5h</code>，让域名解析也走代理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --proxy socks5h://127.0.0.1:40000 https://ifconfig.me</span><br><span class="line">curl --proxy socks5h://127.0.0.1:40000 -I -L https://grok.com</span><br></pre></td></tr></table></figure>
+
+<p>这一步主要看两件事：</p>
+<ul>
+<li><code>ifconfig.me</code> 返回的出口 IP 不再是你原来的 <code>DMIT</code> 原生 IP</li>
+<li><code>grok.com</code> 最终能返回 <code>HTTP 200</code></li>
+</ul>
+<p>如果这一步都不通，先不要急着改 <code>sing-box</code> 或 <code>Xray</code>，先把 <code>WARP</code> 本地代理本身排通。</p>
+<h2 id="第三步：在-sing-box-里添加精准分流"><a href="#第三步：在-sing-box-里添加精准分流" class="headerlink" title="第三步：在 sing-box 里添加精准分流"></a>第三步：在 sing-box 里添加精准分流</h2><p>如果你用的是 <code>sing-box</code>，思路很简单：</p>
+<ol>
+<li>先增加一个指向 <code>127.0.0.1:40000</code> 的 <code>socks</code> 出站</li>
+<li>再增加一条只匹配 <code>grok.com</code> 的路由规则</li>
+</ol>
+<p>下面是一个最小可用示例，直接把对应片段合并进你现有配置即可：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;socks&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;warp&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> <span class="number">40000</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;route&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;domain&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">&quot;grok.com&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;domain_suffix&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">&quot;.grok.com&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;action&quot;</span><span class="punctuation">:</span> <span class="string">&quot;route&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outbound&quot;</span><span class="punctuation">:</span> <span class="string">&quot;warp&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这条规则的意思是：</p>
+<ul>
+<li><code>grok.com</code> 根域名命中 <code>warp</code></li>
+<li><code>*.grok.com</code> 这类子域名也命中 <code>warp</code></li>
+<li>其他没有匹配到的流量，继续走你原来的默认出站</li>
+</ul>
+<p>如果你使用的是较新的 <code>sing-box</code>，建议保留上面这种官方新写法，也就是：</p>
+<ul>
+<li><code>action: &quot;route&quot;</code></li>
+<li><code>outbound: &quot;warp&quot;</code></li>
+</ul>
+<h2 id="第四步：在-Xray-V2Ray-里添加精准分流"><a href="#第四步：在-Xray-V2Ray-里添加精准分流" class="headerlink" title="第四步：在 Xray &#x2F; V2Ray 里添加精准分流"></a>第四步：在 Xray &#x2F; V2Ray 里添加精准分流</h2><p>如果你用的是 <code>Xray</code> 或 <code>V2Ray</code>，同样是两部分：</p>
+<ol>
+<li>添加一个 <code>socks</code> 出站</li>
+<li>添加一条只匹配 <code>grok.com</code> 的路由规则</li>
+</ol>
+<h3 id="Outbounds"><a href="#Outbounds" class="headerlink" title="Outbounds"></a>Outbounds</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;warp&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;socks&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;servers&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;address&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">40000</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Routing-Rules"><a href="#Routing-Rules" class="headerlink" title="Routing Rules"></a>Routing Rules</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;routing&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;domainStrategy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AsIs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;domain&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">&quot;domain:grok.com&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;warp&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里有个很容易踩坑的小细节：</p>
+<ul>
+<li>在 <code>Xray</code> 里，<code>domain:grok.com</code> 会匹配根域名和子域名</li>
+<li>不建议直接写裸字符串 <code>grok.com</code></li>
+</ul>
+<p>因为按官方文档，裸字符串更接近 <code>keyword</code> 行为，不够“精准分流”。</p>
+<h2 id="如果你用的是-3x-ui-X-ui"><a href="#如果你用的是-3x-ui-X-ui" class="headerlink" title="如果你用的是 3x-ui &#x2F; X-ui"></a>如果你用的是 3x-ui &#x2F; X-ui</h2><p>如果你平时主要通过面板操作，其实也很好套：</p>
+<h3 id="出站设置"><a href="#出站设置" class="headerlink" title="出站设置"></a>出站设置</h3><ul>
+<li><code>协议 (Protocol)</code>：<code>SOCKS</code></li>
+<li><code>标签 (Tag)</code>：<code>warp</code></li>
+<li><code>地址 (Address)</code>：<code>127.0.0.1</code></li>
+<li><code>端口 (Port)</code>：<code>40000</code></li>
+</ul>
+<h3 id="路由规则"><a href="#路由规则" class="headerlink" title="路由规则"></a>路由规则</h3><ul>
+<li><code>Domain</code>：<code>domain:grok.com</code></li>
+<li><code>Outbound Tag</code>：<code>warp</code></li>
+</ul>
+<p>如果你更习惯图形界面表单，可以先参考我前一篇 <code>DMIT + WARP + Disney+</code> 的文章，界面层面的操作逻辑是一样的，只是域名规则从 <code>Disney+</code> 换成了 <code>Grok</code>。</p>
+<h2 id="第五步：重启代理服务"><a href="#第五步：重启代理服务" class="headerlink" title="第五步：重启代理服务"></a>第五步：重启代理服务</h2><p>改完配置后，记得重启你实际使用的核心：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart xray</span><br></pre></td></tr></table></figure>
+
+<p>如果你使用的是 <code>3x-ui / X-ui</code>，就在面板里保存并重启内核。</p>
+<h2 id="第六步：验证“精准分流”有没有生效"><a href="#第六步：验证“精准分流”有没有生效" class="headerlink" title="第六步：验证“精准分流”有没有生效"></a>第六步：验证“精准分流”有没有生效</h2><p>重启之后，先做最小验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proxy socks5h://127.0.0.1:40000 -I -L https://grok.com</span><br></pre></td></tr></table></figure>
+
+<p>如果最终响应里能看到 <code>HTTP 200</code>，至少说明：</p>
+<ul>
+<li><code>WARP</code> 本地代理工作正常</li>
+<li><code>grok.com</code> 通过这个出口可以访问</li>
+</ul>
+<p>接下来再用你的真实客户端去打开 <code>Grok</code>。如果页面仍然不通，重点排查这几项：</p>
+<ol>
+<li><code>sing-box / Xray</code> 的规则有没有真的命中 <code>warp</code></li>
+<li>你的实际请求里是否还有其他官方域名没有被包含</li>
+<li>本地是否存在 <code>IPv6</code> 直连、缓存或 DNS 分流干扰</li>
+</ol>
+<p>建议先从最小规则开始，也就是只放 <code>grok.com</code>。<br>如果你后续在浏览器网络面板里看到还有其他官方域名确实需要补，再按同样方式逐步加进去，不要一上来就把整套流量全局化。</p>
+<h2 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h2><h3 id="误区一：把整台-VPS-都切到-WARP-才算“生效”"><a href="#误区一：把整台-VPS-都切到-WARP-才算“生效”" class="headerlink" title="误区一：把整台 VPS 都切到 WARP 才算“生效”"></a>误区一：把整台 VPS 都切到 WARP 才算“生效”</h3><p>不是。<br>你这次的目标是让 <code>Grok</code> 走 <code>WARP</code>，不是把所有业务都重做一遍。</p>
+<h3 id="误区二：Xray-里写-grok-com-就等于精准匹配"><a href="#误区二：Xray-里写-grok-com-就等于精准匹配" class="headerlink" title="误区二：Xray 里写 grok.com 就等于精准匹配"></a>误区二：Xray 里写 <code>grok.com</code> 就等于精准匹配</h3><p>也不是。<br>按官方文档，<code>Xray</code> 推荐使用 <code>domain:grok.com</code> 这种写法来匹配根域名和子域名。</p>
+<h3 id="误区三：只要能打开首页，就一定适合长期聊天"><a href="#误区三：只要能打开首页，就一定适合长期聊天" class="headerlink" title="误区三：只要能打开首页，就一定适合长期聊天"></a>误区三：只要能打开首页，就一定适合长期聊天</h3><p>不一定。<br>Cloudflare 官方文档明确写了 <code>Local proxy mode</code> 有 <code>10 秒</code> 请求超时限制。如果你发现长回复、流式输出、上传附件这些操作不稳定，要优先考虑模式本身的限制，而不是只盯着路由规则找问题。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你的目标只是：</p>
+<ul>
+<li>不动现有主线路</li>
+<li>不影响 <code>SSH</code></li>
+<li>不把全局流量一起拖慢</li>
+<li>只让 <code>grok.com</code> 单独走 <code>WARP</code></li>
+</ul>
+<p>那么这套 <code>DMIT + WARP Client Proxy Mode + sing-box/Xray 精准分流</code> 的思路，确实是很顺手的一种做法。</p>
+<p>它的核心就三步：</p>
+<ol>
+<li>用 <code>fscarmen/warp</code> 装好 <code>WARP</code> 原生客户端代理模式</li>
+<li>在核心里增加一个指向 <code>127.0.0.1:40000</code> 的 <code>socks</code> 出站</li>
+<li>用域名规则只把 <code>grok.com</code> 送进 <code>warp</code></li>
+</ol>
+<p>如果你后面发现 <code>Grok</code> 的长回复存在中断，再往上升级到 <code>WireProxy</code> 或更完整的 <code>WARP</code> 路由方案，会比继续强拧 <code>Proxy Mode</code> 更省时间。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/">Cloudflare WARP client modes</a></li>
+<li><a target="_blank" rel="noopener" href="https://xtls.github.io/en/config/routing.html">Project X Routing</a></li>
+<li><a target="_blank" rel="noopener" href="https://xtls.github.io/en/config/outbounds/socks.html">Project X Socks Outbound</a></li>
+<li><a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/configuration/route/rule/">sing-box Route Rule</a></li>
+<li><a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/configuration/outbound/socks/">sing-box SOCKS Outbound</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/fscarmen/warp">fscarmen&#x2F;warp</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/">https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/VPS/">VPS</a><a class="post-meta__tags" href="/tags/DMIT/">DMIT</a><a class="post-meta__tags" href="/tags/Cloudflare-WARP/">Cloudflare WARP</a><a class="post-meta__tags" href="/tags/Grok/">Grok</a><a class="post-meta__tags" href="/tags/sing-box/">sing-box</a><a class="post-meta__tags" href="/tags/Xray/">Xray</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</div></div><div class="info-2"><div class="info-item-1">按 2026 年 4 月 5 日可查到的 OpenClaw 官方安装、QuickStart、Telegram、Pairing 与 Sandboxing 文档整理，给出一条适合新手和录视频的完整主线：先用安装脚本跑通宿主机版 OpenClaw，再把 Agent 工具执行放进 Docker sandbox。</div></div></div></a><a class="pagination-related" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区"><div class="cover" style="background: linear-gradient(135deg, #0a0f1f 0%, #102a43 26%, #1d4ed8 52%, #0f766e 78%, #f59e0b 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区</div></div><div class="info-2"><div class="info-item-1">按 2026 年 4 月 3 日可查到的 Reddit、V2EX、GitHub Issues、Ollama 与 llama.cpp 资料整理，分析为什么大量人装了 Ollama 之后几乎不用，以及本地模型热潮背后的 7 个核心误区。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战"><div class="cover" style="background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 32%, #06b6d4 68%, #f8fafc 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-30</div><div class="info-item-2">DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</div></div><div class="info-2"><div class="info-item-1">结合实测截图整理一套在 DMIT VPS 上使用 Cloudflare WARP 的 WireProxy socks5 出口，为 3x-ui/X-ui 配置 Disney+ 分流的实战方案，缓解 Error Code 73。</div></div></div></a><a class="pagination-related" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操"><div class="cover" style="background: linear-gradient(135deg, #071a52 0%, #0f4c75 28%, #3282b8 58%, #bbe1fa 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-04</div><div class="info-item-2">2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</div></div><div class="info-2"><div class="info-item-1">本文提供 2026 年最新远程服务器部署与网络链路优化方案，涵盖优质 VPS 选购、SSH 密钥对安全认证、UFW 防火墙策略以及基于 Reality 协议的 TLS 1.3 深度伪装技术。</div></div></div></a><a class="pagination-related" href="/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="VPS搭建过程中遇到的问题及具体解决方法"><div class="cover" style="background: linear-gradient(135deg, #1f2937 0%, #334155 34%, #f97316 68%, #fb7185 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">VPS搭建过程中遇到的问题及具体解决方法</div></div><div class="info-2"><div class="info-item-1">记录 VPS 搭建过程中最常见的连接、系统、Web 服务和安全问题，并提供可直接执行的排查命令与解决思路。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DMIT-%E6%90%AD%E9%85%8D-Cloudflare-WARP-%E5%AE%9E%E7%8E%B0-Grok-%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B%EF%BC%9A%E5%8E%9F%E7%94%9F-Client-Proxy-Mode-sing-box-Xray"><span class="toc-number">1.</span> <span class="toc-text">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box&#x2F;Xray</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%95%99%E7%A8%8B%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">这篇教程适合什么场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E9%87%8C%E9%80%89%E5%8E%9F%E7%94%9F-Client-%E7%9A%84-Proxy-Mode"><span class="toc-number">1.2.</span> <span class="toc-text">为什么这里选原生 Client 的 Proxy Mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%9C%A8-DMIT-%E7%BB%88%E7%AB%AF%E5%AE%89%E8%A3%85-WARP"><span class="toc-number">1.3.</span> <span class="toc-text">第一步：在 DMIT 终端安装 WARP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%90%86%E5%B7%B2%E7%BB%8F%E8%B5%B7%E6%9D%A5"><span class="toc-number">1.4.</span> <span class="toc-text">第二步：确认本地代理已经起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%9C%A8-sing-box-%E9%87%8C%E6%B7%BB%E5%8A%A0%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81"><span class="toc-number">1.5.</span> <span class="toc-text">第三步：在 sing-box 里添加精准分流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%9C%A8-Xray-V2Ray-%E9%87%8C%E6%B7%BB%E5%8A%A0%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81"><span class="toc-number">1.6.</span> <span class="toc-text">第四步：在 Xray &#x2F; V2Ray 里添加精准分流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Outbounds"><span class="toc-number">1.6.1.</span> <span class="toc-text">Outbounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing-Rules"><span class="toc-number">1.6.2.</span> <span class="toc-text">Routing Rules</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%94%A8%E7%9A%84%E6%98%AF-3x-ui-X-ui"><span class="toc-number">1.7.</span> <span class="toc-text">如果你用的是 3x-ui &#x2F; X-ui</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E7%AB%99%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.7.1.</span> <span class="toc-text">出站设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99"><span class="toc-number">1.7.2.</span> <span class="toc-text">路由规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E9%87%8D%E5%90%AF%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.8.</span> <span class="toc-text">第五步：重启代理服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E9%AA%8C%E8%AF%81%E2%80%9C%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E2%80%9D%E6%9C%89%E6%B2%A1%E6%9C%89%E7%94%9F%E6%95%88"><span class="toc-number">1.9.</span> <span class="toc-text">第六步：验证“精准分流”有没有生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.10.</span> <span class="toc-text">常见误区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA%E4%B8%80%EF%BC%9A%E6%8A%8A%E6%95%B4%E5%8F%B0-VPS-%E9%83%BD%E5%88%87%E5%88%B0-WARP-%E6%89%8D%E7%AE%97%E2%80%9C%E7%94%9F%E6%95%88%E2%80%9D"><span class="toc-number">1.10.1.</span> <span class="toc-text">误区一：把整台 VPS 都切到 WARP 才算“生效”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA%E4%BA%8C%EF%BC%9AXray-%E9%87%8C%E5%86%99-grok-com-%E5%B0%B1%E7%AD%89%E4%BA%8E%E7%B2%BE%E5%87%86%E5%8C%B9%E9%85%8D"><span class="toc-number">1.10.2.</span> <span class="toc-text">误区二：Xray 里写 grok.com 就等于精准匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA%E4%B8%89%EF%BC%9A%E5%8F%AA%E8%A6%81%E8%83%BD%E6%89%93%E5%BC%80%E9%A6%96%E9%A1%B5%EF%BC%8C%E5%B0%B1%E4%B8%80%E5%AE%9A%E9%80%82%E5%90%88%E9%95%BF%E6%9C%9F%E8%81%8A%E5%A4%A9"><span class="toc-number">1.10.3.</span> <span class="toc-text">误区三：只要能打开首页，就一定适合长期聊天</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.11.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.12.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置"><div style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</a><time datetime="2026-04-10T13:30:00.000Z" title="发表于 2026-04-10 21:30:00">2026-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</a><time datetime="2026-04-05T12:10:00.000Z" title="发表于 2026-04-05 20:10:00">2026-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray"><div style="background: linear-gradient(135deg, #0b1220 0%, #0f766e 32%, #38bdf8 68%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</a><time datetime="2026-04-04T07:30:00.000Z" title="发表于 2026-04-04 15:30:00">2026-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区"><div style="background: linear-gradient(135deg, #0a0f1f 0%, #102a43 26%, #1d4ed8 52%, #0f766e 78%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区">为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区</a><time datetime="2026-04-03T14:45:00.000Z" title="发表于 2026-04-03 22:45:00">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析"><div style="background: linear-gradient(135deg, #08111f 0%, #12344d 22%, #2563eb 48%, #14b8a6 72%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析">OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析</a><time datetime="2026-04-03T14:20:00.000Z" title="发表于 2026-04-03 22:20:00">2026-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="macOS, MDM 绕过, 远程管理, 激活锁, 跳过 MDM, Apple Silicon, M4 Mac"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026 最新 macOS MDM 远程管理绕过教程：支持 M1&#x2F;M2&#x2F;M3&#x2F;M4 及 Intel 芯片">
+<meta property="og:url" content="https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-03-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-28T15:31:18.978Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="MDM">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="系统工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-03-03T16:00:00.000Z"><meta property="article:modified_time" content="2026-03-28T15:31:18.978Z"><meta property="article:section" content="技术教程"><meta property="article:tag" content="macOS"><meta property="article:tag" content="MDM"><meta property="article:tag" content="系统工具"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片",
+  "description": "详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。",
+  "url": "https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-03-03T16:00:00.000Z",
+  "dateModified": "2026-03-28T15:31:18.978Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "macOS, MDM 绕过, 远程管理, 激活锁, 跳过 MDM, Apple Silicon, M4 Mac",
+  "articleSection": [
+    "技术教程"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #111827 0%, #475569 26%, #94a3b8 58%, #e2e8f0 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-03T16:00:00.000Z" title="发表于 2026-03-04 00:00:00">2026-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-28T15:31:18.978Z" title="更新于 2026-03-28 23:31:18">2026-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-03-28 23:31:18&quot;}" hidden></div><h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">
+    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>
+    <p style="font-size: 0.98rem; line-height: 1.75; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 0.95rem;">VPS 保姆级教程</a>
+        <a href="/docs/software-toolbox/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 0.95rem;">常用工具下载</a>
+    </div>
+</div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/">https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/macOS/">macOS</a><a class="post-meta__tags" href="/tags/MDM/">MDM</a><a class="post-meta__tags" href="/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/">系统工具</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操"><div class="cover" style="background: linear-gradient(135deg, #071a52 0%, #0f4c75 28%, #3282b8 58%, #bbe1fa 100%)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</div></div><div class="info-2"><div class="info-item-1">本文提供 2026 年最新远程服务器部署与网络链路优化方案，涵盖优质 VPS 选购、SSH 密钥对安全认证、UFW 防火墙策略以及基于 Reality 协议的 TLS 1.3 深度伪装技术。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/28/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%A6%82%E4%BD%95%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80OpenClaw%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E5%AE%9E%E6%93%8D%E6%B8%85%E7%90%86%E6%8C%87%E5%8D%97/" title="OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南"><div class="cover" style="background: linear-gradient(135deg, #140b10 0%, #4a1022 28%, #b91c1c 58%, #f59e0b 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-28</div><div class="info-item-2">OpenClaw 完全卸载干净教程：Windows 和 Mac 残留清理指南</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 28 日可查到的 OpenClaw 官方 Uninstall、CLI uninstall、backup、Environment、FAQ 与 Windows 文档整理，手把手说明怎样把 OpenClaw 服务、状态、工作区、CLI 和残留配置真正清理干净。</div></div></div></a><a class="pagination-related" href="/2026/03/27/%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85OpenClaw%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8BWindows%E5%92%8CMac%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E5%85%A8%E6%B5%81%E7%A8%8B/" title="本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程"><div class="cover" style="background: linear-gradient(135deg, #06121f 0%, #0f4c75 30%, #2563eb 62%, #22c55e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-27</div><div class="info-item-2">本地电脑安装 OpenClaw 详细教程：Windows 和 Mac 新手安装指南，从安装到实际运用全流程</div></div><div class="info-2"><div class="info-item-1">按 2026 年 3 月 27 日可查到的 OpenClaw 官方 Install、Onboarding、Control UI、Windows WSL2、Channels 与 Message 文档整理，手把手说明 Windows 和 Mac 如何从零安装 OpenClaw，并讲清楚 Select channel 的实际运用。</div></div></div></a><a class="pagination-related" href="/2026/03/28/OpenClaw%E6%9C%AC%E5%9C%B0%E8%81%8A%E5%A4%A9%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9ESafari%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A512700118789%E8%AF%A6%E7%BB%86%E6%8E%92%E9%94%99%E6%95%99%E7%A8%8B/" title="OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程"><div class="cover" style="background: linear-gradient(135deg, #08111f 0%, #0f4c75 30%, #2563eb 62%, #14b8a6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-28</div><div class="info-item-2">OpenClaw 本地聊天页打不开怎么办？Safari 无法连接 127.0.0.1:18789 详细排错教程</div></div><div class="info-2"><div class="info-item-1">一篇专门给 Mac 新手看的 OpenClaw 排错教程，解决 Safari 无法打开 127.0.0.1:18789、Control UI 能开但聊天发不出去、会话模型被错误覆盖等常见问题。</div></div></div></a><a class="pagination-related" href="/2026/04/01/OpenClaw-Mac%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80CLI-onboarding%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%B8%85%E5%8D%95/" title="OpenClaw Mac 安装详细教程：macOS 零基础 CLI Onboarding 看图操作版"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 56%, #14b8a6 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-01</div><div class="info-item-2">OpenClaw Mac 安装详细教程：macOS 零基础 CLI Onboarding 看图操作版</div></div><div class="info-2"><div class="info-item-1">按 2026 年 4 月 1 日可查到的 OpenClaw 官方 Getting Started、Onboarding Wizard、Dashboard、FAQ 与 doctor 文档整理，并结合实际 onboarding 截图，手把手说明 macOS 新手每一屏该怎么选，适合只想先在本机跑通 Dashboard 的用户。</div></div></div></a><a class="pagination-related" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-05</div><div class="info-item-2">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</div></div><div class="info-2"><div class="info-item-1">按 2026 年 4 月 5 日可查到的 OpenClaw 官方安装、QuickStart、Telegram、Pairing 与 Sandboxing 文档整理，给出一条适合新手和录视频的完整主线：先用安装脚本跑通宿主机版 OpenClaw，再把 Agent 工具执行放进 Docker sandbox。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2026-%E6%9C%80%E6%96%B0-macOS-MDM-%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86%EF%BC%88Remote-Management%EF%BC%89%E7%BB%95%E8%BF%87%E5%85%A8%E6%94%BB%E7%95%A5"><span class="toc-number">1.</span> <span class="toc-text">2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">🔍 核心原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E8%BF%9B%E5%85%A5%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F%E5%B9%B6%E5%87%86%E5%A4%87"><span class="toc-number">1.2.</span> <span class="toc-text">🛠️ 第一阶段：进入恢复模式并准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%BA%E5%88%B6%E5%85%B3%E6%9C%BA%E5%B9%B6%E9%87%8D%E6%96%B0%E5%90%AF%E5%8A%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 强制关机并重新启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%BF%80%E6%B4%BB%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 激活网络连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8%E7%BB%88%E7%AB%AF%EF%BC%88Terminal%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 启动终端（Terminal）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9A%80-%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%89%A7%E8%A1%8C-MDM-%E7%BB%95%E8%BF%87%E8%84%9A%E6%9C%AC"><span class="toc-number">1.3.</span> <span class="toc-text">🚀 第二阶段：执行 MDM 绕过脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92%E6%AD%A5%E9%AA%A4%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.1.</span> <span class="toc-text">脚本交互步骤说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%84-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%99%BB%E5%BD%95%E4%B8%8E%E8%B4%A6%E6%88%B7%E6%B8%85%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">🔄 第三阶段：登录与账户清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9D%93-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%EF%BC%88FAQ%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">❓ 常见问题排查（FAQ）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">💡 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.6.1.</span> <span class="toc-text">🚀 智连云 | 进阶技术支持</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置"><div style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</a><time datetime="2026-04-10T13:30:00.000Z" title="发表于 2026-04-10 21:30:00">2026-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</a><time datetime="2026-04-05T12:10:00.000Z" title="发表于 2026-04-05 20:10:00">2026-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray"><div style="background: linear-gradient(135deg, #0b1220 0%, #0f766e 32%, #38bdf8 68%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</a><time datetime="2026-04-04T07:30:00.000Z" title="发表于 2026-04-04 15:30:00">2026-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区"><div style="background: linear-gradient(135deg, #0a0f1f 0%, #102a43 26%, #1d4ed8 52%, #0f766e 78%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区">为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区</a><time datetime="2026-04-03T14:45:00.000Z" title="发表于 2026-04-03 22:45:00">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析"><div style="background: linear-gradient(135deg, #08111f 0%, #12344d 22%, #2563eb 48%, #14b8a6 72%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析">OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析</a><time datetime="2026-04-03T14:20:00.000Z" title="发表于 2026-04-03 22:20:00">2026-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

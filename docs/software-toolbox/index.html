@@ -1,0 +1,614 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>VPS 与部署软件工具箱 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="VPS工具箱,SSH工具下载,部署软件工具箱,Docker下载,VS Code下载,WinSCP下载,Termius下载"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="汇总 VPS 搭建、SSH 连接、文件传输、代码编辑、Docker 部署与 API 调试常用软件的官方下载入口，方便新手统一下载。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VPS 与部署软件工具箱">
+<meta property="og:url" content="https://skylink9119.github.io/docs/software-toolbox/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="汇总 VPS 搭建、SSH 连接、文件传输、代码编辑、Docker 部署与 API 调试常用软件的官方下载入口，方便新手统一下载。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-04-02T07:50:36.848Z">
+<meta property="article:modified_time" content="2026-03-26T15:32:54.409Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="Skyline博客,VPS测评,Linux运维,AI工具,Claude API,OpenCLA,编程脚本,技术博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "VPS 与部署软件工具箱",
+  "description": "汇总 VPS 搭建、SSH 连接、文件传输、代码编辑、Docker 部署与 API 调试常用软件的官方下载入口，方便新手统一下载。",
+  "url": "https://skylink9119.github.io/docs/software-toolbox/",
+  "inLanguage": "zh-CN",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/"
+  }
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/docs/software-toolbox/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'VPS 与部署软件工具箱',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/software-toolbox.css?v=20260328p" data-page-style-managed="true"><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="page" id="body-wrap"><script id="page-style-config" type="application/json">["/css/software-toolbox.css?v=20260328p"]</script><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">VPS 与部署软件工具箱</h1></header><main class="layout" id="content-inner"><div id="page"><div class="page-title">VPS 与部署软件工具箱</div><div class="container" id="article-container"><div class="software-toolbox-hero">
+  <div class="software-toolbox-hero__eyebrow">Official Downloads</div>
+  <h1>VPS 与部署软件工具箱</h1>
+  <p>下面这些链接我都优先整理成了官网或官方文档入口，方便你在搭建 VPS、部署项目、调试 API 时统一下载，不用再到处翻第三方镜像站。</p>
+</div>
+
+<div class="software-toolbox-nav">
+  <a href="#terminal-ssh">终端与 SSH</a>
+  <a href="#file-transfer">文件传输</a>
+  <a href="#editor-tools">编辑器与代码工具</a>
+  <a href="#docker-api">Docker 与 API 调试</a>
+  <a href="#openclaw-tools">OpenClaw 部署相关</a>
+  <a href="#windows-guide">Windows 下载说明</a>
+  <a href="#mac-guide">Mac 下载说明</a>
+  <a href="#openclaw-checklist">OpenClaw 安装后清单</a>
+</div>
+
+<blockquote>
+<p>说明：下面优先放“官方站点”或“官方文档下载页”。这样后续版本更新时，你点进去通常都还是最新版本。</p>
+</blockquote>
+<div id="terminal-ssh"></div>
+
+<h2 id="终端与-SSH"><a href="#终端与-SSH" class="headerlink" title="终端与 SSH"></a>终端与 SSH</h2><div class="software-toolbox-grid">
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux / iOS / Android</div>
+    <h3>Termius</h3>
+    <p>适合新手的 SSH 客户端，支持多端同步、密钥管理和 SFTP，拿来连 VPS 很省心。</p>
+    <a class="software-toolbox-card__link" href="https://termius.com/download" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows</div>
+    <h3>Windows Terminal</h3>
+    <p>Windows 下很好用的官方终端，适合搭配 PowerShell、WSL 和 SSH 一起用。</p>
+    <a class="software-toolbox-card__link" href="https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-US&gl=US" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">macOS</div>
+    <h3>iTerm2</h3>
+    <p>macOS 上非常经典的终端替代品，功能比系统自带 Terminal 更完整。</p>
+    <a class="software-toolbox-card__link" href="https://iterm2.com/downloads.html" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Warp</h3>
+    <p>更现代的终端界面，适合喜欢更强交互体验和 AI 辅助命令行的人。</p>
+    <a class="software-toolbox-card__link" href="https://www.warp.dev/download" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+</div>
+
+<div id="file-transfer"></div>
+
+<h2 id="文件传输与-SFTP"><a href="#文件传输与-SFTP" class="headerlink" title="文件传输与 SFTP"></a>文件传输与 SFTP</h2><div class="software-toolbox-grid">
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows</div>
+    <h3>WinSCP</h3>
+    <p>Windows 上最常见的 SFTP / SCP / FTP 文件传输工具之一，传配置、改文件都很方便。</p>
+    <a class="software-toolbox-card__link" href="https://winscp.net/eng/download.php" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS</div>
+    <h3>Cyberduck</h3>
+    <p>适合喜欢更简洁界面的用户，支持 SFTP、WebDAV 和常见云存储。</p>
+    <a class="software-toolbox-card__link" href="https://cyberduck.io/download/" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>FileZilla Client</h3>
+    <p>老牌文件传输工具，FTP / SFTP 兼容性不错，很多用户都用过。</p>
+    <a class="software-toolbox-card__link" href="https://filezilla-project.org/download.php?type=client" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+</div>
+
+<div id="editor-tools"></div>
+
+<h2 id="编辑器与代码工具"><a href="#编辑器与代码工具" class="headerlink" title="编辑器与代码工具"></a>编辑器与代码工具</h2><div class="software-toolbox-grid">
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Visual Studio Code</h3>
+    <p>改配置、写脚本、远程开发和部署项目时都很好用，也是我最推荐的新手编辑器之一。</p>
+    <a class="software-toolbox-card__link" href="https://code.visualstudio.com/download" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Git</h3>
+    <p>部署项目、拉代码、同步更新时几乎一定会用到。Windows 建议装官方安装包，Linux 建议直接包管理器安装。</p>
+    <a class="software-toolbox-card__link" href="https://git-scm.com/downloads.html" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">macOS / Linux</div>
+    <h3>Homebrew</h3>
+    <p>macOS 上非常好用的包管理器，很多开发和部署工具都能直接一条命令装好。</p>
+    <a class="software-toolbox-card__link" href="https://brew.sh/" target="_blank" rel="noopener nofollow">官网安装页</a>
+  </div>
+</div>
+
+<div id="docker-api"></div>
+
+<h2 id="Docker-与-API-调试"><a href="#Docker-与-API-调试" class="headerlink" title="Docker 与 API 调试"></a>Docker 与 API 调试</h2><div class="software-toolbox-grid">
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Docker Desktop</h3>
+    <p>本地开发容器和部署前测试最常用。个人、小团队和教育场景通常够用，大企业请先看官方授权说明。</p>
+    <a class="software-toolbox-card__link" href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Postman</h3>
+    <p>调试接口、测试 API Key、验证部署后的接口响应时很常用。</p>
+    <a class="software-toolbox-card__link" href="https://www.postman.com/downloads/" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+</div>
+
+<div id="openclaw-tools"></div>
+
+<h2 id="部署-OpenClaw-会用到的软件"><a href="#部署-OpenClaw-会用到的软件" class="headerlink" title="部署 OpenClaw 会用到的软件"></a>部署 OpenClaw 会用到的软件</h2><div class="software-toolbox-grid">
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Node.js</h3>
+    <p>OpenClaw 本地安装和很多相关命令都依赖 Node.js。按 2026 年 3 月 26 日我核对到的官方页面，当前最新 LTS 是 `v24.14.1`。</p>
+    <a class="software-toolbox-card__link" href="https://nodejs.org/en/download" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>pnpm</h3>
+    <p>如果你后面会自己拉项目、装依赖或本地改 OpenClaw 相关前端项目，`pnpm` 会很常用。官方文档要求非独立脚本安装时系统里要先有 Node.js 18.12 以上。</p>
+    <a class="software-toolbox-card__link" href="https://pnpm.io/installation" target="_blank" rel="noopener nofollow">官方安装文档</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Docker Desktop</h3>
+    <p>如果你准备走容器化部署、测试镜像或后续扩展服务，Docker Desktop 会很实用。官方页面可以直接按系统下载对应版本。</p>
+    <a class="software-toolbox-card__link" href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+  <div class="software-toolbox-card">
+    <div class="software-toolbox-card__meta">Windows / macOS / Linux</div>
+    <h3>Git</h3>
+    <p>你如果要拉取仓库、同步更新、管理配置模板或自己维护工作流，Git 基本都会用到。</p>
+    <a class="software-toolbox-card__link" href="https://git-scm.com/downloads/" target="_blank" rel="noopener nofollow">官方下载</a>
+  </div>
+</div>
+
+<h2 id="部署-OpenClaw-前先装什么"><a href="#部署-OpenClaw-前先装什么" class="headerlink" title="部署 OpenClaw 前先装什么"></a>部署 OpenClaw 前先装什么</h2><p>如果你只想知道“在正式装 OpenClaw 之前，我最少应该先装什么”，那最简清单就是下面这 4 项：</p>
+<ol>
+<li><code>Node.js</code><br>这是运行 OpenClaw 和相关命令的基础环境。按我在 2026 年 3 月 26 日核对到的官方页面，当前最新 LTS 是 <code>v24.14.0</code>。</li>
+<li><code>一个终端工具</code><br>Windows 建议 <code>Windows Terminal</code>，macOS 建议 <code>iTerm2</code>。如果你想多端同步服务器列表，可以直接装 <code>Termius</code>。</li>
+<li><code>VS Code</code><br>用来改配置、看日志、编辑脚本最省事。</li>
+<li><code>pnpm</code><br>如果你后续会自己管理前端项目、依赖或工作区，这个非常实用。</li>
+</ol>
+<p>如果你准备做得更完整，再额外加这两项：</p>
+<ul>
+<li><code>Git</code></li>
+<li><code>Docker Desktop</code></li>
+</ul>
+<h2 id="部署-OpenClaw-我最推荐的组合"><a href="#部署-OpenClaw-我最推荐的组合" class="headerlink" title="部署 OpenClaw 我最推荐的组合"></a>部署 OpenClaw 我最推荐的组合</h2><h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li><code>iTerm2 + Homebrew + Node.js + pnpm + VS Code</code></li>
+<li>如果你需要图形化容器管理，再补一个 <code>Docker Desktop</code></li>
+</ul>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li><code>Windows Terminal + Termius + Node.js + pnpm + VS Code</code></li>
+<li>如果你走容器化开发，再装 <code>Docker Desktop</code></li>
+</ul>
+<h3 id="只想最快跑起来"><a href="#只想最快跑起来" class="headerlink" title="只想最快跑起来"></a>只想最快跑起来</h3><ul>
+<li>终端：<code>Termius</code> 或 <code>Windows Terminal / iTerm2</code></li>
+<li>运行环境：<code>Node.js</code></li>
+<li>包管理：<code>pnpm</code></li>
+<li>编辑器：<code>VS Code</code></li>
+</ul>
+<div id="windows-guide"></div>
+
+<h2 id="Windows-怎么一步步下载这些软件"><a href="#Windows-怎么一步步下载这些软件" class="headerlink" title="Windows 怎么一步步下载这些软件"></a>Windows 怎么一步步下载这些软件</h2><h3 id="1-下载-Node-js"><a href="#1-下载-Node-js" class="headerlink" title="1. 下载 Node.js"></a>1. 下载 Node.js</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://nodejs.org/en/download">Node.js 官方下载页</a></li>
+<li>优先选择 <code>LTS</code> 版本</li>
+<li>在 Windows 区域下载 <code>Installer</code></li>
+<li>双击安装包，基本一路下一步即可</li>
+<li>安装完成后打开终端，执行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果能看到版本号，说明装好了。</p>
+<h3 id="2-下载终端工具"><a href="#2-下载终端工具" class="headerlink" title="2. 下载终端工具"></a>2. 下载终端工具</h3><p>你有两种更推荐的选法：</p>
+<ul>
+<li>官方简洁路线：装 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/terminal/install?source=recommendations">Windows Terminal</a></li>
+<li>多设备同步路线：装 <a target="_blank" rel="noopener" href="https://termius.com/download/windows">Termius</a></li>
+</ul>
+<p>如果你是纯新手，我建议：</p>
+<ol>
+<li>先装 <code>Windows Terminal</code></li>
+<li>后面真的需要同步服务器列表，再补一个 <code>Termius</code></li>
+</ol>
+<h3 id="3-下载-VS-Code"><a href="#3-下载-VS-Code" class="headerlink" title="3. 下载 VS Code"></a>3. 下载 VS Code</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VS Code 官方下载页</a></li>
+<li>在 Windows 区域选择 <code>User Installer</code></li>
+<li>下载后运行安装程序</li>
+<li>安装完成后，建议勾选“添加到 PATH”和“右键菜单打开”</li>
+</ol>
+<h3 id="4-下载-pnpm"><a href="#4-下载-pnpm" class="headerlink" title="4. 下载 pnpm"></a>4. 下载 pnpm</h3><p>先确认你已经装好了 <code>Node.js</code>，再打开 <a target="_blank" rel="noopener" href="https://pnpm.io/installation">pnpm 官方安装文档</a>。</p>
+<p>对大多数 Windows 用户来说，最直接的方法是在终端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<p>装好后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-如果你还想用-Docker"><a href="#5-如果你还想用-Docker" class="headerlink" title="5. 如果你还想用 Docker"></a>5. 如果你还想用 Docker</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker Desktop for Windows 官方文档</a></li>
+<li>先确认你的系统满足官方要求</li>
+<li>按官方指引启用 <code>WSL 2</code></li>
+<li>下载并安装 Docker Desktop</li>
+<li>首次启动后接受许可协议</li>
+</ol>
+<h3 id="6-如果你还要拉仓库或管理配置"><a href="#6-如果你还要拉仓库或管理配置" class="headerlink" title="6. 如果你还要拉仓库或管理配置"></a>6. 如果你还要拉仓库或管理配置</h3><p>直接打开 <a target="_blank" rel="noopener" href="https://git-scm.com/downloads/">Git 官方下载页</a></p>
+<p>Windows 下通常会自动跳到下载入口，装好后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<div id="mac-guide"></div>
+
+<h2 id="macOS-怎么一步步下载这些软件"><a href="#macOS-怎么一步步下载这些软件" class="headerlink" title="macOS 怎么一步步下载这些软件"></a>macOS 怎么一步步下载这些软件</h2><h3 id="1-下载-Node-js-1"><a href="#1-下载-Node-js-1" class="headerlink" title="1. 下载 Node.js"></a>1. 下载 Node.js</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://nodejs.org/en/download">Node.js 官方下载页</a></li>
+<li>优先选择 <code>LTS</code></li>
+<li>在 macOS 区域按你的芯片选择安装包</li>
+<li>下载 <code>.pkg</code> 或安装包后按提示安装</li>
+<li>安装完成后打开终端执行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-下载终端工具-1"><a href="#2-下载终端工具-1" class="headerlink" title="2. 下载终端工具"></a>2. 下载终端工具</h3><p>macOS 下最推荐的两种：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://iterm2.com/downloads.html">iTerm2 官方下载页</a></li>
+<li><a target="_blank" rel="noopener" href="https://termius.com/download/macos">Termius for macOS</a></li>
+</ul>
+<p>如果你只想要一个更顺手的终端，先装 <code>iTerm2</code> 就够了。<br>如果你想跨设备同步主机列表，再补一个 <code>Termius</code>。</p>
+<h3 id="3-先装-Homebrew"><a href="#3-先装-Homebrew" class="headerlink" title="3. 先装 Homebrew"></a>3. 先装 Homebrew</h3><p>打开 <a target="_blank" rel="noopener" href="https://brew.sh/">Homebrew 官网</a>，按官方首页给出的命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>装好后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-下载-VS-Code"><a href="#4-下载-VS-Code" class="headerlink" title="4. 下载 VS Code"></a>4. 下载 VS Code</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VS Code 官方下载页</a></li>
+<li>在 Mac 区域按你的芯片选择 <code>Apple silicon</code> 或 <code>Intel</code></li>
+<li>下载 <code>.dmg</code></li>
+<li>拖到 <code>Applications</code></li>
+</ol>
+<h3 id="5-下载-pnpm"><a href="#5-下载-pnpm" class="headerlink" title="5. 下载 pnpm"></a>5. 下载 pnpm</h3><p>先确认 <code>Node.js</code> 已安装，再打开 <a target="_blank" rel="noopener" href="https://pnpm.io/installation">pnpm 官方安装文档</a>。</p>
+<p>对大多数 macOS 用户来说，最直接的方法是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<p>装好后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-如果你还想用-Docker"><a href="#6-如果你还想用-Docker" class="headerlink" title="6. 如果你还想用 Docker"></a>6. 如果你还想用 Docker</h3><ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/setup/install/mac-install/">Docker Desktop for Mac 官方文档</a></li>
+<li>按你的芯片选择 <code>Apple silicon</code> 或 <code>Intel</code></li>
+<li>下载并安装 Docker Desktop</li>
+<li>首次打开时接受协议并完成初始化</li>
+</ol>
+<h3 id="7-如果你还要拉仓库或管理配置"><a href="#7-如果你还要拉仓库或管理配置" class="headerlink" title="7. 如果你还要拉仓库或管理配置"></a>7. 如果你还要拉仓库或管理配置</h3><p>打开 <a target="_blank" rel="noopener" href="https://git-scm.com/downloads/">Git 官方下载页</a></p>
+<p>如果你已经装了 Homebrew，也可以直接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install git</span><br></pre></td></tr></table></figure>
+
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<div id="openclaw-checklist"></div>
+
+<h2 id="OpenClaw-安装后第一步该做什么"><a href="#OpenClaw-安装后第一步该做什么" class="headerlink" title="OpenClaw 安装后第一步该做什么"></a>OpenClaw 安装后第一步该做什么</h2><p>如果你已经把 OpenClaw 装好了，建议不要急着直接开始乱配。最省事的顺序是下面这样：</p>
+<h3 id="第一步：先确认基础环境有没有装对"><a href="#第一步：先确认基础环境有没有装对" class="headerlink" title="第一步：先确认基础环境有没有装对"></a>第一步：先确认基础环境有没有装对</h3><p>执行这些命令确认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line">pnpm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果这里就报错，说明环境还没装完整，先别继续往下折腾。</p>
+<h3 id="第二步：先跑一次最基础的启动或安装验证"><a href="#第二步：先跑一次最基础的启动或安装验证" class="headerlink" title="第二步：先跑一次最基础的启动或安装验证"></a>第二步：先跑一次最基础的启动或安装验证</h3><p>你应该先确认：</p>
+<ul>
+<li>OpenClaw 命令能不能正常执行</li>
+<li>本地或服务器环境有没有明显报错</li>
+<li>依赖有没有缺失</li>
+</ul>
+<p>如果你是新手，先确保“能跑起来”，再去追求花哨配置。</p>
+<h3 id="第三步：准备-API-Key"><a href="#第三步：准备-API-Key" class="headerlink" title="第三步：准备 API Key"></a>第三步：准备 API Key</h3><p>OpenClaw 本身不是模型提供商，所以你需要先准备至少一家 API：</p>
+<ul>
+<li>OpenAI</li>
+<li>Claude</li>
+<li>Gemini</li>
+<li>OpenRouter</li>
+</ul>
+<p>建议新手先准备一家最常用的，不要一上来全接。</p>
+<h3 id="第四步：先做最小可用配置"><a href="#第四步：先做最小可用配置" class="headerlink" title="第四步：先做最小可用配置"></a>第四步：先做最小可用配置</h3><p>优先完成：</p>
+<ul>
+<li>能调用一个模型</li>
+<li>能正常返回结果</li>
+<li>能确认网络和权限没问题</li>
+</ul>
+<p>先达到“可用”，再去做“复杂”。</p>
+<h3 id="第五步：再决定要不要继续做这些增强"><a href="#第五步：再决定要不要继续做这些增强" class="headerlink" title="第五步：再决定要不要继续做这些增强"></a>第五步：再决定要不要继续做这些增强</h3><p>你后面可以再按需补：</p>
+<ul>
+<li><code>AGENTS.md</code></li>
+<li><code>SOUL.md</code></li>
+<li><code>USER.md</code></li>
+<li><code>MEMORY.md</code></li>
+<li>Docker 化部署</li>
+<li>博客与 YouTube 工作流自动化</li>
+</ul>
+<h3 id="我最建议的新手顺序"><a href="#我最建议的新手顺序" class="headerlink" title="我最建议的新手顺序"></a>我最建议的新手顺序</h3><ol>
+<li>装好 Node.js、终端、VS Code、pnpm</li>
+<li>跑通 OpenClaw</li>
+<li>接入一家 API</li>
+<li>验证能正常使用</li>
+<li>再去做助理化和工作流配置</li>
+</ol>
+<h2 id="我更推荐你怎么装"><a href="#我更推荐你怎么装" class="headerlink" title="我更推荐你怎么装"></a>我更推荐你怎么装</h2><h3 id="Windows-用户"><a href="#Windows-用户" class="headerlink" title="Windows 用户"></a>Windows 用户</h3><ul>
+<li>终端：优先 <code>Windows Terminal</code>，再按需装 <code>Termius</code></li>
+<li>传文件：首选 <code>WinSCP</code></li>
+<li>编辑器：<code>VS Code</code></li>
+<li>容器：<code>Docker Desktop</code></li>
+</ul>
+<h3 id="macOS-用户"><a href="#macOS-用户" class="headerlink" title="macOS 用户"></a>macOS 用户</h3><ul>
+<li>终端：优先 <code>iTerm2</code>，需要多端同步时再装 <code>Termius</code></li>
+<li>包管理：先装 <code>Homebrew</code></li>
+<li>传文件：<code>Cyberduck</code></li>
+<li>编辑器：<code>VS Code</code></li>
+</ul>
+<h3 id="新手最省事的一套组合"><a href="#新手最省事的一套组合" class="headerlink" title="新手最省事的一套组合"></a>新手最省事的一套组合</h3><ul>
+<li>SSH：<code>Termius</code></li>
+<li>文件传输：<code>WinSCP</code> 或 <code>Cyberduck</code></li>
+<li>编辑器：<code>VS Code</code></li>
+<li>容器：<code>Docker Desktop</code></li>
+<li>API 调试：<code>Postman</code></li>
+</ul>
+<h2 id="接下来可以直接看这些教程"><a href="#接下来可以直接看这些教程" class="headerlink" title="接下来可以直接看这些教程"></a>接下来可以直接看这些教程</h2><ul>
+<li><a href="/docs/vps-setup/">VPS 专题导航</a></li>
+<li><a href="/docs/openclaw/">OpenClaw 专题导航</a></li>
+<li><a href="/docs/">教程文档中心</a></li>
+</ul>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置"><div style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</a><time datetime="2026-04-10T13:30:00.000Z" title="发表于 2026-04-10 21:30:00">2026-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</a><time datetime="2026-04-05T12:10:00.000Z" title="发表于 2026-04-05 20:10:00">2026-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray"><div style="background: linear-gradient(135deg, #0b1220 0%, #0f766e 32%, #38bdf8 68%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</a><time datetime="2026-04-04T07:30:00.000Z" title="发表于 2026-04-04 15:30:00">2026-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区"><div style="background: linear-gradient(135deg, #0a0f1f 0%, #102a43 26%, #1d4ed8 52%, #0f766e 78%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区">为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区</a><time datetime="2026-04-03T14:45:00.000Z" title="发表于 2026-04-03 22:45:00">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析"><div style="background: linear-gradient(135deg, #08111f 0%, #12344d 22%, #2563eb 48%, #14b8a6 72%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析">OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析</a><time datetime="2026-04-03T14:20:00.000Z" title="发表于 2026-04-03 22:20:00">2026-04-03</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">AI工具</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">技术教程</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">VPS网络</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"><span class="card-category-list-name">网络链路</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">技术笔记</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/AI%E8%A7%86%E9%A2%91/" style="font-size: 1.15em; color: rgb(50, 114, 165);">AI视频</a><a href="/tags/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C/" style="font-size: 1.15em; color: rgb(156, 50, 64);">短视频制作</a><a href="/tags/AI%E5%B7%A5%E5%85%B7/" style="font-size: 1.45em; color: rgb(135, 50, 56);">AI工具</a><a href="/tags/%E8%87%AA%E5%8A%A8%E9%85%8D%E9%9F%B3/" style="font-size: 1.15em; color: rgb(148, 97, 89);">自动配音</a><a href="/tags/%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91/" style="font-size: 1.15em; color: rgb(180, 64, 50);">视频剪辑</a><a href="/tags/VPS/" style="font-size: 1.26em; color: rgb(81, 80, 136);">VPS</a><a href="/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/" style="font-size: 1.15em; color: rgb(91, 143, 196);">网络优化</a><a href="/tags/Reality%E5%8D%8F%E8%AE%AE/" style="font-size: 1.15em; color: rgb(109, 152, 148);">Reality协议</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" style="font-size: 1.15em; color: rgb(50, 50, 50);">服务器运维</a><a href="/tags/DMIT/" style="font-size: 1.19em; color: rgb(50, 128, 50);">DMIT</a><a href="/tags/Cloudflare-WARP/" style="font-size: 1.19em; color: rgb(50, 181, 50);">Cloudflare WARP</a><a href="/tags/Disney/" style="font-size: 1.15em; color: rgb(153, 50, 110);">Disney+</a><a href="/tags/3x-ui/" style="font-size: 1.15em; color: rgb(161, 50, 72);">3x-ui</a><a href="/tags/X-ui/" style="font-size: 1.15em; color: rgb(50, 156, 192);">X-ui</a><a href="/tags/OpenClaw/" style="font-size: 1.41em; color: rgb(193, 196, 139);">OpenClaw</a><a href="/tags/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B/" style="font-size: 1.38em; color: rgb(133, 50, 175);">新手教程</a><a href="/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" style="font-size: 1.3em; color: rgb(50, 120, 64);">安装教程</a><a href="/tags/%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF/" style="font-size: 1.15em; color: rgb(152, 50, 50);">控制面板</a><a href="/tags/Dashboard/" style="font-size: 1.15em; color: rgb(66, 102, 103);">Dashboard</a><a href="/tags/macOS/" style="font-size: 1.34em; color: rgb(167, 57, 60);">macOS</a><a href="/tags/CLI/" style="font-size: 1.15em; color: rgb(171, 118, 91);">CLI</a><a href="/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/" style="font-size: 1.22em; color: rgb(50, 135, 175);">排错指南</a><a href="/tags/Safari/" style="font-size: 1.15em; color: rgb(50, 157, 50);">Safari</a><a href="/tags/Linux/" style="font-size: 1.15em; color: rgb(50, 76, 50);">Linux</a><a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 1.15em; color: rgb(143, 166, 75);">运维</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.15em; color: rgb(182, 159, 58);">服务器</a><a href="/tags/%E5%8D%B8%E8%BD%BD%E6%95%99%E7%A8%8B/" style="font-size: 1.15em; color: rgb(148, 50, 84);">卸载教程</a><a href="/tags/Windows/" style="font-size: 1.19em; color: rgb(167, 124, 185);">Windows</a><a href="/tags/Canva/" style="font-size: 1.15em; color: rgb(76, 132, 158);">Canva</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%95%99%E7%A8%8B/" style="font-size: 1.15em; color: rgb(131, 195, 155);">设计教程</a><a href="/tags/%E6%B5%B7%E6%8A%A5%E5%88%B6%E4%BD%9C/" style="font-size: 1.15em; color: rgb(200, 50, 50);">海报制作</a><a href="/tags/MDM/" style="font-size: 1.15em; color: rgb(94, 193, 109);">MDM</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/" style="font-size: 1.15em; color: rgb(69, 50, 192);">系统工具</a><a href="/tags/Telegram/" style="font-size: 1.19em; color: rgb(50, 132, 156);">Telegram</a><a href="/tags/Discord/" style="font-size: 1.15em; color: rgb(186, 151, 50);">Discord</a><a href="/tags/Slack/" style="font-size: 1.15em; color: rgb(58, 53, 187);">Slack</a><a href="/tags/WhatsApp/" style="font-size: 1.15em; color: rgb(102, 85, 162);">WhatsApp</a><a href="/tags/Codex/" style="font-size: 1.15em; color: rgb(124, 181, 162);">Codex</a><a href="/tags/Claude-Code/" style="font-size: 1.15em; color: rgb(50, 153, 137);">Claude Code</a><a href="/tags/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 1.19em; color: rgb(50, 50, 98);">本地大模型</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/04/">
+            <span class="card-archive-list-date">
+              2026年04月
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              2026年03月
+            </span>
+            <span class="card-archive-list-count">11</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">18</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-04-10T05:46:35.722Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

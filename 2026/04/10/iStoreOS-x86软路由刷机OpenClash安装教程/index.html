@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="iStoreOS刷机教程,N150软路由,OpenClash安装教程,Mihomo配置,Clash Meta配置,VLESS Reality配置,x86软路由"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="这是一篇面向零基础新手的 iStoreOS x86 软路由刷机教程，从 Windows 和 Mac 制作启动盘、进入 BIOS 选择 U 盘启动、quickstart 安装到硬盘、eth0&#x2F;eth1 接线、后台登录，再到用 Mac 终端安装 OpenClash 和准备 Mihomo 极简配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置">
+<meta property="og:url" content="https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="这是一篇面向零基础新手的 iStoreOS x86 软路由刷机教程，从 Windows 和 Mac 制作启动盘、进入 BIOS 选择 U 盘启动、quickstart 安装到硬盘、eth0&#x2F;eth1 接线、后台登录，再到用 Mac 终端安装 OpenClash 和准备 Mihomo 极简配置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-04-10T13:30:00.000Z">
+<meta property="article:modified_time" content="2026-04-10T13:30:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="Mihomo">
+<meta property="article:tag" content="OpenClash">
+<meta property="article:tag" content="iStoreOS">
+<meta property="article:tag" content="x86">
+<meta property="article:tag" content="软路由">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><meta property="article:published_time" content="2026-04-10T13:30:00.000Z"><meta property="article:modified_time" content="2026-04-10T13:30:00.000Z"><meta property="article:section" content="技术教程"><meta property="article:tag" content="iStoreOS"><meta property="article:tag" content="OpenClash"><meta property="article:tag" content="软路由"><meta property="article:tag" content="Mihomo"><meta property="article:tag" content="x86"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置",
+  "description": "这是一篇面向零基础新手的 iStoreOS x86 软路由刷机教程，从 Windows 和 Mac 制作启动盘、进入 BIOS 选择 U 盘启动、quickstart 安装到硬盘、eth0/eth1 接线、后台登录，再到用 Mac 终端安装 OpenClash 和准备 Mihomo 极简配置。",
+  "url": "https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/",
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "datePublished": "2026-04-10T13:30:00.000Z",
+  "dateModified": "2026-04-10T13:30:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://skylink9119.github.io/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://skylink9119.github.io/img/icon.jpg"
+    }
+  },
+  "keywords": "iStoreOS刷机教程,N150软路由,OpenClash安装教程,Mihomo配置,Clash Meta配置,VLESS Reality配置,x86软路由",
+  "articleSection": [
+    "技术教程",
+    "VPS网络"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://skylink9119.github.io/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-10T13:30:00.000Z" title="发表于 2026-04-10 21:30:00">2026-04-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-10T13:30:00.000Z" title="更新于 2026-04-10 21:30:00">2026-04-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/">VPS网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-04-10 21:30:00&quot;}" hidden></div><div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/501OZxSKHGk"
+    loading="lazy"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<p>这篇教程适合第一次接触 x86 软路由的新手。我们要做的事情很明确：先把 iStoreOS 写进 U 盘，再用 U 盘启动 x86 小主机，把系统安装到内置硬盘，最后登录后台安装 OpenClash，并准备一份最基础的 Mihomo&#x2F;Clash.Meta 配置模板。</p>
+<p>我这次演示的设备是 N150 小主机。如果你用的是 N100、N150、J4125、N5105 这类 x86 物理机，整体流程基本一致。</p>
+<span id="more"></span>
+
+<h2 id="一、先准备这些东西"><a href="#一、先准备这些东西" class="headerlink" title="一、先准备这些东西"></a>一、先准备这些东西</h2><p>开始之前，先把下面几样东西准备好：</p>
+<ul>
+<li>一台 x86 物理机，例如 N100 或 N150 小主机</li>
+<li>两根网线</li>
+<li>一个 U 盘</li>
+<li>一个键盘</li>
+<li>一台电脑，Windows 或 Mac 都可以</li>
+<li>一台显示器，第一次刷机建议准备</li>
+</ul>
+<p>这里有两个细节一定要提前说清楚。</p>
+<p>第一，U 盘最好用空盘，因为制作启动盘会清空 U 盘里的所有内容。第二，两根网线后面有不同用途：一根接光猫或者上级路由，另一根接自己的电脑。</p>
+<p>如果你是第一次刷 iStoreOS，不建议只靠盲插网线和猜 IP。准备显示器和键盘会稳很多，出问题也更容易判断卡在哪一步。</p>
+<h2 id="二、下载-iStoreOS-x86-镜像"><a href="#二、下载-iStoreOS-x86-镜像" class="headerlink" title="二、下载 iStoreOS x86 镜像"></a>二、下载 iStoreOS x86 镜像</h2><p>先打开 iStoreOS 的 x86 安装页面，下载适合 x86 物理机的固件。像 N150 这种小主机，通常优先选择 x86_64 的 EFI 镜像。</p>
+<p>下载时注意两点：</p>
+<ul>
+<li>选择 x86_64 &#x2F; EFI 相关镜像</li>
+<li>下载完成后不要手动解压，保留 <code>.img.gz</code> 文件即可</li>
+</ul>
+<p>也就是说，看到下载下来的文件是 <code>.img.gz</code>，不要自己双击解压。后面写入 U 盘的时候，直接选择这个 <code>.img.gz</code> 镜像文件。</p>
+<h2 id="三、Windows-制作启动盘：用-Rufus"><a href="#三、Windows-制作启动盘：用-Rufus" class="headerlink" title="三、Windows 制作启动盘：用 Rufus"></a>三、Windows 制作启动盘：用 Rufus</h2><p>如果你用的是 Windows 电脑，建议用 Rufus 制作启动盘。</p>
+<p>操作步骤如下：</p>
+<ol>
+<li>打开 Rufus 官网，下载 Rufus。</li>
+<li>把 U 盘插到 Windows 电脑上。</li>
+<li>打开 Rufus。</li>
+<li>在 Rufus 顶部的“设备”里，确认选中的是你的 U 盘。</li>
+<li>点击“选择”，选中刚才下载的 iStoreOS <code>.img.gz</code> 镜像。</li>
+<li>点击“开始”。</li>
+<li>如果提示会清空 U 盘数据，确认继续。</li>
+<li>如果提示选择写入方式，一般选择 <code>DD</code> 模式。</li>
+<li>等进度条完成后，安全弹出 U 盘。</li>
+</ol>
+<p>这里最重要的是第 4 步：一定要确认选中的是 U 盘，不要选错硬盘。写启动盘会擦除目标磁盘的数据，选错就麻烦了。</p>
+<h2 id="四、Mac-制作启动盘：用-balenaEtcher"><a href="#四、Mac-制作启动盘：用-balenaEtcher" class="headerlink" title="四、Mac 制作启动盘：用 balenaEtcher"></a>四、Mac 制作启动盘：用 balenaEtcher</h2><p>如果你用的是 Mac，我更推荐 balenaEtcher。它的流程对新手更直观，基本就是三步：选镜像、选 U 盘、开始写入。</p>
+<p>操作步骤如下：</p>
+<ol>
+<li>打开 balenaEtcher 官网，下载 Mac 版本。</li>
+<li>把 U 盘插进 Mac。</li>
+<li>打开 balenaEtcher。</li>
+<li>点击 <code>Flash from file</code>。</li>
+<li>选择刚才下载的 iStoreOS <code>.img.gz</code> 镜像。</li>
+<li>点击 <code>Select target</code>，选择你的 U 盘。</li>
+<li>确认目标设备没选错。</li>
+<li>点击 <code>Flash</code> 开始写入。</li>
+<li>如果 Mac 弹出系统密码框，输入你的 Mac 登录密码授权。</li>
+<li>等待写入完成。</li>
+</ol>
+<p>写完之后，如果 macOS 弹出“磁盘不可读”之类的提示，不用慌。很多路由系统镜像写入 U 盘后，Mac 不能直接识别里面的分区，这是正常现象，不代表启动盘失败。</p>
+<h2 id="五、从-U-盘启动-x86-小主机"><a href="#五、从-U-盘启动-x86-小主机" class="headerlink" title="五、从 U 盘启动 x86 小主机"></a>五、从 U 盘启动 x86 小主机</h2><p>启动盘做好之后，把 U 盘、键盘、显示器都接到 x86 小主机上。</p>
+<p>然后开机，并连续按启动菜单键或 BIOS 键。不同机器的按键不完全一样，常见的是：</p>
+<ul>
+<li><code>F11</code></li>
+<li><code>F12</code></li>
+<li><code>Delete</code></li>
+<li><code>Esc</code></li>
+</ul>
+<p>如果你不知道自己的机器按哪个键，可以开机时多试几次，或者看主板&#x2F;小主机品牌的启动提示。</p>
+<p>进入启动菜单后，直接选择你的 U 盘启动。如果进入的是 BIOS，就把 U 盘设置成第一启动项，然后保存退出。</p>
+<p>机器从 U 盘启动后，会进入 iStoreOS 的安装环境。</p>
+<h2 id="六、用-quickstart-把系统安装到硬盘"><a href="#六、用-quickstart-把系统安装到硬盘" class="headerlink" title="六、用 quickstart 把系统安装到硬盘"></a>六、用 quickstart 把系统安装到硬盘</h2><p>进入 iStoreOS 安装环境后，在命令行输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quickstart</span><br></pre></td></tr></table></figure>
+
+<p>如果你怕打错，也可以输入前两个字母：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qu</span><br></pre></td></tr></table></figure>
+
+<p>然后按一下 <code>Tab</code> 键自动补全。</p>
+<p>进入菜单后，选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install X86</span><br></pre></td></tr></table></figure>
+
+<p>接下来系统会让你选择要安装到哪块硬盘。这里一定要看清楚，目标应该是小主机里的内置硬盘或 SSD，不是插着的 U 盘，也不是其它数据盘。</p>
+<p>确认无误后，按照提示格式化硬盘，然后继续选择 <code>OK</code> 或 <code>Install</code>。安装开始后，等待系统把 iStoreOS 写入硬盘。</p>
+<p>安装完成后，重启机器，并把 U 盘拔掉。这样下次启动时，系统就会从内置硬盘启动，而不是再次进入 U 盘安装环境。</p>
+<h2 id="七、接线：eth0-接光猫，eth1-接电脑"><a href="#七、接线：eth0-接光猫，eth1-接电脑" class="headerlink" title="七、接线：eth0 接光猫，eth1 接电脑"></a>七、接线：eth0 接光猫，eth1 接电脑</h2><p>系统启动完成后，开始接网线。</p>
+<p>按最常见的主路由思路：</p>
+<ul>
+<li><code>eth0</code> 接光猫或者上级路由</li>
+<li><code>eth1</code> 接自己的电脑</li>
+</ul>
+<p>也就是说，<code>eth0</code> 负责进网，<code>eth1</code> 负责把电脑接到这台 iStoreOS 软路由上。</p>
+<p>如果你不确定哪个物理网口对应 <code>eth0</code> 或 <code>eth1</code>，可以在本机命令行里再次输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quickstart</span><br></pre></td></tr></table></figure>
+
+<p>然后选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Show Interfaces</span><br></pre></td></tr></table></figure>
+
+<p>它会显示当前网线插入到了哪个接口，也能看到当前 LAN 口 IP。</p>
+<h2 id="八、登录-iStoreOS-后台"><a href="#八、登录-iStoreOS-后台" class="headerlink" title="八、登录 iStoreOS 后台"></a>八、登录 iStoreOS 后台</h2><p>电脑这边一般保持自动获取 IP 即可，不用手动设置。接好网线后等一两分钟，让电脑从软路由获取地址。</p>
+<p>然后打开浏览器，输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.100.1</span><br></pre></td></tr></table></figure>
+
+<p>iStoreOS 默认后台信息一般是：</p>
+<ul>
+<li>后台地址：<code>http://192.168.100.1</code></li>
+<li>用户名：<code>root</code></li>
+<li>默认密码：<code>password</code></li>
+</ul>
+<p>如果能顺利进入后台，就说明刷机和接线已经跑通了。</p>
+<p>第一次进入后台，我建议先做三件事：</p>
+<ul>
+<li>确认 WAN 口已经联网</li>
+<li>确认电脑能稳定打开后台</li>
+<li>把默认后台密码改成你自己的密码</li>
+</ul>
+<h2 id="九、用-Mac-终端安装-OpenClash"><a href="#九、用-Mac-终端安装-OpenClash" class="headerlink" title="九、用 Mac 终端安装 OpenClash"></a>九、用 Mac 终端安装 OpenClash</h2><p>确认 iStoreOS 已经能联网后，再安装 OpenClash。这里演示的是用 Mac 终端通过 SSH 登录路由器安装。</p>
+<p>先在 Mac 上打开“终端”，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.100.1</span><br></pre></td></tr></table></figure>
+
+<p>如果是第一次连接，它会问你是否继续连接，输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yes</span><br></pre></td></tr></table></figure>
+
+<p>然后回车。</p>
+<p>接下来输入路由器密码。第一次如果你还没改过密码，默认是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password</span><br></pre></td></tr></table></figure>
+
+<p>注意，终端里输入密码时通常不会显示字符，这是正常的。输完直接回车即可。</p>
+<p>登录成功后，执行 OpenClash 安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL <span class="string">&#x27;https://go.sky9119.cc/openclash&#x27;</span> | sh</span><br></pre></td></tr></table></figure>
+
+<p>这里提醒一句：一键脚本一定要确认来源可信再执行。如果你是跟着我的教程操作，可以用上面这条命令；如果你不想用一键脚本，也可以去 OpenClash 官方 GitHub 页面手动下载安装包。</p>
+<p>安装过程中不要关闭终端，也不要断电断网。等命令执行完成后，回到 iStoreOS 网页后台刷新页面。如果安装成功，菜单里就会出现 OpenClash。</p>
+<h2 id="十、OpenClash-里先安装-Mihomo-Meta-内核"><a href="#十、OpenClash-里先安装-Mihomo-Meta-内核" class="headerlink" title="十、OpenClash 里先安装 Mihomo &#x2F; Meta 内核"></a>十、OpenClash 里先安装 Mihomo &#x2F; Meta 内核</h2><p>进入 OpenClash 页面后，不要急着导入复杂规则。新手第一次建议先做两件事：</p>
+<ol>
+<li>点击检查更新，确认插件本身正常。</li>
+<li>到内核相关页面，优先安装 Mihomo &#x2F; Meta 内核。</li>
+</ol>
+<p>因为现在很多 VLESS + REALITY 配置需要 Mihomo&#x2F;Clash.Meta 支持，所以不要选太老的 Clash 内核。</p>
+<p>内核安装完成后，再启动 OpenClash。第一次先用最简单的配置跑通，不要一上来就加一堆 DNS 分流、广告拦截、细分规则。先跑通，再优化，这样出问题更容易排查。</p>
+<h2 id="十一、Mihomo-Clash-Meta-极简配置模板"><a href="#十一、Mihomo-Clash-Meta-极简配置模板" class="headerlink" title="十一、Mihomo&#x2F;Clash.Meta 极简配置模板"></a>十一、Mihomo&#x2F;Clash.Meta 极简配置模板</h2><p>下面这份是入门极简模板，适合先确认节点能不能跑通。</p>
+<p>使用原则很简单：看注释修改，没写让你改的地方就先不要动。尤其是 <code>name</code>，上面节点名称和下面策略组里引用的名称，必须完全一致。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mixed-port:</span> <span class="number">7890</span></span><br><span class="line"><span class="attr">allow-lan:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">mode:</span> <span class="string">rule</span></span><br><span class="line"><span class="attr">log-level:</span> <span class="string">info</span></span><br><span class="line"></span><br><span class="line"><span class="attr">proxies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;my-node&quot;</span>  <span class="comment"># 改成你自己的节点名称，下面引用时要保持完全一致</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">vless</span></span><br><span class="line">    <span class="attr">server:</span> <span class="number">203.0</span><span class="number">.113</span><span class="number">.10</span>  <span class="comment"># 改成你的服务器 IP 或域名</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">443</span>  <span class="comment"># 改成你的节点端口</span></span><br><span class="line">    <span class="attr">uuid:</span> <span class="number">11111111</span><span class="number">-2222</span><span class="number">-3333</span><span class="number">-4444</span><span class="number">-555555555555</span>  <span class="comment"># 改成你自己的 UUID</span></span><br><span class="line">    <span class="attr">udp:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tls:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">servername:</span> <span class="string">www.microsoft.com</span>  <span class="comment"># 改成你节点实际使用的 SNI 域名</span></span><br><span class="line">    <span class="attr">client-fingerprint:</span> <span class="string">chrome</span></span><br><span class="line">    <span class="attr">network:</span> <span class="string">tcp</span></span><br><span class="line">    <span class="attr">flow:</span> <span class="string">xtls-rprx-vision</span>  <span class="comment"># 如果你的节点链接里没有 flow，可按实际情况调整</span></span><br><span class="line">    <span class="attr">packet-encoding:</span> <span class="string">xudp</span></span><br><span class="line">    <span class="attr">encryption:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="attr">reality-opts:</span></span><br><span class="line">      <span class="attr">public-key:</span> <span class="string">&quot;EXAMPLEPUBLICKEY1234567890ABCDEFGHJKLMNPQ&quot;</span>  <span class="comment"># 改成你的 REALITY 公钥</span></span><br><span class="line">      <span class="attr">short-id:</span> <span class="string">&quot;1a2b&quot;</span>  <span class="comment"># 改成你的 REALITY short-id</span></span><br><span class="line"></span><br><span class="line"><span class="attr">proxy-groups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;节点选择&quot;</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">    <span class="attr">proxies:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;my-node&quot;</span>  <span class="comment"># 这里必须和上面 name 的内容完全一致</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DIRECT</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">MATCH,节点选择</span>  <span class="comment"># 所有流量默认交给“节点选择”这个策略组处理</span></span><br></pre></td></tr></table></figure>
+
+<p>这里最容易出错的是节点名称。比如上面写的是：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&quot;my-node&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么下面就必须也写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">&quot;my-node&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你下面写成 <code>my-nodee</code>、<code>my node</code> 或者其它名字，OpenClash 就会报类似 <code>not found</code> 的错误。</p>
+<h2 id="十二、新手常见问题"><a href="#十二、新手常见问题" class="headerlink" title="十二、新手常见问题"></a>十二、新手常见问题</h2><h3 id="1-后台打不开怎么办？"><a href="#1-后台打不开怎么办？" class="headerlink" title="1. 后台打不开怎么办？"></a>1. 后台打不开怎么办？</h3><p>先检查电脑是不是接在 LAN 口。多网口 x86 设备通常默认 <code>eth0</code> 是 WAN，其它口是 LAN，所以你可以先把电脑接到 <code>eth1</code> 再试。</p>
+<p>如果还是打不开，就接上显示器和键盘，在本机运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quickstart</span><br></pre></td></tr></table></figure>
+
+<p>然后选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Show Interfaces</span><br></pre></td></tr></table></figure>
+
+<p>看当前 LAN 口 IP 到底是多少。</p>
+<h3 id="2-U-盘启动失败怎么办？"><a href="#2-U-盘启动失败怎么办？" class="headerlink" title="2. U 盘启动失败怎么办？"></a>2. U 盘启动失败怎么办？</h3><p>优先检查三件事：</p>
+<ul>
+<li>BIOS 里有没有选 U 盘启动</li>
+<li>U 盘启动盘是否写入成功</li>
+<li>这台机器更适合 UEFI 还是 Legacy 启动</li>
+</ul>
+<p>如果启动菜单里根本看不到 U 盘，可以换一个 U 盘或者换一个 USB 口再试。</p>
+<h3 id="3-OpenClash-安装后找不到菜单怎么办？"><a href="#3-OpenClash-安装后找不到菜单怎么办？" class="headerlink" title="3. OpenClash 安装后找不到菜单怎么办？"></a>3. OpenClash 安装后找不到菜单怎么办？</h3><p>先刷新 iStoreOS 后台页面。如果还是没有，重新登录后台，或者重启一下路由器。</p>
+<p>如果终端里安装过程报错，先确认路由器本身能不能联网。最简单的判断方式是后台里看 WAN 是否拿到地址，或者在终端里测试能不能访问外网。</p>
+<h3 id="4-配置导入后启动失败怎么办？"><a href="#4-配置导入后启动失败怎么办？" class="headerlink" title="4. 配置导入后启动失败怎么办？"></a>4. 配置导入后启动失败怎么办？</h3><p>优先看 OpenClash 的运行日志。如果看到 <code>not found</code>，大概率是 <code>proxy-groups</code> 里引用的节点名称和 <code>proxies</code> 里的 <code>name</code> 不一致。</p>
+<p>如果看到解析 YAML 失败，优先检查缩进。YAML 对缩进非常敏感，不要随便用 Tab，建议统一用空格。</p>
+<h3 id="5-为什么先用极简配置？"><a href="#5-为什么先用极简配置？" class="headerlink" title="5. 为什么先用极简配置？"></a>5. 为什么先用极简配置？</h3><p>因为极简配置的目的不是“最强”，而是先确认链路通不通。只要极简配置能正常启动，后面再逐步加国内直连、DNS 分流、广告拦截和细分规则，排错会轻松很多。</p>
+<p>如果一开始就堆很多规则，出问题时你很难判断到底是节点问题、DNS 问题、规则问题，还是 OpenClash 内核问题。</p>
+<h2 id="十三、关键提醒"><a href="#十三、关键提醒" class="headerlink" title="十三、关键提醒"></a>十三、关键提醒</h2><p>最后把新手最容易踩的坑再总结一遍：</p>
+<ul>
+<li>U 盘写盘会清空数据，提前备份。</li>
+<li>iStoreOS 的 <code>.img.gz</code> 镜像不要手动解压。</li>
+<li>进入 SSH 第一次提示确认连接时，输入 <code>yes</code> 是正常的。</li>
+<li>iStoreOS 默认后台一般是 <code>http://192.168.100.1</code>，默认用户是 <code>root</code>，默认密码是 <code>password</code>。</li>
+<li>多网口 x86 设备通常默认 <code>eth0</code> 是 WAN，其它口是 LAN。</li>
+<li>OpenClash 装好后优先安装 Mihomo &#x2F; Meta 内核。</li>
+<li>新手先用极简配置跑通，再加复杂规则。</li>
+<li>不要随便执行不理解的 <code>opkg upgrade</code>，避免把系统包升级乱。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.kooldns.com/zh/guide/istoreos/install_x86.html">iStoreOS x86 物理机安装文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://rufus.ie/en/index.html">Rufus 官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://etcher.balena.io/">balenaEtcher 官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vernesong/OpenClash">OpenClash GitHub 项目</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/iStoreOS/">iStoreOS</a><a class="post-meta__tags" href="/tags/OpenClash/">OpenClash</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/">软路由</a><a class="post-meta__tags" href="/tags/Mihomo/">Mihomo</a><a class="post-meta__tags" href="/tags/x86/">x86</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</div></div><div class="info-2"><div class="info-item-1">按 2026 年 4 月 5 日可查到的 OpenClaw 官方安装、QuickStart、Telegram、Pairing 与 Sandboxing 文档整理，给出一条适合新手和录视频的完整主线：先用安装脚本跑通宿主机版 OpenClaw，再把 Agent 工具执行放进 Docker sandbox。</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%87%86%E5%A4%87%E8%BF%99%E4%BA%9B%E4%B8%9C%E8%A5%BF"><span class="toc-number">1.</span> <span class="toc-text">一、先准备这些东西</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%8B%E8%BD%BD-iStoreOS-x86-%E9%95%9C%E5%83%8F"><span class="toc-number">2.</span> <span class="toc-text">二、下载 iStoreOS x86 镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Windows-%E5%88%B6%E4%BD%9C%E5%90%AF%E5%8A%A8%E7%9B%98%EF%BC%9A%E7%94%A8-Rufus"><span class="toc-number">3.</span> <span class="toc-text">三、Windows 制作启动盘：用 Rufus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Mac-%E5%88%B6%E4%BD%9C%E5%90%AF%E5%8A%A8%E7%9B%98%EF%BC%9A%E7%94%A8-balenaEtcher"><span class="toc-number">4.</span> <span class="toc-text">四、Mac 制作启动盘：用 balenaEtcher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BB%8E-U-%E7%9B%98%E5%90%AF%E5%8A%A8-x86-%E5%B0%8F%E4%B8%BB%E6%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">五、从 U 盘启动 x86 小主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%94%A8-quickstart-%E6%8A%8A%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E5%88%B0%E7%A1%AC%E7%9B%98"><span class="toc-number">6.</span> <span class="toc-text">六、用 quickstart 把系统安装到硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%8E%A5%E7%BA%BF%EF%BC%9Aeth0-%E6%8E%A5%E5%85%89%E7%8C%AB%EF%BC%8Ceth1-%E6%8E%A5%E7%94%B5%E8%84%91"><span class="toc-number">7.</span> <span class="toc-text">七、接线：eth0 接光猫，eth1 接电脑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%99%BB%E5%BD%95-iStoreOS-%E5%90%8E%E5%8F%B0"><span class="toc-number">8.</span> <span class="toc-text">八、登录 iStoreOS 后台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E7%94%A8-Mac-%E7%BB%88%E7%AB%AF%E5%AE%89%E8%A3%85-OpenClash"><span class="toc-number">9.</span> <span class="toc-text">九、用 Mac 终端安装 OpenClash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81OpenClash-%E9%87%8C%E5%85%88%E5%AE%89%E8%A3%85-Mihomo-Meta-%E5%86%85%E6%A0%B8"><span class="toc-number">10.</span> <span class="toc-text">十、OpenClash 里先安装 Mihomo &#x2F; Meta 内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81Mihomo-Clash-Meta-%E6%9E%81%E7%AE%80%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF"><span class="toc-number">11.</span> <span class="toc-text">十一、Mihomo&#x2F;Clash.Meta 极简配置模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%96%B0%E6%89%8B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">12.</span> <span class="toc-text">十二、新手常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%90%8E%E5%8F%B0%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.1.</span> <span class="toc-text">1. 后台打不开怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-U-%E7%9B%98%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.2.</span> <span class="toc-text">2. U 盘启动失败怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-OpenClash-%E5%AE%89%E8%A3%85%E5%90%8E%E6%89%BE%E4%B8%8D%E5%88%B0%E8%8F%9C%E5%8D%95%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.3.</span> <span class="toc-text">3. OpenClash 安装后找不到菜单怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E5%AF%BC%E5%85%A5%E5%90%8E%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.4.</span> <span class="toc-text">4. 配置导入后启动失败怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%88%E7%94%A8%E6%9E%81%E7%AE%80%E9%85%8D%E7%BD%AE%EF%BC%9F"><span class="toc-number">12.5.</span> <span class="toc-text">5. 为什么先用极简配置？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E6%8F%90%E9%86%92"><span class="toc-number">13.</span> <span class="toc-text">十三、关键提醒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">14.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置"><div style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%)"></div></a><div class="content"><a class="title" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</a><time datetime="2026-04-10T13:30:00.000Z" title="发表于 2026-04-10 21:30:00">2026-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox"><div style="background: linear-gradient(135deg, #07111f 0%, #0f4c75 24%, #2563eb 52%, #14b8a6 76%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/05/OpenClaw%E5%AE%8C%E6%95%B4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%88%E8%B7%91%E9%80%9A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%86%8D%E6%8A%8AAgent%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C%E5%85%B3%E8%BF%9BDockerSandbox/" title="OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox">OpenClaw 完整安装教程：先跑通宿主机，再把 Agent 工具执行关进 Docker Sandbox</a><time datetime="2026-04-05T12:10:00.000Z" title="发表于 2026-04-05 20:10:00">2026-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray"><div style="background: linear-gradient(135deg, #0b1220 0%, #0f766e 32%, #38bdf8 68%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/" title="DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray">DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</a><time datetime="2026-04-04T07:30:00.000Z" title="发表于 2026-04-04 15:30:00">2026-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区"><div style="background: linear-gradient(135deg, #0a0f1f 0%, #102a43 26%, #1d4ed8 52%, #0f766e 78%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E9%87%8F%E4%BA%BA%E8%A3%85%E4%BA%86Ollama%E6%9C%80%E5%90%8E%E5%8D%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E7%83%AD%E6%BD%AE%E8%83%8C%E5%90%8E%E7%9A%847%E4%B8%AA%E8%AF%AF%E5%8C%BA/" title="为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区">为什么大量人装了 Ollama，最后却几乎不用？本地模型热潮背后的 7 个误区</a><time datetime="2026-04-03T14:45:00.000Z" title="发表于 2026-04-03 22:45:00">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析"><div style="background: linear-gradient(135deg, #08111f 0%, #12344d 22%, #2563eb 48%, #14b8a6 72%, #f59e0b 100%)"></div></a><div class="content"><a class="title" href="/2026/04/03/OpenClaw%E5%92%8CCodexClaudeCode%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8C%BA%E5%88%AB%E7%94%A8%E9%80%94%E6%94%AF%E5%87%BA%E5%88%86%E6%9E%90/" title="OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析">OpenClaw、Codex、Claude Code 与本地大模型怎么选？区别、实际用途与支出分析</a><time datetime="2026-04-03T14:20:00.000Z" title="发表于 2026-04-03 22:20:00">2026-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
