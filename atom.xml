@@ -99,9 +99,9 @@
     
     <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
     
-    <category term="Telegram" scheme="https://skylink9119.github.io/tags/Telegram/"/>
-    
     <category term="Docker" scheme="https://skylink9119.github.io/tags/Docker/"/>
+    
+    <category term="Telegram" scheme="https://skylink9119.github.io/tags/Telegram/"/>
     
   </entry>
   
@@ -211,9 +211,9 @@
     
     <category term="OpenClaw" scheme="https://skylink9119.github.io/tags/OpenClaw/"/>
     
-    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
-    
     <category term="Telegram" scheme="https://skylink9119.github.io/tags/Telegram/"/>
+    
+    <category term="排错指南" scheme="https://skylink9119.github.io/tags/%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97/"/>
     
     <category term="Discord" scheme="https://skylink9119.github.io/tags/Discord/"/>
     
