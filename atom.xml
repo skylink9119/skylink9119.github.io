@@ -33,9 +33,9 @@
     <category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
     
     
-    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
-    
     <category term="Debian" scheme="https://skylink9119.github.io/tags/Debian/"/>
+    
+    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
     
     <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
     
@@ -155,6 +155,8 @@
     
     <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
     
+    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
+    
     <category term="DMIT" scheme="https://skylink9119.github.io/tags/DMIT/"/>
     
     <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
@@ -162,8 +164,6 @@
     <category term="Grok" scheme="https://skylink9119.github.io/tags/Grok/"/>
     
     <category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/>
-    
-    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
     
   </entry>
   
@@ -302,11 +302,11 @@
     
     <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
     
+    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    
     <category term="DMIT" scheme="https://skylink9119.github.io/tags/DMIT/"/>
     
     <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
-    
-    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
     
     <category term="Disney+" scheme="https://skylink9119.github.io/tags/Disney/"/>
     
