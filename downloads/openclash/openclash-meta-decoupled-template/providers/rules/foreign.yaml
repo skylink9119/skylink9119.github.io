@@ -1,0 +1,16 @@
+payload:
+  - DOMAIN-SUFFIX,google.com
+  - DOMAIN-SUFFIX,google.com.hk
+  - DOMAIN-SUFFIX,googleapis.com
+  - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,googlevideo.com
+  - DOMAIN-SUFFIX,ggpht.com
+  - DOMAIN-SUFFIX,gvt1.com
+  - GEOSITE,google
+  - GEOSITE,youtube
+  - GEOSITE,telegram
+  - GEOSITE,twitter
+  - GEOSITE,facebook
+  - GEOSITE,github
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com

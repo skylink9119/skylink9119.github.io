@@ -1,0 +1,8 @@
+payload:
+  - GEOSITE,apple-cn
+  - DOMAIN-SUFFIX,microsoft.com
+  - DOMAIN-SUFFIX,microsoftonline.com
+  - DOMAIN-SUFFIX,msftconnecttest.com
+  - DOMAIN-SUFFIX,msftncsi.com
+  - GEOSITE,cn
+  - GEOIP,CN
