@@ -6,7 +6,7 @@
   <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
   
   <link href="https://skylink9119.github.io/"/>
-  <updated>2026-04-15T13:20:00.000Z</updated>
+  <updated>2026-04-18T02:30:00.000Z</updated>
   <id>https://skylink9119.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2026 稳定派最终答案：Debian 搭建 VLESS + TCP(RAW) + REALITY + Vision 节点教程</title>
+    <link href="https://skylink9119.github.io/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/"/>
+    <id>https://skylink9119.github.io/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/</id>
+    <published>2026-04-18T02:30:00.000Z</published>
+    <updated>2026-04-18T02:30:00.000Z</updated>
+    
+    
+    <summary type="html">截至 2026 年 4 月 18 日，如果你把稳定性放在第一优先级，那么 VLESS + TCP(RAW) + REALITY + xtls-rprx-vision 依然是最值得长期使用的默认基线方案。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
+    
+    <category term="Debian" scheme="https://skylink9119.github.io/tags/Debian/"/>
+    
+    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    
+    <category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/>
+    
+    <category term="REALITY" scheme="https://skylink9119.github.io/tags/REALITY/"/>
+    
+    <category term="Vision" scheme="https://skylink9119.github.io/tags/Vision/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenClash Meta 精准分流配置教程：银行 App 国内直连，AI 服务走代理，附 YAML 模板下载</title>
@@ -275,9 +306,9 @@
     
     <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
     
-    <category term="Disney+" scheme="https://skylink9119.github.io/tags/Disney/"/>
-    
     <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    
+    <category term="Disney+" scheme="https://skylink9119.github.io/tags/Disney/"/>
     
     <category term="X-ui" scheme="https://skylink9119.github.io/tags/X-ui/"/>
     
