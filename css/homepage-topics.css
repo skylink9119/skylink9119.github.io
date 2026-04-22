@@ -7,6 +7,10 @@
   margin: 0 0 28px;
 }
 
+.topic-entry-grid > .topic-entry-card:only-child {
+  grid-column: 1 / -1;
+}
+
 .topic-entry-card {
   position: relative;
   overflow: hidden;
@@ -99,6 +103,10 @@
   margin: 14px 0 0;
   color: rgba(226, 232, 240, 0.86) !important;
   line-height: 1.78;
+}
+
+.topic-entry-grid > .topic-entry-card:only-child .topic-entry-card__desc {
+  max-width: 34rem;
 }
 
 .topic-entry-card__action {
