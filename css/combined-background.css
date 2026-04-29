@@ -61,7 +61,8 @@
 .home #page-header {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 88vh;
+  min-height: clamp(560px, 88svh, 820px);
   display: flex;
   align-items: center;
   justify-content: center;

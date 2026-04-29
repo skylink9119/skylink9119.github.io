@@ -108,7 +108,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 88vh;
+  min-height: clamp(560px, 88svh, 820px);
   padding: 7rem 0 4.5rem;
   background-position: center center !important;
   background-repeat: no-repeat !important;

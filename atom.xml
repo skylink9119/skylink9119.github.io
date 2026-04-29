@@ -3,11 +3,11 @@
   <title>Skyline Blog</title>
   
   <subtitle>记录生活，分享技术</subtitle>
-  <link href="https://skylink9119.github.io/atom.xml" rel="self"/>
+  <link href="https://sky9119.cc/atom.xml" rel="self"/>
   
-  <link href="https://skylink9119.github.io/"/>
+  <link href="https://sky9119.cc/"/>
   <updated>2026-04-24T16:00:00.000Z</updated>
-  <id>https://skylink9119.github.io/</id>
+  <id>https://sky9119.cc/</id>
   
   <author>
     <name>sky</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>2026 稳定派最终答案：Debian 搭建 VLESS + TCP(RAW) + REALITY + Vision 节点教程</title>
-    <link href="https://skylink9119.github.io/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/</id>
     <published>2026-04-18T02:30:00.000Z</published>
     <updated>2026-04-24T16:00:00.000Z</updated>
     
@@ -28,29 +28,29 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
     
     
-    <category term="Debian" scheme="https://skylink9119.github.io/tags/Debian/"/>
+    <category term="Debian" scheme="https://sky9119.cc/tags/Debian/"/>
     
-    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
     
-    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
     
-    <category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/>
+    <category term="VLESS" scheme="https://sky9119.cc/tags/VLESS/"/>
     
-    <category term="REALITY" scheme="https://skylink9119.github.io/tags/REALITY/"/>
+    <category term="REALITY" scheme="https://sky9119.cc/tags/REALITY/"/>
     
-    <category term="Vision" scheme="https://skylink9119.github.io/tags/Vision/"/>
+    <category term="Vision" scheme="https://sky9119.cc/tags/Vision/"/>
     
   </entry>
   
   <entry>
     <title>OpenClash Meta 精准分流配置教程：银行 App 国内直连，AI 服务走代理，附 YAML 模板下载</title>
-    <link href="https://skylink9119.github.io/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/"/>
-    <id>https://skylink9119.github.io/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/</id>
+    <link href="https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/"/>
+    <id>https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/</id>
     <published>2026-04-15T13:20:00.000Z</published>
     <updated>2026-04-15T13:20:00.000Z</updated>
     
@@ -59,29 +59,29 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="VPS网络" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="OpenClash" scheme="https://skylink9119.github.io/tags/OpenClash/"/>
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
     
-    <category term="Mihomo" scheme="https://skylink9119.github.io/tags/Mihomo/"/>
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     
-    <category term="Clash Meta" scheme="https://skylink9119.github.io/tags/Clash-Meta/"/>
+    <category term="Clash Meta" scheme="https://sky9119.cc/tags/Clash-Meta/"/>
     
-    <category term="DNS分流" scheme="https://skylink9119.github.io/tags/DNS%E5%88%86%E6%B5%81/"/>
+    <category term="DNS分流" scheme="https://sky9119.cc/tags/DNS%E5%88%86%E6%B5%81/"/>
     
-    <category term="YAML" scheme="https://skylink9119.github.io/tags/YAML/"/>
+    <category term="YAML" scheme="https://sky9119.cc/tags/YAML/"/>
     
-    <category term="iStoreOS" scheme="https://skylink9119.github.io/tags/iStoreOS/"/>
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     
   </entry>
   
   <entry>
     <title>iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</title>
-    <link href="https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</id>
     <published>2026-04-10T13:30:00.000Z</published>
     <updated>2026-04-10T13:30:00.000Z</updated>
     
@@ -90,27 +90,27 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="VPS网络" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="OpenClash" scheme="https://skylink9119.github.io/tags/OpenClash/"/>
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
     
-    <category term="Mihomo" scheme="https://skylink9119.github.io/tags/Mihomo/"/>
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     
-    <category term="iStoreOS" scheme="https://skylink9119.github.io/tags/iStoreOS/"/>
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     
-    <category term="软路由" scheme="https://skylink9119.github.io/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/"/>
+    <category term="软路由" scheme="https://sky9119.cc/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/"/>
     
-    <category term="x86" scheme="https://skylink9119.github.io/tags/x86/"/>
+    <category term="x86" scheme="https://sky9119.cc/tags/x86/"/>
     
   </entry>
   
   <entry>
     <title>DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</title>
-    <link href="https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/</id>
     <published>2026-04-04T07:30:00.000Z</published>
     <updated>2026-04-04T07:30:00.000Z</updated>
     
@@ -119,29 +119,29 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="VPS网络" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     
-    <category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/>
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
     
-    <category term="DMIT" scheme="https://skylink9119.github.io/tags/DMIT/"/>
+    <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
     
-    <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
+    <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
     
-    <category term="Grok" scheme="https://skylink9119.github.io/tags/Grok/"/>
+    <category term="Grok" scheme="https://sky9119.cc/tags/Grok/"/>
     
-    <category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/>
+    <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
     
   </entry>
   
   <entry>
     <title>DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</title>
-    <link href="https://skylink9119.github.io/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/</id>
     <published>2026-03-30T13:15:00.000Z</published>
     <updated>2026-03-30T13:15:00.000Z</updated>
     
@@ -150,29 +150,29 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="VPS网络" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     
-    <category term="3x-ui" scheme="https://skylink9119.github.io/tags/3x-ui/"/>
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
     
-    <category term="DMIT" scheme="https://skylink9119.github.io/tags/DMIT/"/>
+    <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
     
-    <category term="Cloudflare WARP" scheme="https://skylink9119.github.io/tags/Cloudflare-WARP/"/>
+    <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
     
-    <category term="Disney+" scheme="https://skylink9119.github.io/tags/Disney/"/>
+    <category term="Disney+" scheme="https://sky9119.cc/tags/Disney/"/>
     
-    <category term="X-ui" scheme="https://skylink9119.github.io/tags/X-ui/"/>
+    <category term="X-ui" scheme="https://sky9119.cc/tags/X-ui/"/>
     
   </entry>
   
   <entry>
     <title>VPS搭建过程中遇到的问题及具体解决方法</title>
-    <link href="https://skylink9119.github.io/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-    <id>https://skylink9119.github.io/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</id>
+    <link href="https://sky9119.cc/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>https://sky9119.cc/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</id>
     <published>2026-03-25T16:00:00.000Z</published>
     <updated>2026-03-25T16:00:00.000Z</updated>
     
@@ -181,23 +181,23 @@
     
     
     
-    <category term="技术笔记" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+    <category term="技术笔记" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     
-    <category term="Linux" scheme="https://skylink9119.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://sky9119.cc/tags/Linux/"/>
     
-    <category term="运维" scheme="https://skylink9119.github.io/tags/%E8%BF%90%E7%BB%B4/"/>
+    <category term="运维" scheme="https://sky9119.cc/tags/%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="服务器" scheme="https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <category term="服务器" scheme="https://sky9119.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
-    <link href="https://skylink9119.github.io/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</id>
     <published>2026-03-04T11:08:02.000Z</published>
     <updated>2026-03-04T11:08:02.000Z</updated>
     
@@ -206,25 +206,25 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
-    <category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
     
     
-    <category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     
-    <category term="网络优化" scheme="https://skylink9119.github.io/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/"/>
+    <category term="网络优化" scheme="https://sky9119.cc/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/"/>
     
-    <category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/>
+    <category term="Reality协议" scheme="https://sky9119.cc/tags/Reality%E5%8D%8F%E8%AE%AE/"/>
     
-    <category term="服务器运维" scheme="https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/"/>
+    <category term="服务器运维" scheme="https://sky9119.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-    <link href="https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
-    <id>https://skylink9119.github.io/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</id>
+    <link href="https://sky9119.cc/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</id>
     <published>2026-03-03T16:00:00.000Z</published>
     <updated>2026-03-28T15:31:18.978Z</updated>
     
@@ -233,14 +233,14 @@
     
     
     
-    <category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     
     
-    <category term="macOS" scheme="https://skylink9119.github.io/tags/macOS/"/>
+    <category term="macOS" scheme="https://sky9119.cc/tags/macOS/"/>
     
-    <category term="MDM" scheme="https://skylink9119.github.io/tags/MDM/"/>
+    <category term="MDM" scheme="https://sky9119.cc/tags/MDM/"/>
     
-    <category term="系统工具" scheme="https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"/>
+    <category term="系统工具" scheme="https://sky9119.cc/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
