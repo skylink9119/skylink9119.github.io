@@ -6,7 +6,7 @@
   <link href="https://sky9119.cc/atom.xml" rel="self"/>
   
   <link href="https://sky9119.cc/"/>
-  <updated>2026-04-24T16:00:00.000Z</updated>
+  <updated>2026-05-05T04:15:49.000Z</updated>
   <id>https://sky9119.cc/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器 WebRTC IP 泄漏修复教程：Chrome、Edge、Firefox、Brave 设置指南</title>
+    <link href="https://sky9119.cc/2026/05/05/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC-IP%E6%B3%84%E6%BC%8F%E4%BF%AE%E5%A4%8D%E6%95%99%E7%A8%8BChrome-Edge-Firefox-Brave/"/>
+    <id>https://sky9119.cc/2026/05/05/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC-IP%E6%B3%84%E6%BC%8F%E4%BF%AE%E5%A4%8D%E6%95%99%E7%A8%8BChrome-Edge-Firefox-Brave/</id>
+    <published>2026-05-05T04:15:49.000Z</published>
+    <updated>2026-05-05T04:15:49.000Z</updated>
+    
+    
+    <summary type="html">这篇教程整理 Chrome、Microsoft Edge、Firefox 和 Brave 的 WebRTC IP 泄漏修复方法，包含 macOS 与 Windows 策略命令、浏览器内验证方式，以及 IPv6 直出时在 iStoreOS/OpenClash 环境下的排查方向。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络安全" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="WebRTC" scheme="https://sky9119.cc/tags/WebRTC/"/>
+    
+    <category term="Chrome" scheme="https://sky9119.cc/tags/Chrome/"/>
+    
+    <category term="Edge" scheme="https://sky9119.cc/tags/Edge/"/>
+    
+    <category term="Firefox" scheme="https://sky9119.cc/tags/Firefox/"/>
+    
+    <category term="Brave" scheme="https://sky9119.cc/tags/Brave/"/>
+    
+    <category term="隐私保护" scheme="https://sky9119.cc/tags/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/"/>
+    
+    <category term="代理" scheme="https://sky9119.cc/tags/%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>2026 稳定派最终答案：Debian 搭建 VLESS + TCP(RAW) + REALITY + Vision 节点教程</title>
