@@ -6,7 +6,7 @@
   <link href="https://sky9119.cc/atom.xml" rel="self"/>
   
   <link href="https://sky9119.cc/"/>
-  <updated>2026-06-16T09:14:57.000Z</updated>
+  <updated>2026-06-16T15:03:45.000Z</updated>
   <id>https://sky9119.cc/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://sky9119.cc/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/"/>
     <id>https://sky9119.cc/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/</id>
     <published>2026-06-15T14:47:56.000Z</published>
-    <updated>2026-06-16T09:14:57.000Z</updated>
+    <updated>2026-06-16T15:03:45.000Z</updated>
     
     
-    <summary type="html">这篇文章整理一套从 Cloudflare DNS 解析到 VPS 安装 Hysteria2 的完整服务端搭建流程，包含 A 记录设置、灰云注意事项、BBR 网络优化、UFW 防火墙放行、官方脚本安装、配置文件生成和服务状态检查。</summary>
+    <summary type="html">这篇文章整理一套从 Cloudflare DNS 解析到 VPS 安装 Hysteria2 的完整服务端搭建流程，包含 A 记录设置、灰云注意事项、BBR 网络优化、UFW 防火墙放行、官方脚本安装、配置文件生成、服务状态检查和端口跳跃可选配置。</summary>
     
     
     
