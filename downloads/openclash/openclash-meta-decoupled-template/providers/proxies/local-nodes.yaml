@@ -1,0 +1,16 @@
+proxies:
+  - name: "自己的节点名称"
+    type: vless
+    server: YOUR_VPS_IP_OR_DOMAIN
+    port: 443
+    uuid: "YOUR_UUID_HERE"
+    udp: true
+    flow: xtls-rprx-vision
+    packet-encoding: xudp
+    tls: true
+    servername: "YOUR_SNI_DOMAIN"
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: "YOUR_REALITY_PUBLIC_KEY"
+      short-id: "YOUR_SHORT_ID"
+    network: tcp

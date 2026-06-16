@@ -1,0 +1,183 @@
+/* Software toolbox */
+
+.software-toolbox-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 1.2rem 0 2rem;
+  padding: 30px 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(12, 24, 42, 0.32), rgba(12, 24, 42, 0.12)),
+    radial-gradient(circle at top right, rgba(191, 219, 254, 0.08), transparent 28%);
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(18px);
+}
+
+.software-toolbox-hero::after {
+  content: "";
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 70px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.72), rgba(191,219,254,0.56));
+}
+
+.software-toolbox-hero__eyebrow {
+  margin-bottom: 12px;
+  color: rgba(226, 232, 240, 0.7);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.software-toolbox-hero h1 {
+  margin: 0;
+  color: #f8fbff !important;
+  font-size: clamp(1.8rem, 2.35vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.software-toolbox-hero p {
+  margin: 14px 0 0;
+  color: rgba(226, 232, 240, 0.8) !important;
+  font-size: 1.03rem;
+  line-height: 1.85;
+}
+
+.software-toolbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 1.1rem 0 1.8rem;
+}
+
+.software-toolbox-card {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 20px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(12, 24, 42, 0.24), rgba(12, 24, 42, 0.1));
+  box-shadow:
+    0 18px 40px rgba(2, 6, 23, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(14px);
+}
+
+.software-toolbox-card__meta {
+  margin-bottom: 10px;
+  color: rgba(226, 232, 240, 0.62);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.software-toolbox-card h3 {
+  margin: 0;
+  color: #f8fbff !important;
+  font-size: clamp(1.16rem, 1.45vw, 1.34rem);
+}
+
+.software-toolbox-card p {
+  margin: 12px 0 0;
+  color: rgba(226, 232, 240, 0.74) !important;
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.software-toolbox-card__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  margin-top: 16px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8fbff !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.software-toolbox-card__link:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="light"] .software-toolbox-hero {
+  border-color: rgba(148, 163, 184, 0.22);
+  background:
+    linear-gradient(180deg, rgba(241, 245, 249, 0.96), rgba(226, 232, 240, 0.9)),
+    radial-gradient(circle at top right, rgba(147, 197, 253, 0.28), transparent 35%);
+}
+
+[data-theme="light"] .software-toolbox-hero::after {
+  background: linear-gradient(90deg, rgba(30, 64, 175, 0.7), rgba(14, 116, 144, 0.56));
+}
+
+[data-theme="light"] .software-toolbox-hero__eyebrow {
+  color: #54657f;
+}
+
+[data-theme="light"] .software-toolbox-hero h1 {
+  color: #10203b !important;
+}
+
+[data-theme="light"] .software-toolbox-hero p {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .software-toolbox-card {
+  border-color: rgba(148, 163, 184, 0.24);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.82));
+  box-shadow:
+    0 16px 34px rgba(30, 41, 59, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+}
+
+[data-theme="light"] .software-toolbox-card__meta {
+  color: #64748b;
+}
+
+[data-theme="light"] .software-toolbox-card h3 {
+  color: #10203b !important;
+}
+
+[data-theme="light"] .software-toolbox-card p {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .software-toolbox-card__link {
+  border-color: rgba(15, 35, 64, 0.18);
+  background: rgba(148, 163, 184, 0.14);
+  color: #1f3654 !important;
+}
+
+[data-theme="light"] .software-toolbox-card__link:hover {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: rgba(15, 35, 64, 0.26);
+}
+
+@media (max-width: 900px) {
+  .software-toolbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .software-toolbox-hero,
+  .software-toolbox-card {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="IPv6 Fake-IP troubleshooting">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#134e4a"/>
+    </linearGradient>
+    <filter id="shadow3" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="760" rx="34" fill="url(#bg3)"/>
+  <text x="70" y="82" fill="#f8fafc" font-size="38" font-family="Arial, 'PingFang SC', sans-serif" font-weight="700">排错重点：Fake-IP 环境下不要只看 curl -6 域名</text>
+  <text x="70" y="126" fill="#bae6fd" font-size="22" font-family="Arial, 'PingFang SC', sans-serif">看到 198.18.x.x，通常表示 DNS 已被 mihomo/OpenClash 接管</text>
+
+  <g filter="url(#shadow3)">
+    <rect x="70" y="180" width="590" height="360" rx="22" fill="#020617"/>
+    <rect x="70" y="180" width="590" height="62" rx="22" fill="#1f2937"/>
+    <circle cx="112" cy="211" r="13" fill="#ef4444"/>
+    <circle cx="153" cy="211" r="13" fill="#f59e0b"/>
+    <circle cx="194" cy="211" r="13" fill="#22c55e"/>
+    <text x="235" y="221" fill="#e5e7eb" font-size="28" font-family="Arial, sans-serif" font-weight="700">DNS 被 Fake-IP 接管</text>
+    <text x="100" y="300" fill="#d1d5db" font-size="25" font-family="'SF Mono', Menlo, monospace">curl -6 https://ifconfig.co</text>
+    <text x="100" y="356" fill="#93c5fd" font-size="25" font-family="'SF Mono', Menlo, monospace">IPv6: (none)</text>
+    <text x="100" y="412" fill="#93c5fd" font-size="25" font-family="'SF Mono', Menlo, monospace">IPv4: 198.18.38.103</text>
+    <text x="100" y="468" fill="#fca5a5" font-size="25" font-family="'SF Mono', Menlo, monospace">curl: (7) Could not connect</text>
+  </g>
+
+  <g filter="url(#shadow3)">
+    <rect x="740" y="180" width="590" height="360" rx="22" fill="#f8fafc"/>
+    <text x="780" y="250" fill="#0f172a" font-size="31" font-family="Arial, 'PingFang SC', sans-serif" font-weight="700">正确判断方式</text>
+    <text x="780" y="314" fill="#334155" font-size="25" font-family="'SF Mono', Menlo, monospace">ping6 -c 4 2606:4700:4700::1111</text>
+    <text x="780" y="369" fill="#334155" font-size="25" font-family="'SF Mono', Menlo, monospace">ping6 -c 4 2001:db8:52c0:41d5::1697</text>
+    <text x="780" y="424" fill="#334155" font-size="25" font-family="'SF Mono', Menlo, monospace">curl -6 -vk https://[VPS_IPv6]:443</text>
+    <rect x="780" y="465" width="390" height="48" rx="24" fill="#dcfce7"/>
+    <text x="812" y="498" fill="#166534" font-size="23" font-family="Arial, 'PingFang SC', sans-serif" font-weight="700">ping6 VPS 0% 丢包 = IPv6 链路成立</text>
+  </g>
+
+  <rect x="70" y="606" width="1260" height="86" rx="18" fill="#0f766e" opacity="0.92"/>
+  <text x="105" y="642" fill="#f8fafc" font-size="24" font-family="Arial, 'PingFang SC', sans-serif" font-weight="700">结论</text>
+  <text x="105" y="678" fill="#f8fafc" font-size="22" font-family="Arial, 'PingFang SC', sans-serif">Fake-IP 下 curl -6 域名失败，不等于 IPv6 坏了；优先用 IPv6 字面量、VPS IPv6 和端口 443 判断。</text>
+</svg>

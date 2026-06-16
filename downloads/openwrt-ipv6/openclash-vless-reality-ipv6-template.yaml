@@ -1,0 +1,276 @@
+# OpenClash / mihomo VLESS Reality Vision IPv4 + IPv6 template
+# 已脱敏：请把 203.0.113.x、2001:db8::、UUID、公钥、short-id 替换成你自己的信息。
+# 203.0.113.0/24 和 2001:db8::/32 是文档示例地址，不能直接使用。
+mixed-port: 7890
+redir-port: 7892
+tproxy-port: 7895
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: warning
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+  geosite: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+  mmdb: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports:
+      - 443
+      - 8443
+    HTTP:
+      ports:
+      - 80
+      - 8080-8880
+      override-destination: true
+    QUIC:
+      ports:
+      - 443
+      - 8443
+  skip-domain:
+  - Mijia Cloud
+  - dlg.io.mi.com
+  - "+.push.apple.com"
+  - "+.googlevideo.com"
+tun:
+  enable: true
+  stack: mixed
+  mtu: 1492
+  dns-hijack:
+  - any:53
+  - tcp://any:53
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+proxies:
+- name: 自建节点-1
+  type: vless
+  server: 203.0.113.10
+  port: 443
+  ip-version: ipv4
+  udp: true
+  uuid: 00000000-0000-0000-0000-000000000000
+  flow: xtls-rprx-vision
+  packet-encoding: xudp
+  encryption: none
+  network: tcp
+  tls: true
+  servername: www.microsoft.com
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: YOUR_REALITY_PUBLIC_KEY_NODE1
+    short-id: YOUR_REALITY_SHORT_ID_NODE1
+- name: 自建节点-1-IPv6
+  type: vless
+  server: "2001:db8:52c0:41d5::1697"
+  port: 443
+  ip-version: ipv6
+  udp: true
+  uuid: 00000000-0000-0000-0000-000000000000
+  flow: xtls-rprx-vision
+  packet-encoding: xudp
+  encryption: none
+  network: tcp
+  tls: true
+  servername: www.microsoft.com
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: YOUR_REALITY_PUBLIC_KEY_NODE1
+    short-id: YOUR_REALITY_SHORT_ID_NODE1
+- name: 自建节点-2
+  type: vless
+  server: 203.0.113.20
+  port: 443
+  ip-version: ipv4
+  udp: true
+  uuid: 00000000-0000-0000-0000-000000000000
+  flow: xtls-rprx-vision
+  packet-encoding: xudp
+  encryption: none
+  network: tcp
+  tls: true
+  servername: www.microsoft.com
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: YOUR_REALITY_PUBLIC_KEY_NODE2
+    short-id: YOUR_REALITY_SHORT_ID_NODE2
+proxy-groups:
+- name: PROXY
+  type: select
+  proxies:
+  - 自建节点-1
+  - 自建节点-1-IPv6
+  - 自建节点-2
+  - DIRECT
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  cache-algorithm: arc
+  ipv6: true
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+  - "*.lan"
+  - "*.local"
+  - "+.localdomain"
+  - localhost.ptlogin2.qq.com
+  - time.windows.com
+  - time.apple.com
+  - time.android.com
+  - "+.xn--ngstr-lra8j.com"
+  - "+.ntp.org.cn"
+  - "+.pool.ntp.org"
+  default-nameserver:
+  - 1.1.1.1
+  - 8.8.8.8
+  nameserver-policy:
+    geosite:private,cn,apple-cn,microsoft@cn,steam@cn:
+    - 223.5.5.5
+    - 119.29.29.29
+    "+.cn":
+    - 223.5.5.5
+    - 119.29.29.29
+    "+.中国":
+    - 223.5.5.5
+    - 119.29.29.29
+    "+.公司":
+    - 223.5.5.5
+    - 119.29.29.29
+    "+.网络":
+    - 223.5.5.5
+    - 119.29.29.29
+    "+.google.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.googleapis.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.googleapis.cn":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.gstatic.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.gvt1.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.gvt2.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.gvt3.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.googleusercontent.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.ggpht.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.android.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.xn--ngstr-lra8j.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.openai.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.chatgpt.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.anthropic.com":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    "+.claude.ai":
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+    geosite:geolocation-!cn:
+    - https://1.1.1.1/dns-query#PROXY
+    - https://dns.google/dns-query#PROXY
+  nameserver:
+  - https://1.1.1.1/dns-query#PROXY
+  - https://1.0.0.1/dns-query#PROXY
+  - https://dns.google/dns-query#PROXY
+  fallback:
+  - https://1.1.1.1/dns-query#PROXY
+  - https://dns.google/dns-query#PROXY
+  proxy-server-nameserver:
+  - 1.1.1.1
+  - 8.8.8.8
+  direct-nameserver:
+  - 223.5.5.5
+  - 119.29.29.29
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  direct-nameserver-follow-policy: true
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+    - gfw
+    ipcidr:
+    - 240.0.0.0/4
+rules:
+- GEOSITE,private,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+- IP-CIDR,240.0.0.0/4,DIRECT,no-resolve
+- DOMAIN-SUFFIX,openai.com,PROXY
+- DOMAIN-SUFFIX,chatgpt.com,PROXY
+- DOMAIN-SUFFIX,anthropic.com,PROXY
+- DOMAIN-SUFFIX,claude.ai,PROXY
+- DOMAIN-SUFFIX,google.com,PROXY
+- DOMAIN-SUFFIX,googleapis.com,PROXY
+- DOMAIN-SUFFIX,googleapis.cn,PROXY
+- DOMAIN-SUFFIX,gstatic.com,PROXY
+- DOMAIN-SUFFIX,gvt1.com,PROXY
+- DOMAIN-SUFFIX,gvt2.com,PROXY
+- DOMAIN-SUFFIX,gvt3.com,PROXY
+- DOMAIN-SUFFIX,googleusercontent.com,PROXY
+- DOMAIN-SUFFIX,ggpht.com,PROXY
+- DOMAIN-SUFFIX,android.com,PROXY
+- DOMAIN-SUFFIX,android.clients.google.com,PROXY
+- DOMAIN-SUFFIX,android.googleapis.com,PROXY
+- DOMAIN-SUFFIX,dl.google.com,PROXY
+- DOMAIN-SUFFIX,dl-ssl.google.com,PROXY
+- DOMAIN-SUFFIX,play.googleapis.com,PROXY
+- DOMAIN-SUFFIX,market.android.com,PROXY
+- DOMAIN-SUFFIX,xn--ngstr-lra8j.com,PROXY
+- GEOSITE,google,PROXY
+- GEOSITE,youtube,PROXY
+- GEOSITE,telegram,PROXY
+- GEOSITE,github,PROXY
+- GEOSITE,category-games@cn,DIRECT
+- GEOSITE,apple-cn,DIRECT
+- GEOSITE,microsoft@cn,DIRECT
+- GEOSITE,steam@cn,DIRECT
+- DOMAIN-SUFFIX,cn,DIRECT
+- DOMAIN-SUFFIX,中国,DIRECT
+- DOMAIN-SUFFIX,公司,DIRECT
+- DOMAIN-SUFFIX,网络,DIRECT
+- GEOSITE,cn,DIRECT
+- GEOIP,CN,DIRECT
+- GEOSITE,geolocation-!cn,PROXY
+- MATCH,PROXY

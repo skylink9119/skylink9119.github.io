@@ -1,0 +1,7 @@
+payload:
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN,gemini.google.com
+  - DOMAIN-SUFFIX,ai.com

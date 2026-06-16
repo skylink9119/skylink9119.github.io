@@ -1,0 +1,144 @@
+mixed-port: 7890
+redir-port: 7892
+tproxy-port: 7895
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+geodata-mode: true
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: redir-host
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  nameserver-policy:
+    "geosite:cn,private":
+      - 223.5.5.5
+      - 119.29.29.29
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:geolocation-!cn":
+      - "https://dns.google/dns-query#节点选择"
+      - "https://1.1.1.1/dns-query#节点选择"
+
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+  fallback:
+    - "https://dns.google/dns-query#节点选择"
+    - "https://1.1.1.1/dns-query#节点选择"
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    domain:
+      - "+.openai.com"
+      - "+.chatgpt.com"
+      - "+.anthropic.com"
+      - "+.claude.ai"
+      - "+.google.com"
+      - "+.googleapis.com"
+      - "+.gstatic.com"
+      - "+.googlevideo.com"
+      - "+.youtube.com"
+      - "+.facebook.com"
+      - "+.telegram.org"
+
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  direct-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  direct-nameserver-follow-policy: true
+
+proxy-providers:
+  local-nodes:
+    type: file
+    path: ./providers/proxies/local-nodes.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
+
+proxy-groups:
+  - name: 节点选择
+    type: select
+    use:
+      - local-nodes
+    proxies:
+      - DIRECT
+
+  - name: 国外服务
+    type: select
+    proxies:
+      - 节点选择
+      - DIRECT
+
+  - name: AI服务
+    type: select
+    proxies:
+      - 节点选择
+      - DIRECT
+
+  - name: 流媒体
+    type: select
+    proxies:
+      - 节点选择
+      - DIRECT
+
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+
+rule-providers:
+  local-direct:
+    type: file
+    behavior: classical
+    path: ./providers/rules/local-direct.yaml
+
+  ai:
+    type: file
+    behavior: classical
+    path: ./providers/rules/ai.yaml
+
+  foreign:
+    type: file
+    behavior: classical
+    path: ./providers/rules/foreign.yaml
+
+  media:
+    type: file
+    behavior: classical
+    path: ./providers/rules/media.yaml
+
+  cn-direct:
+    type: file
+    behavior: classical
+    path: ./providers/rules/cn-direct.yaml
+
+rules:
+  - RULE-SET,local-direct,DIRECT
+  - RULE-SET,ai,AI服务
+  - RULE-SET,foreign,国外服务
+  - RULE-SET,media,流媒体
+  - RULE-SET,cn-direct,DIRECT
+  - MATCH,漏网之鱼

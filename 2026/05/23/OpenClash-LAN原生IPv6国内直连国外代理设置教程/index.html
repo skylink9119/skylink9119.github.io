@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置 | Skyline Blog</title><meta name="author" content="sky"><meta name="copyright" content="sky"><meta name="keywords" content="OpenClash IPv6,OpenWrt LAN IPv6,iStoreOS IPv6,国内直连国外代理,DNS防泄漏,mihomo IPv6,Fake-IP TUN,AAAA解析"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="记录 OpenWrt &#x2F; iStoreOS 下 OpenClash 的 LAN 原生 IPv6 分流设置：LAN 设备继续获取公网 IPv6，国内网站直连，国外网站走代理，同时通过 Dnsmasq 转发、TUN、Fake-IP IPv6 和规则分流减少 DNS 与 IPv6 泄漏。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置">
+<meta property="og:url" content="https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/">
+<meta property="og:site_name" content="Skyline Blog">
+<meta property="og:description" content="记录 OpenWrt &#x2F; iStoreOS 下 OpenClash 的 LAN 原生 IPv6 分流设置：LAN 设备继续获取公网 IPv6，国内网站直连，国外网站走代理，同时通过 Dnsmasq 转发、TUN、Fake-IP IPv6 和规则分流减少 DNS 与 IPv6 泄漏。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sky9119.cc/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg">
+<meta property="article:published_time" content="2026-05-23T14:20:00.000Z">
+<meta property="article:modified_time" content="2026-05-23T14:20:00.000Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="DNS 防泄漏">
+<meta property="article:tag" content="IPv6">
+<meta property="article:tag" content="Mihomo">
+<meta property="article:tag" content="OpenClash">
+<meta property="article:tag" content="OpenWrt">
+<meta property="article:tag" content="iStoreOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sky9119.cc/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg"><meta property="article:published_time" content="2026-05-23T14:20:00.000Z"><meta property="article:modified_time" content="2026-05-23T14:20:00.000Z"><meta property="article:section" content="技术教程"><meta property="article:tag" content="OpenClash"><meta property="article:tag" content="OpenWrt"><meta property="article:tag" content="iStoreOS"><meta property="article:tag" content="IPv6"><meta property="article:tag" content="DNS 防泄漏"><meta property="article:tag" content="Mihomo"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置",
+  "description": "记录 OpenWrt / iStoreOS 下 OpenClash 的 LAN 原生 IPv6 分流设置：LAN 设备继续获取公网 IPv6，国内网站直连，国外网站走代理，同时通过 Dnsmasq 转发、TUN、Fake-IP IPv6 和规则分流减少 DNS 与 IPv6 泄漏。",
+  "url": "https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/",
+  "image": "https://sky9119.cc/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg",
+  "datePublished": "2026-05-23T14:20:00.000Z",
+  "dateModified": "2026-05-23T14:20:00.000Z",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "name": "sky",
+      "url": "https://github.com/skylink9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Skyline Blog",
+    "url": "https://sky9119.cc/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sky9119.cc/img/icon.jpg"
+    }
+  },
+  "keywords": "OpenClash IPv6,OpenWrt LAN IPv6,iStoreOS IPv6,国内直连国外代理,DNS防泄漏,mihomo IPv6,Fake-IP TUN,AAAA解析",
+  "articleSection": [
+    "技术教程",
+    "网络链路"
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/"><link rel="alternate" type="application/atom+xml" title="Skyline Blog Atom Feed" href="https://sky9119.cc/atom.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: sky","link":"链接: ","source":"来源: Skyline Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cursor-effects.css" media="(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"><meta id="page-style-anchor" name="page-style-anchor" content=""><link rel="stylesheet" href="/css/cyberpunk-theme.css"><link rel="stylesheet" href="/css/footer-cta.css"><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css"/><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div></div></div><div class="post" id="body-wrap"><script id="page-style-config" type="application/json">[]</script><header class="post-bg fixed" id="page-header" style="background-image: url(/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div id="vps-tool-button"><a class="site-page nav-vps-tool" href="/script/" title="vps一键检测工具"><i class="fas fa-terminal fa-fw"></i><span>vps一键检测工具</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-folder-tree"></i><span> 专题</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-23T14:20:00.000Z" title="发表于 2026-05-23 22:20:00">2026-05-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-23T14:20:00.000Z" title="更新于 2026-05-23 22:20:00">2026-05-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/">网络链路</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-05-23 22:20:00&quot;}" hidden></div><h1 id="OpenClash：LAN-开原生-IPv6，国内直连、国外代理，并避免-DNS-泄漏"><a href="#OpenClash：LAN-开原生-IPv6，国内直连、国外代理，并避免-DNS-泄漏" class="headerlink" title="OpenClash：LAN 开原生 IPv6，国内直连、国外代理，并避免 DNS 泄漏"></a>OpenClash：LAN 开原生 IPv6，国内直连、国外代理，并避免 DNS 泄漏</h1><p>这份教程记录的是一种家庭软路由常用方案：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LAN 终端拿到原生公网 IPv6</span><br><span class="line">国内网站直连，保持速度</span><br><span class="line">国外网站走代理</span><br><span class="line">DNS 查询由路由器和 OpenClash 接管</span><br><span class="line">避免国外访问时暴露家宽 IPv4 / IPv6 / 本地运营商 DNS</span><br></pre></td></tr></table></figure>
+
+<p>这不是“全局代理”方案，也不是“禁用 LAN IPv6”方案。它的目标是：<strong>IPv6 可以正常下发给 LAN 设备，但国外流量不能绕过 OpenClash 直连出去。</strong></p>
+<hr>
+<h2 id="一、最终效果应该是什么"><a href="#一、最终效果应该是什么" class="headerlink" title="一、最终效果应该是什么"></a>一、最终效果应该是什么</h2><p>设置完成后，应该看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mac / 手机：能拿到 2409、2408、240e、2xxx 这类公网 IPv6</span><br><span class="line">国内网站：直连家宽 IPv4 / IPv6，速度正常</span><br><span class="line">国外网站：显示 VPS IPv4 / VPS IPv6</span><br><span class="line">DNS Leak：不显示本地运营商 DNS</span><br><span class="line">WebRTC：不暴露家宽公网 IPv6</span><br></pre></td></tr></table></figure>
+
+<p>如果访问国外检测站时显示 VPS IPv6，说明 OpenClash 接管成功。</p>
+<p>如果访问国内服务时显示家宽 IPv6，这是国内直连分流的正常结果，不算泄漏。</p>
+<hr>
+<h2 id="二、OpenWrt-LAN-接口设置"><a href="#二、OpenWrt-LAN-接口设置" class="headerlink" title="二、OpenWrt LAN 接口设置"></a>二、OpenWrt LAN 接口设置</h2><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; 接口 -&gt; lan -&gt; 高级设置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/01-lan-advanced-ipv6-prefix.jpg" alt="LAN 高级设置：委派 IPv6 前缀和前缀分配长度 64" loading='lazy'></p>
+<p>关键设置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">委派 IPv6 前缀：勾选</span><br><span class="line">IPv6 前缀分配长度：64</span><br><span class="line">IPv6 后缀：::1 可以保留</span><br><span class="line">IPv6 优先级：0 可以保留</span><br><span class="line">使用自定义 DNS 服务器：留空</span><br><span class="line">DNS 搜索域名：留空</span><br><span class="line">覆盖 IPv4 路由表：未指定</span><br><span class="line">覆盖 IPv6 路由表：未指定</span><br></pre></td></tr></table></figure>
+
+<p>重点是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IPv6 前缀分配长度：64</span><br></pre></td></tr></table></figure>
+
+<p>如果这里是“已禁用”，LAN 设备通常只能拿到 <code>fe80::</code> 链路本地地址，拿不到公网 IPv6。</p>
+<p>设置为 <code>64</code> 后，Mac 上执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep inet6</span><br></pre></td></tr></table></figure>
+
+<p>应该能看到类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2409:xxxx:xxxx:xxxx:....</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、LAN-DHCP-服务器-IPv6-设置"><a href="#三、LAN-DHCP-服务器-IPv6-设置" class="headerlink" title="三、LAN DHCP 服务器 IPv6 设置"></a>三、LAN DHCP 服务器 IPv6 设置</h2><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; 接口 -&gt; lan -&gt; DHCP 服务器 -&gt; IPv6 设置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/02-lan-dhcpv6-dns.jpg" alt="LAN DHCPv6 设置：RA&#x2F;DHCPv6、IPv6 DNS 和 NDP 代理" loading='lazy'></p>
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">指定的主接口：不勾选</span><br><span class="line">RA 服务：服务器模式</span><br><span class="line">DHCPv6 服务：服务器模式 或 无状态模式</span><br><span class="line">PD 最小长度：留空</span><br><span class="line">通告的 IPv6 DNS 服务器：留空</span><br><span class="line">通告加密 DNS 服务器：留空</span><br><span class="line">本地 IPv6 DNS 服务器：勾选</span><br><span class="line">通告的 DNS 域名：留空</span><br><span class="line">NTP 服务器：不选择</span><br><span class="line">NDP 代理：已禁用</span><br></pre></td></tr></table></figure>
+
+<p>重点是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">通告的 IPv6 DNS 服务器：留空</span><br><span class="line">本地 IPv6 DNS 服务器：勾选</span><br></pre></td></tr></table></figure>
+
+<p>这样 LAN 设备可以拿到公网 IPv6，但 DNS 仍然指向路由器，而不是直接拿到运营商 IPv6 DNS。</p>
+<h3 id="IPv6-RA-设置"><a href="#IPv6-RA-设置" class="headerlink" title="IPv6 RA 设置"></a>IPv6 RA 设置</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; 接口 -&gt; lan -&gt; DHCP 服务器 -&gt; IPv6 RA 设置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/03-lan-ra-settings.jpg" alt="LAN IPv6 RA 设置：默认路由、SLAAC 和 RA 标识" loading='lazy'></p>
+<p>推荐保持：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">默认路由器：自动</span><br><span class="line">启用 SLAAC：勾选</span><br><span class="line">RA 标识：其他配置</span><br><span class="line">NAT64 前缀：留空</span><br><span class="line">RA 周期、生命周期、MTU：默认即可</span><br></pre></td></tr></table></figure>
+
+<p>这里不需要额外通告 NAT64 前缀。SLAAC 开启后，macOS、iOS、Android 等终端可以自动生成公网 IPv6 地址。</p>
+<hr>
+<h2 id="四、OpenWrt-DHCP-DNS-设置"><a href="#四、OpenWrt-DHCP-DNS-设置" class="headerlink" title="四、OpenWrt DHCP&#x2F;DNS 设置"></a>四、OpenWrt DHCP&#x2F;DNS 设置</h2><h3 id="1-常规设置"><a href="#1-常规设置" class="headerlink" title="1. 常规设置"></a>1. 常规设置</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; DHCP/DNS -&gt; 常规</span><br></pre></td></tr></table></figure>
+
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DNS 重定向：不勾选</span><br><span class="line">唯一授权：勾选</span><br><span class="line">本地解析这些项目：/lan/</span><br><span class="line">本地域名：lan</span><br><span class="line">扩展 HOSTS 文件：勾选</span><br><span class="line">顺序分配 IP：不勾选</span><br><span class="line">所有服务器：不勾选</span><br></pre></td></tr></table></figure>
+
+<p>如果 OpenClash 已经做本地 DNS 劫持，不建议在这里再开一层 DNS 重定向，避免重复劫持导致排错困难。</p>
+<h3 id="2-转发设置"><a href="#2-转发设置" class="headerlink" title="2. 转发设置"></a>2. 转发设置</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; DHCP/DNS -&gt; 转发</span><br></pre></td></tr></table></figure>
+
+<p>DNS 转发填 OpenClash 的本地 DNS 端口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1#7874</span><br></pre></td></tr></table></figure>
+
+<p>有些 OpenClash 版本可能是 <code>1053</code>，以 OpenClash 实际本地 DNS 监听端口为准。</p>
+<p>不要在这里填运营商 DNS 或公共 IPv6 DNS，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2400:3200::1</span><br><span class="line">2400:3200:baba::1</span><br><span class="line">2001:4860:4860::8888</span><br><span class="line">2606:4700:4700::1111</span><br><span class="line">运营商 IPv6 DNS</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-转发附加信息"><a href="#3-转发附加信息" class="headerlink" title="3. 转发附加信息"></a>3. 转发附加信息</h3><p>保持：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">添加请求者 MAC 地址：关</span><br><span class="line">在转发查询之前移除 MAC 地址：不勾选</span><br><span class="line">在转发请求时添加子网地址：留空</span><br><span class="line">在转发查询之前移除子网地址：不勾选</span><br></pre></td></tr></table></figure>
+
+<p>不要开启 EDNS Client Subnet，也不要把客户端 MAC 信息带给上游 DNS。</p>
+<h3 id="4-过滤器"><a href="#4-过滤器" class="headerlink" title="4. 过滤器"></a>4. 过滤器</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络 -&gt; DHCP/DNS -&gt; 过滤器</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/04-dhcpdns-filter.jpg" alt="DHCP&#x2F;DNS 过滤器：不要过滤 IPv6 AAAA 记录" loading='lazy'></p>
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">过滤 IPv6 AAAA 记录：不勾选</span><br></pre></td></tr></table></figure>
+
+<p>你要用 IPv6 分流，就不要在 dnsmasq 底层提前切掉 AAAA。AAAA 应该交给 OpenClash &#x2F; mihomo 决定怎么走。</p>
+<hr>
+<h2 id="五、OpenClash-插件设置"><a href="#五、OpenClash-插件设置" class="headerlink" title="五、OpenClash 插件设置"></a>五、OpenClash 插件设置</h2><h3 id="1-模式设置"><a href="#1-模式设置" class="headerlink" title="1. 模式设置"></a>1. 模式设置</h3><p><img src="/img/openclash-lan-ipv6-split/05-openclash-mode.jpg" alt="OpenClash 模式设置：Fake-IP TUN 和 Rule 规则模式" loading='lazy'></p>
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">模式：Rule / 规则模式</span><br><span class="line">不要使用 Global 全局模式</span><br></pre></td></tr></table></figure>
+
+<p>你的目标是国内直连、国外代理，所以不要开全局代理。</p>
+<h3 id="2-DNS-设置"><a href="#2-DNS-设置" class="headerlink" title="2. DNS 设置"></a>2. DNS 设置</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务 -&gt; OpenClash -&gt; 插件设置 -&gt; DNS 设置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/06-openclash-dns.jpg" alt="OpenClash DNS 设置：使用 Dnsmasq 转发，关闭第二 DNS" loading='lazy'></p>
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本地 DNS 劫持：使用 Dnsmasq 转发</span><br><span class="line">启用第二 DNS 服务器：不勾选</span><br></pre></td></tr></table></figure>
+
+<p>数据流应是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LAN 设备 -&gt; dnsmasq -&gt; OpenClash DNS -&gt; 按规则解析</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-IPv6-设置"><a href="#3-IPv6-设置" class="headerlink" title="3. IPv6 设置"></a>3. IPv6 设置</h3><p>路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务 -&gt; OpenClash -&gt; 插件设置 -&gt; IPv6 设置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg" alt="OpenClash IPv6 设置：开启 IPv6 流量代理、AAAA 解析和 IPv6 Fake-IP" loading='lazy'></p>
+<p>推荐：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IPv6 流量代理：开启</span><br><span class="line">IPv6 代理模式：TUN 模式</span><br><span class="line">允许 IPv6 类型 DNS 解析：开启</span><br><span class="line">Fake-IP 地址范围 IPv6 Cidr：fdfe:dcba:9876::/64</span><br><span class="line">实验性：绕过指定区域 IPv6：禁用</span><br></pre></td></tr></table></figure>
+
+<p>“绕过指定区域 IPv6”建议禁用。国内直连应该交给规则文件处理，不要让 OpenClash 在内核外再绕一层，否则容易出现看似分流、实际绕过代理核心的情况。</p>
+<p>本地 IPv6 绕过地址可以保留本地、链路本地、组播、文档地址，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">::/128</span><br><span class="line">::1/128</span><br><span class="line">::ffff:0:0/96</span><br><span class="line">64:ff9b::/96</span><br><span class="line">100::/64</span><br><span class="line">2001:db8::/32</span><br><span class="line">fe80::/10</span><br><span class="line">ff00::/8</span><br></pre></td></tr></table></figure>
+
+<p>不要把下面这个 Fake-IP IPv6 段加入绕过：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdfe:dcba:9876::/64</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、OpenClash-配置文件关键项"><a href="#六、OpenClash-配置文件关键项" class="headerlink" title="六、OpenClash 配置文件关键项"></a>六、OpenClash 配置文件关键项</h2><p>配置文件建议保留这些核心字段。</p>
+<h3 id="1-顶层-IPv6"><a href="#1-顶层-IPv6" class="headerlink" title="1. 顶层 IPv6"></a>1. 顶层 IPv6</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ipv6:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">mode:</span> <span class="string">rule</span></span><br><span class="line"><span class="attr">allow-lan:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">bind-address:</span> <span class="string">&quot;*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-TUN-接管"><a href="#2-TUN-接管" class="headerlink" title="2. TUN 接管"></a>2. TUN 接管</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tun:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">stack:</span> <span class="string">mixed</span></span><br><span class="line">  <span class="attr">mtu:</span> <span class="number">1492</span></span><br><span class="line">  <span class="attr">dns-hijack:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">any:53</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">tcp://any:53</span></span><br><span class="line">  <span class="attr">auto-route:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto-detect-interface:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">strict-route:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-DNS-与-IPv6-Fake-IP"><a href="#3-DNS-与-IPv6-Fake-IP" class="headerlink" title="3. DNS 与 IPv6 Fake-IP"></a>3. DNS 与 IPv6 Fake-IP</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dns:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">listen:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:1053</span></span><br><span class="line">  <span class="attr">ipv6:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">respect-rules:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line">  <span class="attr">fake-ip-range:</span> <span class="number">198.18</span><span class="number">.0</span><span class="number">.1</span><span class="string">/16</span></span><br><span class="line">  <span class="attr">fake-ip-range6:</span> <span class="string">fdfe:dcba:9876::/64</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：IPv6 Fake-IP 不要写成 <code>fake-ip-range</code> 数组，要用：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fake-ip-range6:</span> <span class="string">fdfe:dcba:9876::/64</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-DNS-分流思路"><a href="#4-DNS-分流思路" class="headerlink" title="4. DNS 分流思路"></a>4. DNS 分流思路</h3><p>国内域名用国内公共 DNS，保证速度：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nameserver-policy:</span></span><br><span class="line">  <span class="string">geosite:private,cn,apple-cn,microsoft@cn,steam@cn:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br><span class="line">  <span class="string">&quot;+.cn&quot;</span><span class="string">:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br></pre></td></tr></table></figure>
+
+<p>国外域名用代理 DoH，避免国外解析走本地：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">geosite:geolocation-!cn:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://1.1.1.1/dns-query#PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://dns.google/dns-query#PROXY</span></span><br></pre></td></tr></table></figure>
+
+<p>代理节点自身解析用国内 DNS 即可，尤其节点 server 直接填 IP 时影响很小：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">proxy-server-nameserver:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-规则顺序"><a href="#5-规则顺序" class="headerlink" title="5. 规则顺序"></a>5. 规则顺序</h3><p>国内直连、国外代理的规则大致是：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,private,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,127.0.0.0/8,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,169.254.0.0/16,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,10.0.0.0/8,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,172.16.0.0/12,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,192.168.0.0/16,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,100.64.0.0/10,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR6,::1/128,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR6,fe80::/10,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR6,ff00::/8,DIRECT,no-resolve</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,google,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,youtube,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,telegram,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,github,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,openai.com,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,chatgpt.com,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,anthropic.com,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,claude.ai,PROXY</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,category-games@cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,apple-cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,microsoft@cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,steam@cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,cn,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,geolocation-!cn,PROXY</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">MATCH,PROXY</span></span><br></pre></td></tr></table></figure>
+
+<p>分流模式下，不要把 Fake-IP 段写成最前面的强制代理规则，例如不要这样写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">IP-CIDR,198.18.0.0/16,PROXY,no-resolve</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">IP-CIDR6,fdfe:dcba:9876::/64,PROXY,no-resolve</span></span><br></pre></td></tr></table></figure>
+
+<p>否则 fake-ip 命中的连接可能被提前打进 PROXY，国内直连规则就失去意义。</p>
+<p>也不建议写宽泛的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">IP-CIDR6,fc00::/7,DIRECT,no-resolve</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 IPv6 Fake-IP 段常常也在 ULA 范围内，容易误伤。</p>
+<hr>
+<h2 id="七、检测方法"><a href="#七、检测方法" class="headerlink" title="七、检测方法"></a>七、检测方法</h2><h3 id="1-LAN-是否拿到公网-IPv6"><a href="#1-LAN-是否拿到公网-IPv6" class="headerlink" title="1. LAN 是否拿到公网 IPv6"></a>1. LAN 是否拿到公网 IPv6</h3><p>Mac 执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep inet6</span><br></pre></td></tr></table></figure>
+
+<p>看到类似下面这种就是公网 IPv6：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2409:....</span><br><span class="line">2408:....</span><br><span class="line">240e:....</span><br><span class="line">2xxx:....</span><br></pre></td></tr></table></figure>
+
+<p>只有 <code>fe80::</code> 说明只是链路本地 IPv6，LAN 没有下发公网 IPv6。</p>
+<h3 id="2-OpenClash-开启时测试国外"><a href="#2-OpenClash-开启时测试国外" class="headerlink" title="2. OpenClash 开启时测试国外"></a>2. OpenClash 开启时测试国外</h3><p>浏览器打开：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://browserleaks.com/ip</span><br><span class="line">https://ipleak.net</span><br><span class="line">https://ip.sb</span><br></pre></td></tr></table></figure>
+
+<p>理想结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IPv4：VPS IPv4</span><br><span class="line">IPv6：VPS IPv6</span><br><span class="line">DNS：不显示本地运营商 DNS</span><br><span class="line">WebRTC：不显示家宽 IPv6</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-直连-IPv6-测试"><a href="#3-直连-IPv6-测试" class="headerlink" title="3. 直连 IPv6 测试"></a>3. 直连 IPv6 测试</h3><p>如果要测试原生 IPv6，可以临时关闭 OpenClash，或者给测试域名单独加 DIRECT 规则，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -6 --noproxy <span class="string">&#x27;*&#x27;</span> https://v6.ident.me</span><br></pre></td></tr></table></figure>
+
+<p>直连时应该显示家宽 IPv6，例如 <code>2409:...</code>。</p>
+<p>OpenClash 开启并代理时，显示 VPS IPv6 是正常的。</p>
+<h3 id="4-国内直连测试"><a href="#4-国内直连测试" class="headerlink" title="4. 国内直连测试"></a>4. 国内直连测试</h3><p>访问国内网站或国内 IP 查询服务时，显示家宽 IPv4 &#x2F; IPv6 是正常的。</p>
+<p>这不是泄漏，因为你的目标就是国内直连。</p>
+<p>真正的问题是：访问国外网站时显示家宽 IPv6。</p>
+<hr>
+<h2 id="八、常见错误"><a href="#八、常见错误" class="headerlink" title="八、常见错误"></a>八、常见错误</h2><h3 id="错误-1：LAN-口-IPv6-前缀分配长度是“已禁用”"><a href="#错误-1：LAN-口-IPv6-前缀分配长度是“已禁用”" class="headerlink" title="错误 1：LAN 口 IPv6 前缀分配长度是“已禁用”"></a>错误 1：LAN 口 IPv6 前缀分配长度是“已禁用”</h3><p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">终端只有 fe80::</span><br><span class="line">没有 2409 / 2408 / 240e / 2xxx 公网 IPv6</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IPv6 前缀分配长度改为 64</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-2：通告了运营商-IPv6-DNS"><a href="#错误-2：通告了运营商-IPv6-DNS" class="headerlink" title="错误 2：通告了运营商 IPv6 DNS"></a>错误 2：通告了运营商 IPv6 DNS</h3><p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">终端可能绕过路由器，直接问运营商 DNS</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">通告的 IPv6 DNS 服务器留空</span><br><span class="line">本地 IPv6 DNS 服务器勾选</span><br><span class="line">DNS 转发到 127.0.0.1#7874</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-3：过滤-AAAA"><a href="#错误-3：过滤-AAAA" class="headerlink" title="错误 3：过滤 AAAA"></a>错误 3：过滤 AAAA</h3><p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IPv6 分流判断不完整</span><br><span class="line">IPv6 节点可能解析失败</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">过滤 IPv6 AAAA 记录不要勾选</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-4：绕过指定区域-IPv6"><a href="#错误-4：绕过指定区域-IPv6" class="headerlink" title="错误 4：绕过指定区域 IPv6"></a>错误 4：绕过指定区域 IPv6</h3><p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">某些 IPv6 流量可能绕过 OpenClash 核心</span><br><span class="line">排错困难</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">绕过指定区域 IPv6 禁用</span><br><span class="line">用规则决定 DIRECT / PROXY</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-5：把分流配置改成全局代理"><a href="#错误-5：把分流配置改成全局代理" class="headerlink" title="错误 5：把分流配置改成全局代理"></a>错误 5：把分流配置改成全局代理</h3><p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">国内网站也走代理</span><br><span class="line">国内 App、银行、视频、下载速度变差</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">保留 GEOSITE,cn,DIRECT</span><br><span class="line">保留 GEOIP,CN,DIRECT</span><br><span class="line">最后 MATCH,PROXY</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="九、最终推荐组合"><a href="#九、最终推荐组合" class="headerlink" title="九、最终推荐组合"></a>九、最终推荐组合</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LAN：下发原生 IPv6，IPv6 前缀分配长度 64</span><br><span class="line">DNS：LAN 终端只拿路由器 DNS</span><br><span class="line">dnsmasq：转发到 OpenClash 本地 DNS 端口</span><br><span class="line">OpenClash：Rule 模式</span><br><span class="line">IPv6：流量代理开启，TUN 模式</span><br><span class="line">DNS：允许 AAAA，启用 IPv6 Fake-IP</span><br><span class="line">规则：国内 DIRECT，国外 PROXY</span><br><span class="line">检测：国外不显示家宽 IP，DNS 不显示本地运营商</span><br></pre></td></tr></table></figure>
+
+<p>一句话总结：</p>
+<p><strong>不要禁用 IPv6，也不要全局代理。让 LAN 正常拿原生 IPv6，让 OpenClash 接管 DNS 和国外流量，国内仍然按规则直连。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/skylink9119">sky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/">https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sky9119.cc" target="_blank">Skyline Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenClash/">OpenClash</a><a class="post-meta__tags" href="/tags/OpenWrt/">OpenWrt</a><a class="post-meta__tags" href="/tags/iStoreOS/">iStoreOS</a><a class="post-meta__tags" href="/tags/IPv6/">IPv6</a><a class="post-meta__tags" href="/tags/DNS-%E9%98%B2%E6%B3%84%E6%BC%8F/">DNS 防泄漏</a><a class="post-meta__tags" href="/tags/Mihomo/">Mihomo</a></div><div class="post-share"><div class="social-share" data-image="/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/12/%E7%BE%8E%E5%9B%BD%E4%BD%8F%E5%AE%85IP-VDS%E5%BB%BA%E8%AE%AE%E9%80%9A%E8%BF%87%E9%A6%99%E6%B8%AF%E6%88%96%E6%97%A5%E6%9C%AC%E7%BA%BF%E8%B7%AF%E4%B8%AD%E8%BD%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="美国住宅 IP VDS 建议通过香港或日本线路中转使用教程：Xray REALITY + HAProxy 实战"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">美国住宅 IP VDS 建议通过香港或日本线路中转使用教程：Xray REALITY + HAProxy 实战</div></div><div class="info-2"><div class="info-item-1">这篇文章从零整理一套美国住宅 IP VDS + 香港或日本线路中转的搭建流程：住宅 VDS 负责最终出口，中转机负责跨境链路，服务端使用 Xray VLESS REALITY Vision，转发层使用 HAProxy。</div></div></div></a><a class="pagination-related" href="/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #155e75 42%, #0f766e 72%, #d8fff7 100%)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚</div></div><div class="info-2"><div class="info-item-1">一篇通俗但尽量严谨的 IPv4 / IPv6 双栈代理教程，讲清双栈代理的优势、边界、误区，以及 VPS 上用 sing-box 和 3x-ui 部署，手机电脑客户端怎么填，OpenWrt/OpenClash 软路由怎么设置和检测泄漏。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/" title="OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #164e63 34%, #0f766e 68%, #e2f5f3 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-21</div><div class="info-item-2">OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程</div></div><div class="info-2"><div class="info-item-1">一篇面向 OpenWrt、iStoreOS、N100/N150 软路由用户的 IPv6 工作流详解，讲清 WAN6、前缀委派、RA、DHCPv6、NDP、ULA、公网 IPv6、HomeProxy、OpenClash、sing-box、mihomo、3x-ui、Xray、IPv6 代理、防泄漏和双栈节点的完整配置逻辑。</div></div></div></a><a class="pagination-related" href="/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="IPv4 &#x2F; IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚"><div class="cover" style="background: linear-gradient(135deg, #07111f 0%, #155e75 42%, #0f766e 72%, #d8fff7 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-22</div><div class="info-item-2">IPv4 &#x2F; IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚</div></div><div class="info-2"><div class="info-item-1">一篇通俗但尽量严谨的 IPv4 / IPv6 双栈代理教程，讲清双栈代理的优势、边界、误区，以及 VPS 上用 sing-box 和 3x-ui 部署，手机电脑客户端怎么填，OpenWrt/OpenClash 软路由怎么设置和检测泄漏。</div></div></div></a><a class="pagination-related" href="/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/" title="OpenClash Meta 精准分流配置教程：银行 App 国内直连，AI 服务走代理，附 YAML 模板下载"><div class="cover" style="background: linear-gradient(135deg, #08121f 0%, #14532d 34%, #0ea5e9 72%, #f8fafc 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-15</div><div class="info-item-2">OpenClash Meta 精准分流配置教程：银行 App 国内直连，AI 服务走代理，附 YAML 模板下载</div></div><div class="info-2"><div class="info-item-1">结合 9 张截图，把 OpenClash Meta 这份 YAML 模板怎么改、怎么导入、运行状态页该怎么确认，以及 GEO 数据库和大陆白名单如何自动更新，完整讲清楚。</div></div></div></a><a class="pagination-related" href="/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置"><div class="cover" style="background: linear-gradient(135deg, #0b1320 0%, #164e63 38%, #22c55e 100%)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-10</div><div class="info-item-2">iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</div></div><div class="info-2"><div class="info-item-1">这是一篇面向零基础新手的 iStoreOS x86 软路由刷机教程，从 Windows 和 Mac 制作启动盘、进入 BIOS 选择 U 盘启动、quickstart 安装到硬盘、eth0/eth1 接线、后台登录，再到用 Mac 终端安装 OpenClash 和准备 Mihomo 极简配置。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="author-info-name">sky</div><div class="author-info-description">热爱技术与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube" rel="noopener"><i class="fab fa-youtube" style="color: #ff0033;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email" rel="noopener"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenClash%EF%BC%9ALAN-%E5%BC%80%E5%8E%9F%E7%94%9F-IPv6%EF%BC%8C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E3%80%81%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%EF%BC%8C%E5%B9%B6%E9%81%BF%E5%85%8D-DNS-%E6%B3%84%E6%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">OpenClash：LAN 开原生 IPv6，国内直连、国外代理，并避免 DNS 泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C%E5%BA%94%E8%AF%A5%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">一、最终效果应该是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81OpenWrt-LAN-%E6%8E%A5%E5%8F%A3%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">二、OpenWrt LAN 接口设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81LAN-DHCP-%E6%9C%8D%E5%8A%A1%E5%99%A8-IPv6-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">三、LAN DHCP 服务器 IPv6 设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv6-RA-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">IPv6 RA 设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81OpenWrt-DHCP-DNS-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">四、OpenWrt DHCP&#x2F;DNS 设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B8%B8%E8%A7%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 常规设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BD%AC%E5%8F%91%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 转发设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BD%AC%E5%8F%91%E9%99%84%E5%8A%A0%E4%BF%A1%E6%81%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 转发附加信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. 过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81OpenClash-%E6%8F%92%E4%BB%B6%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.</span> <span class="toc-text">五、OpenClash 插件设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 模式设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-DNS-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. DNS 设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IPv6-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. IPv6 设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81OpenClash-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%85%B3%E9%94%AE%E9%A1%B9"><span class="toc-number">1.6.</span> <span class="toc-text">六、OpenClash 配置文件关键项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B6%E5%B1%82-IPv6"><span class="toc-number">1.6.1.</span> <span class="toc-text">1. 顶层 IPv6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-TUN-%E6%8E%A5%E7%AE%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text">2. TUN 接管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DNS-%E4%B8%8E-IPv6-Fake-IP"><span class="toc-number">1.6.3.</span> <span class="toc-text">3. DNS 与 IPv6 Fake-IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-DNS-%E5%88%86%E6%B5%81%E6%80%9D%E8%B7%AF"><span class="toc-number">1.6.4.</span> <span class="toc-text">4. DNS 分流思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%A7%84%E5%88%99%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.6.5.</span> <span class="toc-text">5. 规则顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、检测方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-LAN-%E6%98%AF%E5%90%A6%E6%8B%BF%E5%88%B0%E5%85%AC%E7%BD%91-IPv6"><span class="toc-number">1.7.1.</span> <span class="toc-text">1. LAN 是否拿到公网 IPv6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-OpenClash-%E5%BC%80%E5%90%AF%E6%97%B6%E6%B5%8B%E8%AF%95%E5%9B%BD%E5%A4%96"><span class="toc-number">1.7.2.</span> <span class="toc-text">2. OpenClash 开启时测试国外</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%9B%B4%E8%BF%9E-IPv6-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.7.3.</span> <span class="toc-text">3. 直连 IPv6 测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E6%B5%8B%E8%AF%95"><span class="toc-number">1.7.4.</span> <span class="toc-text">4. 国内直连测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="toc-number">1.8.</span> <span class="toc-text">八、常见错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF-1%EF%BC%9ALAN-%E5%8F%A3-IPv6-%E5%89%8D%E7%BC%80%E5%88%86%E9%85%8D%E9%95%BF%E5%BA%A6%E6%98%AF%E2%80%9C%E5%B7%B2%E7%A6%81%E7%94%A8%E2%80%9D"><span class="toc-number">1.8.1.</span> <span class="toc-text">错误 1：LAN 口 IPv6 前缀分配长度是“已禁用”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF-2%EF%BC%9A%E9%80%9A%E5%91%8A%E4%BA%86%E8%BF%90%E8%90%A5%E5%95%86-IPv6-DNS"><span class="toc-number">1.8.2.</span> <span class="toc-text">错误 2：通告了运营商 IPv6 DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF-3%EF%BC%9A%E8%BF%87%E6%BB%A4-AAAA"><span class="toc-number">1.8.3.</span> <span class="toc-text">错误 3：过滤 AAAA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF-4%EF%BC%9A%E7%BB%95%E8%BF%87%E6%8C%87%E5%AE%9A%E5%8C%BA%E5%9F%9F-IPv6"><span class="toc-number">1.8.4.</span> <span class="toc-text">错误 4：绕过指定区域 IPv6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF-5%EF%BC%9A%E6%8A%8A%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%94%B9%E6%88%90%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86"><span class="toc-number">1.8.5.</span> <span class="toc-text">错误 5：把分流配置改成全局代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E7%BB%88%E6%8E%A8%E8%8D%90%E7%BB%84%E5%90%88"><span class="toc-number">1.9.</span> <span class="toc-text">九、最终推荐组合</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/" title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署"><div style="background: linear-gradient(135deg, #061826 0%, #0f766e 38%, #2563eb 72%, #f8fafc 100%)"></div></a><div class="content"><a class="title" href="/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/" title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署">Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署</a><time datetime="2026-06-15T14:47:56.000Z" title="发表于 2026-06-15 22:47:56">2026-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/12/%E7%BE%8E%E5%9B%BD%E4%BD%8F%E5%AE%85IP-VDS%E5%BB%BA%E8%AE%AE%E9%80%9A%E8%BF%87%E9%A6%99%E6%B8%AF%E6%88%96%E6%97%A5%E6%9C%AC%E7%BA%BF%E8%B7%AF%E4%B8%AD%E8%BD%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="美国住宅 IP VDS 建议通过香港或日本线路中转使用教程：Xray REALITY + HAProxy 实战">美国住宅 IP VDS 建议通过香港或日本线路中转使用教程：Xray REALITY + HAProxy 实战</a><time datetime="2026-06-12T14:06:00.000Z" title="发表于 2026-06-12 22:06:00">2026-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/" title="OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置"><img src="/img/openclash-lan-ipv6-split/07-openclash-ipv6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置"/ loading='lazy'></a><div class="content"><a class="title" href="/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/" title="OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置">OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置</a><time datetime="2026-05-23T14:20:00.000Z" title="发表于 2026-05-23 22:20:00">2026-05-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚"><div style="background: linear-gradient(135deg, #07111f 0%, #155e75 42%, #0f766e 72%, #d8fff7 100%)"></div></a><div class="content"><a class="title" href="/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚">IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚</a><time datetime="2026-05-22T01:10:00.000Z" title="发表于 2026-05-22 09:10:00">2026-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/" title="OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程"><div style="background: linear-gradient(135deg, #07111f 0%, #164e63 34%, #0f766e 68%, #e2f5f3 100%)"></div></a><div class="content"><a class="title" href="/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/" title="OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程">OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程</a><time datetime="2026-05-21T08:53:12.000Z" title="发表于 2026-05-21 16:53:12">2026-05-21</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-cta"><div class="footer-cta__glow"></div><div class="footer-cta__content"><div class="footer-cta__copy"><div class="footer-cta__eyebrow">Skyline Lab</div><h2 class="footer-cta__title">博客看图文，YouTube 看完整实操</h2><p class="footer-cta__desc">博客负责图文拆解，YouTube 频道负责完整实操、演示和更新追踪。</p><div class="footer-cta__meta"><span class="footer-cta__meta-item">从文章进入，从视频转化</span><span class="footer-cta__meta-item">教程拆解 + 演示实拍双线同步</span></div></div><div class="footer-cta__actions"><a class="footer-cta__button footer-cta__button--primary" href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube"></i><span>去 YouTube 看实操视频</span></a><a class="footer-cta__button footer-cta__button--secondary" href="/archives/"><i class="fas fa-book-open"></i><span>先逛博客文章</span></a><div class="footer-cta__hint">把最新视频同步嵌入对应文章，底部 CTA 的引流效果通常会更好。</div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By sky</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">最新教程会优先在博客整理，再同步到 YouTube 做完整演示。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://unpkg.com/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://unpkg.com/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="/js/page-style-sync.js" defer></script><script>(() => {
+  const canEnableCursorFx = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches
+  if (!canEnableCursorFx) return
+
+  const cursorScript = document.createElement('script')
+  cursorScript.src = '/js/cursor-effects.js'
+  cursorScript.defer = true
+  document.body.appendChild(cursorScript)
+})()
+</script><div class="js-pjax"></div><script src="https://cdn.bootcdn.net/ajax/libs/pjax/0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

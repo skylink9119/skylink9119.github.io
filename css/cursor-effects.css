@@ -1,0 +1,41 @@
+/* Cyber cursor effects */
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.25s ease, transform 0.16s ease, width 0.18s ease, height 0.18s ease, background 0.18s ease;
+}
+
+.cursor-glow {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.88) 0%, rgba(34, 211, 238, 0.22) 44%, rgba(244, 114, 182, 0.06) 76%, transparent 100%);
+  filter: blur(1px);
+  mix-blend-mode: screen;
+}
+
+.cursor-glow.is-visible {
+  opacity: 1;
+}
+
+.cursor-glow.is-hover {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.88) 0%, rgba(34, 211, 238, 0.28) 42%, rgba(244, 114, 182, 0.08) 76%, transparent 100%);
+}
+
+.cursor-glow.is-clicking {
+  transform: translate3d(-50%, -50%, 0) scale(0.84);
+}
+
+@media (max-width: 900px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none !important;
+  }
+}

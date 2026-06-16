@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Skyline Blog</title>
+  
+  <subtitle>记录生活，分享技术</subtitle>
+  <link href="https://sky9119.cc/atom.xml" rel="self"/>
+  
+  <link href="https://sky9119.cc/"/>
+  <updated>2026-06-16T09:14:57.000Z</updated>
+  <id>https://sky9119.cc/</id>
+  
+  <author>
+    <name>sky</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署</title>
+    <link href="https://sky9119.cc/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/"/>
+    <id>https://sky9119.cc/2026/06/15/Hysteria2%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8BCloudflare-DNS-VPS%E9%83%A8%E7%BD%B2/</id>
+    <published>2026-06-15T14:47:56.000Z</published>
+    <updated>2026-06-16T09:14:57.000Z</updated>
+    
+    
+    <summary type="html">这篇文章整理一套从 Cloudflare DNS 解析到 VPS 安装 Hysteria2 的完整服务端搭建流程，包含 A 记录设置、灰云注意事项、BBR 网络优化、UFW 防火墙放行、官方脚本安装、配置文件生成和服务状态检查。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="Hysteria2" scheme="https://sky9119.cc/tags/Hysteria2/"/>
+    
+    <category term="Cloudflare" scheme="https://sky9119.cc/tags/Cloudflare/"/>
+    
+    <category term="DNS" scheme="https://sky9119.cc/tags/DNS/"/>
+    
+    <category term="UFW" scheme="https://sky9119.cc/tags/UFW/"/>
+    
+    <category term="BBR" scheme="https://sky9119.cc/tags/BBR/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>美国住宅 IP VDS 建议通过香港或日本线路中转使用教程：Xray REALITY + HAProxy 实战</title>
+    <link href="https://sky9119.cc/2026/06/12/%E7%BE%8E%E5%9B%BD%E4%BD%8F%E5%AE%85IP-VDS%E5%BB%BA%E8%AE%AE%E9%80%9A%E8%BF%87%E9%A6%99%E6%B8%AF%E6%88%96%E6%97%A5%E6%9C%AC%E7%BA%BF%E8%B7%AF%E4%B8%AD%E8%BD%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/06/12/%E7%BE%8E%E5%9B%BD%E4%BD%8F%E5%AE%85IP-VDS%E5%BB%BA%E8%AE%AE%E9%80%9A%E8%BF%87%E9%A6%99%E6%B8%AF%E6%88%96%E6%97%A5%E6%9C%AC%E7%BA%BF%E8%B7%AF%E4%B8%AD%E8%BD%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</id>
+    <published>2026-06-12T14:06:00.000Z</published>
+    <updated>2026-06-13T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">这篇文章从零整理一套美国住宅 IP VDS + 香港或日本线路中转的搭建流程：住宅 VDS 负责最终出口，中转机负责跨境链路，服务端使用 Xray VLESS REALITY Vision，转发层使用 HAProxy。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
+    
+    <category term="VLESS" scheme="https://sky9119.cc/tags/VLESS/"/>
+    
+    <category term="REALITY" scheme="https://sky9119.cc/tags/REALITY/"/>
+    
+    <category term="住宅IP" scheme="https://sky9119.cc/tags/%E4%BD%8F%E5%AE%85IP/"/>
+    
+    <category term="中转线路" scheme="https://sky9119.cc/tags/%E4%B8%AD%E8%BD%AC%E7%BA%BF%E8%B7%AF/"/>
+    
+    <category term="HAProxy" scheme="https://sky9119.cc/tags/HAProxy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenClash LAN 原生 IPv6 分流教程：国内直连、国外代理与 DNS 防泄漏设置</title>
+    <link href="https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</id>
+    <published>2026-05-23T14:20:00.000Z</published>
+    <updated>2026-05-23T14:20:00.000Z</updated>
+    
+    
+    <summary type="html">记录 OpenWrt / iStoreOS 下 OpenClash 的 LAN 原生 IPv6 分流设置：LAN 设备继续获取公网 IPv6，国内网站直连，国外网站走代理，同时通过 Dnsmasq 转发、TUN、Fake-IP IPv6 和规则分流减少 DNS 与 IPv6 泄漏。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    
+    <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
+    
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
+    
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
+    
+    <category term="DNS 防泄漏" scheme="https://sky9119.cc/tags/DNS-%E9%98%B2%E6%B3%84%E6%BC%8F/"/>
+    
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IPv4 / IPv6 双栈代理的优势与边界：sing-box、3x-ui、OpenClash 软路由一次讲清楚</title>
+    <link href="https://sky9119.cc/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</id>
+    <published>2026-05-22T01:10:00.000Z</published>
+    <updated>2026-05-22T01:10:00.000Z</updated>
+    
+    
+    <summary type="html">一篇通俗但尽量严谨的 IPv4 / IPv6 双栈代理教程，讲清双栈代理的优势、边界、误区，以及 VPS 上用 sing-box 和 3x-ui 部署，手机电脑客户端怎么填，OpenWrt/OpenClash 软路由怎么设置和检测泄漏。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
+    
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
+    
+    <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
+    
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    
+    <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
+    
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
+    
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    
+    <category term="IPv4" scheme="https://sky9119.cc/tags/IPv4/"/>
+    
+    <category term="双栈代理" scheme="https://sky9119.cc/tags/%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenWrt 软路由 IPv6 工作流详解：HomeProxy、OpenClash、sing-box、mihomo 双栈代理与防泄漏教程</title>
+    <link href="https://sky9119.cc/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/</id>
+    <published>2026-05-21T08:53:12.000Z</published>
+    <updated>2026-05-21T13:55:00.000Z</updated>
+    
+    
+    <summary type="html">一篇面向 OpenWrt、iStoreOS、N100/N150 软路由用户的 IPv6 工作流详解，讲清 WAN6、前缀委派、RA、DHCPv6、NDP、ULA、公网 IPv6、HomeProxy、OpenClash、sing-box、mihomo、3x-ui、Xray、IPv6 代理、防泄漏和双栈节点的完整配置逻辑。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
+    
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
+    
+    <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
+    
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    
+    <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
+    
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
+    
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
+    
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    
+    <category term="HomeProxy" scheme="https://sky9119.cc/tags/HomeProxy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>买 VPS 别只看地区：电信、联通、移动线路怎么选？住宅 IP 和机房 IP 到底差在哪？</title>
+    <link href="https://sky9119.cc/2026/05/21/%E4%B9%B0VPS%E5%88%AB%E5%8F%AA%E7%9C%8B%E5%9C%B0%E5%8C%BA%E7%94%B5%E4%BF%A1%E8%81%94%E9%80%9A%E7%A7%BB%E5%8A%A8%E7%BA%BF%E8%B7%AF%E4%BD%8F%E5%AE%85IP%E6%9C%BA%E6%88%BFIP%E9%80%89%E6%8B%A9%E6%8C%87%E5%8D%97/"/>
+    <id>https://sky9119.cc/2026/05/21/%E4%B9%B0VPS%E5%88%AB%E5%8F%AA%E7%9C%8B%E5%9C%B0%E5%8C%BA%E7%94%B5%E4%BF%A1%E8%81%94%E9%80%9A%E7%A7%BB%E5%8A%A8%E7%BA%BF%E8%B7%AF%E4%BD%8F%E5%AE%85IP%E6%9C%BA%E6%88%BFIP%E9%80%89%E6%8B%A9%E6%8C%87%E5%8D%97/</id>
+    <published>2026-05-21T02:16:57.000Z</published>
+    <updated>2026-05-21T02:16:57.000Z</updated>
+    
+    
+    <summary type="html">买 VPS 不要只看香港、日本、美西这些地区标签。真正影响体验的是你的运营商、VPS 回程线路、IP 信誉和协议特征。本文系统讲清电信、联通、移动线路选择，住宅 IP 与机房 IP 的差异，以及建站、流媒体和账号环境该怎么选。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS选购" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E9%80%89%E8%B4%AD/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="住宅IP" scheme="https://sky9119.cc/tags/%E4%BD%8F%E5%AE%85IP/"/>
+    
+    <category term="网络线路" scheme="https://sky9119.cc/tags/%E7%BD%91%E7%BB%9C%E7%BA%BF%E8%B7%AF/"/>
+    
+    <category term="CN2" scheme="https://sky9119.cc/tags/CN2/"/>
+    
+    <category term="CMIN2" scheme="https://sky9119.cc/tags/CMIN2/"/>
+    
+    <category term="流媒体解锁" scheme="https://sky9119.cc/tags/%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%A3%E9%94%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sing-box VPS 部署 VLESS + Reality + Vision 新手入门教程：无域名、无证书、纯配置文件方案</title>
+    <link href="https://sky9119.cc/2026/05/05/sing-box-vps-vless-reality-vision-beginner/"/>
+    <id>https://sky9119.cc/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</id>
+    <published>2026-05-05T05:30:00.000Z</published>
+    <updated>2026-05-09T02:13:06.000Z</updated>
+    
+    
+    <summary type="html">这是一份面向新手的 sing-box VPS 部署教程，使用 VLESS + Reality + Vision 搭建稳定 TCP 节点，不依赖域名、TLS 证书或面板，包含安装、密钥生成、服务端配置、客户端参数、验证和排错。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="Debian" scheme="https://sky9119.cc/tags/Debian/"/>
+    
+    <category term="VLESS" scheme="https://sky9119.cc/tags/VLESS/"/>
+    
+    <category term="REALITY" scheme="https://sky9119.cc/tags/REALITY/"/>
+    
+    <category term="Vision" scheme="https://sky9119.cc/tags/Vision/"/>
+    
+    <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浏览器 WebRTC IP 泄漏修复教程：Chrome、Edge、Firefox、Brave 设置指南</title>
+    <link href="https://sky9119.cc/2026/05/05/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC-IP%E6%B3%84%E6%BC%8F%E4%BF%AE%E5%A4%8D%E6%95%99%E7%A8%8BChrome-Edge-Firefox-Brave/"/>
+    <id>https://sky9119.cc/2026/05/05/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC-IP%E6%B3%84%E6%BC%8F%E4%BF%AE%E5%A4%8D%E6%95%99%E7%A8%8BChrome-Edge-Firefox-Brave/</id>
+    <published>2026-05-05T04:15:49.000Z</published>
+    <updated>2026-05-05T04:15:49.000Z</updated>
+    
+    
+    <summary type="html">这篇教程整理 Chrome、Microsoft Edge、Firefox 和 Brave 的 WebRTC IP 泄漏修复方法，包含 macOS 与 Windows 策略命令、浏览器内验证方式，以及 IPv6 直出时在 iStoreOS/OpenClash 环境下的排查方向。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络安全" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="WebRTC" scheme="https://sky9119.cc/tags/WebRTC/"/>
+    
+    <category term="Chrome" scheme="https://sky9119.cc/tags/Chrome/"/>
+    
+    <category term="Edge" scheme="https://sky9119.cc/tags/Edge/"/>
+    
+    <category term="Firefox" scheme="https://sky9119.cc/tags/Firefox/"/>
+    
+    <category term="Brave" scheme="https://sky9119.cc/tags/Brave/"/>
+    
+    <category term="隐私保护" scheme="https://sky9119.cc/tags/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/"/>
+    
+    <category term="代理" scheme="https://sky9119.cc/tags/%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2026 稳定派最终答案：Debian 搭建 VLESS + TCP(RAW) + REALITY + Vision 节点教程</title>
+    <link href="https://sky9119.cc/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/18/2026%E7%A8%B3%E5%AE%9A%E6%B4%BE%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88Debian%E6%90%AD%E5%BB%BAVLESS+TCPRAW+REALITY+Vision%E8%8A%82%E7%82%B9%E6%95%99%E7%A8%8B/</id>
+    <published>2026-04-18T02:30:00.000Z</published>
+    <updated>2026-04-24T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">截至 2026 年 4 月 18 日，如果你把稳定性放在第一优先级，那么 VLESS + TCP(RAW) + REALITY + xtls-rprx-vision 依然是最值得长期使用的默认基线方案。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="Debian" scheme="https://sky9119.cc/tags/Debian/"/>
+    
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
+    
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
+    
+    <category term="VLESS" scheme="https://sky9119.cc/tags/VLESS/"/>
+    
+    <category term="REALITY" scheme="https://sky9119.cc/tags/REALITY/"/>
+    
+    <category term="Vision" scheme="https://sky9119.cc/tags/Vision/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenClash Meta 精准分流配置教程：银行 App 国内直连，AI 服务走代理，附 YAML 模板下载</title>
+    <link href="https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/"/>
+    <id>https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/</id>
+    <published>2026-04-15T13:20:00.000Z</published>
+    <updated>2026-04-15T13:20:00.000Z</updated>
+    
+    
+    <summary type="html">结合 9 张截图，把 OpenClash Meta 这份 YAML 模板怎么改、怎么导入、运行状态页该怎么确认，以及 GEO 数据库和大陆白名单如何自动更新，完整讲清楚。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
+    
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    
+    <category term="Clash Meta" scheme="https://sky9119.cc/tags/Clash-Meta/"/>
+    
+    <category term="DNS分流" scheme="https://sky9119.cc/tags/DNS%E5%88%86%E6%B5%81/"/>
+    
+    <category term="YAML" scheme="https://sky9119.cc/tags/YAML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iStoreOS x86 软路由刷机与 OpenClash 安装教程：N150 小主机从 U 盘启动到后台配置</title>
+    <link href="https://sky9119.cc/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</id>
+    <published>2026-04-10T13:30:00.000Z</published>
+    <updated>2026-04-10T13:30:00.000Z</updated>
+    
+    
+    <summary type="html">这是一篇面向零基础新手的 iStoreOS x86 软路由刷机教程，从 Windows 和 Mac 制作启动盘、进入 BIOS 选择 U 盘启动、quickstart 安装到硬盘、eth0/eth1 接线、后台登录，再到用 Mac 终端安装 OpenClash 和准备 Mihomo 极简配置。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
+    
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    
+    <category term="软路由" scheme="https://sky9119.cc/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/"/>
+    
+    <category term="x86" scheme="https://sky9119.cc/tags/x86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DMIT 搭配 Cloudflare WARP 实现 Grok 精准分流教程：原生 Client Proxy Mode + sing-box/Xray</title>
+    <link href="https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/</id>
+    <published>2026-04-04T07:30:00.000Z</published>
+    <updated>2026-04-04T07:30:00.000Z</updated>
+    
+    
+    <summary type="html">这篇文章演示如何在 DMIT VPS 上通过 fscarmen 脚本安装 Cloudflare WARP 原生客户端，并用 sing-box 或 Xray 仅让 grok.com 相关流量走 WARP，避免全局绕路拖慢整体速度。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
+    
+    <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
+    
+    <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
+    
+    <category term="Grok" scheme="https://sky9119.cc/tags/Grok/"/>
+    
+    <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DMIT 搭配 Cloudflare WARP 缓解 Disney+ Error 73 教程：WireProxy + 3x-ui 分流实战</title>
+    <link href="https://sky9119.cc/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/</id>
+    <published>2026-03-30T13:15:00.000Z</published>
+    <updated>2026-03-30T13:15:00.000Z</updated>
+    
+    
+    <summary type="html">结合实测截图整理一套在 DMIT VPS 上使用 Cloudflare WARP 的 WireProxy socks5 出口，为 3x-ui/X-ui 配置 Disney+ 分流的实战方案，缓解 Error Code 73。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
+    
+    <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
+    
+    <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
+    
+    <category term="Disney+" scheme="https://sky9119.cc/tags/Disney/"/>
+    
+    <category term="X-ui" scheme="https://sky9119.cc/tags/X-ui/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VPS搭建过程中遇到的问题及具体解决方法</title>
+    <link href="https://sky9119.cc/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>https://sky9119.cc/2026/03/26/VPS%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B7%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</id>
+    <published>2026-03-25T16:00:00.000Z</published>
+    <updated>2026-03-25T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">记录 VPS 搭建过程中最常见的连接、系统、Web 服务和安全问题，并提供可直接执行的排查命令与解决思路。</summary>
+    
+    
+    
+    <category term="技术笔记" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="Linux" scheme="https://sky9119.cc/tags/Linux/"/>
+    
+    <category term="运维" scheme="https://sky9119.cc/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="服务器" scheme="https://sky9119.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
+    <link href="https://sky9119.cc/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</id>
+    <published>2026-03-04T11:08:02.000Z</published>
+    <updated>2026-03-04T11:08:02.000Z</updated>
+    
+    
+    <summary type="html">本文提供 2026 年最新远程服务器部署与网络链路优化方案，涵盖优质 VPS 选购、SSH 密钥对安全认证、UFW 防火墙策略以及基于 Reality 协议的 TLS 1.3 深度伪装技术。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    
+    
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
+    
+    <category term="网络优化" scheme="https://sky9119.cc/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/"/>
+    
+    <category term="Reality协议" scheme="https://sky9119.cc/tags/Reality%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="服务器运维" scheme="https://sky9119.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <link href="https://sky9119.cc/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
+    <id>https://sky9119.cc/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</id>
+    <published>2026-03-03T16:00:00.000Z</published>
+    <updated>2026-03-28T15:31:18.978Z</updated>
+    
+    
+    <summary type="html">详细指导如何通过终端脚本在全新安装 macOS 时跳过 Remote Management (MDM) 注册。适用于所有现代 Mac 设备。</summary>
+    
+    
+    
+    <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    
+    <category term="macOS" scheme="https://sky9119.cc/tags/macOS/"/>
+    
+    <category term="MDM" scheme="https://sky9119.cc/tags/MDM/"/>
+    
+    <category term="系统工具" scheme="https://sky9119.cc/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+</feed>
