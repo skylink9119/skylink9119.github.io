@@ -55,12 +55,12 @@
     </author>
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
     <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
     <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
-    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
     <category term="DNS 防泄漏" scheme="https://sky9119.cc/tags/DNS-%E9%98%B2%E6%B3%84%E6%BC%8F/"/>
-    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <id>https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</id>
     <link href="https://sky9119.cc/2026/05/23/OpenClash-LAN%E5%8E%9F%E7%94%9FIPv6%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E5%9B%BD%E5%A4%96%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/"/>
     <published>2026-05-23T14:20:00.000Z</published>
@@ -77,12 +77,12 @@
     <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
     <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
     <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
-    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
-    <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
-    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
-    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <category term="IPv4" scheme="https://sky9119.cc/tags/IPv4/"/>
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
     <category term="双栈代理" scheme="https://sky9119.cc/tags/%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86/"/>
+    <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
     <id>https://sky9119.cc/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</id>
     <link href="https://sky9119.cc/2026/05/22/IPv4IPv6%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E4%BC%98%E5%8A%BF%E8%BE%B9%E7%95%8Csing-box-3x-ui%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/"/>
     <published>2026-05-22T01:10:00.000Z</published>
@@ -99,11 +99,11 @@
     <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
     <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
     <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
+    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
     <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
+    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <category term="OpenWrt" scheme="https://sky9119.cc/tags/OpenWrt/"/>
     <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
-    <category term="IPv6" scheme="https://sky9119.cc/tags/IPv6/"/>
-    <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <category term="HomeProxy" scheme="https://sky9119.cc/tags/HomeProxy/"/>
     <id>https://sky9119.cc/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/</id>
     <link href="https://sky9119.cc/2026/05/21/OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1IPv6%E5%B7%A5%E4%BD%9C%E6%B5%81HomeProxyOpenClashSingBoxMihomo%E5%8F%8C%E6%A0%88%E4%BB%A3%E7%90%86%E9%98%B2%E6%B3%84%E6%BC%8F%E6%95%99%E7%A8%8B/"/>
@@ -137,12 +137,12 @@
     </author>
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="网络链路" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <category term="Debian" scheme="https://sky9119.cc/tags/Debian/"/>
     <category term="VLESS" scheme="https://sky9119.cc/tags/VLESS/"/>
     <category term="REALITY" scheme="https://sky9119.cc/tags/REALITY/"/>
     <category term="Vision" scheme="https://sky9119.cc/tags/Vision/"/>
     <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
-    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <id>https://sky9119.cc/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</id>
     <link href="https://sky9119.cc/2026/05/05/sing-box-vps-vless-reality-vision-beginner/"/>
     <published>2026-05-05T05:30:00.000Z</published>
@@ -196,11 +196,11 @@
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
-    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
     <category term="Clash Meta" scheme="https://sky9119.cc/tags/Clash-Meta/"/>
     <category term="DNS分流" scheme="https://sky9119.cc/tags/DNS%E5%88%86%E6%B5%81/"/>
     <category term="YAML" scheme="https://sky9119.cc/tags/YAML/"/>
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     <id>https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/</id>
     <link href="https://sky9119.cc/2026/04/15/OpenClash-Meta%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%E9%93%B6%E8%A1%8C%E7%9B%B4%E8%BF%9EAI%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/"/>
     <published>2026-04-15T13:20:00.000Z</published>
@@ -215,8 +215,8 @@
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
     <category term="OpenClash" scheme="https://sky9119.cc/tags/OpenClash/"/>
-    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     <category term="Mihomo" scheme="https://sky9119.cc/tags/Mihomo/"/>
+    <category term="iStoreOS" scheme="https://sky9119.cc/tags/iStoreOS/"/>
     <category term="软路由" scheme="https://sky9119.cc/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/"/>
     <category term="x86" scheme="https://sky9119.cc/tags/x86/"/>
     <id>https://sky9119.cc/2026/04/10/iStoreOS-x86%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%88%B7%E6%9C%BAOpenClash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</id>
@@ -232,12 +232,12 @@
     </author>
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <category term="Xray" scheme="https://sky9119.cc/tags/Xray/"/>
     <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
     <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
     <category term="Grok" scheme="https://sky9119.cc/tags/Grok/"/>
     <category term="sing-box" scheme="https://sky9119.cc/tags/sing-box/"/>
-    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <id>https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/</id>
     <link href="https://sky9119.cc/2026/04/04/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E5%AE%9E%E7%8E%B0Grok%E7%B2%BE%E5%87%86%E5%88%86%E6%B5%81%E6%95%99%E7%A8%8B/"/>
     <published>2026-04-04T07:30:00.000Z</published>
@@ -251,10 +251,10 @@
     </author>
     <category term="技术教程" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
     <category term="VPS网络" scheme="https://sky9119.cc/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/VPS%E7%BD%91%E7%BB%9C/"/>
+    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <category term="3x-ui" scheme="https://sky9119.cc/tags/3x-ui/"/>
     <category term="DMIT" scheme="https://sky9119.cc/tags/DMIT/"/>
     <category term="Cloudflare WARP" scheme="https://sky9119.cc/tags/Cloudflare-WARP/"/>
-    <category term="VPS" scheme="https://sky9119.cc/tags/VPS/"/>
     <category term="Disney+" scheme="https://sky9119.cc/tags/Disney/"/>
     <category term="X-ui" scheme="https://sky9119.cc/tags/X-ui/"/>
     <id>https://sky9119.cc/2026/03/30/DMIT%E6%90%AD%E9%85%8DCloudflareWARP%E7%BC%93%E8%A7%A3Disney-Error-73%E6%95%99%E7%A8%8B/</id>
