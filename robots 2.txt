@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://sky9119.cc/sitemap.xml
