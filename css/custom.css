@@ -245,7 +245,8 @@ body {
     border-left: 4px solid #ff50c8;
     padding-left: 14px;
     color: #ffffff !important;
-    font-size: 1.8rem !important;
+    font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
+    line-height: 1.25;
     font-weight: 800 !important;
     letter-spacing: 1.5px;
     text-shadow:
