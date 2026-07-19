@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://skylink9119.github.io/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</loc>
+    
+    <lastmod>2026-07-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/plugins/</loc>
     
     <lastmod>2026-07-18</lastmod>
@@ -68,15 +77,6 @@
     <loc>https://skylink9119.github.io/docs/ssh-tool/</loc>
     
     <lastmod>2026-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
