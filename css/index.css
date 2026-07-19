@@ -5114,7 +5114,7 @@ figure.highlight pre .javascript .function {
 }
 .layout .pagination > * {
   display: inline-block;
-  margin: 6px;
+  margin: 0 6px;
   width: 2.5em;
   height: 2.5em;
   line-height: 2.5em;
@@ -6133,9 +6133,8 @@ figure.highlight pre .javascript .function {
   filter: none;
 }
 @media screen and (max-width: 768px) {
-  .fancybox__toolbar__column.is-middle,
-  .f-carousel__toolbar__column.is-middle {
-    visibility: hidden;
+  .fancybox__toolbar__column.is-middle {
+    display: none;
   }
 }
 .container .btn-center {

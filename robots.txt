@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sky9119.cc/sitemap.xml
-Sitemap: https://sky9119.cc/baidusitemap.xml
+Sitemap: https://skylink9119.github.io/sitemap.xml
