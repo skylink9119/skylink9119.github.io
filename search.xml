@@ -1,69 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>🚀 2026 高性能网络链路搭建全攻略：从 VPS 选购到 Reality 协议实操</title>
-      <link href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<div class="video-container">  <iframe    src="https://www.youtube.com/embed/rbvd4RZQaNY"    frameborder="0"    allowfullscreen>  </iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><h2 id="🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）"><a href="#🛠️-第一步：选购高性价比优质-VPS（CN2-GIA-线路推荐）" class="headerlink" title="🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）"></a>🛠️ 第一步：选购高性价比优质 VPS（CN2-GIA 线路推荐）</h2><p>在配置远程链路之前，你首先需要一台海外服务器，即 <strong>VPS</strong>。2026 年网络环境瞬息万变，线路质量直接决定了你的使用体验。</p><h3 id="核心选购指标（避坑指南）"><a href="#核心选购指标（避坑指南）" class="headerlink" title="核心选购指标（避坑指南）"></a>核心选购指标（避坑指南）</h3><ul><li><strong>🌐 线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现还会受到地区、运营商、路由和晚高峰拥塞影响，购买前应查看回程路由与晚高峰测速。</li><li><strong>📍 机房位置</strong>：通常距离越近，基础延迟越低，但不能仅凭机房名称承诺具体延迟。应以自己所在地到测试 IP 的 <code>ping</code>、路由追踪和丢包测试为准。</li><li><strong>💳 支付方式</strong>：优先推荐支持 <strong>支付宝（Alipay）</strong> 的服务商。</li></ul><h3 id="2026-热门-VPS-服务商横向对比"><a href="#2026-热门-VPS-服务商横向对比" class="headerlink" title="2026 热门 VPS 服务商横向对比"></a>2026 热门 VPS 服务商横向对比</h3><table><thead><tr><th align="left">服务商</th><th align="left">核心优势</th><th align="left">推荐线路</th><th align="left">适用场景</th><th align="left">价格区间</th></tr></thead><tbody><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td><td align="left">极致稳定性，原生 IP 丰富，带宽质量极高</td><td align="left">CN2 GIA (Premium)</td><td align="left">高质量生产力博客、极速中转节点</td><td align="left">高（$15+&#x2F;月）</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="bandwagon"><i class="anzhiyu-icon-gift"></i><span>bandwagon</span></a></strong></td><td align="left">独家 CN2 GIA-E 线路，支持智能机房迁移</td><td align="left">CN2 GIA-E &#x2F; 日本软银</td><td align="left">资深折腾党、多机房灵活切换需求</td><td align="left">中高（$49+&#x2F;季）</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td><td align="left">界面现代，支持按小时计费，内网互联强</td><td align="left">港台 &#x2F; 日韩 BGP</td><td align="left">临时项目测试、流媒体解锁、即用即删</td><td align="left">低（按量&#x2F;月付）</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td><td align="left">极致性价比，”价格屠夫”，老牌稳定</td><td align="left">常规直连（优化较少）</td><td align="left">静态博客挂载、自动化部署备份机</td><td align="left">极低（$10+&#x2F;年）</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td><td align="left">全球大厂，按需创建，API 支持完善</td><td align="left">国际标准 BGP</td><td align="left">纯海外业务拓展、纯开发环境调试</td><td align="left">中（$5+&#x2F;月）</td></tr></tbody></table><hr><h2 id="🖥️-第二步：操作系统选择与初始化"><a href="#🖥️-第二步：操作系统选择与初始化" class="headerlink" title="🖥️ 第二步：操作系统选择与初始化"></a>🖥️ 第二步：操作系统选择与初始化</h2><h3 id="一、操作系统对比与推荐"><a href="#一、操作系统对比与推荐" class="headerlink" title="一、操作系统对比与推荐"></a>一、操作系统对比与推荐</h3><p>在 VPS 领域，Linux 是绝对的主流。以下是目前最推荐的三个发行版：</p><p><strong>1. Debian（首选推荐）</strong></p><p>极其轻量、纯净且稳如磐石。对于内存较小的 VPS 非常友好，适合个人博客 (Hexo)、3x-ui 面板、生产环境、轻量级应用。版本建议：<strong>Debian 12 (Bookworm)</strong> 或 <strong>Debian 13 (Trixie)</strong>。</p><p><strong>2. Ubuntu Server（新手友好）</strong></p><p>社区支持极其庞大，几乎所有开发工具和脚本都会优先适配 Ubuntu，方便初学者快速找到报错解决方案。版本建议：<strong>Ubuntu 24.04 LTS</strong>（长期支持版）。</p><p><strong>3. AlmaLinux &#x2F; Rocky Linux（企业级）</strong></p><p>CentOS 的正统继任者，完全兼容 RHEL（红帽）。适合运行大型企业软件、习惯使用 <code>yum/dnf</code> 命令的用户。</p><h3 id="二、系统安装步骤"><a href="#二、系统安装步骤" class="headerlink" title="二、系统安装步骤"></a>二、系统安装步骤</h3><p>大部分 VPS 服务商（如 DMIT、搬瓦工等）的操作逻辑一致：</p><ol><li>登录 VPS 管理后台。</li><li>找到 <strong>“Reinstall”</strong> 或 <strong>“OS Installation”</strong> 选项（通常在电源开关附近）。</li><li>选择 <strong>Debian 12&#x2F;13 64-bit</strong>，优先选择 “Minimal”（最小化）版本，系统最干净。</li><li>设置高强度 Root 密码（含大小写字母、数字和特殊字符）。</li><li>等待 2-5 分钟，系统安装完成后自动重启。</li></ol><h3 id="三、服务器初始化（保姆级教程）"><a href="#三、服务器初始化（保姆级教程）" class="headerlink" title="三、服务器初始化（保姆级教程）"></a>三、服务器初始化（保姆级教程）</h3><p>系统安装完成后，通过 SSH 工具（如 PowerShell、Tabby 或 Termius）连接到服务器，依次执行以下命令。本文命令默认在 <code>root</code> 用户下执行：</p><p><strong>更新系统软件包</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure><p><strong>安装常用工具</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y curl wget vim socat gnupg2 ca-certificates lsb-release ufw</span><br></pre></td></tr></table></figure><h3 id="四、配置-SSH-密钥登录（推荐）"><a href="#四、配置-SSH-密钥登录（推荐）" class="headerlink" title="四、配置 SSH 密钥登录（推荐）"></a>四、配置 SSH 密钥登录（推荐）</h3><p>以下两条命令在<strong>本地 Windows PowerShell</strong> 中执行，而不是在 VPS 中执行。先生成密钥，再把公钥追加到服务器：</p><p>把命令中的 <code>服务器IP</code> 替换为 VPS 的真实公网 IP，不能原样照抄。</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh<span class="literal">-keygen</span> <span class="literal">-t</span> ed25519 <span class="literal">-a</span> <span class="number">100</span></span><br><span class="line"><span class="built_in">Get-Content</span> <span class="string">&quot;<span class="variable">$env:USERPROFILE</span>\.ssh\id_ed25519.pub&quot;</span> | ssh root<span class="selector-tag">@</span>服务器IP <span class="string">&quot;umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure><p>随后新开一个 PowerShell 窗口测试：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>服务器IP</span><br></pre></td></tr></table></figure><p>确认无需输入服务器密码也能登录后，再考虑关闭密码登录。<strong>在密钥登录验证成功前，不要关闭当前 SSH 窗口，也不要禁用密码登录</strong>，否则可能失去服务器访问权限。</p><h3 id="五、开启-UFW-防火墙（务必先放行-SSH）"><a href="#五、开启-UFW-防火墙（务必先放行-SSH）" class="headerlink" title="五、开启 UFW 防火墙（务必先放行 SSH）"></a>五、开启 UFW 防火墙（务必先放行 SSH）</h3><p>UFW 默认处于关闭状态。正确顺序是：<strong>确认 SSH 端口 → 放行 SSH → 设置默认策略 → 启用防火墙</strong>。如果先启用再放行 SSH，可能会立即断开连接并把自己锁在服务器外。</p><h4 id="1-确认-SSH-实际监听端口"><a href="#1-确认-SSH-实际监听端口" class="headerlink" title="1. 确认 SSH 实际监听端口"></a>1. 确认 SSH 实际监听端口</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure><p>如果输出中看到 <code>:22</code>，说明 SSH 使用默认的 <code>22</code> 端口。如果你已经把 SSH 改成其他端口，请在下面的命令中把 <code>22</code> 换成实际端口。</p><h4 id="2-设置默认策略"><a href="#2-设置默认策略" class="headerlink" title="2. 设置默认策略"></a>2. 设置默认策略</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br></pre></td></tr></table></figure><h4 id="3-先放行-SSH，再开启防火墙"><a href="#3-先放行-SSH，再开启防火墙" class="headerlink" title="3. 先放行 SSH，再开启防火墙"></a>3. 先放行 SSH，再开启防火墙</h4><p>此时面板和 Reality 入站都还没有安装或创建，因此<strong>只放行当前正在使用的 SSH 端口</strong>。不要提前猜测并开放面板端口、<code>443</code> 或 <code>2096</code>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSH 使用默认 22 端口时执行</span></span><br><span class="line">ufw allow 22/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启并查看防火墙状态</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure><p>如果 SSH 使用的不是 <code>22</code>，必须把命令中的 <code>22</code> 换成实际端口后再开启 UFW。</p><h4 id="4-详细检查规则"><a href="#4-详细检查规则" class="headerlink" title="4. 详细检查规则"></a>4. 详细检查规则</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>看到 <code>Status: active</code>，并且规则列表中存在实际 SSH 端口后，建议<strong>不要关闭当前窗口</strong>，先新开一个终端再次连接服务器。确认新连接成功后，再继续安装面板。</p><blockquote><p>如果 VPS 服务商还提供“安全组”或“云防火墙”，必须同时在服务商后台放行相同端口。云防火墙与 UFW 任意一层拦截，外部都无法访问。</p></blockquote><h4 id="5-后续常用操作"><a href="#5-后续常用操作" class="headerlink" title="5. 后续常用操作"></a>5. 后续常用操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看带编号的规则</span></span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除指定编号的规则，例如删除第 3 条</span></span><br><span class="line">ufw delete 3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启低级别日志，便于排查连接问题</span></span><br><span class="line">ufw logging low</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅在服务商 VNC/网页控制台救援时临时关闭</span></span><br><span class="line">ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure><p>不要随意执行 <code>ufw reset</code>，它会清空全部规则。若误封 SSH，请进入 VPS 服务商提供的 VNC、Console 或 Serial Console，执行 <code>ufw disable</code> 后重新配置。</p><p>参考：<a href="https://documentation.ubuntu.com/server/how-to/security/firewalls/">Ubuntu Server 官方 UFW 防火墙指南</a></p><hr><h2 id="⚡-第三步：开启-BBR-网络加速"><a href="#⚡-第三步：开启-BBR-网络加速" class="headerlink" title="⚡ 第三步：开启 BBR 网络加速"></a>⚡ 第三步：开启 BBR 网络加速</h2><h3 id="写入-BBR-配置"><a href="#写入-BBR-配置" class="headerlink" title="写入 BBR 配置"></a>写入 BBR 配置</h3><p>使用独立配置文件，避免反复执行时向 <code>/etc/sysctl.conf</code> 追加重复内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure><h3 id="验证-BBR-是否生效"><a href="#验证-BBR-是否生效" class="headerlink" title="验证 BBR 是否生效"></a>验证 BBR 是否生效</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure><p>成功标志：第一条输出的当前算法为 <code>bbr</code>，第二条的可用算法列表中也包含 <code>bbr</code>。不要只用 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核而不是作为模块加载时，<code>lsmod</code> 可能没有输出。</p><hr><h2 id="🖥️-第四步：安装-3X-UI-面板"><a href="#🖥️-第四步：安装-3X-UI-面板" class="headerlink" title="🖥️ 第四步：安装 3X-UI 面板"></a>🖥️ 第四步：安装 3X-UI 面板</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure><h3 id="交互安装说明（以安装器实际提示为准）"><a href="#交互安装说明（以安装器实际提示为准）" class="headerlink" title="交互安装说明（以安装器实际提示为准）"></a>交互安装说明（以安装器实际提示为准）</h3><p>3X-UI 安装脚本会持续更新，提示内容可能发生变化。当前官方安装器会生成随机的用户名、密码和 WebBasePath，并在结束时显示面板端口及完整访问地址。请完整保存最终输出，不要套用网上旧教程中的默认账号或固定路径。</p><p>如果安装器询问面板 HTTPS&#x2F;SSL，请按自己的域名、IP 证书或反向代理方案选择。没有启用 HTTPS 时，直接通过公网 HTTP 登录会以明文传输凭据；更安全的做法是使用 HTTPS，或者把面板绑定到 <code>127.0.0.1</code> 后通过 SSH 隧道访问。</p><h3 id="安装后放行防火墙（以端口-28530-为例）"><a href="#安装后放行防火墙（以端口-28530-为例）" class="headerlink" title="安装后放行防火墙（以端口 28530 为例）"></a>安装后放行防火墙（以端口 28530 为例）</h3><p>安装程序结束后会显示你刚设置的面板端口。确认实际端口后再配置 UFW；下面的 <code>28530</code> 仅为示例，必须与安装时设置的端口一致。</p><p>面板端口不建议直接对全网开放。若你有固定公网 IP，优先只允许自己的 IP 访问：</p><p>把 <code>你的公网IP</code> 和 <code>28530</code> 都替换为真实值，不能原样执行。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br></pre></td></tr></table></figure><p>如果没有固定 IP，只能临时对外开放时使用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw reload</span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>安装完成后还应启用 HTTPS 或 SSH 隧道、开启双重验证（如果使用场景允许），并避免在文章或截图中公开面板地址、账号和 API Token。</p><p>在浏览器中确认面板可以正常打开后，再进入下一步创建 Reality 入站。面板端口只用于管理面板，并不是 Shadowrocket 等客户端连接节点的端口。</p><hr><h2 id="📡-第五步：配置-VLESS-Reality-入站"><a href="#📡-第五步：配置-VLESS-Reality-入站" class="headerlink" title="📡 第五步：配置 VLESS + Reality 入站"></a>📡 第五步：配置 VLESS + Reality 入站</h2><p>“进站设置”（Inbound）决定了你的客户端如何连接到服务器。本教程推荐目前最主流的 <strong>VLESS + Reality</strong> 方案。</p><h3 id="基础参数配置"><a href="#基础参数配置" class="headerlink" title="基础参数配置"></a>基础参数配置</h3><p>登录面板后，点击左侧 <strong>“入站列表”</strong> → <strong>“添加入站”</strong>，按下表填写：</p><table><thead><tr><th align="left">选项</th><th align="left">建议填写</th><th align="left">说明</th></tr></thead><tbody><tr><td align="left">备注 (Remark)</td><td align="left">随便填（如 <code>My_Vless</code>）</td><td align="left">方便自己识别</td></tr><tr><td align="left">协议 (Protocol)</td><td align="left"><strong>VLESS</strong></td><td align="left">与 Reality 和 XTLS Vision 配合使用</td></tr><tr><td align="left">监听 IP</td><td align="left">默认 <code>0.0.0.0</code></td><td align="left">监听服务器所有网卡</td></tr><tr><td align="left">端口 (Port)</td><td align="left"><strong>443</strong>（示例）</td><td align="left">常用 TLS 端口；使用前确认未被网站或其他服务占用</td></tr><tr><td align="left">总流量 &#x2F; 到期时间</td><td align="left">留空</td><td align="left">留空表示不限制</td></tr></tbody></table><h3 id="Reality-传输安全配置"><a href="#Reality-传输安全配置" class="headerlink" title="Reality 传输安全配置"></a>Reality 传输安全配置</h3><p>在”添加入站”窗口下方找到 <strong>传输（Transport）</strong> 部分：</p><ol><li><strong>传输方式 (Network)</strong>：选 <strong>tcp</strong></li><li><strong>安全 (Security)</strong>：选 <strong>reality</strong></li><li><strong>Flow</strong>：选 <strong>xtls-rprx-vision</strong></li><li><strong>uTLS &#x2F; Fingerprint</strong>：选 <strong>chrome</strong></li><li><strong>Target（旧版界面可能显示 Dest）</strong>：填写经过测试、支持 TLS 1.3 且与你无关的正常 HTTPS 站点及端口</li><li><strong>Server Names &#x2F; SNI</strong>：填写目标站证书接受的域名，通常与 Target 的域名一致</li><li><strong>Short ID</strong>：点击生成；它必须是长度为偶数的十六进制字符串，最长 16 个字符</li><li><strong>Private Key（私钥）</strong>：点击生成，并妥善保管；客户端只使用对应公钥</li></ol><p>不要机械照抄某个固定目标站。Xray 官方说明，未通过 Reality 验证的流量会转发到 Target；选择 CDN 等特殊目标可能让服务器被滥用为转发器。目标站、SNI 和证书必须匹配，并应在部署时重新测试。</p><h3 id="保存后放行-Reality-入站端口"><a href="#保存后放行-Reality-入站端口" class="headerlink" title="保存后放行 Reality 入站端口"></a>保存后放行 Reality 入站端口</h3><p>先保存入站并确认它实际使用的端口，再放行对应端口。本教程的入站端口设置为 <code>443</code>，因此执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 443/tcp</span><br><span class="line">ufw reload</span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>如果你设置的是其他端口，就把 <code>443</code> 换成该端口。例如只有入站实际使用 <code>2096</code> 时，才执行 <code>ufw allow 2096/tcp</code>。Shadowrocket 本身没有固定服务器端口。</p><h3 id="连接到手机-电脑"><a href="#连接到手机-电脑" class="headerlink" title="连接到手机&#x2F;电脑"></a>连接到手机&#x2F;电脑</h3><p>在”入站列表”找到刚创建的记录，点击<strong>二维码</strong>或<strong>复制</strong>图标，在客户端软件（v2rayN、Shadowrocket、Clash Meta 等）中导入即可。</p><hr><h2 id="🏁-总结"><a href="#🏁-总结" class="headerlink" title="🏁 总结"></a>🏁 总结</h2><p>通过本教程，你已经完成：<strong>SSH 密钥登录、BBR 拥塞控制、VLESS + Reality 入站和 UFW 最小端口放行</strong>。实际速度与稳定性仍取决于 VPS 线路、网络拥塞、客户端和服务端配置，任何单一协议都不能保证固定的加速效果。</p><blockquote><p><strong>注意</strong>：任何技术都有时效性。建议每 3 个月进行一次组件更新检查。如果在配置防火墙时不慎把自己”锁在门外”，请通过 VPS 服务商后台的 VNC 控制台进行修复。</p></blockquote><p>官方参考：<a href="https://documentation.ubuntu.com/server/how-to/security/firewalls/">Ubuntu UFW 防火墙</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</title>
+    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/rbvd4RZQaNY"
+    title="Debian VPS 搭建 VLESS Reality、3X-UI、BBR 与 UFW 视频教程"
+    frameborder="0"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=rbvd4RZQaNY" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+
+<p>这是一份面向 <strong>Debian 纯净系统</strong>的完整教程，不混用 Ubuntu、CentOS 或 Alpine 命令。请严格按照本文顺序操作：先确认 SSH 可以登录，再开启防火墙；安装面板并取得实际端口后，才放行面板端口；创建 Reality 入站后，才放行节点端口。</p>
+<p>REALITY 不要求你购买域名，也不需要为节点单独申请 TLS 证书。它会利用目标 HTTPS 站点的握手特征和证书外观进行伪装，但并不是把目标网站的证书复制或安装到你的 VPS。</p>
+<blockquote>
+<p>本文默认使用 <code>root</code> 用户，因此命令中不添加 <code>sudo</code>。</p>
+</blockquote>
+<h2 id="🛠️-一、选择-VPS-与厂商推荐"><a href="#🛠️-一、选择-VPS-与厂商推荐" class="headerlink" title="🛠️ 一、选择 VPS 与厂商推荐"></a>🛠️ 一、选择 VPS 与厂商推荐</h2><p>在开始搭建前，需要准备一台具有公网可达 IP 的海外 VPS。线路质量、机房位置和晚高峰拥塞情况，都会直接影响实际体验。</p>
+<h3 id="核心选购指标"><a href="#核心选购指标" class="headerlink" title="核心选购指标"></a>核心选购指标</h3><ul>
+<li><strong>线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现取决于所在地、运营商、路由和晚高峰拥塞。</li>
+<li><strong>机房位置</strong>：通常距离越近，基础延迟越低，但应以测试 IP 的 <code>ping</code>、路由追踪、丢包率和晚高峰测速为准。</li>
+<li><strong>系统支持</strong>：确认服务商可以安装 Debian 12 或 Debian 13 64 位纯净系统。</li>
+<li><strong>公网 IP</strong>：确认 VPS 具有公网可达 IP，并了解服务商是否额外提供安全组或云防火墙。</li>
+<li><strong>付款方式</strong>：根据自己的需求选择月付或年付，首次购买不建议一次预付太长时间。</li>
+</ul>
+<h3 id="VPS-服务商对比"><a href="#VPS-服务商对比" class="headerlink" title="VPS 服务商对比"></a>VPS 服务商对比</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">主要特点</th>
+<th align="left">推荐线路&#x2F;地区</th>
+<th align="left">适用场景</th>
+<th align="left">价格定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
+<td align="left">线路质量较高，提供多种优化网络产品</td>
+<td align="left">CN2 GIA &#x2F; 香港 &#x2F; 日本 &#x2F; 美国</td>
+<td align="left">对线路稳定性要求较高</td>
+<td align="left">较高</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="搬瓦工"><i class="anzhiyu-icon-gift"></i><span>搬瓦工</span></a></strong></td>
+<td align="left">支持多个机房和线路方案</td>
+<td align="left">CN2 GIA-E &#x2F; 日本软银等</td>
+<td align="left">需要灵活切换机房</td>
+<td align="left">中高</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
+<td align="left">支持按量或月付，地区选择较多</td>
+<td align="left">香港 &#x2F; 台湾 &#x2F; 日本 &#x2F; 韩国等</td>
+<td align="left">临时测试和短期项目</td>
+<td align="left">中低</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
+<td align="left">年付产品价格较低</td>
+<td align="left">美国常规线路</td>
+<td align="left">预算有限、博客和测试环境</td>
+<td align="left">较低</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
+<td align="left">全球机房较多，支持按小时计费和 API</td>
+<td align="left">国际标准 BGP</td>
+<td align="left">临时部署和开发测试</td>
+<td align="left">中等</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>线路、IP 属性、库存和价格会随时变化，请以服务商实时页面及测试 IP 为准。上表部分按钮包含推广参数，购买价格通常不因此增加。</p>
+</blockquote>
+<hr>
+<h2 id="💡-二、搭建前准备"><a href="#💡-二、搭建前准备" class="headerlink" title="💡 二、搭建前准备"></a>💡 二、搭建前准备</h2><ul>
+<li>一台具有公网可达 IP 的 VPS，优先选择 <strong>Debian 13 64 位</strong>，也可使用 <strong>Debian 12 64 位</strong>。</li>
+<li>VPS 的公网 IP，以及服务商提供的 <code>root</code> 初始登录凭据。</li>
+<li>SSH 工具：Windows 可使用 Windows Terminal &#x2F; PowerShell，macOS 可使用系统自带终端。</li>
+<li>一个部署时经过测试的 Reality Target&#x2F;SNI。无需拥有这个域名，但不能把网上的示例当成永久可用配置。</li>
+</ul>
+<p>截至 2026 年 7 月，Debian 11 LTS 将于 2026 年 8 月 31 日结束，不建议再用于新装服务器。Debian 12 LTS 持续至 2028 年 6 月 30 日。</p>
+<hr>
+<h2 id="🚀-三、更新-Debian-并安装基础工具"><a href="#🚀-三、更新-Debian-并安装基础工具" class="headerlink" title="🚀 三、更新 Debian 并安装基础工具"></a>🚀 三、更新 Debian 并安装基础工具</h2><p>通过 SSH 登录 VPS：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>你的VPS_IP</code> 替换为真实公网 IP。登录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install -y curl wget ca-certificates tar ufw</span><br></pre></td></tr></table></figure>
+
+<p>如果系统更新了内核，建议先重启，再重新连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚡-四、开启并验证-BBR"><a href="#⚡-四、开启并验证-BBR" class="headerlink" title="⚡ 四、开启并验证 BBR"></a>⚡ 四、开启并验证 BBR</h2><p>使用独立配置文件，避免重复执行时不断向 <code>/etc/sysctl.conf</code> 追加相同内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>验证当前算法及内核可用算法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>第一条应显示当前算法为 <code>bbr</code>，第二条的列表中也应包含 <code>bbr</code>。不要只依靠 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核时可能不会出现在模块列表中。</p>
+<hr>
+<h2 id="🛡️-五、配置-UFW：此时只放行-SSH"><a href="#🛡️-五、配置-UFW：此时只放行-SSH" class="headerlink" title="🛡️ 五、配置 UFW：此时只放行 SSH"></a>🛡️ 五、配置 UFW：此时只放行 SSH</h2><h3 id="1-确认-SSH-实际端口"><a href="#1-确认-SSH-实际端口" class="headerlink" title="1. 确认 SSH 实际端口"></a>1. 确认 SSH 实际端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出是 <code>port 22</code>，下面使用 <code>22</code>；如果输出为其他端口，必须把命令中的 <code>22</code> 换成实际值。</p>
+<h3 id="2-设置策略、放行-SSH-并开启-UFW"><a href="#2-设置策略、放行-SSH-并开启-UFW" class="headerlink" title="2. 设置策略、放行 SSH 并开启 UFW"></a>2. 设置策略、放行 SSH 并开启 UFW</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line">ufw allow 22/tcp comment <span class="string">&#x27;SSH&#x27;</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>Status: active</code> 和实际 SSH 端口规则后，不要立即关闭当前窗口。先新开一个终端再次连接 VPS，确认 SSH 仍然可用。</p>
+<blockquote>
+<p>此时 3X-UI 尚未安装，Reality 入站也尚未创建，因此不要提前开放面板端口、<code>443</code> 或 <code>2096</code>。</p>
+</blockquote>
+<hr>
+<h2 id="🖥️-六、安装-3X-UI-面板"><a href="#🖥️-六、安装-3X-UI-面板" class="headerlink" title="🖥️ 六、安装 3X-UI 面板"></a>🖥️ 六、安装 3X-UI 面板</h2><p>执行 3X-UI 官方安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<p>安装脚本会持续更新，应以屏幕上的实际提示为准。当前版本会生成随机用户名、密码和 WebBasePath，并在安装结束时显示面板端口、访问地址、账号以及 API Token。请立即保存完整输出，不要套用旧教程中的默认账号、固定端口或固定路径。</p>
+<p>如果安装器提供 HTTPS、IP 证书、反向代理或仅监听 <code>127.0.0.1</code> 等选项，请根据实际访问方式选择。公网 HTTP 会明文传输面板登录信息，不适合长期使用。</p>
+<h3 id="安装完成后再放行面板端口"><a href="#安装完成后再放行面板端口" class="headerlink" title="安装完成后再放行面板端口"></a>安装完成后再放行面板端口</h3><p>假设安装结果显示面板端口为 <code>28530</code>，有固定公网 IP 时，建议只允许自己的 IP：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>必须把 <code>你的公网IP</code> 和 <code>28530</code> 换成真实值，不能原样执行。</p>
+<p>没有固定 IP、确实需要临时公网访问时，可以开放实际面板端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>更安全的方式是不向公网开放面板端口，而是在本地建立 SSH 隧道：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-L</span> <span class="number">28530</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">28530</span> root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>随后通过 <code>http://127.0.0.1:28530/你的WebBasePath/</code> 访问。端口和路径都必须使用安装器实际给出的值。</p>
+<hr>
+<h2 id="📡-七、配置-VLESS-REALITY-XTLS-Vision"><a href="#📡-七、配置-VLESS-REALITY-XTLS-Vision" class="headerlink" title="📡 七、配置 VLESS + REALITY + XTLS Vision"></a>📡 七、配置 VLESS + REALITY + XTLS Vision</h2><p>登录面板，进入 <strong>入站列表（Inbounds）</strong>，点击 <strong>添加入站（Add Inbound）</strong>。</p>
+<h3 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h3><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">填写内容</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">备注（Remark）</td>
+<td align="left"><code>VLESS-REALITY</code></td>
+<td align="left">仅用于自己识别</td>
+</tr>
+<tr>
+<td align="left">协议（Protocol）</td>
+<td align="left"><code>VLESS</code></td>
+<td align="left">入站协议</td>
+</tr>
+<tr>
+<td align="left">监听 IP</td>
+<td align="left"><code>0.0.0.0</code></td>
+<td align="left">监听服务器公网网卡</td>
+</tr>
+<tr>
+<td align="left">端口（Port）</td>
+<td align="left"><code>443</code>（示例）</td>
+<td align="left">使用前确认没有被网站或其他服务占用</td>
+</tr>
+<tr>
+<td align="left">客户端 ID &#x2F; UUID</td>
+<td align="left">点击生成</td>
+<td align="left">每位用户建议使用独立 UUID</td>
+</tr>
+<tr>
+<td align="left">Flow</td>
+<td align="left"><code>xtls-rprx-vision</code></td>
+<td align="left">与 TCP&#x2F;RAW + Reality 配合</td>
+</tr>
+<tr>
+<td align="left">传输方式</td>
+<td align="left"><code>TCP</code>，新版内核可能显示 <code>RAW</code></td>
+<td align="left">以当前面板字段为准</td>
+</tr>
+<tr>
+<td align="left">安全（Security）</td>
+<td align="left"><code>reality</code></td>
+<td align="left">开启 Reality</td>
+</tr>
+<tr>
+<td align="left">Fingerprint &#x2F; uTLS</td>
+<td align="left"><code>chrome</code></td>
+<td align="left">客户端也要使用兼容指纹</td>
+</tr>
+<tr>
+<td align="left">Private&#x2F;Public Key</td>
+<td align="left">点击生成</td>
+<td align="left">私钥只保留在服务器端，客户端使用公钥</td>
+</tr>
+<tr>
+<td align="left">Short ID</td>
+<td align="left">点击生成</td>
+<td align="left">必须为偶数长度的十六进制字符串，最长 16 个字符</td>
+</tr>
+</tbody></table>
+<h3 id="Target-与-SNI"><a href="#Target-与-SNI" class="headerlink" title="Target 与 SNI"></a>Target 与 SNI</h3><p>旧教程中常见 <code>dl.google.com:443</code>、<code>www.microsoft.com:443</code> 或 <code>itunes.apple.com:443</code>，但它们只能作为候选示例，不能保证在所有 VPS、地区和时间都适用。</p>
+<ul>
+<li>Target（旧版界面可能显示 Dest）应填写经过测试的 HTTPS 站点和端口。</li>
+<li>Server Names &#x2F; SNI 通常应与 Target 接受的证书域名一致。</li>
+<li>Target 应支持所需 TLS 特性，并且从 VPS 所在网络能够稳定访问。</li>
+<li>不要机械照抄 CDN 或特殊目标。未通过 Reality 验证的流量可能被转发至 Target，错误选择可能导致服务器被滥用为转发器。</li>
+</ul>
+<p>设置完成后点击 <strong>添加（Add）</strong> 保存入站。</p>
+<h3 id="保存入站后再放行节点端口"><a href="#保存入站后再放行节点端口" class="headerlink" title="保存入站后再放行节点端口"></a>保存入站后再放行节点端口</h3><p>本例使用 TCP <code>443</code>，因此执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 443/tcp comment <span class="string">&#x27;VLESS Reality&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>如果入站使用其他端口，就把 <code>443</code> 换成实际端口。本文采用 TCP&#x2F;RAW + Reality，不需要额外执行 <code>ufw allow 443/udp</code>。只有服务确实监听 UDP 时才开放 UDP。</p>
+<p>如果面板端口和入站端口相同，或者 <code>443</code> 已被 Nginx、Caddy 等程序占用，入站将无法正常启动。可先检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📱-八、导出节点并连接客户端"><a href="#📱-八、导出节点并连接客户端" class="headerlink" title="📱 八、导出节点并连接客户端"></a>📱 八、导出节点并连接客户端</h2><p>在入站列表中找到刚创建的记录，点击二维码或复制链接，获取 <code>vless://</code> 节点链接。导入后核对服务器地址、端口、公钥、SNI、Short ID、Fingerprint 和 Flow。</p>
+<table>
+<thead>
+<tr>
+<th align="left">平台</th>
+<th align="left">可选客户端</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Windows</td>
+<td align="left">v2rayN、sing-box</td>
+</tr>
+<tr>
+<td align="left">macOS</td>
+<td align="left">sing-box 等支持 Reality 的客户端</td>
+</tr>
+<tr>
+<td align="left">Android</td>
+<td align="left">v2rayNG、NekoBox、sing-box</td>
+</tr>
+<tr>
+<td align="left">iOS &#x2F; iPadOS</td>
+<td align="left">Shadowrocket、Stash、sing-box</td>
+</tr>
+</tbody></table>
+<p>Shadowrocket（小火箭）本身没有固定服务器端口。它连接哪个端口，取决于你创建的入站配置。</p>
+<hr>
+<h2 id="☁️-九、同步检查云厂商安全组"><a href="#☁️-九、同步检查云厂商安全组" class="headerlink" title="☁️ 九、同步检查云厂商安全组"></a>☁️ 九、同步检查云厂商安全组</h2><p>如果使用阿里云、腾讯云、AWS、Oracle Cloud 等带有安全组或云防火墙的平台，还必须在服务商控制台同步开放实际使用的端口：</p>
+<ul>
+<li>SSH 的实际 TCP 端口。</li>
+<li>面板的实际 TCP 端口——仅当面板需要公网访问时。</li>
+<li>Reality 入站的实际 TCP 端口。</li>
+</ul>
+<p>云安全组和 UFW 是两道独立防火墙。任何一层没有放行，外部都无法访问。不要为了省事开放全部端口或 <code>0-65535</code>。</p>
+<hr>
+<h2 id="🛠️-十、排查与维护命令"><a href="#🛠️-十、排查与维护命令" class="headerlink" title="🛠️ 十、排查与维护命令"></a>🛠️ 十、排查与维护命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 3X-UI 管理菜单</span></span><br><span class="line">x-ui</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看面板服务状态</span></span><br><span class="line">systemctl status x-ui --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查节点端口和面板端口（按实际端口替换）</span></span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(443|28530)\b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙规则</span></span><br><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改规则后重新加载</span></span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<p>如果服务正在监听但外部无法访问，应依次检查：服务商安全组、UFW、入站端口、客户端参数、VPS 系统时间和 Target 可达性。不要直接关闭全部防火墙来排错。</p>
+<p>若误封 SSH，请通过 VPS 服务商的 VNC、Web Console 或 Serial Console 登录，修正规则后再继续。</p>
+<hr>
+<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>正确的安全顺序是：</p>
+<ol>
+<li>选择支持 Debian 和公网 IP 的 VPS。</li>
+<li>更新 Debian 并确认 SSH 登录。</li>
+<li>开启并验证 BBR。</li>
+<li>只放行 SSH 后开启 UFW。</li>
+<li>安装 3X-UI，取得真实面板端口后再决定是否放行。</li>
+<li>创建 VLESS + Reality 入站，保存后只开放实际节点 TCP 端口。</li>
+<li>同步检查云厂商安全组，最后导入客户端测试。</li>
+</ol>
+<p>如果这篇教程对你有帮助，欢迎前往 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong> 观看配套视频。视频会展示面板界面和实际操作过程，后续更新也会优先发布在频道中。</p>
+<p>官方参考：<a href="https://www.debian.org/News/2026/20260712">Debian 版本支持周期</a>、<a href="https://manpages.debian.org/bookworm/ufw/ufw.8.en.html">Debian UFW 手册</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>
+]]></content>
       <categories>
-          
-          <category> 技术教程 </category>
-          
-          <category> 网络链路 </category>
-          
+        <category>技术教程</category>
+        <category>网络链路</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> 网络优化 </tag>
-            
-            <tag> Reality协议 </tag>
-            
-            <tag> 服务器运维 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-      <link href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
-      <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p><blockquote><p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p></blockquote><hr><h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p><hr><h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul><li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li><li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li></ul><h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p><h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p><hr><h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure><h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol><li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li><li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li><li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li><li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li></ol><p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p><hr><h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol><li>使用脚本创建的 <code>Apple</code> 账户登录。</li><li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li><li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li><li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li></ol><hr><h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p><p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p><p><strong>Q2：提示 “Read-only file system”</strong></p><p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p><p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p><p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure><hr><h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p><div style="border: 1px dashed #3498db; border-radius: 12px; padding: 20px; background-color: #f7fbfe; margin-top: 30px;">    <h3 style="color: #2980b9; margin-top: 0;">🚀 智连云 | 进阶技术支持</h3>    <p style="font-size: 14px; color: #555;">如果您在绕过 MDM 或 VPS 部署过程中遇到困难，欢迎访问我们的技术社区或观看 YouTube 同步教程。</p>    <div style="display: flex; gap: 10px;">        <a href="/docs/vps-setup/" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">VPS 保姆级教程</a>        <a href="/docs/ssh-tool/" style="background-color: #2ecc71; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">常用工具下载</a>    </div></div>]]></content>
-      
-      
+      <tags>
+        <tag>VPS</tag>
+        <tag>Debian</tag>
+        <tag>Reality协议</tag>
+        <tag>3X-UI</tag>
+        <tag>服务器运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<h2 id="📺-观看更多视频教程"><a href="#📺-观看更多视频教程" class="headerlink" title="📺 观看更多视频教程"></a>📺 观看更多视频教程</h2><p>更多 macOS、VPS 和服务器运维实操视频，请访问 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p>
+<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="前往 YouTube 频道"><i class="fab fa-youtube"></i><span>前往 YouTube 频道</span></a>
+]]></content>
       <categories>
-          
-          <category> 技术教程 </category>
-          
+        <category>技术教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> macOS </tag>
-            
-            <tag> MDM </tag>
-            
-            <tag> 系统工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>macOS</tag>
+        <tag>MDM</tag>
+        <tag>系统工具</tag>
+      </tags>
+  </entry>
 </search>
