@@ -1,1126 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</title>
-    <url>/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/h67zIOeu6x0"
-    title="sing-box VPS 部署 VLESS Reality Vision 新手视频教程"
-    loading="lazy"
-    frameborder="0"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=h67zIOeu6x0" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<p>如果你刚开始折腾 VPS 节点，不想一上来就碰域名、证书、Nginx、CDN、面板，那么 <strong>sing-box + VLESS + Reality + Vision</strong> 是一个很适合入门的组合。</p>
-<p>它的优点很直接：</p>
-<ul>
-<li>不需要域名</li>
-<li>不需要申请 TLS 证书</li>
-<li>服务端只跑 sing-box，一个配置文件就能启动</li>
-<li><code>Reality</code> 负责伪装真实 TLS 握手</li>
-<li><code>Vision</code> 负责 VLESS 在 TCP 场景下的高性能传输</li>
-</ul>
-<p>这篇教程会从一台全新的 Debian &#x2F; Ubuntu VPS 开始，带你完成安装、生成密钥、写服务端配置、启动服务、填写客户端参数和排错。</p>
-<blockquote>
-<p>本教程已于 2026 年 7 月依据 sing-box 当前官方文档复核。sing-box 配置语法更新较快，请使用官方稳定版，并在每次重启服务前运行 <code>sing-box check -c /etc/sing-box/config.json</code>。</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="🎯-先说结论"><a href="#🎯-先说结论" class="headerlink" title="🎯 先说结论"></a>🎯 先说结论</h2><p>最终我们要部署的是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</span><br></pre></td></tr></table></figure>
-
-<p>在 sing-box 配置里，最关键的几个字段是：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里容易混淆的地方是：<strong>Vision 不是一个单独协议，也不是传输层，而是 VLESS 的 <code>flow</code> 参数</strong>。</p>
-<h2 id="💡-一、准备条件"><a href="#💡-一、准备条件" class="headerlink" title="💡 一、准备条件"></a>💡 一、准备条件</h2><p>你需要准备：</p>
-<ul>
-<li>一台 VPS，推荐 Debian 12 或 Ubuntu 22.04 &#x2F; 24.04</li>
-<li>一个可以 SSH 登录 VPS 的终端</li>
-<li>VPS 公网 IP</li>
-<li>放行一个 TCP 端口，本文默认使用 <code>443</code></li>
-</ul>
-<p>本文不需要：</p>
-<ul>
-<li>不需要域名</li>
-<li>不需要 Cloudflare</li>
-<li>不需要申请证书</li>
-<li>不需要 3x-ui &#x2F; x-ui 面板</li>
-</ul>
-<blockquote>
-<p>注意：请遵守你所在地区和服务商的使用规则。本文仅用于自有服务器远程访问、加密传输和网络调试场景。</p>
-</blockquote>
-<h2 id="🚀-二、更新系统"><a href="#🚀-二、更新系统" class="headerlink" title="🚀 二、更新系统"></a>🚀 二、更新系统</h2><p>SSH 登录 VPS 后，先更新系统。</p>
-<p>如果你是 <code>root</code> 用户，按顺序一条一条执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get full-upgrade -y</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install -y curl wget nano ca-certificates gnupg lsb-release ufw</span><br></pre></td></tr></table></figure>
-
-<p>Reality 对服务端和客户端时间差比较敏感，时间明显不准时可能会连接失败。先查看时间状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
-
-<p>重点看 <code>Local time</code>、<code>Universal time</code> 和 <code>System clock synchronized</code>。如果时间明显不对，优先到 VPS 服务商面板里检查系统时间；如果你用的是 LXC &#x2F; OpenVZ &#x2F; 容器环境，系统时间通常由宿主机控制，容器内不一定能直接修改。</p>
-<h2 id="📦-三、安装-sing-box"><a href="#📦-三、安装-sing-box" class="headerlink" title="📦 三、安装 sing-box"></a>📦 三、安装 sing-box</h2><p>sing-box 官方提供了安装脚本。Debian &#x2F; Ubuntu 用户可以直接执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://sing-box.app/install.sh | sh</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后查看版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box version</span><br></pre></td></tr></table></figure>
-
-<p>如果能看到版本号，就说明安装成功。以后需要升级 sing-box，也可以再次运行上面的官方安装脚本。</p>
-<h2 id="⚡-四、开启-BBR"><a href="#⚡-四、开启-BBR" class="headerlink" title="⚡ 四、开启 BBR"></a>⚡ 四、开启 BBR</h2><p>BBR 不是必须项，但大多数 VPS 上开启后 TCP 体验会更好。</p>
-<p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>再应用系统参数：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
-
-<p>看到类似结果即可：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
-
-<h2 id="🔑-五、生成-UUID、Reality-密钥和-Short-ID"><a href="#🔑-五、生成-UUID、Reality-密钥和-Short-ID" class="headerlink" title="🔑 五、生成 UUID、Reality 密钥和 Short ID"></a>🔑 五、生成 UUID、Reality 密钥和 Short ID</h2><p>VLESS + Reality 需要 4 个关键参数：</p>
-<ul>
-<li><code>uuid</code>：用户 ID，客户端和服务端必须一致</li>
-<li><code>private_key</code>：Reality 私钥，只放在服务端</li>
-<li><code>public_key</code>：Reality 公钥，只放在客户端</li>
-<li><code>short_id</code>：短 ID，客户端和服务端必须一致</li>
-</ul>
-<p>先生成 UUID：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box generate uuid</span><br></pre></td></tr></table></figure>
-
-<p>示例输出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0d72f5a1-1111-4a22-8888-123456789abc</span><br></pre></td></tr></table></figure>
-
-<p>再生成 Reality 密钥对：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box generate reality-keypair</span><br></pre></td></tr></table></figure>
-
-<p>示例输出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">PrivateKey: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br><span class="line">PublicKey: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span><br></pre></td></tr></table></figure>
-
-<p>最后生成 short_id：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box generate rand --hex 8</span><br></pre></td></tr></table></figure>
-
-<p>示例输出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">7f3a91c6d8e24b10</span><br></pre></td></tr></table></figure>
-
-<p>如果你的 sing-box 版本没有 <code>generate rand</code>，也可以用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl rand -hex 8</span><br></pre></td></tr></table></figure>
-
-<p>把这 4 个值先记下来：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">UUID        = 你的 UUID</span><br><span class="line">PrivateKey  = 服务端 Reality 私钥</span><br><span class="line">PublicKey   = 客户端 Reality 公钥</span><br><span class="line">Short ID    = short_id</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>千万不要把 <code>PrivateKey</code> 发给别人。客户端只需要 <code>PublicKey</code>。</p>
-</blockquote>
-<h2 id="🌐-六、选择-Reality-目标站"><a href="#🌐-六、选择-Reality-目标站" class="headerlink" title="🌐 六、选择 Reality 目标站"></a>🌐 六、选择 Reality 目标站</h2><p>Reality 需要一个真实可访问的网站作为握手目标。新手可以先用：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">www.microsoft.com</span><br></pre></td></tr></table></figure>
-
-<p>在 VPS 上测试一下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I https://www.microsoft.com --connect-timeout 5</span><br></pre></td></tr></table></figure>
-
-<p>能看到 HTTP 响应头，说明 VPS 可以访问这个目标。</p>
-<p>你也可以换成其他大型 HTTPS 网站，但建议满足这几点：</p>
-<ul>
-<li>支持 TLS 1.3</li>
-<li>从你的 VPS 能正常访问</li>
-<li>域名和证书正常</li>
-<li>不要使用奇怪的小站或自建站</li>
-</ul>
-<p>本文后面的配置统一使用：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">server_name = www.microsoft.com</span><br></pre></td></tr></table></figure>
-
-<p>如果后续使用中遇到断流，可以将 <code>server_name</code> 和 <code>handshake.server</code> 换成苹果的系统更新或 iCloud 域名，例如 <code>swdist.apple.com</code> 或 <code>gateway.icloud.com</code>。换伪装域名时，服务端和客户端必须保持一致。</p>
-<h2 id="📝-七、写入服务端配置"><a href="#📝-七、写入服务端配置" class="headerlink" title="📝 七、写入服务端配置"></a>📝 七、写入服务端配置</h2><p>打开 sing-box 配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nano /etc/sing-box/config.json</span><br></pre></td></tr></table></figure>
-
-<p>把下面这一整份 JSON 写入 <code>/etc/sing-box/config.json</code>。如果文件里已经有默认配置，比如 <code>shadowsocks</code>、<code>mixed</code>、<code>tun</code> 等旧入站内容，不要和下面的配置混在一起；写入前先清空原文件内容，并替换 3 个地方：</p>
-<ul>
-<li><code>替换成你的UUID</code></li>
-<li><code>替换成你的Reality私钥</code></li>
-<li><code>替换成你的ShortID</code></li>
-</ul>
-<p>这里 <strong>不用填 VPS IP</strong>。服务端的 <code>&quot;listen&quot;: &quot;0.0.0.0&quot;</code> 表示监听这台 VPS 的所有公网和内网地址，保持不变即可。VPS IP 只填在后面的客户端配置里。</p>
-<p>注意：这一段是 <strong>服务端配置</strong>，要写在 VPS 的 <code>/etc/sing-box/config.json</code> 里。服务端配置里应该看到 <code>inbounds</code> 里的 <code>&quot;type&quot;: &quot;vless&quot;</code> 和 <code>private_key</code>。如果你看到的是 <code>&quot;type&quot;: &quot;mixed&quot;</code>、<code>&quot;tag&quot;: &quot;mixed-in&quot;</code>、<code>&quot;server&quot;: &quot;你的VPS公网IP&quot;</code>、<code>public_key</code> 或 <code>&quot;final&quot;: &quot;proxy&quot;</code>，那是后面的客户端配置，不能粘到 VPS 服务端。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;log&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;level&quot;</span><span class="punctuation">:</span> <span class="string">&quot;info&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless-reality-in&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;users&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user1&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;替换成你的UUID&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;server_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;handshake&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span></span><br><span class="line">          <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;private_key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;替换成你的Reality私钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;short_id&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;替换成你的ShortID&quot;</span></span><br><span class="line">          <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;max_time_difference&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1m&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;route&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;final&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里解释几个重点：</p>
-<ul>
-<li><code>listen_port</code>：服务端监听端口，本文用 <code>443</code></li>
-<li><code>uuid</code>：VLESS 用户 ID</li>
-<li><code>flow</code>：必须填 <code>xtls-rprx-vision</code></li>
-<li><code>server_name</code>：客户端填写的 SNI，也就是伪装目标域名</li>
-<li><code>handshake.server</code>：Reality 实际转发握手的目标站</li>
-<li><code>private_key</code>：只写服务端 Reality 私钥</li>
-<li><code>short_id</code>：客户端也要填写同一个值</li>
-</ul>
-<p>如果你的 VPS 同时有 IPv6，并且你希望监听 IPv4 + IPv6，可以把：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&quot;listen&quot;: &quot;0.0.0.0&quot;</span><br></pre></td></tr></table></figure>
-
-<p>改成：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&quot;listen&quot;: &quot;::&quot;</span><br></pre></td></tr></table></figure>
-
-<p>新手优先用 <code>0.0.0.0</code>，排错更直观。</p>
-<h2 id="✅-八、检查配置并启动服务"><a href="#✅-八、检查配置并启动服务" class="headerlink" title="✅ 八、检查配置并启动服务"></a>✅ 八、检查配置并启动服务</h2><p>编辑时看到 JSON 被挤成很长一行，或者自动折到下一行，是正常显示效果，不代表配置错了。不要靠肉眼判断，写入后用下面的命令检查。</p>
-<p>下面几步建议一条一条执行，不要把多条命令粘在同一行。</p>
-<p>第一步，检查配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure>
-
-<p>如果没有报错，第二步，格式化配置：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box format -w -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure>
-
-<p>第三步，设置开机自启并重启服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> sing-box</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure>
-
-<p>第四步，查看运行状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>看到 <code>Active: active (running)</code>，并且日志里有 <code>tcp server started at 0.0.0.0:443</code>，说明 sing-box 已经启动成功。如果 <code>Loaded</code> 那一行显示 <code>disabled</code>，表示当前服务虽然在运行，但还没有设置开机自启，再执行一次 <code>systemctl enable sing-box</code> 即可。</p>
-<p>如果误把几条命令粘在同一行，可能会看到 <code>unknown flag: --no-pager</code>。这不是配置错了，只是 shell 把后面的命令当成前一条命令的参数了，重新按上面四步分开执行即可。</p>
-<p>查看日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure>
-
-<p>检查端口是否监听：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tlnp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>正常情况下，你应该能看到 sing-box 正在监听 <code>443</code>。</p>
-<h2 id="🛡️-九、放行防火墙端口"><a href="#🛡️-九、放行防火墙端口" class="headerlink" title="🛡️ 九、放行防火墙端口"></a>🛡️ 九、放行防火墙端口</h2><p>如果你使用 <code>ufw</code>，先确认 SSH 端口已经放行。若执行 <code>ufw</code> 时提示 <code>ufw: command not found</code>，说明系统里还没安装 <code>ufw</code>，可以先安装。下面两条命令要分开执行，不要粘在同一行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install -y ufw</span><br></pre></td></tr></table></figure>
-
-<p>如果误粘成 <code>apt-get update apt-get install -y ufw</code>，会看到 <code>E: The update command takes no arguments</code>。这不是系统坏了，重新按上面两条分别执行即可。</p>
-<p>如果你用的是容器环境，系统可能不支持 <code>ufw</code>。这种情况下可以先跳过系统内防火墙，只去服务商后台安全组放行 <code>22/tcp</code> 和 <code>443/tcp</code>。</p>
-<p>默认 SSH 是 <code>22</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br></pre></td></tr></table></figure>
-
-<p>放行 sing-box 节点端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 443/tcp</span><br></pre></td></tr></table></figure>
-
-<p>启用防火墙：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>如果你改过 SSH 端口，比如 SSH 是 <code>2222</code>，那就必须放行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 2222/tcp</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>云厂商后台的安全组也要同步放行 <code>443/tcp</code>。很多连接超时不是 sing-box 配置错了，而是云防火墙没开。</p>
-</blockquote>
-<h2 id="📱-十、填写客户端参数"><a href="#📱-十、填写客户端参数" class="headerlink" title="📱 十、填写客户端参数"></a>📱 十、填写客户端参数</h2><p>不同客户端界面不一样，但核心参数是一样的。</p>
-<h3 id="图形客户端通用参数"><a href="#图形客户端通用参数" class="headerlink" title="图形客户端通用参数"></a>图形客户端通用参数</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">协议：VLESS</span><br><span class="line">地址 / Server：你的 VPS 公网 IP</span><br><span class="line">端口 / Port：443</span><br><span class="line">UUID：服务端生成的 UUID</span><br><span class="line">传输 / Network：TCP / RAW</span><br><span class="line">加密 / Encryption：none</span><br><span class="line">Flow：xtls-rprx-vision</span><br><span class="line">TLS：开启</span><br><span class="line">TLS 类型：Reality</span><br><span class="line">SNI / Server Name：www.microsoft.com</span><br><span class="line">Fingerprint / uTLS：chrome</span><br><span class="line">Public Key：服务端生成的 PublicKey</span><br><span class="line">Short ID：服务端配置里的 short_id</span><br><span class="line">ALPN：留空</span><br></pre></td></tr></table></figure>
-
-<p>注意两点：</p>
-<ol>
-<li><code>地址 / Server</code> 填你的 VPS IP，不是 <code>www.microsoft.com</code></li>
-<li><code>SNI / Server Name</code> 才填 <code>www.microsoft.com</code></li>
-</ol>
-<p>这两个填反了，是新手最常见的错误。</p>
-<h3 id="桌面端-sing-box-客户端示例"><a href="#桌面端-sing-box-客户端示例" class="headerlink" title="桌面端 sing-box 客户端示例"></a>桌面端 sing-box 客户端示例</h3><p>如果你在电脑本地也用 sing-box，可以参考下面这份配置。这一段适合 macOS &#x2F; Windows &#x2F; Linux 桌面端使用，因为它只是在本机开一个 <code>127.0.0.1:7890</code> 代理端口。</p>
-<p>注意：这不是手机端整机代理配置。手机端如果直接照抄这个 <code>mixed-in</code> 配置，客户端可能显示已经启动，但系统流量不会自动走代理。</p>
-<p>把这几个值替换掉：</p>
-<ul>
-<li><code>你的VPS公网IP</code></li>
-<li><code>你的UUID</code></li>
-<li><code>你的Reality公钥</code></li>
-<li><code>你的ShortID</code></li>
-</ul>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;log&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;level&quot;</span><span class="punctuation">:</span> <span class="string">&quot;info&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mixed&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mixed-in&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen_port&quot;</span><span class="punctuation">:</span> <span class="number">7890</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的VPS公网IP&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的UUID&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;server_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;utls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;fingerprint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;chrome&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;public_key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的Reality公钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;short_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的ShortID&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;packet_encoding&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xudp&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;route&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;final&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>启动客户端后，把系统代理或浏览器代理指向：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">127.0.0.1:7890</span><br></pre></td></tr></table></figure>
-
-<p>如果客户端日志里只看到终端测试请求，比如 <code>api.ipify.org:443</code>，但浏览器没有任何连接记录，说明浏览器还没有走这个本地代理。</p>
-<h3 id="手机端-sing-box-使用要点"><a href="#手机端-sing-box-使用要点" class="headerlink" title="手机端 sing-box 使用要点"></a>手机端 sing-box 使用要点</h3><p>手机端不要只看 <code>sing-box started</code>。关键是确认它有没有用 VPN &#x2F; TUN 模式接管系统流量。</p>
-<p>正常情况下，手机端启动后应该出现系统 VPN 图标，sing-box 日志里也应该能看到手机浏览器或 App 发出的连接。如果没有 VPN 图标，或者日志里没有任何新的访问记录，通常说明手机流量没有进入 sing-box。</p>
-<p>手机端建议优先使用客户端图形界面填写上面的“图形客户端通用参数”，或使用客户端提供的导入功能。不要把桌面端的 <code>127.0.0.1:7890</code> 当成手机整机代理来用。</p>
-<p>如果手机端提供运行模式，优先选择类似下面的模式：</p>
-<ul>
-<li>VPN</li>
-<li>TUN</li>
-<li>全局代理 &#x2F; Global</li>
-</ul>
-<p>如果只提供本地 HTTP &#x2F; SOCKS 代理模式，那就还需要在系统 Wi-Fi 代理里手动填写手机本机代理地址；这个方式容易漏掉 App 流量，新手更推荐直接用 VPN &#x2F; TUN 模式。</p>
-<h2 id="🧪-十一、测试是否成功"><a href="#🧪-十一、测试是否成功" class="headerlink" title="🧪 十一、测试是否成功"></a>🧪 十一、测试是否成功</h2><p>桌面端客户端连接后，打开终端测试：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</span><br></pre></td></tr></table></figure>
-
-<p>如果返回的是你的 VPS 出口 IP，说明客户端到 VPS 的代理链路已经工作。此时如果浏览器仍然没网，重点检查浏览器或系统代理是否真的指向 <code>127.0.0.1:7890</code>。</p>
-<p>也可以测试 HTTPS：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://www.google.com -I</span><br></pre></td></tr></table></figure>
-
-<p>手机端测试时，直接用手机浏览器打开：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://api.ipify.org</span><br></pre></td></tr></table></figure>
-
-<p>如果显示的是 VPS IP，说明手机端已经走代理。如果显示的还是手机运营商或家里宽带 IP，说明手机端 VPN &#x2F; TUN 没有接管流量，优先回到客户端里检查运行模式和配置是否启用。</p>
-<p>服务端日志里如果有连接记录，也说明入站正在工作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure>
-
-<h2 id="🛠️-十二、常见错误排查"><a href="#🛠️-十二、常见错误排查" class="headerlink" title="🛠️ 十二、常见错误排查"></a>🛠️ 十二、常见错误排查</h2><h3 id="1-客户端连接超时"><a href="#1-客户端连接超时" class="headerlink" title="1. 客户端连接超时"></a>1. 客户端连接超时</h3><p>优先检查端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tlnp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>再检查云厂商安全组是否放行了 <code>443/tcp</code>。</p>
-<p>如果端口没监听，说明 sing-box 没启动成功：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -e</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-reality-verification-failed"><a href="#2-reality-verification-failed" class="headerlink" title="2. reality verification failed"></a>2. reality verification failed</h3><p>通常是这些参数不一致：</p>
-<ul>
-<li>客户端 <code>PublicKey</code> 填错</li>
-<li>服务端 <code>PrivateKey</code> 填错</li>
-<li><code>short_id</code> 不一致</li>
-<li><code>server_name</code> &#x2F; SNI 不一致</li>
-<li>客户端时间或服务端时间偏差太大</li>
-<li>客户端 sing-box 核心太旧</li>
-</ul>
-<p>先检查时间：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
-
-<p>再升级 sing-box，按顺序一条一条执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install --only-upgrade sing-box</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-TLS-handshake-invalid-connection-processed-invalid-connection"><a href="#3-TLS-handshake-invalid-connection-processed-invalid-connection" class="headerlink" title="3. TLS handshake invalid connection &#x2F; processed invalid connection"></a>3. TLS handshake invalid connection &#x2F; processed invalid connection</h3><p>服务端日志里偶尔出现 <code>TLS handshake invalid connection</code> 或 <code>processed invalid connection</code>，不一定代表配置错了。公网端口会被扫描，陌生连接打到 Reality 入站时可能会被拒绝。</p>
-<p>如果 <code>systemctl status</code> 里已经看到 <code>Active: active (running)</code>，并且日志里出现 <code>inbound connection from ...</code>，说明外部连接已经能打到 VPS，端口和安全组大概率是通的。</p>
-<p>判断是不是自己的客户端：先在本地查公网 IP，再打开客户端连接，看服务端日志里是否出现同一个 IP。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://api.ipify.org</span><br></pre></td></tr></table></figure>
-
-<p>如果日志里的 IP 不是你的公网 IP，多半只是公网扫描，可以忽略。如果日志里的 IP 是你的公网 IP，但仍然报 Reality &#x2F; TLS 握手错误，再重点检查 UUID、Reality 公钥、short_id、SNI 和 <code>flow</code> 是否完全一致。</p>
-<h3 id="4-客户端显示-connected，但网页打不开"><a href="#4-客户端显示-connected，但网页打不开" class="headerlink" title="4. 客户端显示 connected，但网页打不开"></a>4. 客户端显示 connected，但网页打不开</h3><p>先在本机确认本地代理是否工作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</span><br></pre></td></tr></table></figure>
-
-<p>如果这条命令能返回 VPS 出口 IP，说明节点本身是通的。浏览器打不开通常是浏览器没有走代理：把 macOS 系统代理或浏览器代理设置为 <code>SOCKS5 127.0.0.1 7890</code>，再打开 <code>https://api.ipify.org</code> 验证。</p>
-<p>检查服务端出站是否能访问外网：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I https://www.google.com --connect-timeout 5</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I https://www.microsoft.com --connect-timeout 5</span><br></pre></td></tr></table></figure>
-
-<p>如果服务端自己都访问不了目标网站，那不是客户端问题，而是 VPS 出口网络问题。</p>
-<h3 id="5-手机端-sing-box-启动了，但没网络"><a href="#5-手机端-sing-box-启动了，但没网络" class="headerlink" title="5. 手机端 sing-box 启动了，但没网络"></a>5. 手机端 sing-box 启动了，但没网络</h3><p>如果电脑端用 <code>curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</code> 能返回 VPS IP，但手机端不行，优先怀疑手机端没有用 VPN &#x2F; TUN 接管系统流量，而不是 VPS 或防火墙坏了。</p>
-<p>手机端按这个顺序排查：</p>
-<ol>
-<li>启动后手机状态栏是否出现 VPN 图标</li>
-<li>手机浏览器打开 <code>https://api.ipify.org</code> 是否显示 VPS IP</li>
-<li>VPS 上执行 <code>journalctl -u sing-box --output cat -f</code> 时，手机访问网页后是否出现新的 <code>inbound connection</code></li>
-</ol>
-<p>如果没有 VPN 图标，也没有服务端新连接，说明手机流量根本没有进入 sing-box。回到手机客户端里选择 VPN &#x2F; TUN &#x2F; 全局代理模式。</p>
-<p>如果服务端有手机的新连接，但仍然打不开网页，再检查客户端参数是否和服务端一致，尤其是 <code>UUID</code>、<code>Public Key</code>、<code>Short ID</code>、<code>SNI</code>、<code>Flow</code> 和端口 <code>443</code>。</p>
-<h3 id="6-速度不理想"><a href="#6-速度不理想" class="headerlink" title="6. 速度不理想"></a>6. 速度不理想</h3><p>VLESS + Reality + Vision 是稳定路线，不是暴力提速路线。速度主要取决于：</p>
-<ul>
-<li>VPS 线路质量</li>
-<li>本地运营商到 VPS 的路由</li>
-<li>晚高峰丢包</li>
-<li>VPS 带宽限制</li>
-<li>客户端分流和 DNS 配置</li>
-</ul>
-<p>如果 TCP 晚高峰丢包严重，可以再额外部署 Hysteria2 &#x2F; TUIC 作为 UDP 加速备用节点。但这已经是另一套方案，不建议新手一开始就混在同一个教程里。</p>
-<h2 id="🔄-十三、升级和维护"><a href="#🔄-十三、升级和维护" class="headerlink" title="🔄 十三、升级和维护"></a>🔄 十三、升级和维护</h2><p>以后升级 sing-box，按顺序一条一条执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install --only-upgrade sing-box</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure>
-
-<p>查看服务状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>查看实时日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure>
-
-<p>修改配置后，一定先检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure>
-
-<p>没报错再重启：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure>
-
-<h2 id="📋-十四、参数速查表"><a href="#📋-十四、参数速查表" class="headerlink" title="📋 十四、参数速查表"></a>📋 十四、参数速查表</h2><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>服务端填写</th>
-<th>客户端填写</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>VPS IP</td>
-<td>不需要</td>
-<td><code>server</code></td>
-</tr>
-<tr>
-<td>端口</td>
-<td><code>listen_port</code></td>
-<td><code>server_port</code></td>
-</tr>
-<tr>
-<td>UUID</td>
-<td><code>users.uuid</code></td>
-<td><code>uuid</code></td>
-</tr>
-<tr>
-<td>Vision</td>
-<td><code>users.flow</code></td>
-<td><code>flow</code></td>
-</tr>
-<tr>
-<td>Reality 私钥</td>
-<td><code>tls.reality.private_key</code></td>
-<td>不填</td>
-</tr>
-<tr>
-<td>Reality 公钥</td>
-<td>不填</td>
-<td><code>tls.reality.public_key</code></td>
-</tr>
-<tr>
-<td>short_id</td>
-<td><code>tls.reality.short_id</code></td>
-<td><code>tls.reality.short_id</code></td>
-</tr>
-<tr>
-<td>伪装域名</td>
-<td><code>tls.server_name</code> 和 <code>handshake.server</code></td>
-<td><code>tls.server_name</code> &#x2F; SNI</td>
-</tr>
-<tr>
-<td>uTLS 指纹</td>
-<td>不填</td>
-<td><code>chrome</code></td>
-</tr>
-</tbody></table>
-<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>如果你只是想先搭一个稳定、干净、可维护的 VPS 节点，那么这套 <code>sing-box + VLESS + Reality + Vision</code> 就足够作为第一套配置。</p>
-<p>它不追求花哨，但胜在链路简单、依赖少、排错容易。等你把这套跑稳之后，再去加 Hysteria2、TUIC、CDN 备用通道或更复杂的分流，会轻松很多。</p>
-<blockquote>
-<p>旧版文章曾附带 Fake-IP + TUN 客户端模板。由于旧 FakeIP 配置已在 sing-box 1.14 中移除，为避免新手复制不兼容配置，本次发布不再展示该附录。手机客户端建议使用支持当前 sing-box 核心的图形客户端，并按照前文“图形客户端通用参数”填写。</p>
-</blockquote>
-<h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你希望跟着实际终端画面操作，请观看 <strong><a href="https://www.youtube.com/watch?v=h67zIOeu6x0">sing-box + VLESS + Reality + Vision 配套视频</a></strong>。更多 VPS 和服务器运维教程会持续发布在 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p>
-<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
-<li><a href="https://sing-box.sagernet.org/installation/package-manager/">sing-box 官方安装文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/inbound/vless/">sing-box VLESS 入站文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/outbound/vless/">sing-box VLESS 出站文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/shared/tls/">sing-box TLS &#x2F; Reality 文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/">sing-box 配置检查与格式化</a></li>
-</ul>
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</title>
+      <link href="/2026/06/15/hysteria2-cloudflare-dns-vps/"/>
+      <url>/2026/06/15/hysteria2-cloudflare-dns-vps/</url>
+      
+        <content type="html"><![CDATA[<div class="video-container">  <iframe    src="https://www.youtube.com/embed/ELCVRcb8KfQ"    title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署视频"    loading="lazy"    frameborder="0"    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"    referrerpolicy="strict-origin-when-cross-origin"    allowfullscreen>  </iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a><a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a><p>本文记录如何使用自己的域名和 VPS 搭建 Hysteria2 服务端。示例中使用的子域名是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure><p>请把文中的域名、邮箱和 VPS IP 替换成你自己的真实信息。</p><p>本文只适合合法自用、远程办公、授权测试和个人网络环境优化。不要用于违法用途，也不要用于违反服务条款的场景。</p><span id="more"></span><h2 id="💡-一、准备工作"><a href="#💡-一、准备工作" class="headerlink" title="💡 一、准备工作"></a>💡 一、准备工作</h2><p>开始之前，你需要准备好以下内容：</p><ul><li>一个自己的域名；</li><li>一台 VPS，建议使用 Debian 12 或 Debian 13 纯净系统；</li><li>VPS 的公网 IPv4 地址；</li><li>可以 SSH 登录 VPS 的 root 权限；</li><li>域名 DNS 管理权限，例如 Cloudflare。</li></ul><p>本文默认使用的服务端域名是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure><p>后面所有命令里的 <code>hy2.example.com</code>、<code>your@email.com</code> 和 <code>你的VPS_IP</code> 都需要替换。</p><h2 id="🌐-二、进入-DNS-设置页面"><a href="#🌐-二、进入-DNS-设置页面" class="headerlink" title="🌐 二、进入 DNS 设置页面"></a>🌐 二、进入 DNS 设置页面</h2><p>先找到你的域名 DNS 设置页面。</p><p>如果你使用 Cloudflare，常见路径是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网站 -&gt; DNS -&gt; Records</span><br></pre></td></tr></table></figure><p>进入 DNS Records 页面后，准备添加一条新的 DNS 记录。</p><h2 id="🧭-三、添加子域名解析"><a href="#🧭-三、添加子域名解析" class="headerlink" title="🧭 三、添加子域名解析"></a>🧭 三、添加子域名解析</h2><p>添加一条 <code>A</code> 记录：</p><table><thead><tr><th>类型</th><th>名称</th><th>内容</th><th>TTL</th><th>代理状态</th></tr></thead><tbody><tr><td>A</td><td>hy2</td><td>你的 VPS IPv4 地址</td><td>Auto 或 300</td><td>DNS only &#x2F; 灰云</td></tr></tbody></table><p>示例：</p><table><thead><tr><th>类型</th><th>名称</th><th>内容</th><th>TTL</th><th>代理状态</th></tr></thead><tbody><tr><td>A</td><td>hy2</td><td>123.123.123.123</td><td>Auto</td><td>DNS only</td></tr></tbody></table><p>这里的最终访问域名就是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure><p>注意，Cloudflare 里一定不要开启橙云代理，要保持 <code>DNS only</code>，也就是灰云状态。</p><p>原因很简单：普通 Cloudflare CDN 不会直接代理 Hysteria2 的 UDP 443 流量。开启橙云后，客户端连接到的是 Cloudflare，而不是你的 VPS，Hysteria2 会连不上。</p><h2 id="⏳-四、等待-DNS-生效"><a href="#⏳-四、等待-DNS-生效" class="headerlink" title="⏳ 四、等待 DNS 生效"></a>⏳ 四、等待 DNS 生效</h2><p>添加 DNS 记录后，等待几分钟。</p><p>可以在本地电脑或 VPS 上测试：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping hy2.example.com</span><br></pre></td></tr></table></figure><p>如果能解析到你的 VPS IPv4 地址，说明 DNS 已经生效。</p><p>如果暂时没有解析到，先等几分钟再试。DNS 生效时间和本地缓存、运营商缓存、域名服务商有关。</p><h2 id="🔐-五、SSH-登录-VPS"><a href="#🔐-五、SSH-登录-VPS" class="headerlink" title="🔐 五、SSH 登录 VPS"></a>🔐 五、SSH 登录 VPS</h2><p>DNS 准备好后，SSH 登录 VPS：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@你的VPS_IP</span><br></pre></td></tr></table></figure><p>示例：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@123.123.123.123</span><br></pre></td></tr></table></figure><p>登录后再继续执行下面的命令。</p><h2 id="🚀-六、更新系统并安装基础工具"><a href="#🚀-六、更新系统并安装基础工具" class="headerlink" title="🚀 六、更新系统并安装基础工具"></a>🚀 六、更新系统并安装基础工具</h2><p>先更新系统：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure><p>安装基础工具：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y curl wget nano openssl ca-certificates nftables</span><br></pre></td></tr></table></figure><p>这些工具后面会用于下载安装脚本、编辑配置文件、生成随机密码和处理证书相关请求。</p><h2 id="⚡-七、开启-BBR-网络优化"><a href="#⚡-七、开启-BBR-网络优化" class="headerlink" title="⚡ 七、开启 BBR 网络优化"></a>⚡ 七、开启 BBR 网络优化</h2><p>BBR 不是 Hysteria2 的必需项，因为 Hysteria2 主要使用 UDP&#x2F;QUIC，<code>net.ipv4.tcp_congestion_control=bbr</code> 直接优化的是 TCP 拥塞控制。</p><p>不过 VPS 上通常还会跑 SSH、证书申请、网站伪装页、订阅服务或其他 TCP 服务，所以建议把 BBR 作为基础网络优化一起开启。</p><p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure><p>再应用系统参数：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure><p>检查是否生效：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure><p>正常情况下可以看到类似结果：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr</span><br></pre></td></tr></table></figure><p>如果 <code>lsmod | grep bbr</code> 没有输出，但前面的 <code>sysctl</code> 已经显示 <code>bbr</code>，通常也可以继续部署。部分内核会把 BBR 编进内核，不一定以模块形式显示。</p><h2 id="🛡️-八、安装并配置-UFW-防火墙"><a href="#🛡️-八、安装并配置-UFW-防火墙" class="headerlink" title="🛡️ 八、安装并配置 UFW 防火墙"></a>🛡️ 八、安装并配置 UFW 防火墙</h2><p>Debian 可以直接安装 UFW：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install -y ufw</span><br></pre></td></tr></table></figure><p>先确认 SSH 实际监听端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure><p>如果输出是 <code>port 22</code>，再放行以下必要端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/udp</span><br></pre></td></tr></table></figure><p>启用 UFW：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure><p>查看状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure><p>注意：一定要先放行 SSH 的实际端口，再执行 <code>ufw enable</code>。如果 SSH 不是 22 端口，请把命令中的 <code>22</code> 换成真实端口，否则可能会断开远程连接。</p><p>如果你的 VPS 服务商还有额外的安全组、防火墙或云防火墙，也需要同步放行：</p><ul><li><code>22/tcp</code>：SSH 登录；</li><li><code>80/tcp</code>：本文明确使用 ACME HTTP 验证申请证书；</li><li><code>443/udp</code>：Hysteria2 连接端口。</li></ul><h2 id="📦-九、安装-Hysteria2"><a href="#📦-九、安装-Hysteria2" class="headerlink" title="📦 九、安装 Hysteria2"></a>📦 九、安装 Hysteria2</h2><p>执行官方安装脚本：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -fsSL https://get.hy2.sh/)</span><br></pre></td></tr></table></figure><p>安装脚本会获取当前稳定版。安装后检查版本：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hysteria version</span><br></pre></td></tr></table></figure><p>建议服务端和客户端都使用当前稳定版。官方更新日志显示 2.8.2 包含重要安全修复；若版本更旧，请重新运行上面的官方脚本升级。</p><p>安装完成后，生成认证密码和混淆密码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AUTH=$(openssl rand -<span class="built_in">base64</span> 32)</span><br><span class="line">OBFS=$(openssl rand -<span class="built_in">base64</span> 32)</span><br></pre></td></tr></table></figure><p>这两个变量会写入 Hysteria2 配置文件。</p><h2 id="📝-十、创建-Hysteria2-配置文件"><a href="#📝-十、创建-Hysteria2-配置文件" class="headerlink" title="📝 十、创建 Hysteria2 配置文件"></a>📝 十、创建 Hysteria2 配置文件</h2><p>执行下面的命令创建配置文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/hysteria/config.yaml &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">listen: &quot;:443&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">acme:</span></span><br><span class="line"><span class="string">  domains:</span></span><br><span class="line"><span class="string">    - hy2.example.com</span></span><br><span class="line"><span class="string">  email: your@email.com</span></span><br><span class="line"><span class="string">  type: http</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth:</span></span><br><span class="line"><span class="string">  type: password</span></span><br><span class="line"><span class="string">  password: &quot;$AUTH&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">obfs:</span></span><br><span class="line"><span class="string">  type: salamander</span></span><br><span class="line"><span class="string">  salamander:</span></span><br><span class="line"><span class="string">    password: &quot;$OBFS&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">masquerade:</span></span><br><span class="line"><span class="string">  type: proxy</span></span><br><span class="line"><span class="string">  proxy:</span></span><br><span class="line"><span class="string">    url: &quot;https://www.microsoft.com/&quot;</span></span><br><span class="line"><span class="string">    rewriteHost: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;auth password: <span class="variable">$AUTH</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obfs password: <span class="variable">$OBFS</span>&quot;</span></span><br></pre></td></tr></table></figure><p>这里需要替换两处：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">hy2.example.com</span></span><br><span class="line"><span class="string">your@email.com</span></span><br></pre></td></tr></table></figure><p><code>hy2.example.com</code> 改成你自己的 Hysteria2 子域名，<code>your@email.com</code> 改成你的邮箱。</p><p>命令执行完成后，终端会输出两项重要信息：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auth password: xxxxx</span><br><span class="line">obfs password: xxxxx</span><br></pre></td></tr></table></figure><p>请保存好这两个密码，后面配置客户端时会用到。</p><h2 id="✅-十一、检查配置文件"><a href="#✅-十一、检查配置文件" class="headerlink" title="✅ 十一、检查配置文件"></a>✅ 十一、检查配置文件</h2><p>写入配置后，先检查一下文件内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> -n /etc/hysteria/config.yaml</span><br></pre></td></tr></table></figure><p>重点确认下面几项：</p><ul><li>域名是否是你的真实域名；</li><li>邮箱是否填写正确；</li><li><code>acme.type</code> 是否为 <code>http</code>；</li><li><code>listen</code> 是否是 <code>&quot;:443&quot;</code>；</li><li><code>auth.password</code> 是否已经生成；</li><li><code>obfs.salamander.password</code> 是否已经生成；</li><li>YAML 缩进是否正常。</li></ul><h2 id="▶️-十二、启动并检查服务"><a href="#▶️-十二、启动并检查服务" class="headerlink" title="▶️ 十二、启动并检查服务"></a>▶️ 十二、启动并检查服务</h2><p>启用开机启动并立即启动 Hysteria2 服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now hysteria-server.service</span><br></pre></td></tr></table></figure><p>查看服务状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure><p>如果正常运行，应该可以看到类似状态：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure><p>这表示 Hysteria2 服务端已经启动成功。</p><h2 id="🔀-十三、可选：是否开启端口跳跃"><a href="#🔀-十三、可选：是否开启端口跳跃" class="headerlink" title="🔀 十三、可选：是否开启端口跳跃"></a>🔀 十三、可选：是否开启端口跳跃</h2><p>端口跳跃不是必选项。普通 VPS 如果 <code>443/udp</code> 稳定能连，建议继续保持前面的默认配置，不要一开始就放行一大段端口。</p><p>它主要适合下面这种情况：</p><ul><li>固定 UDP 端口晚高峰经常断流；</li><li><code>443/udp</code> 经常被限速，但换一个 UDP 端口后又恢复；</li><li>SSH、网页、TCP 服务正常，只有 Hysteria2 的 UDP 连接不稳定；</li><li>你使用的客户端明确支持 Hysteria2 端口范围或端口跳跃。</li></ul><p>如果要开启，可以把服务端配置里的：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:443&quot;</span></span><br></pre></td></tr></table></figure><p>改成一个 UDP 端口范围，例如：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:20000-20100&quot;</span></span><br></pre></td></tr></table></figure><p>Linux 版 Hysteria2 当前支持直接监听端口范围，并通过 nftables 或 iptables 建立转发规则。此功能需要 root 或 <code>CAP_NET_ADMIN</code> 权限；如果重启后日志提示防火墙权限错误，请先恢复单端口 <code>443</code>，不要盲目扩大权限。</p><p>然后放行这段 UDP 端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 20000:20100/udp</span><br></pre></td></tr></table></figure><p>如果 VPS 服务商后台还有安全组、防火墙或云防火墙，也要同步放行：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20000-20100/udp</span><br></pre></td></tr></table></figure><p>改完后重启服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart hysteria-server.service</span><br><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure><p>客户端配置也要对应改成端口范围：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span> <span class="string">hy2.example.com:20000-20100</span></span><br><span class="line"></span><br><span class="line"><span class="attr">transport:</span></span><br><span class="line">  <span class="attr">udp:</span></span><br><span class="line">    <span class="attr">minHopInterval:</span> <span class="string">15s</span></span><br><span class="line">    <span class="attr">maxHopInterval:</span> <span class="string">45s</span></span><br></pre></td></tr></table></figure><p>如果是手机图形客户端，要确认它是否支持 <code>20000-20100</code> 这种端口范围。客户端不支持的话，就不要开启端口跳跃，继续使用单端口 <code>443/udp</code> 更稳。</p><p>注意：端口跳跃不能解决 Cloudflare 橙云代理问题。Hysteria2 仍然需要 Cloudflare DNS 保持 <code>DNS only</code>，也就是灰云。</p><h2 id="🛠️-十四、常见问题排查"><a href="#🛠️-十四、常见问题排查" class="headerlink" title="🛠️ 十四、常见问题排查"></a>🛠️ 十四、常见问题排查</h2><h3 id="1-服务没有启动成功"><a href="#1-服务没有启动成功" class="headerlink" title="1. 服务没有启动成功"></a>1. 服务没有启动成功</h3><p>查看服务日志：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --no-pager -e -u hysteria-server.service</span><br></pre></td></tr></table></figure><p>优先检查：</p><ul><li>DNS 是否已经解析到 VPS；</li><li>Cloudflare 是否保持灰云；</li><li>VPS 防火墙是否放行 <code>80/tcp</code> 和 <code>443/udp</code>；</li><li>如果开启了端口跳跃，VPS 防火墙和云厂商安全组是否放行对应的 UDP 端口范围；</li><li>配置文件缩进是否正确；</li><li>邮箱和域名是否填写正确。</li></ul><h3 id="2-客户端无法连接"><a href="#2-客户端无法连接" class="headerlink" title="2. 客户端无法连接"></a>2. 客户端无法连接</h3><p>先检查 UFW：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure><p>确认里面有：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">443/udp</span><br></pre></td></tr></table></figure><p>如果你开启了端口跳跃，还要确认里面有对应的 UDP 端口范围，例如：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20000:20100/udp</span><br></pre></td></tr></table></figure><p>然后再检查 Cloudflare DNS 记录，代理状态必须是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DNS only</span><br></pre></td></tr></table></figure><p>也就是灰云，不能是橙云。</p><h3 id="3-域名能-ping-通但服务仍然连不上"><a href="#3-域名能-ping-通但服务仍然连不上" class="headerlink" title="3. 域名能 ping 通但服务仍然连不上"></a>3. 域名能 ping 通但服务仍然连不上</h3><p><code>ping</code> 只能说明域名解析到了某个 IP，并不代表 UDP 443 一定通。</p><p>继续检查：</p><ul><li>VPS 系统防火墙；</li><li>VPS 服务商安全组；</li><li>Hysteria2 服务状态；</li><li>Hysteria2 日志；</li><li>客户端里的认证密码和混淆密码是否填写正确。</li><li>如果开启了端口跳跃，客户端端口范围是否和服务端 <code>listen</code> 范围一致。</li></ul><h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>整个流程可以概括为：</p><ol><li>在 Cloudflare 添加 <code>hy2</code> 的 A 记录；</li><li>代理状态保持 <code>DNS only</code>，不要开启橙云；</li><li>等待 DNS 解析生效；</li><li>SSH 登录 VPS；</li><li>安装基础工具；</li><li>开启 BBR 基础网络优化；</li><li>安装 UFW，并放行 <code>22/tcp</code>、<code>80/tcp</code>、<code>443/udp</code>；</li><li>安装 Hysteria2；</li><li>写入 <code>/etc/hysteria/config.yaml</code>；</li><li>重启并检查 <code>hysteria-server.service</code>。</li></ol><p>如果你的网络环境对固定 UDP 端口有限速或阻断，再考虑开启端口跳跃；如果 <code>443/udp</code> 已经稳定，就不需要额外配置。</p><p>最后服务状态显示：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure><p>就说明 Hysteria2 服务端已经正常运行，可以继续配置客户端。</p><h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你更习惯跟着画面操作，可以观看本教程的完整视频。视频中会演示 Cloudflare DNS、VPS 命令和 Hysteria2 配置过程。</p><a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看 Hysteria2 完整教程"><i class="fab fa-youtube"></i><span>在 YouTube 观看 Hysteria2 完整教程</span></a><a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline，获取更多 VPS 教程"><i class="fab fa-youtube"></i><span>订阅 Skyline，获取更多 VPS 教程</span></a><h2 id="📚-官方参考资料"><a href="#📚-官方参考资料" class="headerlink" title="📚 官方参考资料"></a>📚 官方参考资料</h2><ul><li><a href="https://v2.hysteria.network/zh/docs/getting-started/Server/">Hysteria2 官方服务端教程</a></li><li><a href="https://v2.hysteria.network/zh/docs/getting-started/Installation/">Hysteria2 官方安装说明</a></li><li><a href="https://v2.hysteria.network/zh/docs/advanced/Full-Server-Config/">Hysteria2 服务端完整配置</a></li><li><a href="https://v2.hysteria.network/zh/docs/advanced/Port-Hopping/">Hysteria2 端口跳跃说明</a></li><li><a href="https://v2.hysteria.network/docs/Changelog/">Hysteria2 更新日志</a></li></ul>]]></content>
+      
+      
       <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
+          
+          <category> 技术教程 </category>
+          
+          <category> 网络链路 </category>
+          
       </categories>
-      <tags>
-        <tag>sing-box</tag>
-        <tag>VPS</tag>
-        <tag>VLESS</tag>
-        <tag>Reality协议</tag>
-        <tag>Vision</tag>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</title>
-    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/rbvd4RZQaNY"
-    title="Debian VPS 搭建 VLESS Reality、3X-UI、BBR 与 UFW 视频教程"
-    frameborder="0"
-    loading="lazy"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=rbvd4RZQaNY" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<p>这是一份面向 <strong>Debian 纯净系统</strong>的完整教程，不混用 Ubuntu、CentOS 或 Alpine 命令。请严格按照本文顺序操作：先确认 SSH 可以登录，再开启防火墙；安装面板并取得实际端口后，才放行面板端口；创建 Reality 入站后，才放行节点端口。</p>
-<p>REALITY 不要求你购买域名，也不需要为节点单独申请 TLS 证书。它会利用目标 HTTPS 站点的握手特征和证书外观进行伪装，但并不是把目标网站的证书复制或安装到你的 VPS。</p>
-<blockquote>
-<p>本文默认使用 <code>root</code> 用户，因此命令中不添加 <code>sudo</code>。</p>
-</blockquote>
-<h2 id="🛠️-一、选择-VPS-与厂商推荐"><a href="#🛠️-一、选择-VPS-与厂商推荐" class="headerlink" title="🛠️ 一、选择 VPS 与厂商推荐"></a>🛠️ 一、选择 VPS 与厂商推荐</h2><p>在开始搭建前，需要准备一台具有公网可达 IP 的海外 VPS。线路质量、机房位置和晚高峰拥塞情况，都会直接影响实际体验。</p>
-<h3 id="核心选购指标"><a href="#核心选购指标" class="headerlink" title="核心选购指标"></a>核心选购指标</h3><ul>
-<li><strong>线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现取决于所在地、运营商、路由和晚高峰拥塞。</li>
-<li><strong>机房位置</strong>：通常距离越近，基础延迟越低，但应以测试 IP 的 <code>ping</code>、路由追踪、丢包率和晚高峰测速为准。</li>
-<li><strong>系统支持</strong>：确认服务商可以安装 Debian 12 或 Debian 13 64 位纯净系统。</li>
-<li><strong>公网 IP</strong>：确认 VPS 具有公网可达 IP，并了解服务商是否额外提供安全组或云防火墙。</li>
-<li><strong>付款方式</strong>：根据自己的需求选择月付或年付，首次购买不建议一次预付太长时间。</li>
-</ul>
-<h3 id="VPS-服务商对比"><a href="#VPS-服务商对比" class="headerlink" title="VPS 服务商对比"></a>VPS 服务商对比</h3><table>
-<thead>
-<tr>
-<th align="left">服务商</th>
-<th align="left">主要特点</th>
-<th align="left">推荐线路&#x2F;地区</th>
-<th align="left">适用场景</th>
-<th align="left">价格定位</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
-<td align="left">线路质量较高，提供多种优化网络产品</td>
-<td align="left">CN2 GIA &#x2F; 香港 &#x2F; 日本 &#x2F; 美国</td>
-<td align="left">对线路稳定性要求较高</td>
-<td align="left">较高</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="搬瓦工"><i class="anzhiyu-icon-gift"></i><span>搬瓦工</span></a></strong></td>
-<td align="left">支持多个机房和线路方案</td>
-<td align="left">CN2 GIA-E &#x2F; 日本软银等</td>
-<td align="left">需要灵活切换机房</td>
-<td align="left">中高</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
-<td align="left">支持按量或月付，地区选择较多</td>
-<td align="left">香港 &#x2F; 台湾 &#x2F; 日本 &#x2F; 韩国等</td>
-<td align="left">临时测试和短期项目</td>
-<td align="left">中低</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
-<td align="left">年付产品价格较低</td>
-<td align="left">美国常规线路</td>
-<td align="left">预算有限、博客和测试环境</td>
-<td align="left">较低</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
-<td align="left">全球机房较多，支持按小时计费和 API</td>
-<td align="left">国际标准 BGP</td>
-<td align="left">临时部署和开发测试</td>
-<td align="left">中等</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>线路、IP 属性、库存和价格会随时变化，请以服务商实时页面及测试 IP 为准。上表部分按钮包含推广参数，购买价格通常不因此增加。</p>
-</blockquote>
-<hr>
-<h2 id="💡-二、搭建前准备"><a href="#💡-二、搭建前准备" class="headerlink" title="💡 二、搭建前准备"></a>💡 二、搭建前准备</h2><ul>
-<li>一台具有公网可达 IP 的 VPS，优先选择 <strong>Debian 13 64 位</strong>，也可使用 <strong>Debian 12 64 位</strong>。</li>
-<li>VPS 的公网 IP，以及服务商提供的 <code>root</code> 初始登录凭据。</li>
-<li>SSH 工具：Windows 可使用 Windows Terminal &#x2F; PowerShell，macOS 可使用系统自带终端。</li>
-<li>一个部署时经过测试的 Reality Target&#x2F;SNI。无需拥有这个域名，但不能把网上的示例当成永久可用配置。</li>
-</ul>
-<p>截至 2026 年 7 月，Debian 11 LTS 将于 2026 年 8 月 31 日结束，不建议再用于新装服务器。Debian 12 LTS 持续至 2028 年 6 月 30 日。</p>
-<hr>
-<h2 id="🚀-三、更新-Debian-并安装基础工具"><a href="#🚀-三、更新-Debian-并安装基础工具" class="headerlink" title="🚀 三、更新 Debian 并安装基础工具"></a>🚀 三、更新 Debian 并安装基础工具</h2><p>通过 SSH 登录 VPS：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>你的VPS_IP</code> 替换为真实公网 IP。登录后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install -y curl wget ca-certificates tar ufw</span><br></pre></td></tr></table></figure>
-
-<p>如果系统更新了内核，建议先重启，再重新连接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="⚡-四、开启并验证-BBR"><a href="#⚡-四、开启并验证-BBR" class="headerlink" title="⚡ 四、开启并验证 BBR"></a>⚡ 四、开启并验证 BBR</h2><p>使用独立配置文件，避免重复执行时不断向 <code>/etc/sysctl.conf</code> 追加相同内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>验证当前算法及内核可用算法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-
-<p>第一条应显示当前算法为 <code>bbr</code>，第二条的列表中也应包含 <code>bbr</code>。不要只依靠 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核时可能不会出现在模块列表中。</p>
-<hr>
-<h2 id="🛡️-五、配置-UFW：此时只放行-SSH"><a href="#🛡️-五、配置-UFW：此时只放行-SSH" class="headerlink" title="🛡️ 五、配置 UFW：此时只放行 SSH"></a>🛡️ 五、配置 UFW：此时只放行 SSH</h2><h3 id="1-确认-SSH-实际端口"><a href="#1-确认-SSH-实际端口" class="headerlink" title="1. 确认 SSH 实际端口"></a>1. 确认 SSH 实际端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果输出是 <code>port 22</code>，下面使用 <code>22</code>；如果输出为其他端口，必须把命令中的 <code>22</code> 换成实际值。</p>
-<h3 id="2-设置策略、放行-SSH-并开启-UFW"><a href="#2-设置策略、放行-SSH-并开启-UFW" class="headerlink" title="2. 设置策略、放行 SSH 并开启 UFW"></a>2. 设置策略、放行 SSH 并开启 UFW</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line">ufw allow 22/tcp comment <span class="string">&#x27;SSH&#x27;</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure>
-
-<p>看到 <code>Status: active</code> 和实际 SSH 端口规则后，不要立即关闭当前窗口。先新开一个终端再次连接 VPS，确认 SSH 仍然可用。</p>
-<blockquote>
-<p>此时 3X-UI 尚未安装，Reality 入站也尚未创建，因此不要提前开放面板端口、<code>443</code> 或 <code>2096</code>。</p>
-</blockquote>
-<hr>
-<h2 id="🖥️-六、安装-3X-UI-面板"><a href="#🖥️-六、安装-3X-UI-面板" class="headerlink" title="🖥️ 六、安装 3X-UI 面板"></a>🖥️ 六、安装 3X-UI 面板</h2><p>执行 3X-UI 官方安装脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
-
-<p>安装脚本会持续更新，应以屏幕上的实际提示为准。当前版本会生成随机用户名、密码和 WebBasePath，并在安装结束时显示面板端口、访问地址、账号以及 API Token。请立即保存完整输出，不要套用旧教程中的默认账号、固定端口或固定路径。</p>
-<p>如果安装器提供 HTTPS、IP 证书、反向代理或仅监听 <code>127.0.0.1</code> 等选项，请根据实际访问方式选择。公网 HTTP 会明文传输面板登录信息，不适合长期使用。</p>
-<h3 id="安装完成后再放行面板端口"><a href="#安装完成后再放行面板端口" class="headerlink" title="安装完成后再放行面板端口"></a>安装完成后再放行面板端口</h3><p>假设安装结果显示面板端口为 <code>28530</code>，有固定公网 IP 时，建议只允许自己的 IP：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>必须把 <code>你的公网IP</code> 和 <code>28530</code> 换成真实值，不能原样执行。</p>
-<p>没有固定 IP、确实需要临时公网访问时，可以开放实际面板端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>更安全的方式是不向公网开放面板端口，而是在本地建立 SSH 隧道：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-L</span> <span class="number">28530</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">28530</span> root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>随后通过 <code>http://127.0.0.1:28530/你的WebBasePath/</code> 访问。端口和路径都必须使用安装器实际给出的值。</p>
-<hr>
-<h2 id="📡-七、配置-VLESS-REALITY-XTLS-Vision"><a href="#📡-七、配置-VLESS-REALITY-XTLS-Vision" class="headerlink" title="📡 七、配置 VLESS + REALITY + XTLS Vision"></a>📡 七、配置 VLESS + REALITY + XTLS Vision</h2><p>登录面板，进入 <strong>入站列表（Inbounds）</strong>，点击 <strong>添加入站（Add Inbound）</strong>。</p>
-<h3 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h3><table>
-<thead>
-<tr>
-<th align="left">配置项</th>
-<th align="left">填写内容</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">备注（Remark）</td>
-<td align="left"><code>VLESS-REALITY</code></td>
-<td align="left">仅用于自己识别</td>
-</tr>
-<tr>
-<td align="left">协议（Protocol）</td>
-<td align="left"><code>VLESS</code></td>
-<td align="left">入站协议</td>
-</tr>
-<tr>
-<td align="left">监听 IP</td>
-<td align="left"><code>0.0.0.0</code></td>
-<td align="left">监听服务器公网网卡</td>
-</tr>
-<tr>
-<td align="left">端口（Port）</td>
-<td align="left"><code>443</code>（示例）</td>
-<td align="left">使用前确认没有被网站或其他服务占用</td>
-</tr>
-<tr>
-<td align="left">客户端 ID &#x2F; UUID</td>
-<td align="left">点击生成</td>
-<td align="left">每位用户建议使用独立 UUID</td>
-</tr>
-<tr>
-<td align="left">Flow</td>
-<td align="left"><code>xtls-rprx-vision</code></td>
-<td align="left">与 TCP&#x2F;RAW + Reality 配合</td>
-</tr>
-<tr>
-<td align="left">传输方式</td>
-<td align="left"><code>TCP</code>，新版内核可能显示 <code>RAW</code></td>
-<td align="left">以当前面板字段为准</td>
-</tr>
-<tr>
-<td align="left">安全（Security）</td>
-<td align="left"><code>reality</code></td>
-<td align="left">开启 Reality</td>
-</tr>
-<tr>
-<td align="left">Fingerprint &#x2F; uTLS</td>
-<td align="left"><code>chrome</code></td>
-<td align="left">客户端也要使用兼容指纹</td>
-</tr>
-<tr>
-<td align="left">Private&#x2F;Public Key</td>
-<td align="left">点击生成</td>
-<td align="left">私钥只保留在服务器端，客户端使用公钥</td>
-</tr>
-<tr>
-<td align="left">Short ID</td>
-<td align="left">点击生成</td>
-<td align="left">必须为偶数长度的十六进制字符串，最长 16 个字符</td>
-</tr>
-</tbody></table>
-<h3 id="Target-与-SNI"><a href="#Target-与-SNI" class="headerlink" title="Target 与 SNI"></a>Target 与 SNI</h3><p>旧教程中常见 <code>dl.google.com:443</code>、<code>www.microsoft.com:443</code> 或 <code>itunes.apple.com:443</code>，但它们只能作为候选示例，不能保证在所有 VPS、地区和时间都适用。</p>
-<ul>
-<li>Target（旧版界面可能显示 Dest）应填写经过测试的 HTTPS 站点和端口。</li>
-<li>Server Names &#x2F; SNI 通常应与 Target 接受的证书域名一致。</li>
-<li>Target 应支持所需 TLS 特性，并且从 VPS 所在网络能够稳定访问。</li>
-<li>不要机械照抄 CDN 或特殊目标。未通过 Reality 验证的流量可能被转发至 Target，错误选择可能导致服务器被滥用为转发器。</li>
-</ul>
-<p>设置完成后点击 <strong>添加（Add）</strong> 保存入站。</p>
-<h3 id="保存入站后再放行节点端口"><a href="#保存入站后再放行节点端口" class="headerlink" title="保存入站后再放行节点端口"></a>保存入站后再放行节点端口</h3><p>本例使用 TCP <code>443</code>，因此执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 443/tcp comment <span class="string">&#x27;VLESS Reality&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>如果入站使用其他端口，就把 <code>443</code> 换成实际端口。本文采用 TCP&#x2F;RAW + Reality，不需要额外执行 <code>ufw allow 443/udp</code>。只有服务确实监听 UDP 时才开放 UDP。</p>
-<p>如果面板端口和入站端口相同，或者 <code>443</code> 已被 Nginx、Caddy 等程序占用，入站将无法正常启动。可先检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="📱-八、导出节点并连接客户端"><a href="#📱-八、导出节点并连接客户端" class="headerlink" title="📱 八、导出节点并连接客户端"></a>📱 八、导出节点并连接客户端</h2><p>在入站列表中找到刚创建的记录，点击二维码或复制链接，获取 <code>vless://</code> 节点链接。导入后核对服务器地址、端口、公钥、SNI、Short ID、Fingerprint 和 Flow。</p>
-<table>
-<thead>
-<tr>
-<th align="left">平台</th>
-<th align="left">可选客户端</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Windows</td>
-<td align="left">v2rayN、sing-box</td>
-</tr>
-<tr>
-<td align="left">macOS</td>
-<td align="left">sing-box 等支持 Reality 的客户端</td>
-</tr>
-<tr>
-<td align="left">Android</td>
-<td align="left">v2rayNG、NekoBox、sing-box</td>
-</tr>
-<tr>
-<td align="left">iOS &#x2F; iPadOS</td>
-<td align="left">Shadowrocket、Stash、sing-box</td>
-</tr>
-</tbody></table>
-<p>Shadowrocket（小火箭）本身没有固定服务器端口。它连接哪个端口，取决于你创建的入站配置。</p>
-<hr>
-<h2 id="☁️-九、同步检查云厂商安全组"><a href="#☁️-九、同步检查云厂商安全组" class="headerlink" title="☁️ 九、同步检查云厂商安全组"></a>☁️ 九、同步检查云厂商安全组</h2><p>如果使用阿里云、腾讯云、AWS、Oracle Cloud 等带有安全组或云防火墙的平台，还必须在服务商控制台同步开放实际使用的端口：</p>
-<ul>
-<li>SSH 的实际 TCP 端口。</li>
-<li>面板的实际 TCP 端口——仅当面板需要公网访问时。</li>
-<li>Reality 入站的实际 TCP 端口。</li>
-</ul>
-<p>云安全组和 UFW 是两道独立防火墙。任何一层没有放行，外部都无法访问。不要为了省事开放全部端口或 <code>0-65535</code>。</p>
-<hr>
-<h2 id="🛠️-十、排查与维护命令"><a href="#🛠️-十、排查与维护命令" class="headerlink" title="🛠️ 十、排查与维护命令"></a>🛠️ 十、排查与维护命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 3X-UI 管理菜单</span></span><br><span class="line">x-ui</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看面板服务状态</span></span><br><span class="line">systemctl status x-ui --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查节点端口和面板端口（按实际端口替换）</span></span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(443|28530)\b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙规则</span></span><br><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改规则后重新加载</span></span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
-
-<p>如果服务正在监听但外部无法访问，应依次检查：服务商安全组、UFW、入站端口、客户端参数、VPS 系统时间和 Target 可达性。不要直接关闭全部防火墙来排错。</p>
-<p>若误封 SSH，请通过 VPS 服务商的 VNC、Web Console 或 Serial Console 登录，修正规则后再继续。</p>
-<hr>
-<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>正确的安全顺序是：</p>
-<ol>
-<li>选择支持 Debian 和公网 IP 的 VPS。</li>
-<li>更新 Debian 并确认 SSH 登录。</li>
-<li>开启并验证 BBR。</li>
-<li>只放行 SSH 后开启 UFW。</li>
-<li>安装 3X-UI，取得真实面板端口后再决定是否放行。</li>
-<li>创建 VLESS + Reality 入站，保存后只开放实际节点 TCP 端口。</li>
-<li>同步检查云厂商安全组，最后导入客户端测试。</li>
-</ol>
-<p>如果这篇教程对你有帮助，欢迎前往 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong> 观看配套视频。视频会展示面板界面和实际操作过程，后续更新也会优先发布在频道中。</p>
-<p>官方参考：<a href="https://www.debian.org/News/2026/20260712">Debian 版本支持周期</a>、<a href="https://manpages.debian.org/bookworm/ufw/ufw.8.en.html">Debian UFW 手册</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> VPS </tag>
+            
+            <tag> Hysteria2 </tag>
+            
+            <tag> Cloudflare </tag>
+            
+            <tag> DNS </tag>
+            
+            <tag> UFW </tag>
+            
+            <tag> BBR </tag>
+            
+            <tag> 端口跳跃 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</title>
+      <link href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/"/>
+      <url>/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</url>
+      
+        <content type="html"><![CDATA[<div class="video-container">  <iframe    src="https://www.youtube.com/embed/h67zIOeu6x0"    title="sing-box VPS 部署 VLESS Reality Vision 新手视频教程"    loading="lazy"    frameborder="0"    referrerpolicy="strict-origin-when-cross-origin"    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"    allowfullscreen>  </iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=h67zIOeu6x0" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a><a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a><p>如果你刚开始折腾 VPS 节点，不想一上来就碰域名、证书、Nginx、CDN、面板，那么 <strong>sing-box + VLESS + Reality + Vision</strong> 是一个很适合入门的组合。</p><p>它的优点很直接：</p><ul><li>不需要域名</li><li>不需要申请 TLS 证书</li><li>服务端只跑 sing-box，一个配置文件就能启动</li><li><code>Reality</code> 负责伪装真实 TLS 握手</li><li><code>Vision</code> 负责 VLESS 在 TCP 场景下的高性能传输</li></ul><p>这篇教程会从一台全新的 Debian &#x2F; Ubuntu VPS 开始，带你完成安装、生成密钥、写服务端配置、启动服务、填写客户端参数和排错。</p><blockquote><p>本教程已于 2026 年 7 月依据 sing-box 当前官方文档复核。sing-box 配置语法更新较快，请使用官方稳定版，并在每次重启服务前运行 <code>sing-box check -c /etc/sing-box/config.json</code>。</p></blockquote><span id="more"></span><h2 id="🎯-先说结论"><a href="#🎯-先说结论" class="headerlink" title="🎯 先说结论"></a>🎯 先说结论</h2><p>最终我们要部署的是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</span><br></pre></td></tr></table></figure><p>在 sing-box 配置里，最关键的几个字段是：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><p>这里容易混淆的地方是：<strong>Vision 不是一个单独协议，也不是传输层，而是 VLESS 的 <code>flow</code> 参数</strong>。</p><h2 id="💡-一、准备条件"><a href="#💡-一、准备条件" class="headerlink" title="💡 一、准备条件"></a>💡 一、准备条件</h2><p>你需要准备：</p><ul><li>一台 VPS，推荐 Debian 12 或 Ubuntu 22.04 &#x2F; 24.04</li><li>一个可以 SSH 登录 VPS 的终端</li><li>VPS 公网 IP</li><li>放行一个 TCP 端口，本文默认使用 <code>443</code></li></ul><p>本文不需要：</p><ul><li>不需要域名</li><li>不需要 Cloudflare</li><li>不需要申请证书</li><li>不需要 3x-ui &#x2F; x-ui 面板</li></ul><blockquote><p>注意：请遵守你所在地区和服务商的使用规则。本文仅用于自有服务器远程访问、加密传输和网络调试场景。</p></blockquote><h2 id="🚀-二、更新系统"><a href="#🚀-二、更新系统" class="headerlink" title="🚀 二、更新系统"></a>🚀 二、更新系统</h2><p>SSH 登录 VPS 后，先更新系统。</p><p>如果你是 <code>root</code> 用户，按顺序一条一条执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get full-upgrade -y</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install -y curl wget nano ca-certificates gnupg lsb-release ufw</span><br></pre></td></tr></table></figure><p>Reality 对服务端和客户端时间差比较敏感，时间明显不准时可能会连接失败。先查看时间状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure><p>重点看 <code>Local time</code>、<code>Universal time</code> 和 <code>System clock synchronized</code>。如果时间明显不对，优先到 VPS 服务商面板里检查系统时间；如果你用的是 LXC &#x2F; OpenVZ &#x2F; 容器环境，系统时间通常由宿主机控制，容器内不一定能直接修改。</p><h2 id="📦-三、安装-sing-box"><a href="#📦-三、安装-sing-box" class="headerlink" title="📦 三、安装 sing-box"></a>📦 三、安装 sing-box</h2><p>sing-box 官方提供了安装脚本。Debian &#x2F; Ubuntu 用户可以直接执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://sing-box.app/install.sh | sh</span><br></pre></td></tr></table></figure><p>安装完成后查看版本：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box version</span><br></pre></td></tr></table></figure><p>如果能看到版本号，就说明安装成功。以后需要升级 sing-box，也可以再次运行上面的官方安装脚本。</p><h2 id="⚡-四、开启-BBR"><a href="#⚡-四、开启-BBR" class="headerlink" title="⚡ 四、开启 BBR"></a>⚡ 四、开启 BBR</h2><p>BBR 不是必须项，但大多数 VPS 上开启后 TCP 体验会更好。</p><p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure><p>再应用系统参数：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure><p>检查：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure><p>看到类似结果即可：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure><h2 id="🔑-五、生成-UUID、Reality-密钥和-Short-ID"><a href="#🔑-五、生成-UUID、Reality-密钥和-Short-ID" class="headerlink" title="🔑 五、生成 UUID、Reality 密钥和 Short ID"></a>🔑 五、生成 UUID、Reality 密钥和 Short ID</h2><p>VLESS + Reality 需要 4 个关键参数：</p><ul><li><code>uuid</code>：用户 ID，客户端和服务端必须一致</li><li><code>private_key</code>：Reality 私钥，只放在服务端</li><li><code>public_key</code>：Reality 公钥，只放在客户端</li><li><code>short_id</code>：短 ID，客户端和服务端必须一致</li></ul><p>先生成 UUID：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box generate uuid</span><br></pre></td></tr></table></figure><p>示例输出：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0d72f5a1-1111-4a22-8888-123456789abc</span><br></pre></td></tr></table></figure><p>再生成 Reality 密钥对：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box generate reality-keypair</span><br></pre></td></tr></table></figure><p>示例输出：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrivateKey: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br><span class="line">PublicKey: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span><br></pre></td></tr></table></figure><p>最后生成 short_id：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box generate rand --hex 8</span><br></pre></td></tr></table></figure><p>示例输出：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7f3a91c6d8e24b10</span><br></pre></td></tr></table></figure><p>如果你的 sing-box 版本没有 <code>generate rand</code>，也可以用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 8</span><br></pre></td></tr></table></figure><p>把这 4 个值先记下来：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UUID        = 你的 UUID</span><br><span class="line">PrivateKey  = 服务端 Reality 私钥</span><br><span class="line">PublicKey   = 客户端 Reality 公钥</span><br><span class="line">Short ID    = short_id</span><br></pre></td></tr></table></figure><blockquote><p>千万不要把 <code>PrivateKey</code> 发给别人。客户端只需要 <code>PublicKey</code>。</p></blockquote><h2 id="🌐-六、选择-Reality-目标站"><a href="#🌐-六、选择-Reality-目标站" class="headerlink" title="🌐 六、选择 Reality 目标站"></a>🌐 六、选择 Reality 目标站</h2><p>Reality 需要一个真实可访问的网站作为握手目标。新手可以先用：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.microsoft.com</span><br></pre></td></tr></table></figure><p>在 VPS 上测试一下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://www.microsoft.com --connect-timeout 5</span><br></pre></td></tr></table></figure><p>能看到 HTTP 响应头，说明 VPS 可以访问这个目标。</p><p>你也可以换成其他大型 HTTPS 网站，但建议满足这几点：</p><ul><li>支持 TLS 1.3</li><li>从你的 VPS 能正常访问</li><li>域名和证书正常</li><li>不要使用奇怪的小站或自建站</li></ul><p>本文后面的配置统一使用：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server_name = www.microsoft.com</span><br></pre></td></tr></table></figure><p>如果后续使用中遇到断流，可以将 <code>server_name</code> 和 <code>handshake.server</code> 换成苹果的系统更新或 iCloud 域名，例如 <code>swdist.apple.com</code> 或 <code>gateway.icloud.com</code>。换伪装域名时，服务端和客户端必须保持一致。</p><h2 id="📝-七、写入服务端配置"><a href="#📝-七、写入服务端配置" class="headerlink" title="📝 七、写入服务端配置"></a>📝 七、写入服务端配置</h2><p>打开 sing-box 配置文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/sing-box/config.json</span><br></pre></td></tr></table></figure><p>把下面这一整份 JSON 写入 <code>/etc/sing-box/config.json</code>。如果文件里已经有默认配置，比如 <code>shadowsocks</code>、<code>mixed</code>、<code>tun</code> 等旧入站内容，不要和下面的配置混在一起；写入前先清空原文件内容，并替换 3 个地方：</p><ul><li><code>替换成你的UUID</code></li><li><code>替换成你的Reality私钥</code></li><li><code>替换成你的ShortID</code></li></ul><p>这里 <strong>不用填 VPS IP</strong>。服务端的 <code>&quot;listen&quot;: &quot;0.0.0.0&quot;</code> 表示监听这台 VPS 的所有公网和内网地址，保持不变即可。VPS IP 只填在后面的客户端配置里。</p><p>注意：这一段是 <strong>服务端配置</strong>，要写在 VPS 的 <code>/etc/sing-box/config.json</code> 里。服务端配置里应该看到 <code>inbounds</code> 里的 <code>&quot;type&quot;: &quot;vless&quot;</code> 和 <code>private_key</code>。如果你看到的是 <code>&quot;type&quot;: &quot;mixed&quot;</code>、<code>&quot;tag&quot;: &quot;mixed-in&quot;</code>、<code>&quot;server&quot;: &quot;你的VPS公网IP&quot;</code>、<code>public_key</code> 或 <code>&quot;final&quot;: &quot;proxy&quot;</code>，那是后面的客户端配置，不能粘到 VPS 服务端。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;log&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;level&quot;</span><span class="punctuation">:</span> <span class="string">&quot;info&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless-reality-in&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;users&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user1&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;替换成你的UUID&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;server_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;handshake&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span></span><br><span class="line">          <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;private_key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;替换成你的Reality私钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;short_id&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;替换成你的ShortID&quot;</span></span><br><span class="line">          <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;max_time_difference&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1m&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;route&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;final&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><p>这里解释几个重点：</p><ul><li><code>listen_port</code>：服务端监听端口，本文用 <code>443</code></li><li><code>uuid</code>：VLESS 用户 ID</li><li><code>flow</code>：必须填 <code>xtls-rprx-vision</code></li><li><code>server_name</code>：客户端填写的 SNI，也就是伪装目标域名</li><li><code>handshake.server</code>：Reality 实际转发握手的目标站</li><li><code>private_key</code>：只写服务端 Reality 私钥</li><li><code>short_id</code>：客户端也要填写同一个值</li></ul><p>如果你的 VPS 同时有 IPv6，并且你希望监听 IPv4 + IPv6，可以把：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;listen&quot;: &quot;0.0.0.0&quot;</span><br></pre></td></tr></table></figure><p>改成：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;listen&quot;: &quot;::&quot;</span><br></pre></td></tr></table></figure><p>新手优先用 <code>0.0.0.0</code>，排错更直观。</p><h2 id="✅-八、检查配置并启动服务"><a href="#✅-八、检查配置并启动服务" class="headerlink" title="✅ 八、检查配置并启动服务"></a>✅ 八、检查配置并启动服务</h2><p>编辑时看到 JSON 被挤成很长一行，或者自动折到下一行，是正常显示效果，不代表配置错了。不要靠肉眼判断，写入后用下面的命令检查。</p><p>下面几步建议一条一条执行，不要把多条命令粘在同一行。</p><p>第一步，检查配置文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure><p>如果没有报错，第二步，格式化配置：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box format -w -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure><p>第三步，设置开机自启并重启服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> sing-box</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure><p>第四步，查看运行状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure><p>看到 <code>Active: active (running)</code>，并且日志里有 <code>tcp server started at 0.0.0.0:443</code>，说明 sing-box 已经启动成功。如果 <code>Loaded</code> 那一行显示 <code>disabled</code>，表示当前服务虽然在运行，但还没有设置开机自启，再执行一次 <code>systemctl enable sing-box</code> 即可。</p><p>如果误把几条命令粘在同一行，可能会看到 <code>unknown flag: --no-pager</code>。这不是配置错了，只是 shell 把后面的命令当成前一条命令的参数了，重新按上面四步分开执行即可。</p><p>查看日志：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure><p>检查端口是否监听：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tlnp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure><p>正常情况下，你应该能看到 sing-box 正在监听 <code>443</code>。</p><h2 id="🛡️-九、放行防火墙端口"><a href="#🛡️-九、放行防火墙端口" class="headerlink" title="🛡️ 九、放行防火墙端口"></a>🛡️ 九、放行防火墙端口</h2><p>如果你使用 <code>ufw</code>，先确认 SSH 端口已经放行。若执行 <code>ufw</code> 时提示 <code>ufw: command not found</code>，说明系统里还没安装 <code>ufw</code>，可以先安装。下面两条命令要分开执行，不要粘在同一行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install -y ufw</span><br></pre></td></tr></table></figure><p>如果误粘成 <code>apt-get update apt-get install -y ufw</code>，会看到 <code>E: The update command takes no arguments</code>。这不是系统坏了，重新按上面两条分别执行即可。</p><p>如果你用的是容器环境，系统可能不支持 <code>ufw</code>。这种情况下可以先跳过系统内防火墙，只去服务商后台安全组放行 <code>22/tcp</code> 和 <code>443/tcp</code>。</p><p>默认 SSH 是 <code>22</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br></pre></td></tr></table></figure><p>放行 sing-box 节点端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 443/tcp</span><br></pre></td></tr></table></figure><p>启用防火墙：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure><p>如果你改过 SSH 端口，比如 SSH 是 <code>2222</code>，那就必须放行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 2222/tcp</span><br></pre></td></tr></table></figure><blockquote><p>云厂商后台的安全组也要同步放行 <code>443/tcp</code>。很多连接超时不是 sing-box 配置错了，而是云防火墙没开。</p></blockquote><h2 id="📱-十、填写客户端参数"><a href="#📱-十、填写客户端参数" class="headerlink" title="📱 十、填写客户端参数"></a>📱 十、填写客户端参数</h2><p>不同客户端界面不一样，但核心参数是一样的。</p><h3 id="图形客户端通用参数"><a href="#图形客户端通用参数" class="headerlink" title="图形客户端通用参数"></a>图形客户端通用参数</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">协议：VLESS</span><br><span class="line">地址 / Server：你的 VPS 公网 IP</span><br><span class="line">端口 / Port：443</span><br><span class="line">UUID：服务端生成的 UUID</span><br><span class="line">传输 / Network：TCP / RAW</span><br><span class="line">加密 / Encryption：none</span><br><span class="line">Flow：xtls-rprx-vision</span><br><span class="line">TLS：开启</span><br><span class="line">TLS 类型：Reality</span><br><span class="line">SNI / Server Name：www.microsoft.com</span><br><span class="line">Fingerprint / uTLS：chrome</span><br><span class="line">Public Key：服务端生成的 PublicKey</span><br><span class="line">Short ID：服务端配置里的 short_id</span><br><span class="line">ALPN：留空</span><br></pre></td></tr></table></figure><p>注意两点：</p><ol><li><code>地址 / Server</code> 填你的 VPS IP，不是 <code>www.microsoft.com</code></li><li><code>SNI / Server Name</code> 才填 <code>www.microsoft.com</code></li></ol><p>这两个填反了，是新手最常见的错误。</p><h3 id="桌面端-sing-box-客户端示例"><a href="#桌面端-sing-box-客户端示例" class="headerlink" title="桌面端 sing-box 客户端示例"></a>桌面端 sing-box 客户端示例</h3><p>如果你在电脑本地也用 sing-box，可以参考下面这份配置。这一段适合 macOS &#x2F; Windows &#x2F; Linux 桌面端使用，因为它只是在本机开一个 <code>127.0.0.1:7890</code> 代理端口。</p><p>注意：这不是手机端整机代理配置。手机端如果直接照抄这个 <code>mixed-in</code> 配置，客户端可能显示已经启动，但系统流量不会自动走代理。</p><p>把这几个值替换掉：</p><ul><li><code>你的VPS公网IP</code></li><li><code>你的UUID</code></li><li><code>你的Reality公钥</code></li><li><code>你的ShortID</code></li></ul><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;log&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;level&quot;</span><span class="punctuation">:</span> <span class="string">&quot;info&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mixed&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mixed-in&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;listen_port&quot;</span><span class="punctuation">:</span> <span class="number">7890</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的VPS公网IP&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的UUID&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-vision&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;server_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;www.microsoft.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;utls&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;fingerprint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;chrome&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reality&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;public_key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的Reality公钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;short_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的ShortID&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;packet_encoding&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xudp&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;route&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;final&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><p>启动客户端后，把系统代理或浏览器代理指向：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:7890</span><br></pre></td></tr></table></figure><p>如果客户端日志里只看到终端测试请求，比如 <code>api.ipify.org:443</code>，但浏览器没有任何连接记录，说明浏览器还没有走这个本地代理。</p><h3 id="手机端-sing-box-使用要点"><a href="#手机端-sing-box-使用要点" class="headerlink" title="手机端 sing-box 使用要点"></a>手机端 sing-box 使用要点</h3><p>手机端不要只看 <code>sing-box started</code>。关键是确认它有没有用 VPN &#x2F; TUN 模式接管系统流量。</p><p>正常情况下，手机端启动后应该出现系统 VPN 图标，sing-box 日志里也应该能看到手机浏览器或 App 发出的连接。如果没有 VPN 图标，或者日志里没有任何新的访问记录，通常说明手机流量没有进入 sing-box。</p><p>手机端建议优先使用客户端图形界面填写上面的“图形客户端通用参数”，或使用客户端提供的导入功能。不要把桌面端的 <code>127.0.0.1:7890</code> 当成手机整机代理来用。</p><p>如果手机端提供运行模式，优先选择类似下面的模式：</p><ul><li>VPN</li><li>TUN</li><li>全局代理 &#x2F; Global</li></ul><p>如果只提供本地 HTTP &#x2F; SOCKS 代理模式，那就还需要在系统 Wi-Fi 代理里手动填写手机本机代理地址；这个方式容易漏掉 App 流量，新手更推荐直接用 VPN &#x2F; TUN 模式。</p><h2 id="🧪-十一、测试是否成功"><a href="#🧪-十一、测试是否成功" class="headerlink" title="🧪 十一、测试是否成功"></a>🧪 十一、测试是否成功</h2><p>桌面端客户端连接后，打开终端测试：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</span><br></pre></td></tr></table></figure><p>如果返回的是你的 VPS 出口 IP，说明客户端到 VPS 的代理链路已经工作。此时如果浏览器仍然没网，重点检查浏览器或系统代理是否真的指向 <code>127.0.0.1:7890</code>。</p><p>也可以测试 HTTPS：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://www.google.com -I</span><br></pre></td></tr></table></figure><p>手机端测试时，直接用手机浏览器打开：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.ipify.org</span><br></pre></td></tr></table></figure><p>如果显示的是 VPS IP，说明手机端已经走代理。如果显示的还是手机运营商或家里宽带 IP，说明手机端 VPN &#x2F; TUN 没有接管流量，优先回到客户端里检查运行模式和配置是否启用。</p><p>服务端日志里如果有连接记录，也说明入站正在工作：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure><h2 id="🛠️-十二、常见错误排查"><a href="#🛠️-十二、常见错误排查" class="headerlink" title="🛠️ 十二、常见错误排查"></a>🛠️ 十二、常见错误排查</h2><h3 id="1-客户端连接超时"><a href="#1-客户端连接超时" class="headerlink" title="1. 客户端连接超时"></a>1. 客户端连接超时</h3><p>优先检查端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tlnp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure><p>再检查云厂商安全组是否放行了 <code>443/tcp</code>。</p><p>如果端口没监听，说明 sing-box 没启动成功：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -e</span><br></pre></td></tr></table></figure><h3 id="2-reality-verification-failed"><a href="#2-reality-verification-failed" class="headerlink" title="2. reality verification failed"></a>2. reality verification failed</h3><p>通常是这些参数不一致：</p><ul><li>客户端 <code>PublicKey</code> 填错</li><li>服务端 <code>PrivateKey</code> 填错</li><li><code>short_id</code> 不一致</li><li><code>server_name</code> &#x2F; SNI 不一致</li><li>客户端时间或服务端时间偏差太大</li><li>客户端 sing-box 核心太旧</li></ul><p>先检查时间：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure><p>再升级 sing-box，按顺序一条一条执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install --only-upgrade sing-box</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure><h3 id="3-TLS-handshake-invalid-connection-processed-invalid-connection"><a href="#3-TLS-handshake-invalid-connection-processed-invalid-connection" class="headerlink" title="3. TLS handshake invalid connection &#x2F; processed invalid connection"></a>3. TLS handshake invalid connection &#x2F; processed invalid connection</h3><p>服务端日志里偶尔出现 <code>TLS handshake invalid connection</code> 或 <code>processed invalid connection</code>，不一定代表配置错了。公网端口会被扫描，陌生连接打到 Reality 入站时可能会被拒绝。</p><p>如果 <code>systemctl status</code> 里已经看到 <code>Active: active (running)</code>，并且日志里出现 <code>inbound connection from ...</code>，说明外部连接已经能打到 VPS，端口和安全组大概率是通的。</p><p>判断是不是自己的客户端：先在本地查公网 IP，再打开客户端连接，看服务端日志里是否出现同一个 IP。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://api.ipify.org</span><br></pre></td></tr></table></figure><p>如果日志里的 IP 不是你的公网 IP，多半只是公网扫描，可以忽略。如果日志里的 IP 是你的公网 IP，但仍然报 Reality &#x2F; TLS 握手错误，再重点检查 UUID、Reality 公钥、short_id、SNI 和 <code>flow</code> 是否完全一致。</p><h3 id="4-客户端显示-connected，但网页打不开"><a href="#4-客户端显示-connected，但网页打不开" class="headerlink" title="4. 客户端显示 connected，但网页打不开"></a>4. 客户端显示 connected，但网页打不开</h3><p>先在本机确认本地代理是否工作：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</span><br></pre></td></tr></table></figure><p>如果这条命令能返回 VPS 出口 IP，说明节点本身是通的。浏览器打不开通常是浏览器没有走代理：把 macOS 系统代理或浏览器代理设置为 <code>SOCKS5 127.0.0.1 7890</code>，再打开 <code>https://api.ipify.org</code> 验证。</p><p>检查服务端出站是否能访问外网：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://www.google.com --connect-timeout 5</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://www.microsoft.com --connect-timeout 5</span><br></pre></td></tr></table></figure><p>如果服务端自己都访问不了目标网站，那不是客户端问题，而是 VPS 出口网络问题。</p><h3 id="5-手机端-sing-box-启动了，但没网络"><a href="#5-手机端-sing-box-启动了，但没网络" class="headerlink" title="5. 手机端 sing-box 启动了，但没网络"></a>5. 手机端 sing-box 启动了，但没网络</h3><p>如果电脑端用 <code>curl -x socks5h://127.0.0.1:7890 https://api.ipify.org</code> 能返回 VPS IP，但手机端不行，优先怀疑手机端没有用 VPN &#x2F; TUN 接管系统流量，而不是 VPS 或防火墙坏了。</p><p>手机端按这个顺序排查：</p><ol><li>启动后手机状态栏是否出现 VPN 图标</li><li>手机浏览器打开 <code>https://api.ipify.org</code> 是否显示 VPS IP</li><li>VPS 上执行 <code>journalctl -u sing-box --output cat -f</code> 时，手机访问网页后是否出现新的 <code>inbound connection</code></li></ol><p>如果没有 VPN 图标，也没有服务端新连接，说明手机流量根本没有进入 sing-box。回到手机客户端里选择 VPN &#x2F; TUN &#x2F; 全局代理模式。</p><p>如果服务端有手机的新连接，但仍然打不开网页，再检查客户端参数是否和服务端一致，尤其是 <code>UUID</code>、<code>Public Key</code>、<code>Short ID</code>、<code>SNI</code>、<code>Flow</code> 和端口 <code>443</code>。</p><h3 id="6-速度不理想"><a href="#6-速度不理想" class="headerlink" title="6. 速度不理想"></a>6. 速度不理想</h3><p>VLESS + Reality + Vision 是稳定路线，不是暴力提速路线。速度主要取决于：</p><ul><li>VPS 线路质量</li><li>本地运营商到 VPS 的路由</li><li>晚高峰丢包</li><li>VPS 带宽限制</li><li>客户端分流和 DNS 配置</li></ul><p>如果 TCP 晚高峰丢包严重，可以再额外部署 Hysteria2 &#x2F; TUIC 作为 UDP 加速备用节点。但这已经是另一套方案，不建议新手一开始就混在同一个教程里。</p><h2 id="🔄-十三、升级和维护"><a href="#🔄-十三、升级和维护" class="headerlink" title="🔄 十三、升级和维护"></a>🔄 十三、升级和维护</h2><p>以后升级 sing-box，按顺序一条一条执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install --only-upgrade sing-box</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure><p>查看服务状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure><p>查看实时日志：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u sing-box --output <span class="built_in">cat</span> -f</span><br></pre></td></tr></table></figure><p>修改配置后，一定先检查：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sing-box check -c /etc/sing-box/config.json</span><br></pre></td></tr></table></figure><p>没报错再重启：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sing-box</span><br></pre></td></tr></table></figure><h2 id="📋-十四、参数速查表"><a href="#📋-十四、参数速查表" class="headerlink" title="📋 十四、参数速查表"></a>📋 十四、参数速查表</h2><table><thead><tr><th>参数</th><th>服务端填写</th><th>客户端填写</th></tr></thead><tbody><tr><td>VPS IP</td><td>不需要</td><td><code>server</code></td></tr><tr><td>端口</td><td><code>listen_port</code></td><td><code>server_port</code></td></tr><tr><td>UUID</td><td><code>users.uuid</code></td><td><code>uuid</code></td></tr><tr><td>Vision</td><td><code>users.flow</code></td><td><code>flow</code></td></tr><tr><td>Reality 私钥</td><td><code>tls.reality.private_key</code></td><td>不填</td></tr><tr><td>Reality 公钥</td><td>不填</td><td><code>tls.reality.public_key</code></td></tr><tr><td>short_id</td><td><code>tls.reality.short_id</code></td><td><code>tls.reality.short_id</code></td></tr><tr><td>伪装域名</td><td><code>tls.server_name</code> 和 <code>handshake.server</code></td><td><code>tls.server_name</code> &#x2F; SNI</td></tr><tr><td>uTLS 指纹</td><td>不填</td><td><code>chrome</code></td></tr></tbody></table><h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>如果你只是想先搭一个稳定、干净、可维护的 VPS 节点，那么这套 <code>sing-box + VLESS + Reality + Vision</code> 就足够作为第一套配置。</p><p>它不追求花哨，但胜在链路简单、依赖少、排错容易。等你把这套跑稳之后，再去加 Hysteria2、TUIC、CDN 备用通道或更复杂的分流，会轻松很多。</p><blockquote><p>旧版文章曾附带 Fake-IP + TUN 客户端模板。由于旧 FakeIP 配置已在 sing-box 1.14 中移除，为避免新手复制不兼容配置，本次发布不再展示该附录。手机客户端建议使用支持当前 sing-box 核心的图形客户端，并按照前文“图形客户端通用参数”填写。</p></blockquote><h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你希望跟着实际终端画面操作，请观看 <strong><a href="https://www.youtube.com/watch?v=h67zIOeu6x0">sing-box + VLESS + Reality + Vision 配套视频</a></strong>。更多 VPS 和服务器运维教程会持续发布在 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p><h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul><li><a href="https://sing-box.sagernet.org/installation/package-manager/">sing-box 官方安装文档</a></li><li><a href="https://sing-box.sagernet.org/configuration/inbound/vless/">sing-box VLESS 入站文档</a></li><li><a href="https://sing-box.sagernet.org/configuration/outbound/vless/">sing-box VLESS 出站文档</a></li><li><a href="https://sing-box.sagernet.org/configuration/shared/tls/">sing-box TLS &#x2F; Reality 文档</a></li><li><a href="https://sing-box.sagernet.org/configuration/">sing-box 配置检查与格式化</a></li></ul>]]></content>
+      
+      
       <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
+          
+          <category> 技术教程 </category>
+          
+          <category> 网络链路 </category>
+          
       </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>Reality协议</tag>
-        <tag>Debian</tag>
-        <tag>3X-UI</tag>
-        <tag>服务器运维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
-<blockquote>
-<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
-</blockquote>
-<hr>
-<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
-<hr>
-<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
-<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
-<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
-</ul>
-<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
-<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
-<hr>
-<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
-<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
-<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
-<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
-<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
-</ol>
-<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
-<hr>
-<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
-<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
-<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
-<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
-<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
-</ol>
-<hr>
-<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
-<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
-<p><strong>Q2：提示 “Read-only file system”</strong></p>
-<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
-<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
-<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
-<h2 id="📺-观看更多视频教程"><a href="#📺-观看更多视频教程" class="headerlink" title="📺 观看更多视频教程"></a>📺 观看更多视频教程</h2><p>更多 macOS、VPS 和服务器运维实操视频，请访问 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p>
-<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="前往 YouTube 频道"><i class="fab fa-youtube"></i><span>前往 YouTube 频道</span></a>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> VPS </tag>
+            
+            <tag> Debian </tag>
+            
+            <tag> Reality协议 </tag>
+            
+            <tag> sing-box </tag>
+            
+            <tag> VLESS </tag>
+            
+            <tag> Vision </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</title>
+      <link href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
+      <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<div class="video-container">  <iframe    src="https://www.youtube.com/embed/rbvd4RZQaNY"    title="Debian VPS 搭建 VLESS Reality、3X-UI、BBR 与 UFW 视频教程"    frameborder="0"    loading="lazy"    referrerpolicy="strict-origin-when-cross-origin"    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"    allowfullscreen>  </iframe></div><style>.video-container {    position: relative;    width: 100%;    padding-top: 56.25%;    border-radius: 12px;    overflow: hidden;    box-shadow: 0 8px 20px rgba(0,0,0,0.1);    margin-bottom: 20px;}.video-container iframe {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;}</style><a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=rbvd4RZQaNY" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a><a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a><p>这是一份面向 <strong>Debian 纯净系统</strong>的完整教程，不混用 Ubuntu、CentOS 或 Alpine 命令。请严格按照本文顺序操作：先确认 SSH 可以登录，再开启防火墙；安装面板并取得实际端口后，才放行面板端口；创建 Reality 入站后，才放行节点端口。</p><p>REALITY 不要求你购买域名，也不需要为节点单独申请 TLS 证书。它会利用目标 HTTPS 站点的握手特征和证书外观进行伪装，但并不是把目标网站的证书复制或安装到你的 VPS。</p><blockquote><p>本文默认使用 <code>root</code> 用户，因此命令中不添加 <code>sudo</code>。</p></blockquote><h2 id="🛠️-一、选择-VPS-与厂商推荐"><a href="#🛠️-一、选择-VPS-与厂商推荐" class="headerlink" title="🛠️ 一、选择 VPS 与厂商推荐"></a>🛠️ 一、选择 VPS 与厂商推荐</h2><p>在开始搭建前，需要准备一台具有公网可达 IP 的海外 VPS。线路质量、机房位置和晚高峰拥塞情况，都会直接影响实际体验。</p><h3 id="核心选购指标"><a href="#核心选购指标" class="headerlink" title="核心选购指标"></a>核心选购指标</h3><ul><li><strong>线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现取决于所在地、运营商、路由和晚高峰拥塞。</li><li><strong>机房位置</strong>：通常距离越近，基础延迟越低，但应以测试 IP 的 <code>ping</code>、路由追踪、丢包率和晚高峰测速为准。</li><li><strong>系统支持</strong>：确认服务商可以安装 Debian 12 或 Debian 13 64 位纯净系统。</li><li><strong>公网 IP</strong>：确认 VPS 具有公网可达 IP，并了解服务商是否额外提供安全组或云防火墙。</li><li><strong>付款方式</strong>：根据自己的需求选择月付或年付，首次购买不建议一次预付太长时间。</li></ul><h3 id="VPS-服务商对比"><a href="#VPS-服务商对比" class="headerlink" title="VPS 服务商对比"></a>VPS 服务商对比</h3><table><thead><tr><th align="left">服务商</th><th align="left">主要特点</th><th align="left">推荐线路&#x2F;地区</th><th align="left">适用场景</th><th align="left">价格定位</th></tr></thead><tbody><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td><td align="left">线路质量较高，提供多种优化网络产品</td><td align="left">CN2 GIA &#x2F; 香港 &#x2F; 日本 &#x2F; 美国</td><td align="left">对线路稳定性要求较高</td><td align="left">较高</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="搬瓦工"><i class="anzhiyu-icon-gift"></i><span>搬瓦工</span></a></strong></td><td align="left">支持多个机房和线路方案</td><td align="left">CN2 GIA-E &#x2F; 日本软银等</td><td align="left">需要灵活切换机房</td><td align="left">中高</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td><td align="left">支持按量或月付，地区选择较多</td><td align="left">香港 &#x2F; 台湾 &#x2F; 日本 &#x2F; 韩国等</td><td align="left">临时测试和短期项目</td><td align="left">中低</td></tr><tr><td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td><td align="left">年付产品价格较低</td><td align="left">美国常规线路</td><td align="left">预算有限、博客和测试环境</td><td align="left">较低</td></tr><tr><td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td><td align="left">全球机房较多，支持按小时计费和 API</td><td align="left">国际标准 BGP</td><td align="left">临时部署和开发测试</td><td align="left">中等</td></tr></tbody></table><blockquote><p>线路、IP 属性、库存和价格会随时变化，请以服务商实时页面及测试 IP 为准。上表部分按钮包含推广参数，购买价格通常不因此增加。</p></blockquote><hr><h2 id="💡-二、搭建前准备"><a href="#💡-二、搭建前准备" class="headerlink" title="💡 二、搭建前准备"></a>💡 二、搭建前准备</h2><ul><li>一台具有公网可达 IP 的 VPS，优先选择 <strong>Debian 13 64 位</strong>，也可使用 <strong>Debian 12 64 位</strong>。</li><li>VPS 的公网 IP，以及服务商提供的 <code>root</code> 初始登录凭据。</li><li>SSH 工具：Windows 可使用 Windows Terminal &#x2F; PowerShell，macOS 可使用系统自带终端。</li><li>一个部署时经过测试的 Reality Target&#x2F;SNI。无需拥有这个域名，但不能把网上的示例当成永久可用配置。</li></ul><p>截至 2026 年 7 月，Debian 11 LTS 将于 2026 年 8 月 31 日结束，不建议再用于新装服务器。Debian 12 LTS 持续至 2028 年 6 月 30 日。</p><hr><h2 id="🚀-三、更新-Debian-并安装基础工具"><a href="#🚀-三、更新-Debian-并安装基础工具" class="headerlink" title="🚀 三、更新 Debian 并安装基础工具"></a>🚀 三、更新 Debian 并安装基础工具</h2><p>通过 SSH 登录 VPS：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure><p>把 <code>你的VPS_IP</code> 替换为真实公网 IP。登录后执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install -y curl wget ca-certificates tar ufw</span><br></pre></td></tr></table></figure><p>如果系统更新了内核，建议先重启，再重新连接：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure><hr><h2 id="⚡-四、开启并验证-BBR"><a href="#⚡-四、开启并验证-BBR" class="headerlink" title="⚡ 四、开启并验证 BBR"></a>⚡ 四、开启并验证 BBR</h2><p>使用独立配置文件，避免重复执行时不断向 <code>/etc/sysctl.conf</code> 追加相同内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure><p>验证当前算法及内核可用算法：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure><p>第一条应显示当前算法为 <code>bbr</code>，第二条的列表中也应包含 <code>bbr</code>。不要只依靠 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核时可能不会出现在模块列表中。</p><hr><h2 id="🛡️-五、配置-UFW：此时只放行-SSH"><a href="#🛡️-五、配置-UFW：此时只放行-SSH" class="headerlink" title="🛡️ 五、配置 UFW：此时只放行 SSH"></a>🛡️ 五、配置 UFW：此时只放行 SSH</h2><h3 id="1-确认-SSH-实际端口"><a href="#1-确认-SSH-实际端口" class="headerlink" title="1. 确认 SSH 实际端口"></a>1. 确认 SSH 实际端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure><p>如果输出是 <code>port 22</code>，下面使用 <code>22</code>；如果输出为其他端口，必须把命令中的 <code>22</code> 换成实际值。</p><h3 id="2-设置策略、放行-SSH-并开启-UFW"><a href="#2-设置策略、放行-SSH-并开启-UFW" class="headerlink" title="2. 设置策略、放行 SSH 并开启 UFW"></a>2. 设置策略、放行 SSH 并开启 UFW</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line">ufw allow 22/tcp comment <span class="string">&#x27;SSH&#x27;</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure><p>看到 <code>Status: active</code> 和实际 SSH 端口规则后，不要立即关闭当前窗口。先新开一个终端再次连接 VPS，确认 SSH 仍然可用。</p><blockquote><p>此时 3X-UI 尚未安装，Reality 入站也尚未创建，因此不要提前开放面板端口、<code>443</code> 或 <code>2096</code>。</p></blockquote><hr><h2 id="🖥️-六、安装-3X-UI-面板"><a href="#🖥️-六、安装-3X-UI-面板" class="headerlink" title="🖥️ 六、安装 3X-UI 面板"></a>🖥️ 六、安装 3X-UI 面板</h2><p>执行 3X-UI 官方安装脚本：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure><p>安装脚本会持续更新，应以屏幕上的实际提示为准。当前版本会生成随机用户名、密码和 WebBasePath，并在安装结束时显示面板端口、访问地址、账号以及 API Token。请立即保存完整输出，不要套用旧教程中的默认账号、固定端口或固定路径。</p><p>如果安装器提供 HTTPS、IP 证书、反向代理或仅监听 <code>127.0.0.1</code> 等选项，请根据实际访问方式选择。公网 HTTP 会明文传输面板登录信息，不适合长期使用。</p><h3 id="安装完成后再放行面板端口"><a href="#安装完成后再放行面板端口" class="headerlink" title="安装完成后再放行面板端口"></a>安装完成后再放行面板端口</h3><p>假设安装结果显示面板端口为 <code>28530</code>，有固定公网 IP 时，建议只允许自己的 IP：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>必须把 <code>你的公网IP</code> 和 <code>28530</code> 换成真实值，不能原样执行。</p><p>没有固定 IP、确实需要临时公网访问时，可以开放实际面板端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>更安全的方式是不向公网开放面板端口，而是在本地建立 SSH 隧道：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh <span class="literal">-L</span> <span class="number">28530</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">28530</span> root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure><p>随后通过 <code>http://127.0.0.1:28530/你的WebBasePath/</code> 访问。端口和路径都必须使用安装器实际给出的值。</p><hr><h2 id="📡-七、配置-VLESS-REALITY-XTLS-Vision"><a href="#📡-七、配置-VLESS-REALITY-XTLS-Vision" class="headerlink" title="📡 七、配置 VLESS + REALITY + XTLS Vision"></a>📡 七、配置 VLESS + REALITY + XTLS Vision</h2><p>登录面板，进入 <strong>入站列表（Inbounds）</strong>，点击 <strong>添加入站（Add Inbound）</strong>。</p><h3 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h3><table><thead><tr><th align="left">配置项</th><th align="left">填写内容</th><th align="left">说明</th></tr></thead><tbody><tr><td align="left">备注（Remark）</td><td align="left"><code>VLESS-REALITY</code></td><td align="left">仅用于自己识别</td></tr><tr><td align="left">协议（Protocol）</td><td align="left"><code>VLESS</code></td><td align="left">入站协议</td></tr><tr><td align="left">监听 IP</td><td align="left"><code>0.0.0.0</code></td><td align="left">监听服务器公网网卡</td></tr><tr><td align="left">端口（Port）</td><td align="left"><code>443</code>（示例）</td><td align="left">使用前确认没有被网站或其他服务占用</td></tr><tr><td align="left">客户端 ID &#x2F; UUID</td><td align="left">点击生成</td><td align="left">每位用户建议使用独立 UUID</td></tr><tr><td align="left">Flow</td><td align="left"><code>xtls-rprx-vision</code></td><td align="left">与 TCP&#x2F;RAW + Reality 配合</td></tr><tr><td align="left">传输方式</td><td align="left"><code>TCP</code>，新版内核可能显示 <code>RAW</code></td><td align="left">以当前面板字段为准</td></tr><tr><td align="left">安全（Security）</td><td align="left"><code>reality</code></td><td align="left">开启 Reality</td></tr><tr><td align="left">Fingerprint &#x2F; uTLS</td><td align="left"><code>chrome</code></td><td align="left">客户端也要使用兼容指纹</td></tr><tr><td align="left">Private&#x2F;Public Key</td><td align="left">点击生成</td><td align="left">私钥只保留在服务器端，客户端使用公钥</td></tr><tr><td align="left">Short ID</td><td align="left">点击生成</td><td align="left">必须为偶数长度的十六进制字符串，最长 16 个字符</td></tr></tbody></table><h3 id="Target-与-SNI"><a href="#Target-与-SNI" class="headerlink" title="Target 与 SNI"></a>Target 与 SNI</h3><p>旧教程中常见 <code>dl.google.com:443</code>、<code>www.microsoft.com:443</code> 或 <code>itunes.apple.com:443</code>，但它们只能作为候选示例，不能保证在所有 VPS、地区和时间都适用。</p><ul><li>Target（旧版界面可能显示 Dest）应填写经过测试的 HTTPS 站点和端口。</li><li>Server Names &#x2F; SNI 通常应与 Target 接受的证书域名一致。</li><li>Target 应支持所需 TLS 特性，并且从 VPS 所在网络能够稳定访问。</li><li>不要机械照抄 CDN 或特殊目标。未通过 Reality 验证的流量可能被转发至 Target，错误选择可能导致服务器被滥用为转发器。</li></ul><p>设置完成后点击 <strong>添加（Add）</strong> 保存入站。</p><h3 id="保存入站后再放行节点端口"><a href="#保存入站后再放行节点端口" class="headerlink" title="保存入站后再放行节点端口"></a>保存入站后再放行节点端口</h3><p>本例使用 TCP <code>443</code>，因此执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 443/tcp comment <span class="string">&#x27;VLESS Reality&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure><p>如果入站使用其他端口，就把 <code>443</code> 换成实际端口。本文采用 TCP&#x2F;RAW + Reality，不需要额外执行 <code>ufw allow 443/udp</code>。只有服务确实监听 UDP 时才开放 UDP。</p><p>如果面板端口和入站端口相同，或者 <code>443</code> 已被 Nginx、Caddy 等程序占用，入站将无法正常启动。可先检查：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure><hr><h2 id="📱-八、导出节点并连接客户端"><a href="#📱-八、导出节点并连接客户端" class="headerlink" title="📱 八、导出节点并连接客户端"></a>📱 八、导出节点并连接客户端</h2><p>在入站列表中找到刚创建的记录，点击二维码或复制链接，获取 <code>vless://</code> 节点链接。导入后核对服务器地址、端口、公钥、SNI、Short ID、Fingerprint 和 Flow。</p><table><thead><tr><th align="left">平台</th><th align="left">可选客户端</th></tr></thead><tbody><tr><td align="left">Windows</td><td align="left">v2rayN、sing-box</td></tr><tr><td align="left">macOS</td><td align="left">sing-box 等支持 Reality 的客户端</td></tr><tr><td align="left">Android</td><td align="left">v2rayNG、NekoBox、sing-box</td></tr><tr><td align="left">iOS &#x2F; iPadOS</td><td align="left">Shadowrocket、Stash、sing-box</td></tr></tbody></table><p>Shadowrocket（小火箭）本身没有固定服务器端口。它连接哪个端口，取决于你创建的入站配置。</p><hr><h2 id="☁️-九、同步检查云厂商安全组"><a href="#☁️-九、同步检查云厂商安全组" class="headerlink" title="☁️ 九、同步检查云厂商安全组"></a>☁️ 九、同步检查云厂商安全组</h2><p>如果使用阿里云、腾讯云、AWS、Oracle Cloud 等带有安全组或云防火墙的平台，还必须在服务商控制台同步开放实际使用的端口：</p><ul><li>SSH 的实际 TCP 端口。</li><li>面板的实际 TCP 端口——仅当面板需要公网访问时。</li><li>Reality 入站的实际 TCP 端口。</li></ul><p>云安全组和 UFW 是两道独立防火墙。任何一层没有放行，外部都无法访问。不要为了省事开放全部端口或 <code>0-65535</code>。</p><hr><h2 id="🛠️-十、排查与维护命令"><a href="#🛠️-十、排查与维护命令" class="headerlink" title="🛠️ 十、排查与维护命令"></a>🛠️ 十、排查与维护命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开 3X-UI 管理菜单</span></span><br><span class="line">x-ui</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看面板服务状态</span></span><br><span class="line">systemctl status x-ui --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查节点端口和面板端口（按实际端口替换）</span></span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(443|28530)\b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙规则</span></span><br><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改规则后重新加载</span></span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure><p>如果服务正在监听但外部无法访问，应依次检查：服务商安全组、UFW、入站端口、客户端参数、VPS 系统时间和 Target 可达性。不要直接关闭全部防火墙来排错。</p><p>若误封 SSH，请通过 VPS 服务商的 VNC、Web Console 或 Serial Console 登录，修正规则后再继续。</p><hr><h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>正确的安全顺序是：</p><ol><li>选择支持 Debian 和公网 IP 的 VPS。</li><li>更新 Debian 并确认 SSH 登录。</li><li>开启并验证 BBR。</li><li>只放行 SSH 后开启 UFW。</li><li>安装 3X-UI，取得真实面板端口后再决定是否放行。</li><li>创建 VLESS + Reality 入站，保存后只开放实际节点 TCP 端口。</li><li>同步检查云厂商安全组，最后导入客户端测试。</li></ol><p>如果这篇教程对你有帮助，欢迎前往 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong> 观看配套视频。视频会展示面板界面和实际操作过程，后续更新也会优先发布在频道中。</p><p>官方参考：<a href="https://www.debian.org/News/2026/20260712">Debian 版本支持周期</a>、<a href="https://manpages.debian.org/bookworm/ufw/ufw.8.en.html">Debian UFW 手册</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>]]></content>
+      
+      
       <categories>
-        <category>技术教程</category>
+          
+          <category> 技术教程 </category>
+          
+          <category> 网络链路 </category>
+          
       </categories>
-      <tags>
-        <tag>macOS</tag>
-        <tag>MDM</tag>
-        <tag>系统工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</title>
-    <url>/2026/06/15/hysteria2-cloudflare-dns-vps/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/ELCVRcb8KfQ"
-    title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署视频"
-    loading="lazy"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<p>本文记录如何使用自己的域名和 VPS 搭建 Hysteria2 服务端。示例中使用的子域名是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>请把文中的域名、邮箱和 VPS IP 替换成你自己的真实信息。</p>
-<p>本文只适合合法自用、远程办公、授权测试和个人网络环境优化。不要用于违法用途，也不要用于违反服务条款的场景。</p>
-<span id="more"></span>
-
-<h2 id="💡-一、准备工作"><a href="#💡-一、准备工作" class="headerlink" title="💡 一、准备工作"></a>💡 一、准备工作</h2><p>开始之前，你需要准备好以下内容：</p>
-<ul>
-<li>一个自己的域名；</li>
-<li>一台 VPS，建议使用 Debian 12 或 Debian 13 纯净系统；</li>
-<li>VPS 的公网 IPv4 地址；</li>
-<li>可以 SSH 登录 VPS 的 root 权限；</li>
-<li>域名 DNS 管理权限，例如 Cloudflare。</li>
-</ul>
-<p>本文默认使用的服务端域名是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>后面所有命令里的 <code>hy2.example.com</code>、<code>your@email.com</code> 和 <code>你的VPS_IP</code> 都需要替换。</p>
-<h2 id="🌐-二、进入-DNS-设置页面"><a href="#🌐-二、进入-DNS-设置页面" class="headerlink" title="🌐 二、进入 DNS 设置页面"></a>🌐 二、进入 DNS 设置页面</h2><p>先找到你的域名 DNS 设置页面。</p>
-<p>如果你使用 Cloudflare，常见路径是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">网站 -&gt; DNS -&gt; Records</span><br></pre></td></tr></table></figure>
-
-<p>进入 DNS Records 页面后，准备添加一条新的 DNS 记录。</p>
-<h2 id="🧭-三、添加子域名解析"><a href="#🧭-三、添加子域名解析" class="headerlink" title="🧭 三、添加子域名解析"></a>🧭 三、添加子域名解析</h2><p>添加一条 <code>A</code> 记录：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>内容</th>
-<th>TTL</th>
-<th>代理状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>hy2</td>
-<td>你的 VPS IPv4 地址</td>
-<td>Auto 或 300</td>
-<td>DNS only &#x2F; 灰云</td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>内容</th>
-<th>TTL</th>
-<th>代理状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>hy2</td>
-<td>123.123.123.123</td>
-<td>Auto</td>
-<td>DNS only</td>
-</tr>
-</tbody></table>
-<p>这里的最终访问域名就是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>注意，Cloudflare 里一定不要开启橙云代理，要保持 <code>DNS only</code>，也就是灰云状态。</p>
-<p>原因很简单：普通 Cloudflare CDN 不会直接代理 Hysteria2 的 UDP 443 流量。开启橙云后，客户端连接到的是 Cloudflare，而不是你的 VPS，Hysteria2 会连不上。</p>
-<h2 id="⏳-四、等待-DNS-生效"><a href="#⏳-四、等待-DNS-生效" class="headerlink" title="⏳ 四、等待 DNS 生效"></a>⏳ 四、等待 DNS 生效</h2><p>添加 DNS 记录后，等待几分钟。</p>
-<p>可以在本地电脑或 VPS 上测试：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>如果能解析到你的 VPS IPv4 地址，说明 DNS 已经生效。</p>
-<p>如果暂时没有解析到，先等几分钟再试。DNS 生效时间和本地缓存、运营商缓存、域名服务商有关。</p>
-<h2 id="🔐-五、SSH-登录-VPS"><a href="#🔐-五、SSH-登录-VPS" class="headerlink" title="🔐 五、SSH 登录 VPS"></a>🔐 五、SSH 登录 VPS</h2><p>DNS 准备好后，SSH 登录 VPS：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@123.123.123.123</span><br></pre></td></tr></table></figure>
-
-<p>登录后再继续执行下面的命令。</p>
-<h2 id="🚀-六、更新系统并安装基础工具"><a href="#🚀-六、更新系统并安装基础工具" class="headerlink" title="🚀 六、更新系统并安装基础工具"></a>🚀 六、更新系统并安装基础工具</h2><p>先更新系统：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
-
-<p>安装基础工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget nano openssl ca-certificates nftables</span><br></pre></td></tr></table></figure>
-
-<p>这些工具后面会用于下载安装脚本、编辑配置文件、生成随机密码和处理证书相关请求。</p>
-<h2 id="⚡-七、开启-BBR-网络优化"><a href="#⚡-七、开启-BBR-网络优化" class="headerlink" title="⚡ 七、开启 BBR 网络优化"></a>⚡ 七、开启 BBR 网络优化</h2><p>BBR 不是 Hysteria2 的必需项，因为 Hysteria2 主要使用 UDP&#x2F;QUIC，<code>net.ipv4.tcp_congestion_control=bbr</code> 直接优化的是 TCP 拥塞控制。</p>
-<p>不过 VPS 上通常还会跑 SSH、证书申请、网站伪装页、订阅服务或其他 TCP 服务，所以建议把 BBR 作为基础网络优化一起开启。</p>
-<p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>再应用系统参数：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>检查是否生效：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
-
-<p>正常情况下可以看到类似结果：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr</span><br></pre></td></tr></table></figure>
-
-<p>如果 <code>lsmod | grep bbr</code> 没有输出，但前面的 <code>sysctl</code> 已经显示 <code>bbr</code>，通常也可以继续部署。部分内核会把 BBR 编进内核，不一定以模块形式显示。</p>
-<h2 id="🛡️-八、安装并配置-UFW-防火墙"><a href="#🛡️-八、安装并配置-UFW-防火墙" class="headerlink" title="🛡️ 八、安装并配置 UFW 防火墙"></a>🛡️ 八、安装并配置 UFW 防火墙</h2><p>Debian 可以直接安装 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install -y ufw</span><br></pre></td></tr></table></figure>
-
-<p>先确认 SSH 实际监听端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果输出是 <code>port 22</code>，再放行以下必要端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/udp</span><br></pre></td></tr></table></figure>
-
-<p>启用 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
-
-<p>查看状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>注意：一定要先放行 SSH 的实际端口，再执行 <code>ufw enable</code>。如果 SSH 不是 22 端口，请把命令中的 <code>22</code> 换成真实端口，否则可能会断开远程连接。</p>
-<p>如果你的 VPS 服务商还有额外的安全组、防火墙或云防火墙，也需要同步放行：</p>
-<ul>
-<li><code>22/tcp</code>：SSH 登录；</li>
-<li><code>80/tcp</code>：本文明确使用 ACME HTTP 验证申请证书；</li>
-<li><code>443/udp</code>：Hysteria2 连接端口。</li>
-</ul>
-<h2 id="📦-九、安装-Hysteria2"><a href="#📦-九、安装-Hysteria2" class="headerlink" title="📦 九、安装 Hysteria2"></a>📦 九、安装 Hysteria2</h2><p>执行官方安装脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -fsSL https://get.hy2.sh/)</span><br></pre></td></tr></table></figure>
-
-<p>安装脚本会获取当前稳定版。安装后检查版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hysteria version</span><br></pre></td></tr></table></figure>
-
-<p>建议服务端和客户端都使用当前稳定版。官方更新日志显示 2.8.2 包含重要安全修复；若版本更旧，请重新运行上面的官方脚本升级。</p>
-<p>安装完成后，生成认证密码和混淆密码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">AUTH=$(openssl rand -<span class="built_in">base64</span> 32)</span><br><span class="line">OBFS=$(openssl rand -<span class="built_in">base64</span> 32)</span><br></pre></td></tr></table></figure>
-
-<p>这两个变量会写入 Hysteria2 配置文件。</p>
-<h2 id="📝-十、创建-Hysteria2-配置文件"><a href="#📝-十、创建-Hysteria2-配置文件" class="headerlink" title="📝 十、创建 Hysteria2 配置文件"></a>📝 十、创建 Hysteria2 配置文件</h2><p>执行下面的命令创建配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/hysteria/config.yaml &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">listen: &quot;:443&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">acme:</span></span><br><span class="line"><span class="string">  domains:</span></span><br><span class="line"><span class="string">    - hy2.example.com</span></span><br><span class="line"><span class="string">  email: your@email.com</span></span><br><span class="line"><span class="string">  type: http</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth:</span></span><br><span class="line"><span class="string">  type: password</span></span><br><span class="line"><span class="string">  password: &quot;$AUTH&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">obfs:</span></span><br><span class="line"><span class="string">  type: salamander</span></span><br><span class="line"><span class="string">  salamander:</span></span><br><span class="line"><span class="string">    password: &quot;$OBFS&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">masquerade:</span></span><br><span class="line"><span class="string">  type: proxy</span></span><br><span class="line"><span class="string">  proxy:</span></span><br><span class="line"><span class="string">    url: &quot;https://www.microsoft.com/&quot;</span></span><br><span class="line"><span class="string">    rewriteHost: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;auth password: <span class="variable">$AUTH</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obfs password: <span class="variable">$OBFS</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里需要替换两处：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">hy2.example.com</span></span><br><span class="line"><span class="string">your@email.com</span></span><br></pre></td></tr></table></figure>
-
-<p><code>hy2.example.com</code> 改成你自己的 Hysteria2 子域名，<code>your@email.com</code> 改成你的邮箱。</p>
-<p>命令执行完成后，终端会输出两项重要信息：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">auth password: xxxxx</span><br><span class="line">obfs password: xxxxx</span><br></pre></td></tr></table></figure>
-
-<p>请保存好这两个密码，后面配置客户端时会用到。</p>
-<h2 id="✅-十一、检查配置文件"><a href="#✅-十一、检查配置文件" class="headerlink" title="✅ 十一、检查配置文件"></a>✅ 十一、检查配置文件</h2><p>写入配置后，先检查一下文件内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> -n /etc/hysteria/config.yaml</span><br></pre></td></tr></table></figure>
-
-<p>重点确认下面几项：</p>
-<ul>
-<li>域名是否是你的真实域名；</li>
-<li>邮箱是否填写正确；</li>
-<li><code>acme.type</code> 是否为 <code>http</code>；</li>
-<li><code>listen</code> 是否是 <code>&quot;:443&quot;</code>；</li>
-<li><code>auth.password</code> 是否已经生成；</li>
-<li><code>obfs.salamander.password</code> 是否已经生成；</li>
-<li>YAML 缩进是否正常。</li>
-</ul>
-<h2 id="▶️-十二、启动并检查服务"><a href="#▶️-十二、启动并检查服务" class="headerlink" title="▶️ 十二、启动并检查服务"></a>▶️ 十二、启动并检查服务</h2><p>启用开机启动并立即启动 Hysteria2 服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>查看服务状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>如果正常运行，应该可以看到类似状态：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
-
-<p>这表示 Hysteria2 服务端已经启动成功。</p>
-<h2 id="🔀-十三、可选：是否开启端口跳跃"><a href="#🔀-十三、可选：是否开启端口跳跃" class="headerlink" title="🔀 十三、可选：是否开启端口跳跃"></a>🔀 十三、可选：是否开启端口跳跃</h2><p>端口跳跃不是必选项。普通 VPS 如果 <code>443/udp</code> 稳定能连，建议继续保持前面的默认配置，不要一开始就放行一大段端口。</p>
-<p>它主要适合下面这种情况：</p>
-<ul>
-<li>固定 UDP 端口晚高峰经常断流；</li>
-<li><code>443/udp</code> 经常被限速，但换一个 UDP 端口后又恢复；</li>
-<li>SSH、网页、TCP 服务正常，只有 Hysteria2 的 UDP 连接不稳定；</li>
-<li>你使用的客户端明确支持 Hysteria2 端口范围或端口跳跃。</li>
-</ul>
-<p>如果要开启，可以把服务端配置里的：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:443&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>改成一个 UDP 端口范围，例如：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:20000-20100&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>Linux 版 Hysteria2 当前支持直接监听端口范围，并通过 nftables 或 iptables 建立转发规则。此功能需要 root 或 <code>CAP_NET_ADMIN</code> 权限；如果重启后日志提示防火墙权限错误，请先恢复单端口 <code>443</code>，不要盲目扩大权限。</p>
-<p>然后放行这段 UDP 端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 20000:20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>如果 VPS 服务商后台还有安全组、防火墙或云防火墙，也要同步放行：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000-20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>改完后重启服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart hysteria-server.service</span><br><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>客户端配置也要对应改成端口范围：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span> <span class="string">hy2.example.com:20000-20100</span></span><br><span class="line"></span><br><span class="line"><span class="attr">transport:</span></span><br><span class="line">  <span class="attr">udp:</span></span><br><span class="line">    <span class="attr">minHopInterval:</span> <span class="string">15s</span></span><br><span class="line">    <span class="attr">maxHopInterval:</span> <span class="string">45s</span></span><br></pre></td></tr></table></figure>
-
-<p>如果是手机图形客户端，要确认它是否支持 <code>20000-20100</code> 这种端口范围。客户端不支持的话，就不要开启端口跳跃，继续使用单端口 <code>443/udp</code> 更稳。</p>
-<p>注意：端口跳跃不能解决 Cloudflare 橙云代理问题。Hysteria2 仍然需要 Cloudflare DNS 保持 <code>DNS only</code>，也就是灰云。</p>
-<h2 id="🛠️-十四、常见问题排查"><a href="#🛠️-十四、常见问题排查" class="headerlink" title="🛠️ 十四、常见问题排查"></a>🛠️ 十四、常见问题排查</h2><h3 id="1-服务没有启动成功"><a href="#1-服务没有启动成功" class="headerlink" title="1. 服务没有启动成功"></a>1. 服务没有启动成功</h3><p>查看服务日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl --no-pager -e -u hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>优先检查：</p>
-<ul>
-<li>DNS 是否已经解析到 VPS；</li>
-<li>Cloudflare 是否保持灰云；</li>
-<li>VPS 防火墙是否放行 <code>80/tcp</code> 和 <code>443/udp</code>；</li>
-<li>如果开启了端口跳跃，VPS 防火墙和云厂商安全组是否放行对应的 UDP 端口范围；</li>
-<li>配置文件缩进是否正确；</li>
-<li>邮箱和域名是否填写正确。</li>
-</ul>
-<h3 id="2-客户端无法连接"><a href="#2-客户端无法连接" class="headerlink" title="2. 客户端无法连接"></a>2. 客户端无法连接</h3><p>先检查 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>确认里面有：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">443/udp</span><br></pre></td></tr></table></figure>
-
-<p>如果你开启了端口跳跃，还要确认里面有对应的 UDP 端口范围，例如：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000:20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>然后再检查 Cloudflare DNS 记录，代理状态必须是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">DNS only</span><br></pre></td></tr></table></figure>
-
-<p>也就是灰云，不能是橙云。</p>
-<h3 id="3-域名能-ping-通但服务仍然连不上"><a href="#3-域名能-ping-通但服务仍然连不上" class="headerlink" title="3. 域名能 ping 通但服务仍然连不上"></a>3. 域名能 ping 通但服务仍然连不上</h3><p><code>ping</code> 只能说明域名解析到了某个 IP，并不代表 UDP 443 一定通。</p>
-<p>继续检查：</p>
-<ul>
-<li>VPS 系统防火墙；</li>
-<li>VPS 服务商安全组；</li>
-<li>Hysteria2 服务状态；</li>
-<li>Hysteria2 日志；</li>
-<li>客户端里的认证密码和混淆密码是否填写正确。</li>
-<li>如果开启了端口跳跃，客户端端口范围是否和服务端 <code>listen</code> 范围一致。</li>
-</ul>
-<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>整个流程可以概括为：</p>
-<ol>
-<li>在 Cloudflare 添加 <code>hy2</code> 的 A 记录；</li>
-<li>代理状态保持 <code>DNS only</code>，不要开启橙云；</li>
-<li>等待 DNS 解析生效；</li>
-<li>SSH 登录 VPS；</li>
-<li>安装基础工具；</li>
-<li>开启 BBR 基础网络优化；</li>
-<li>安装 UFW，并放行 <code>22/tcp</code>、<code>80/tcp</code>、<code>443/udp</code>；</li>
-<li>安装 Hysteria2；</li>
-<li>写入 <code>/etc/hysteria/config.yaml</code>；</li>
-<li>重启并检查 <code>hysteria-server.service</code>。</li>
-</ol>
-<p>如果你的网络环境对固定 UDP 端口有限速或阻断，再考虑开启端口跳跃；如果 <code>443/udp</code> 已经稳定，就不需要额外配置。</p>
-<p>最后服务状态显示：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
-
-<p>就说明 Hysteria2 服务端已经正常运行，可以继续配置客户端。</p>
-<h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你更习惯跟着画面操作，可以观看本教程的完整视频。视频中会演示 Cloudflare DNS、VPS 命令和 Hysteria2 配置过程。</p>
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看 Hysteria2 完整教程"><i class="fab fa-youtube"></i><span>在 YouTube 观看 Hysteria2 完整教程</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline，获取更多 VPS 教程"><i class="fab fa-youtube"></i><span>订阅 Skyline，获取更多 VPS 教程</span></a>
-
-<h2 id="📚-官方参考资料"><a href="#📚-官方参考资料" class="headerlink" title="📚 官方参考资料"></a>📚 官方参考资料</h2><ul>
-<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Server/">Hysteria2 官方服务端教程</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Installation/">Hysteria2 官方安装说明</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/advanced/Full-Server-Config/">Hysteria2 服务端完整配置</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/advanced/Port-Hopping/">Hysteria2 端口跳跃说明</a></li>
-<li><a href="https://v2.hysteria.network/docs/Changelog/">Hysteria2 更新日志</a></li>
-</ul>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> VPS </tag>
+            
+            <tag> Debian </tag>
+            
+            <tag> Reality协议 </tag>
+            
+            <tag> 3X-UI </tag>
+            
+            <tag> 服务器运维 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+      <link href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/"/>
+      <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p><blockquote><p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p></blockquote><hr><h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p><hr><h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul><li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li><li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li></ul><h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p><h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p><hr><h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure><h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol><li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li><li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li><li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li><li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li></ol><p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p><hr><h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol><li>使用脚本创建的 <code>Apple</code> 账户登录。</li><li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li><li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li><li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li></ol><hr><h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p><p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p><p><strong>Q2：提示 “Read-only file system”</strong></p><p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p><p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p><p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure><hr><h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p><h2 id="📺-观看更多视频教程"><a href="#📺-观看更多视频教程" class="headerlink" title="📺 观看更多视频教程"></a>📺 观看更多视频教程</h2><p>更多 macOS、VPS 和服务器运维实操视频，请访问 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p><a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="前往 YouTube 频道"><i class="fab fa-youtube"></i><span>前往 YouTube 频道</span></a>]]></content>
+      
+      
       <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
+          
+          <category> 技术教程 </category>
+          
       </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>Hysteria2</tag>
-        <tag>Cloudflare</tag>
-        <tag>DNS</tag>
-        <tag>UFW</tag>
-        <tag>BBR</tag>
-        <tag>端口跳跃</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> macOS </tag>
+            
+            <tag> MDM </tag>
+            
+            <tag> 系统工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
