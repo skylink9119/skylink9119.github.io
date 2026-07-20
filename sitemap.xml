@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</loc>
+    
+    <lastmod>2026-07-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2026-07-20</lastmod>
@@ -38,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/</loc>
+    <loc>https://skylink9119.github.io/script/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -47,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/script/</loc>
+    <loc>https://skylink9119.github.io/tags/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -72,6 +81,27 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/macOS/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/MDM/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>https://skylink9119.github.io/tags/VPS/</loc>
@@ -109,21 +139,21 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/macOS/</loc>
+    <loc>https://skylink9119.github.io/tags/sing-box/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/MDM/</loc>
+    <loc>https://skylink9119.github.io/tags/VLESS/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://skylink9119.github.io/tags/Vision/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
