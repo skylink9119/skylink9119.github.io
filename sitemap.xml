@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/downloads/</loc>
+    
+    <lastmod>2026-07-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</loc>
     
     <lastmod>2026-07-20</lastmod>
@@ -56,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/plugins/</loc>
+    <loc>https://skylink9119.github.io/script/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -65,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/script/</loc>
+    <loc>https://skylink9119.github.io/plugins/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -127,21 +136,21 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/sing-box/</loc>
+    <loc>https://skylink9119.github.io/tags/macOS/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/VLESS/</loc>
+    <loc>https://skylink9119.github.io/tags/MDM/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/Vision/</loc>
+    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -190,21 +199,21 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/macOS/</loc>
+    <loc>https://skylink9119.github.io/tags/sing-box/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/MDM/</loc>
+    <loc>https://skylink9119.github.io/tags/VLESS/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://skylink9119.github.io/tags/Vision/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
