@@ -112,28 +112,22 @@ tun:
 proxies:
 - name: 自建节点-1
   type: vless
-  # 【需要修改】填写你的 VPS 公网 IP 或服务器域名
-  server: "请填写你的VPS_IP或域名"
-  # 【需要修改】填写服务端实际监听端口，例如 443
-  port: "请填写服务器端口，例如443"
+  server: "修改为你的服务器IP或域名"
+  port: 443
   ip-version: ipv4
   udp: true
-  # 【需要修改】填写服务端生成的 UUID
-  uuid: "请填写你的UUID"
+  uuid: "修改为你的UUID"
   flow: xtls-rprx-vision
   packet-encoding: xudp
   encryption: none
   network: tcp
   tls: true
-  # 【需要修改】必须与服务端 Reality 的 server_name 保持一致
-  servername: "请填写Reality伪装域名，例如www.microsoft.com"
+  servername: "修改为你的Reality伪装域名"
   client-fingerprint: chrome
   skip-cert-verify: false
   reality-opts:
-    # 【需要修改】填写服务端 Reality 私钥对应的公钥，不能填写私钥
-    public-key: "请填写Reality公钥"
-    # 【需要修改】填写服务端配置的 Short ID
-    short-id: "请填写Reality短ID"
+    public-key: "修改为你的Reality公钥"
+    short-id: "修改为你的Reality短ID"
 proxy-groups:
 - name: PROXY
   type: select
