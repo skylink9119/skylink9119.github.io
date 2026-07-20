@@ -105,6 +105,39 @@ body {
     -webkit-backdrop-filter: blur(10px);
 }
 
+/* 桌面端导航文字与图标：更大、更醒目 */
+@media screen and (min-width: 1101px) {
+    #nav {
+        font-size: clamp(1.25rem, 1.3vw, 1.45rem) !important;
+    }
+
+    #nav #menus .menus_item {
+        padding-left: 20px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+    #nav {
+        font-size: 1.15rem !important;
+    }
+
+    #nav #menus .menus_item {
+        padding-left: 13px;
+    }
+}
+
+#nav #menus .site-page,
+#nav #search-button .site-page {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+#nav #menus .site-page > i,
+#nav #search-button .site-page > i {
+    margin-right: 5px;
+    font-size: 1.05em;
+}
+
 /* -----------------------------------------------
    6. 滚动条美化
 ----------------------------------------------- */
