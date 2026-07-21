@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐） | Skyline</title><meta name="author" content="Skyline,sky13712559955@gmail.com"><meta name="copyright" content="Skyline"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="零基础搭建 sing-box VLESS + Reality + Vision 节点，使用第三方一键脚本完成安装，涵盖 VPS 准备、协议选择、端口放行、客户端导入、维护命令与故障排查。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）">
+<meta property="og:url" content="https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/">
+<meta property="og:site_name" content="Skyline">
+<meta property="og:description" content="零基础搭建 sing-box VLESS + Reality + Vision 节点，使用第三方一键脚本完成安装，涵盖 VPS 准备、协议选择、端口放行、客户端导入、维护命令与故障排查。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-07-21T07:30:00.000Z">
+<meta property="article:modified_time" content="2026-07-21T07:30:00.000Z">
+<meta property="article:author" content="Skyline">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="Reality协议">
+<meta property="article:tag" content="VLESS">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="sing-box">
+<meta property="article:tag" content="一键脚本">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）",
+  "url": "https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/"
+  },
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "description": "零基础搭建 sing-box VLESS + Reality + Vision 节点，使用第三方一键脚本完成安装，涵盖 VPS 准备、协议选择、端口放行、客户端导入、维护命令与故障排查。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-07-21T07:30:00.000Z",
+  "dateModified": "2026-07-21T07:30:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Skyline",
+      "url": "https://www.youtube.com/@guo1986"
+    }
+  ],
+  "publisher": {
+    "@type": "Person",
+    "name": "Skyline",
+    "url": "https://skylink9119.github.io/"
+  }
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: Skyline","link":"链接: ","source":"来源: Skyline","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Skyline","url":"https://skylink9119.github.io/about/","image":"https://skylink9119.github.io/img/icon.jpg","sameAs":["https://www.youtube.com/@guo1986"]}</script><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Skyline" type="application/atom+xml">
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Skyline</span></a><a class="nav-page-title" href="/"><span class="site-name">🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-21T07:30:00.000Z" title="发表于 2026-07-21 15:30:00">2026-07-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-21T07:30:00.000Z" title="更新于 2026-07-21 15:30:00">2026-07-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/">网络链路</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-07-21 15:30:00&quot;}" hidden></div><h2 id="📖-前言"><a href="#📖-前言" class="headerlink" title="📖 前言"></a>📖 前言</h2><p>如果你觉得手动编写 sing-box JSON 配置太复杂，可以使用一键脚本自动完成 sing-box 安装、Reality 密钥生成、节点配置和客户端信息导出。</p>
+<p>本文采用 <code>fscarmen/sing-box</code> 开源项目，按最简单的路线只安装：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VLESS + Reality + Vision</span><br></pre></td></tr></table></figure>
+
+<p>这套方案不需要购买域名、不需要申请 TLS 证书，也不需要安装面板。</p>
+<blockquote>
+<p><strong>重要说明：</strong>本文使用的是社区维护的第三方脚本，并非 sing-box 官方安装脚本。脚本会以 <code>root</code> 权限修改系统、安装服务并配置端口。建议只在纯净 VPS 上使用，并在执行前查看项目源码和近期更新记录。sing-box 官方脚本只负责安装核心，不会自动创建 Reality 节点。</p>
+</blockquote>
+<blockquote>
+<p>本文默认以 <code>root</code> 用户登录，因此命令中不添加 <code>sudo</code>。请勿公开节点链接、UUID、Reality 私钥或订阅地址。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="🧰-一、搭建前准备"><a href="#🧰-一、搭建前准备" class="headerlink" title="🧰 一、搭建前准备"></a>🧰 一、搭建前准备</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPS 系统</td>
+<td>Debian 12 &#x2F; 13 或 Ubuntu LTS 纯净系统</td>
+</tr>
+<tr>
+<td>CPU &#x2F; 内存</td>
+<td>1 核、512MB 以上</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>具有公网可达的 IPv4 或 IPv6</td>
+</tr>
+<tr>
+<td>登录权限</td>
+<td><code>root</code> 用户</td>
+</tr>
+<tr>
+<td>节点协议</td>
+<td>VLESS + Reality + Vision</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>v2rayN、Clash Verge、Shadowrocket 或 sing-box</td>
+</tr>
+</tbody></table>
+<p>还没有 VPS 的读者，可以先参考本站原有的 VPS 厂商推荐与购买说明。购买时优先选择支持 Debian、独立公网 IP 和自定义安全组的产品。</p>
+<h2 id="🔐-二、连接-VPS"><a href="#🔐-二、连接-VPS" class="headerlink" title="🔐 二、连接 VPS"></a>🔐 二、连接 VPS</h2><p>在 Windows Terminal 或 PowerShell 中输入：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@<span class="number">1.2</span>.<span class="number">3.4</span></span><br></pre></td></tr></table></figure>
+
+<p>首次连接出现指纹确认时输入 <code>yes</code>，然后输入 VPS 的 root 密码。</p>
+<blockquote>
+<p>后面的命令全部在 VPS 终端中执行，不是在本地 Windows PowerShell 中执行。</p>
+</blockquote>
+<h2 id="🚀-三、更新系统并安装-wget"><a href="#🚀-三、更新系统并安装-wget" class="headerlink" title="🚀 三、更新系统并安装 wget"></a>🚀 三、更新系统并安装 wget</h2><p>更新 Debian 软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p>安装脚本需要的下载工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y wget</span><br></pre></td></tr></table></figure>
+
+<p>如果更新后提示需要重启，先执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>等待约一分钟，然后重新连接 VPS。</p>
+<h2 id="📦-四、运行-sing-box-一键脚本"><a href="#📦-四、运行-sing-box-一键脚本" class="headerlink" title="📦 四、运行 sing-box 一键脚本"></a>📦 四、运行 sing-box 一键脚本</h2><p>执行项目 README 提供的首次运行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh)</span><br></pre></td></tr></table></figure>
+
+<p>脚本启动后按下面的原则选择：</p>
+<ol>
+<li>语言选择中文。</li>
+<li>协议只选择 <code>b</code>，即 <code>XTLS + Reality</code>。</li>
+<li>不要选择全部协议，避免开放大量无用端口。</li>
+<li>起始端口优先填写 <code>443</code>；如果 443 已被其他程序占用，再使用其他 TCP 端口。</li>
+<li>节点名称可填写容易识别的名称，例如 <code>Skyline-Reality</code>。</li>
+<li>UUID、Reality 密钥、Short ID 让脚本自动生成。</li>
+<li>新手暂时不启用 Argo、WARP、端口跳跃等额外功能。</li>
+<li>是否创建在线订阅可按需要选择；只使用一个节点时，可以不启用在线订阅，直接复制节点链接。</li>
+</ol>
+<blockquote>
+<p>项目参数表中 <code>b</code> 对应 <code>XTLS + Reality</code>。不要使用 <code>-l</code> 极速模式：它会自动安装多种协议，不适合只想搭建一个 Reality 节点的新手。</p>
+</blockquote>
+<p>安装通常需要几分钟。完成后，终端会显示节点链接、二维码或客户端订阅信息。立即把需要的信息保存到自己的密码管理器中，不要发到群聊或公开网页。</p>
+<h2 id="🧱-五、放行实际节点端口"><a href="#🧱-五、放行实际节点端口" class="headerlink" title="🧱 五、放行实际节点端口"></a>🧱 五、放行实际节点端口</h2><p>先在安装结果中确认 Reality 节点的实际端口。如果使用的是 <code>443</code>，需要在云厂商控制台的安全组或防火墙中放行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">协议：TCP</span><br><span class="line">端口：443</span><br><span class="line">来源：0.0.0.0/0</span><br></pre></td></tr></table></figure>
+
+<p>如果脚本分配的是其他端口，就放行实际端口，不要照抄 443。</p>
+<p>脚本目前会自动检测 UFW，并在 UFW 未启用时使用 iptables 管理规则；但是它无法替你修改阿里云、腾讯云、AWS、甲骨文等云厂商控制台中的安全组，因此云端规则必须自己确认。</p>
+<p>检查端口是否正在监听：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你的节点不是 443，请把命令中的 <code>443</code> 换成实际端口。</p>
+<h2 id="📱-六、导入客户端"><a href="#📱-六、导入客户端" class="headerlink" title="📱 六、导入客户端"></a>📱 六、导入客户端</h2><p>安装完成后，可以随时重新显示节点信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
+
+<p>常见导入方法：</p>
+<ul>
+<li>**v2rayN：**复制 <code>vless://</code> 链接，在客户端中选择“从剪贴板导入”。</li>
+<li>**Shadowrocket：**扫描脚本输出的二维码，或复制链接后从剪贴板导入。</li>
+<li>**Clash Verge：**使用脚本生成的 Clash&#x2F;Mihomo 订阅或配置，不要把普通 <code>vless://</code> 链接直接当作 Clash 订阅地址。</li>
+<li>**sing-box 客户端：**使用脚本导出的对应 sing-box 配置。</li>
+</ul>
+<p>导入后选择新节点，开启系统代理，再访问网站测试连接。</p>
+<h2 id="✅-七、检查服务状态"><a href="#✅-七、检查服务状态" class="headerlink" title="✅ 七、检查服务状态"></a>✅ 七、检查服务状态</h2><p>查看 sing-box 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>active (running)</code> 表示服务正在运行。</p>
+<p>查看最近日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u sing-box -n 50 --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>检查公网时间，Reality 对系统时间比较敏感：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠️-八、常用管理命令"><a href="#🛠️-八、常用管理命令" class="headerlink" title="🛠️ 八、常用管理命令"></a>🛠️ 八、常用管理命令</h2><p>安装完成后，直接输入以下命令打开管理菜单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sb</span><br></pre></td></tr></table></figure>
+
+<p>常用参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sb -n    <span class="comment"># 显示节点信息</span></span><br><span class="line">sb -d    <span class="comment"># 修改节点参数</span></span><br><span class="line">sb -s    <span class="comment"># 停止或启动 sing-box 服务</span></span><br><span class="line">sb -r    <span class="comment"># 添加或删除协议</span></span><br><span class="line">sb -u    <span class="comment"># 卸载</span></span><br></pre></td></tr></table></figure>
+
+<p>需要修改端口、Reality SNI、节点名称、UUID 或服务器 IP 时，优先使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sb -d</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后再次执行 <code>sb -n</code>，重新导出并更新客户端节点。</p>
+<h2 id="❌-九、连接失败排查"><a href="#❌-九、连接失败排查" class="headerlink" title="❌ 九、连接失败排查"></a>❌ 九、连接失败排查</h2><h3 id="1-云厂商安全组没有放行"><a href="#1-云厂商安全组没有放行" class="headerlink" title="1. 云厂商安全组没有放行"></a>1. 云厂商安全组没有放行</h3><p>最常见原因是 VPS 内部已经监听端口，但云厂商控制台仍然拦截。确认安全组已放行节点的实际 TCP 端口。</p>
+<h3 id="2-端口被其他程序占用"><a href="#2-端口被其他程序占用" class="headerlink" title="2. 端口被其他程序占用"></a>2. 端口被其他程序占用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 443 已被 Nginx、Apache、3X-UI 或其他节点使用，通过 <code>sb -d</code> 把 Reality 改为一个未占用的 TCP 端口，并同步修改安全组与客户端。</p>
+<h3 id="3-客户端参数不一致"><a href="#3-客户端参数不一致" class="headerlink" title="3. 客户端参数不一致"></a>3. 客户端参数不一致</h3><p>出现 <code>REALITY authentication failed</code> 时，重点核对：</p>
+<ul>
+<li>VPS 地址和端口</li>
+<li>UUID</li>
+<li>Flow 是否为 <code>xtls-rprx-vision</code></li>
+<li>Reality 公钥</li>
+<li>Short ID</li>
+<li>SNI &#x2F; Server Name</li>
+<li>客户端指纹是否为 <code>chrome</code></li>
+</ul>
+<p>不要把服务端的 Reality 私钥填入客户端。客户端使用的是公钥。</p>
+<h3 id="4-修改服务端后仍使用旧链接"><a href="#4-修改服务端后仍使用旧链接" class="headerlink" title="4. 修改服务端后仍使用旧链接"></a>4. 修改服务端后仍使用旧链接</h3><p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
+
+<p>重新复制最新节点链接，删除客户端旧节点后再导入。</p>
+<h3 id="5-系统时间不正确"><a href="#5-系统时间不正确" class="headerlink" title="5. 系统时间不正确"></a>5. 系统时间不正确</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-ntp <span class="literal">true</span></span><br><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
+
+<p>等待系统完成时间同步后重试。</p>
+<h2 id="🔄-十、一键脚本和手动配置怎么选"><a href="#🔄-十、一键脚本和手动配置怎么选" class="headerlink" title="🔄 十、一键脚本和手动配置怎么选"></a>🔄 十、一键脚本和手动配置怎么选</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一键脚本</td>
+<td>安装快、自动生成参数、自动导出客户端</td>
+<td>依赖第三方维护，配置内容较多</td>
+</tr>
+<tr>
+<td>手动配置</td>
+<td>结构透明、便于学习、容易精确控制</td>
+<td>步骤更多，需要编辑 JSON</td>
+</tr>
+</tbody></table>
+<p>只想尽快搭建节点，可以使用本文的一键脚本方案。希望真正理解每个参数，建议继续阅读：</p>
+<a class="btn-beautify blue larger" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="sing-box VLESS + Reality 手动配置教程"><i class="fas fa-book"></i><span>sing-box VLESS + Reality 手动配置教程</span></a>
+
+<h2 id="🔒-十一、安全提醒"><a href="#🔒-十一、安全提醒" class="headerlink" title="🔒 十一、安全提醒"></a>🔒 十一、安全提醒</h2><ul>
+<li>不要公开节点链接、订阅地址、UUID、Reality 私钥和 Short ID。</li>
+<li>不要在存有重要业务数据的服务器上直接运行陌生的一键脚本。</li>
+<li>脚本和 sing-box 都会持续更新，执行前应查看项目 README 与近期变更。</li>
+<li>节点只供自己管理的设备和合法用途使用，并遵守服务器所在地及使用地的法律法规。</li>
+</ul>
+<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fscarmen/sing-box">fscarmen&#x2F;sing-box 一键脚本项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/installation/package-manager/">sing-box 官方安装文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/configuration/inbound/vless/">sing-box 官方 VLESS 入站文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/configuration/shared/tls/#reality-fields">sing-box 官方 Reality 配置文档</a></li>
+</ul>
+<hr>
+<p>如果这篇教程对你有帮助，欢迎订阅 Skyline YouTube 频道。后续会继续更新 sing-box、VLESS Reality、Hysteria2 和 VPS 实操教程。</p>
+<a class="btn-beautify red larger" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986">Skyline</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/">https://skylink9119.github.io/2026/07/21/sing-box-one-click-vless-reality-beginner/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">Skyline</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/sing-box/">sing-box</a><a class="post-meta__tags" href="/tags/VPS/">VPS</a><a class="post-meta__tags" href="/tags/VLESS/">VLESS</a><a class="post-meta__tags" href="/tags/Reality%E5%8D%8F%E8%AE%AE/">Reality协议</a><a class="post-meta__tags" href="/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/">一键脚本</a><a class="post-meta__tags" href="/tags/Debian/">Debian</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/06/15/hysteria2-cloudflare-dns-vps/" title="🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</div></div><div class="info-2"><div class="info-item-1">从 Cloudflare DNS 灰云解析开始，在 Debian VPS 上安装和配置 Hysteria2，涵盖自动证书、UFW、BBR、服务检查、故障排查与可选端口跳跃。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-05</div><div class="info-item-2">🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</div></div><div class="info-2"><div class="info-item-1">面向新手的 sing-box VPS 部署完整教程，使用 VLESS + Reality + Vision 搭建无域名节点，涵盖系统初始化、密钥与 UUID 生成、防火墙、BBR、客户端配置和故障排查。</div></div></div></a><a class="pagination-related" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-04</div><div class="info-item-2">🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</div></div><div class="info-2"><div class="info-item-1">Debian 12/13 纯净系统搭建教程，按照系统初始化、BBR、UFW、3X-UI 和 VLESS + Reality 的安全顺序完成部署，无需自购域名或单独申请 TLS 证书。</div></div></div></a><a class="pagination-related" href="/2026/06/15/hysteria2-cloudflare-dns-vps/" title="🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-15</div><div class="info-item-2">🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</div></div><div class="info-2"><div class="info-item-1">从 Cloudflare DNS 灰云解析开始，在 Debian VPS 上安装和配置 Hysteria2，涵盖自动证书、UFW、BBR、服务检查、故障排查与可选端口跳跃。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Skyline</div><div class="author-info-description">技术教程作者 · YouTube @guo1986</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@guo1986"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@guo1986" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">📺 图文教程均有视频版：<a href="https://www.youtube.com/@guo1986" target="_blank" rel="noopener">前往 Skyline YouTube 频道</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%96-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">📖 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%B0-%E4%B8%80%E3%80%81%E6%90%AD%E5%BB%BA%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">🧰 一、搭建前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%90-%E4%BA%8C%E3%80%81%E8%BF%9E%E6%8E%A5-VPS"><span class="toc-number">3.</span> <span class="toc-text">🔐 二、连接 VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9A%80-%E4%B8%89%E3%80%81%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E5%B9%B6%E5%AE%89%E8%A3%85-wget"><span class="toc-number">4.</span> <span class="toc-text">🚀 三、更新系统并安装 wget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%A6-%E5%9B%9B%E3%80%81%E8%BF%90%E8%A1%8C-sing-box-%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">📦 四、运行 sing-box 一键脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%B1-%E4%BA%94%E3%80%81%E6%94%BE%E8%A1%8C%E5%AE%9E%E9%99%85%E8%8A%82%E7%82%B9%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">🧱 五、放行实际节点端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%B1-%E5%85%AD%E3%80%81%E5%AF%BC%E5%85%A5%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">7.</span> <span class="toc-text">📱 六、导入客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E4%B8%83%E3%80%81%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81"><span class="toc-number">8.</span> <span class="toc-text">✅ 七、检查服务状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E5%85%AB%E3%80%81%E5%B8%B8%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">9.</span> <span class="toc-text">🛠️ 八、常用管理命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9D%8C-%E4%B9%9D%E3%80%81%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5%E6%8E%92%E6%9F%A5"><span class="toc-number">10.</span> <span class="toc-text">❌ 九、连接失败排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%91%E5%8E%82%E5%95%86%E5%AE%89%E5%85%A8%E7%BB%84%E6%B2%A1%E6%9C%89%E6%94%BE%E8%A1%8C"><span class="toc-number">10.1.</span> <span class="toc-text">1. 云厂商安全组没有放行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E5%8D%A0%E7%94%A8"><span class="toc-number">10.2.</span> <span class="toc-text">2. 端口被其他程序占用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%82%E6%95%B0%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">10.3.</span> <span class="toc-text">3. 客户端参数不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%90%8E%E4%BB%8D%E4%BD%BF%E7%94%A8%E6%97%A7%E9%93%BE%E6%8E%A5"><span class="toc-number">10.4.</span> <span class="toc-text">4. 修改服务端后仍使用旧链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E4%B8%8D%E6%AD%A3%E7%A1%AE"><span class="toc-number">10.5.</span> <span class="toc-text">5. 系统时间不正确</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%84-%E5%8D%81%E3%80%81%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC%E5%92%8C%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">11.</span> <span class="toc-text">🔄 十、一键脚本和手动配置怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%92-%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%89%E5%85%A8%E6%8F%90%E9%86%92"><span class="toc-number">12.</span> <span class="toc-text">🔒 十一、安全提醒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">13.</span> <span class="toc-text">📚 参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/21/sing-box-one-click-vless-reality-beginner/" title="🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）">🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</a><time datetime="2026-07-21T07:30:00.000Z" title="发表于 2026-07-21 15:30:00">2026-07-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/15/hysteria2-cloudflare-dns-vps/" title="🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃">🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</a><time datetime="2026-06-15T14:47:56.000Z" title="发表于 2026-06-15 22:47:56">2026-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程">🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</a><time datetime="2026-05-05T05:30:00.000Z" title="发表于 2026-05-05 13:30:00">2026-05-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/" title="🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW">🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</a><time datetime="2026-03-04T11:08:02.000Z" title="发表于 2026-03-04 19:08:02">2026-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/" title="2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片">2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</a><time datetime="2026-03-03T16:00:00.000Z" title="发表于 2026-03-04 00:00:00">2026-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Skyline</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
