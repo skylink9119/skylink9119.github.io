@@ -45,28 +45,54 @@
       }
     },
 
-    overflowPaddingR: {
-      add: () => {
-        const paddingRight = window.innerWidth - document.body.clientWidth
-
-        if (paddingRight > 0) {
-          document.body.style.paddingRight = `${paddingRight}px`
-          document.body.style.overflow = 'hidden'
-          const menuElement = document.querySelector('#page-header.nav-fixed #menus')
-          if (menuElement) {
-            menuElement.style.paddingRight = `${paddingRight}px`
-          }
-        }
-      },
-      remove: () => {
-        document.body.style.paddingRight = ''
-        document.body.style.overflow = ''
-        const menuElement = document.querySelector('#page-header.nav-fixed #menus')
-        if (menuElement) {
-          menuElement.style.paddingRight = ''
-        }
+    rafThrottle: fn => {
+      let rafId = null
+      return (...args) => {
+        if (rafId) return
+        rafId = requestAnimationFrame(() => {
+          fn(...args)
+          rafId = null
+        })
       }
     },
+
+    overflowPaddingR: (() => {
+      let headerElement = null
+      let menuElement = null
+
+      const getElements = () => {
+        if (!headerElement) {
+          headerElement = document.getElementById('page-header')
+        }
+        if (!menuElement) {
+          menuElement = document.getElementById('menus')
+        }
+        return { headerElement, menuElement }
+      }
+
+      return {
+        add: () => {
+          const paddingRight = window.innerWidth - document.body.clientWidth
+
+          if (paddingRight > 0) {
+            document.body.style.paddingRight = `${paddingRight}px`
+            document.body.style.overflow = 'hidden'
+            const { headerElement: header, menuElement: menu } = getElements()
+            if (header && menu && header.classList.contains('nav-fixed')) {
+              menu.style.paddingRight = `${paddingRight}px`
+            }
+          }
+        },
+        remove: () => {
+          document.body.style.paddingRight = ''
+          document.body.style.overflow = ''
+          const { headerElement: header, menuElement: menu } = getElements()
+          if (header && menu && header.classList.contains('nav-fixed')) {
+            menu.style.paddingRight = ''
+          }
+        }
+      }
+    })(),
 
     snackbarShow: (text, showAction = false, duration = 2000) => {
       const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
@@ -133,7 +159,8 @@
       const animate = currentTime => {
         const timeElapsed = currentTime - startTime
         const progress = Math.min(timeElapsed / time, 1)
-        window.scrollTo(0, currentPos + (pos - currentPos) * progress)
+        const easedProgress = 1 - Math.pow(1 - progress, 4) // easeOutQuart
+        window.scrollTo(0, currentPos + (pos - currentPos) * easedProgress)
         if (progress < 1) {
           requestAnimationFrame(animate)
         }

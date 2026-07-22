@@ -9,51 +9,92 @@
 <meta property="article:author" content="Skyline">
 <meta property="article:tag" content="Skyline,YouTube技术频道,Debian VPS,3X-UI,VLESS Reality,网络优化,macOS,服务器运维">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
     (() => {
       
     const saveToLocal = {
       set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
       },
       get: key => {
         const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
           localStorage.removeItem(key)
-          return undefined
         }
-        return value
       }
     }
 
+    const scriptCache = new Map()
+    const cssCache = new Map()
     window.btf = {
       saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
         }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
         }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
       addGlobalFn: (key, fn, name = false, parent = window) => {
         if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
@@ -64,16 +105,17 @@
     }
   
       
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
       const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
         }
       }
       const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'ffffff')
         }
       }
 
@@ -90,10 +132,15 @@
             else if (mediaQueryDark.matches) activateDarkMode()
             else {
               const hour = new Date().getHours()
-              const isNight = hour <= 6 || hour >= 18
+              const start = 6
+              const end = 18
+              const isNight =
+                start < end
+                    ? hour < start || hour >= end
+                    : hour >= start || hour < end
               isNight ? activateDarkMode() : activateLightMode()
             }
-            mediaQueryDark.addEventListener('change', () => {
+            mediaQueryDark.addEventListener('change', e => {
               if (saveToLocal.get('theme') === undefined) {
                 e.matches ? activateDarkMode() : activateLightMode()
               }
@@ -176,7 +223,7 @@ btf.addGlobalFn('pjaxSend', () => {
           </div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">技术教程</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"><span class="card-category-list-name">网络链路</span><span class="card-category-list-count">4</span></a></li></ul></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/VPS/" style="font-size: 1.45em; color: rgb(176, 82, 50);">VPS</a><a href="/tags/Debian/" style="font-size: 1.35em; color: rgb(139, 198, 198);">Debian</a><a href="/tags/Reality%E5%8D%8F%E8%AE%AE/" style="font-size: 1.35em; color: rgb(101, 104, 82);">Reality协议</a><a href="/tags/3X-UI/" style="font-size: 1.15em; color: rgb(50, 131, 128);">3X-UI</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" style="font-size: 1.15em; color: rgb(99, 140, 168);">服务器运维</a><a href="/tags/Hysteria2/" style="font-size: 1.15em; color: rgb(122, 51, 52);">Hysteria2</a><a href="/tags/Cloudflare/" style="font-size: 1.15em; color: rgb(98, 139, 57);">Cloudflare</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(160, 50, 153);">DNS</a><a href="/tags/UFW/" style="font-size: 1.15em; color: rgb(181, 75, 127);">UFW</a><a href="/tags/BBR/" style="font-size: 1.15em; color: rgb(50, 153, 75);">BBR</a><a href="/tags/%E7%AB%AF%E5%8F%A3%E8%B7%B3%E8%B7%83/" style="font-size: 1.15em; color: rgb(50, 193, 199);">端口跳跃</a><a href="/tags/sing-box/" style="font-size: 1.25em; color: rgb(94, 168, 98);">sing-box</a><a href="/tags/VLESS/" style="font-size: 1.25em; color: rgb(84, 125, 50);">VLESS</a><a href="/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/" style="font-size: 1.15em; color: rgb(64, 50, 91);">一键脚本</a><a href="/tags/Vision/" style="font-size: 1.15em; color: rgb(183, 134, 50);">Vision</a><a href="/tags/macOS/" style="font-size: 1.15em; color: rgb(111, 159, 50);">macOS</a><a href="/tags/MDM/" style="font-size: 1.15em; color: rgb(58, 198, 177);">MDM</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/" style="font-size: 1.15em; color: rgb(185, 111, 102);">系统工具</a></div></div><div class="card-widget card-archives">
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/VPS/" style="font-size: 1.45em; color: rgb(82, 146, 50);">VPS</a><a href="/tags/Debian/" style="font-size: 1.35em; color: rgb(50, 50, 50);">Debian</a><a href="/tags/Reality%E5%8D%8F%E8%AE%AE/" style="font-size: 1.35em; color: rgb(84, 57, 181);">Reality协议</a><a href="/tags/3X-UI/" style="font-size: 1.15em; color: rgb(68, 187, 115);">3X-UI</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" style="font-size: 1.15em; color: rgb(95, 51, 94);">服务器运维</a><a href="/tags/macOS/" style="font-size: 1.15em; color: rgb(197, 102, 167);">macOS</a><a href="/tags/MDM/" style="font-size: 1.15em; color: rgb(192, 167, 188);">MDM</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/" style="font-size: 1.15em; color: rgb(50, 103, 149);">系统工具</a><a href="/tags/sing-box/" style="font-size: 1.25em; color: rgb(50, 128, 50);">sing-box</a><a href="/tags/VLESS/" style="font-size: 1.25em; color: rgb(120, 59, 62);">VLESS</a><a href="/tags/Vision/" style="font-size: 1.15em; color: rgb(136, 50, 111);">Vision</a><a href="/tags/Hysteria2/" style="font-size: 1.15em; color: rgb(151, 129, 165);">Hysteria2</a><a href="/tags/Cloudflare/" style="font-size: 1.15em; color: rgb(109, 118, 167);">Cloudflare</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(50, 108, 136);">DNS</a><a href="/tags/UFW/" style="font-size: 1.15em; color: rgb(132, 156, 180);">UFW</a><a href="/tags/BBR/" style="font-size: 1.15em; color: rgb(100, 184, 180);">BBR</a><a href="/tags/%E7%AB%AF%E5%8F%A3%E8%B7%B3%E8%B7%83/" style="font-size: 1.15em; color: rgb(161, 92, 50);">端口跳跃</a><a href="/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/" style="font-size: 1.15em; color: rgb(81, 195, 50);">一键脚本</a></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -222,11 +269,11 @@ btf.addGlobalFn('pjaxSend', () => {
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-21T14:28:56.029Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Skyline</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-22T00:57:39.300Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Skyline</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.6.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.6.1"></script><script src="/js/main.js?v=5.6.1"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
   const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
   window.pjax = new Pjax({
-    elements: 'a:not([target="_blank"])',
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
     selectors: pjaxSelectors,
     cacheBust: false,
     analytics: false,
@@ -259,8 +306,9 @@ btf.addGlobalFn('pjaxSend', () => {
   document.addEventListener('pjax:complete', () => {
     btf.removeGlobalFnEvent('pjaxCompleteOnce')
     document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
       const newScript = document.createElement('script')
-      const content = item.text || item.textContent || item.innerHTML || ""
+      const content = item.text || item.textContent || ''
       Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
       newScript.appendChild(document.createTextNode(content))
       item.parentNode.replaceChild(newScript, item)
@@ -270,10 +318,13 @@ btf.addGlobalFn('pjaxSend', () => {
   })
 
   document.addEventListener('pjax:error', e => {
-    if (e.request.status === 404) {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
       true
         ? pjax.loadUrl('/404')
-        : window.location.href = e.request.responseURL
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
     }
   })
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.6.1"></script></div></div></body></html>
