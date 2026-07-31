@@ -558,760 +558,6 @@
       </tags>
   </entry>
   <entry>
-    <title>🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</title>
-    <url>/2026/06/15/hysteria2-cloudflare-dns-vps/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/ELCVRcb8KfQ"
-    title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署视频"
-    loading="lazy"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<p>本文记录如何使用自己的域名和 VPS 搭建 Hysteria2 服务端。示例中使用的子域名是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>请把文中的域名、邮箱和 VPS IP 替换成你自己的真实信息。</p>
-<p>本文只适合合法自用、远程办公、授权测试和个人网络环境优化。不要用于违法用途，也不要用于违反服务条款的场景。</p>
-<span id="more"></span>
-
-<h2 id="💡-一、准备工作"><a href="#💡-一、准备工作" class="headerlink" title="💡 一、准备工作"></a>💡 一、准备工作</h2><p>开始之前，你需要准备好以下内容：</p>
-<ul>
-<li>一个自己的域名；</li>
-<li>一台 VPS，建议使用 Debian 12 或 Debian 13 纯净系统；</li>
-<li>VPS 的公网 IPv4 地址；</li>
-<li>可以 SSH 登录 VPS 的 root 权限；</li>
-<li>域名 DNS 管理权限，例如 Cloudflare。</li>
-</ul>
-<p>本文默认使用的服务端域名是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>后面所有命令里的 <code>hy2.example.com</code>、<code>your@email.com</code> 和 <code>你的VPS_IP</code> 都需要替换。</p>
-<h2 id="🌐-二、进入-DNS-设置页面"><a href="#🌐-二、进入-DNS-设置页面" class="headerlink" title="🌐 二、进入 DNS 设置页面"></a>🌐 二、进入 DNS 设置页面</h2><p>先找到你的域名 DNS 设置页面。</p>
-<p>如果你使用 Cloudflare，常见路径是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">网站 -&gt; DNS -&gt; Records</span><br></pre></td></tr></table></figure>
-
-<p>进入 DNS Records 页面后，准备添加一条新的 DNS 记录。</p>
-<h2 id="🧭-三、添加子域名解析"><a href="#🧭-三、添加子域名解析" class="headerlink" title="🧭 三、添加子域名解析"></a>🧭 三、添加子域名解析</h2><p>添加一条 <code>A</code> 记录：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>内容</th>
-<th>TTL</th>
-<th>代理状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>hy2</td>
-<td>你的 VPS IPv4 地址</td>
-<td>Auto 或 300</td>
-<td>DNS only &#x2F; 灰云</td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>内容</th>
-<th>TTL</th>
-<th>代理状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>hy2</td>
-<td>123.123.123.123</td>
-<td>Auto</td>
-<td>DNS only</td>
-</tr>
-</tbody></table>
-<p>这里的最终访问域名就是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>注意，Cloudflare 里一定不要开启橙云代理，要保持 <code>DNS only</code>，也就是灰云状态。</p>
-<p>原因很简单：普通 Cloudflare CDN 不会直接代理 Hysteria2 的 UDP 443 流量。开启橙云后，客户端连接到的是 Cloudflare，而不是你的 VPS，Hysteria2 会连不上。</p>
-<h2 id="⏳-四、等待-DNS-生效"><a href="#⏳-四、等待-DNS-生效" class="headerlink" title="⏳ 四、等待 DNS 生效"></a>⏳ 四、等待 DNS 生效</h2><p>添加 DNS 记录后，等待几分钟。</p>
-<p>可以在本地电脑或 VPS 上测试：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping hy2.example.com</span><br></pre></td></tr></table></figure>
-
-<p>如果能解析到你的 VPS IPv4 地址，说明 DNS 已经生效。</p>
-<p>如果暂时没有解析到，先等几分钟再试。DNS 生效时间和本地缓存、运营商缓存、域名服务商有关。</p>
-<h2 id="🔐-五、SSH-登录-VPS"><a href="#🔐-五、SSH-登录-VPS" class="headerlink" title="🔐 五、SSH 登录 VPS"></a>🔐 五、SSH 登录 VPS</h2><p>DNS 准备好后，SSH 登录 VPS：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@123.123.123.123</span><br></pre></td></tr></table></figure>
-
-<p>登录后再继续执行下面的命令。</p>
-<h2 id="🚀-六、更新系统并安装基础工具"><a href="#🚀-六、更新系统并安装基础工具" class="headerlink" title="🚀 六、更新系统并安装基础工具"></a>🚀 六、更新系统并安装基础工具</h2><p>先更新系统：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
-
-<p>安装基础工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget nano openssl ca-certificates nftables</span><br></pre></td></tr></table></figure>
-
-<p>这些工具后面会用于下载安装脚本、编辑配置文件、生成随机密码和处理证书相关请求。</p>
-<h2 id="⚡-七、开启-BBR-网络优化"><a href="#⚡-七、开启-BBR-网络优化" class="headerlink" title="⚡ 七、开启 BBR 网络优化"></a>⚡ 七、开启 BBR 网络优化</h2><p>BBR 不是 Hysteria2 的必需项，因为 Hysteria2 主要使用 UDP&#x2F;QUIC，<code>net.ipv4.tcp_congestion_control=bbr</code> 直接优化的是 TCP 拥塞控制。</p>
-<p>不过 VPS 上通常还会跑 SSH、证书申请、网站伪装页、订阅服务或其他 TCP 服务，所以建议把 BBR 作为基础网络优化一起开启。</p>
-<p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>再应用系统参数：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>检查是否生效：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
-
-<p>正常情况下可以看到类似结果：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr</span><br></pre></td></tr></table></figure>
-
-<p>如果 <code>lsmod | grep bbr</code> 没有输出，但前面的 <code>sysctl</code> 已经显示 <code>bbr</code>，通常也可以继续部署。部分内核会把 BBR 编进内核，不一定以模块形式显示。</p>
-<h2 id="🛡️-八、安装并配置-UFW-防火墙"><a href="#🛡️-八、安装并配置-UFW-防火墙" class="headerlink" title="🛡️ 八、安装并配置 UFW 防火墙"></a>🛡️ 八、安装并配置 UFW 防火墙</h2><p>Debian 可以直接安装 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install -y ufw</span><br></pre></td></tr></table></figure>
-
-<p>先确认 SSH 实际监听端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果输出是 <code>port 22</code>，再放行以下必要端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/udp</span><br></pre></td></tr></table></figure>
-
-<p>启用 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
-
-<p>查看状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>注意：一定要先放行 SSH 的实际端口，再执行 <code>ufw enable</code>。如果 SSH 不是 22 端口，请把命令中的 <code>22</code> 换成真实端口，否则可能会断开远程连接。</p>
-<p>如果你的 VPS 服务商还有额外的安全组、防火墙或云防火墙，也需要同步放行：</p>
-<ul>
-<li><code>22/tcp</code>：SSH 登录；</li>
-<li><code>80/tcp</code>：本文明确使用 ACME HTTP 验证申请证书；</li>
-<li><code>443/udp</code>：Hysteria2 连接端口。</li>
-</ul>
-<h2 id="📦-九、安装-Hysteria2"><a href="#📦-九、安装-Hysteria2" class="headerlink" title="📦 九、安装 Hysteria2"></a>📦 九、安装 Hysteria2</h2><p>执行官方安装脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -fsSL https://get.hy2.sh/)</span><br></pre></td></tr></table></figure>
-
-<p>安装脚本会获取当前稳定版。安装后检查版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hysteria version</span><br></pre></td></tr></table></figure>
-
-<p>建议服务端和客户端都使用当前稳定版。官方更新日志显示 2.8.2 包含重要安全修复；若版本更旧，请重新运行上面的官方脚本升级。</p>
-<p>安装完成后，生成认证密码和混淆密码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">AUTH=$(openssl rand -<span class="built_in">base64</span> 32)</span><br><span class="line">OBFS=$(openssl rand -<span class="built_in">base64</span> 32)</span><br></pre></td></tr></table></figure>
-
-<p>这两个变量会写入 Hysteria2 配置文件。</p>
-<h2 id="📝-十、创建-Hysteria2-配置文件"><a href="#📝-十、创建-Hysteria2-配置文件" class="headerlink" title="📝 十、创建 Hysteria2 配置文件"></a>📝 十、创建 Hysteria2 配置文件</h2><p>执行下面的命令创建配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/hysteria/config.yaml &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">listen: &quot;:443&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">acme:</span></span><br><span class="line"><span class="string">  domains:</span></span><br><span class="line"><span class="string">    - hy2.example.com</span></span><br><span class="line"><span class="string">  email: your@email.com</span></span><br><span class="line"><span class="string">  type: http</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth:</span></span><br><span class="line"><span class="string">  type: password</span></span><br><span class="line"><span class="string">  password: &quot;$AUTH&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">obfs:</span></span><br><span class="line"><span class="string">  type: salamander</span></span><br><span class="line"><span class="string">  salamander:</span></span><br><span class="line"><span class="string">    password: &quot;$OBFS&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">masquerade:</span></span><br><span class="line"><span class="string">  type: proxy</span></span><br><span class="line"><span class="string">  proxy:</span></span><br><span class="line"><span class="string">    url: &quot;https://www.microsoft.com/&quot;</span></span><br><span class="line"><span class="string">    rewriteHost: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;auth password: <span class="variable">$AUTH</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obfs password: <span class="variable">$OBFS</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里需要替换两处：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">hy2.example.com</span></span><br><span class="line"><span class="string">your@email.com</span></span><br></pre></td></tr></table></figure>
-
-<p><code>hy2.example.com</code> 改成你自己的 Hysteria2 子域名，<code>your@email.com</code> 改成你的邮箱。</p>
-<p>命令执行完成后，终端会输出两项重要信息：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">auth password: xxxxx</span><br><span class="line">obfs password: xxxxx</span><br></pre></td></tr></table></figure>
-
-<p>请保存好这两个密码，后面配置客户端时会用到。</p>
-<h2 id="✅-十一、检查配置文件"><a href="#✅-十一、检查配置文件" class="headerlink" title="✅ 十一、检查配置文件"></a>✅ 十一、检查配置文件</h2><p>写入配置后，先检查一下文件内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> -n /etc/hysteria/config.yaml</span><br></pre></td></tr></table></figure>
-
-<p>重点确认下面几项：</p>
-<ul>
-<li>域名是否是你的真实域名；</li>
-<li>邮箱是否填写正确；</li>
-<li><code>acme.type</code> 是否为 <code>http</code>；</li>
-<li><code>listen</code> 是否是 <code>&quot;:443&quot;</code>；</li>
-<li><code>auth.password</code> 是否已经生成；</li>
-<li><code>obfs.salamander.password</code> 是否已经生成；</li>
-<li>YAML 缩进是否正常。</li>
-</ul>
-<h2 id="▶️-十二、启动并检查服务"><a href="#▶️-十二、启动并检查服务" class="headerlink" title="▶️ 十二、启动并检查服务"></a>▶️ 十二、启动并检查服务</h2><p>启用开机启动并立即启动 Hysteria2 服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>查看服务状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>如果正常运行，应该可以看到类似状态：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
-
-<p>这表示 Hysteria2 服务端已经启动成功。</p>
-<h2 id="🔀-十三、可选：是否开启端口跳跃"><a href="#🔀-十三、可选：是否开启端口跳跃" class="headerlink" title="🔀 十三、可选：是否开启端口跳跃"></a>🔀 十三、可选：是否开启端口跳跃</h2><p>端口跳跃不是必选项。普通 VPS 如果 <code>443/udp</code> 稳定能连，建议继续保持前面的默认配置，不要一开始就放行一大段端口。</p>
-<p>它主要适合下面这种情况：</p>
-<ul>
-<li>固定 UDP 端口晚高峰经常断流；</li>
-<li><code>443/udp</code> 经常被限速，但换一个 UDP 端口后又恢复；</li>
-<li>SSH、网页、TCP 服务正常，只有 Hysteria2 的 UDP 连接不稳定；</li>
-<li>你使用的客户端明确支持 Hysteria2 端口范围或端口跳跃。</li>
-</ul>
-<p>如果要开启，可以把服务端配置里的：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:443&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>改成一个 UDP 端口范围，例如：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:20000-20100&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>Linux 版 Hysteria2 当前支持直接监听端口范围，并通过 nftables 或 iptables 建立转发规则。此功能需要 root 或 <code>CAP_NET_ADMIN</code> 权限；如果重启后日志提示防火墙权限错误，请先恢复单端口 <code>443</code>，不要盲目扩大权限。</p>
-<p>然后放行这段 UDP 端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 20000:20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>如果 VPS 服务商后台还有安全组、防火墙或云防火墙，也要同步放行：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000-20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>改完后重启服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart hysteria-server.service</span><br><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>客户端配置也要对应改成端口范围：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span> <span class="string">hy2.example.com:20000-20100</span></span><br><span class="line"></span><br><span class="line"><span class="attr">transport:</span></span><br><span class="line">  <span class="attr">udp:</span></span><br><span class="line">    <span class="attr">minHopInterval:</span> <span class="string">15s</span></span><br><span class="line">    <span class="attr">maxHopInterval:</span> <span class="string">45s</span></span><br></pre></td></tr></table></figure>
-
-<p>如果是手机图形客户端，要确认它是否支持 <code>20000-20100</code> 这种端口范围。客户端不支持的话，就不要开启端口跳跃，继续使用单端口 <code>443/udp</code> 更稳。</p>
-<p>注意：端口跳跃不能解决 Cloudflare 橙云代理问题。Hysteria2 仍然需要 Cloudflare DNS 保持 <code>DNS only</code>，也就是灰云。</p>
-<h2 id="🛠️-十四、常见问题排查"><a href="#🛠️-十四、常见问题排查" class="headerlink" title="🛠️ 十四、常见问题排查"></a>🛠️ 十四、常见问题排查</h2><h3 id="1-服务没有启动成功"><a href="#1-服务没有启动成功" class="headerlink" title="1. 服务没有启动成功"></a>1. 服务没有启动成功</h3><p>查看服务日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl --no-pager -e -u hysteria-server.service</span><br></pre></td></tr></table></figure>
-
-<p>优先检查：</p>
-<ul>
-<li>DNS 是否已经解析到 VPS；</li>
-<li>Cloudflare 是否保持灰云；</li>
-<li>VPS 防火墙是否放行 <code>80/tcp</code> 和 <code>443/udp</code>；</li>
-<li>如果开启了端口跳跃，VPS 防火墙和云厂商安全组是否放行对应的 UDP 端口范围；</li>
-<li>配置文件缩进是否正确；</li>
-<li>邮箱和域名是否填写正确。</li>
-</ul>
-<h3 id="2-客户端无法连接"><a href="#2-客户端无法连接" class="headerlink" title="2. 客户端无法连接"></a>2. 客户端无法连接</h3><p>先检查 UFW：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>确认里面有：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">443/udp</span><br></pre></td></tr></table></figure>
-
-<p>如果你开启了端口跳跃，还要确认里面有对应的 UDP 端口范围，例如：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000:20100/udp</span><br></pre></td></tr></table></figure>
-
-<p>然后再检查 Cloudflare DNS 记录，代理状态必须是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">DNS only</span><br></pre></td></tr></table></figure>
-
-<p>也就是灰云，不能是橙云。</p>
-<h3 id="3-域名能-ping-通但服务仍然连不上"><a href="#3-域名能-ping-通但服务仍然连不上" class="headerlink" title="3. 域名能 ping 通但服务仍然连不上"></a>3. 域名能 ping 通但服务仍然连不上</h3><p><code>ping</code> 只能说明域名解析到了某个 IP，并不代表 UDP 443 一定通。</p>
-<p>继续检查：</p>
-<ul>
-<li>VPS 系统防火墙；</li>
-<li>VPS 服务商安全组；</li>
-<li>Hysteria2 服务状态；</li>
-<li>Hysteria2 日志；</li>
-<li>客户端里的认证密码和混淆密码是否填写正确。</li>
-<li>如果开启了端口跳跃，客户端端口范围是否和服务端 <code>listen</code> 范围一致。</li>
-</ul>
-<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>整个流程可以概括为：</p>
-<ol>
-<li>在 Cloudflare 添加 <code>hy2</code> 的 A 记录；</li>
-<li>代理状态保持 <code>DNS only</code>，不要开启橙云；</li>
-<li>等待 DNS 解析生效；</li>
-<li>SSH 登录 VPS；</li>
-<li>安装基础工具；</li>
-<li>开启 BBR 基础网络优化；</li>
-<li>安装 UFW，并放行 <code>22/tcp</code>、<code>80/tcp</code>、<code>443/udp</code>；</li>
-<li>安装 Hysteria2；</li>
-<li>写入 <code>/etc/hysteria/config.yaml</code>；</li>
-<li>重启并检查 <code>hysteria-server.service</code>。</li>
-</ol>
-<p>如果你的网络环境对固定 UDP 端口有限速或阻断，再考虑开启端口跳跃；如果 <code>443/udp</code> 已经稳定，就不需要额外配置。</p>
-<p>最后服务状态显示：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
-
-<p>就说明 Hysteria2 服务端已经正常运行，可以继续配置客户端。</p>
-<h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你更习惯跟着画面操作，可以观看本教程的完整视频。视频中会演示 Cloudflare DNS、VPS 命令和 Hysteria2 配置过程。</p>
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看 Hysteria2 完整教程"><i class="fab fa-youtube"></i><span>在 YouTube 观看 Hysteria2 完整教程</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline，获取更多 VPS 教程"><i class="fab fa-youtube"></i><span>订阅 Skyline，获取更多 VPS 教程</span></a>
-
-<h2 id="📚-官方参考资料"><a href="#📚-官方参考资料" class="headerlink" title="📚 官方参考资料"></a>📚 官方参考资料</h2><ul>
-<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Server/">Hysteria2 官方服务端教程</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Installation/">Hysteria2 官方安装说明</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/advanced/Full-Server-Config/">Hysteria2 服务端完整配置</a></li>
-<li><a href="https://v2.hysteria.network/zh/docs/advanced/Port-Hopping/">Hysteria2 端口跳跃说明</a></li>
-<li><a href="https://v2.hysteria.network/docs/Changelog/">Hysteria2 更新日志</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>Hysteria2</tag>
-        <tag>Cloudflare</tag>
-        <tag>DNS</tag>
-        <tag>UFW</tag>
-        <tag>BBR</tag>
-        <tag>端口跳跃</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</title>
-    <url>/2026/07/21/sing-box-one-click-vless-reality-beginner/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/1UYMIMyTv9w"
-    title="sing-box 一键脚本搭建 VLESS Reality 节点零基础视频教程"
-    loading="lazy"
-    frameborder="0"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://youtu.be/1UYMIMyTv9w" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<h2 id="📖-前言"><a href="#📖-前言" class="headerlink" title="📖 前言"></a>📖 前言</h2><p>如果你觉得手动编写 sing-box JSON 配置太复杂，可以使用一键脚本自动完成 sing-box 安装、Reality 密钥生成、节点配置和客户端信息导出。</p>
-<p>本文采用 <code>fscarmen/sing-box</code> 开源项目，按最简单的路线只安装：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">VLESS + Reality + Vision</span><br></pre></td></tr></table></figure>
-
-<p>这套方案不需要购买域名、不需要申请 TLS 证书，也不需要安装面板。</p>
-<blockquote>
-<p><strong>重要说明：</strong>本文使用的是社区维护的第三方脚本，并非 sing-box 官方安装脚本。脚本会以 <code>root</code> 权限修改系统、安装服务并配置端口。建议只在纯净 VPS 上使用，并在执行前查看项目源码和近期更新记录。sing-box 官方脚本只负责安装核心，不会自动创建 Reality 节点。</p>
-</blockquote>
-<blockquote>
-<p>本文默认以 <code>root</code> 用户登录，因此命令中不添加 <code>sudo</code>。请勿公开节点链接、UUID、Reality 私钥或订阅地址。</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="🧰-一、搭建前准备"><a href="#🧰-一、搭建前准备" class="headerlink" title="🧰 一、搭建前准备"></a>🧰 一、搭建前准备</h2><table>
-<thead>
-<tr>
-<th>项目</th>
-<th>建议</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>VPS 系统</td>
-<td>Debian 12 &#x2F; 13 或 Ubuntu LTS 纯净系统</td>
-</tr>
-<tr>
-<td>CPU &#x2F; 内存</td>
-<td>1 核、512MB 以上</td>
-</tr>
-<tr>
-<td>网络</td>
-<td>具有公网可达的 IPv4 或 IPv6</td>
-</tr>
-<tr>
-<td>登录权限</td>
-<td><code>root</code> 用户</td>
-</tr>
-<tr>
-<td>节点协议</td>
-<td>VLESS + Reality + Vision</td>
-</tr>
-<tr>
-<td>客户端</td>
-<td>v2rayN、Clash Verge、Shadowrocket 或 sing-box</td>
-</tr>
-</tbody></table>
-<p>还没有 VPS 的读者，可以先参考本站原有的 VPS 厂商推荐与购买说明。购买时优先选择支持 Debian、独立公网 IP 和自定义安全组的产品。</p>
-<h2 id="🔐-二、连接-VPS"><a href="#🔐-二、连接-VPS" class="headerlink" title="🔐 二、连接 VPS"></a>🔐 二、连接 VPS</h2><p>在 Windows Terminal 或 PowerShell 中输入：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root@<span class="number">1.2</span>.<span class="number">3.4</span></span><br></pre></td></tr></table></figure>
-
-<p>首次连接出现指纹确认时输入 <code>yes</code>，然后输入 VPS 的 root 密码。</p>
-<blockquote>
-<p>后面的命令全部在 VPS 终端中执行，不是在本地 Windows PowerShell 中执行。</p>
-</blockquote>
-<h2 id="🚀-三、更新系统并安装-wget"><a href="#🚀-三、更新系统并安装-wget" class="headerlink" title="🚀 三、更新系统并安装 wget"></a>🚀 三、更新系统并安装 wget</h2><p>更新 Debian 软件包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
-
-<p>安装脚本需要的下载工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y wget</span><br></pre></td></tr></table></figure>
-
-<p>如果更新后提示需要重启，先执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<p>等待约一分钟，然后重新连接 VPS。</p>
-<h2 id="📦-四、运行-sing-box-一键脚本"><a href="#📦-四、运行-sing-box-一键脚本" class="headerlink" title="📦 四、运行 sing-box 一键脚本"></a>📦 四、运行 sing-box 一键脚本</h2><p>执行项目 README 提供的首次运行命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh)</span><br></pre></td></tr></table></figure>
-
-<p>脚本进入主菜单后，输入 <code>5</code>，选择“安装 Sing-box”。这种方式不会额外安装 Argo 和 Nginx，配置更简单。</p>
-<p><img src="/img/posts/sing-box-one-click/01-install-sing-box.png" alt="sing-box 一键脚本主菜单选择安装 Sing-box"></p>
-<p>进入协议选择页面后输入 <code>b</code>，只安装 <code>XTLS + Reality</code>。不要直接回车，否则会选择默认的 <code>a</code> 并安装全部协议。</p>
-<p><img src="/img/posts/sing-box-one-click/02-select-xtls-reality.png" alt="sing-box 一键脚本选择 XTLS Reality 协议"></p>
-<p>确认协议后，在起始端口处输入 <code>443</code>。如果 443 已被其他程序占用，可以改用 <code>8443</code>，并在云厂商安全组中放行相同的 TCP 端口。</p>
-<p><img src="/img/posts/sing-box-one-click/03-set-port-443.png" alt="sing-box Reality 节点填写 443 起始端口"></p>
-<p>接下来按下面的原则继续：</p>
-<ol>
-<li>节点名称可填写容易识别的名称，例如 <code>Skyline-Reality</code>。</li>
-<li>UUID、Reality 密钥、Short ID 让脚本自动生成。</li>
-<li>新手暂时不启用 Argo、WARP、端口跳跃等额外功能。</li>
-<li>是否创建在线订阅可按需要选择；只使用一个节点时，可以不启用在线订阅，直接复制节点链接。</li>
-</ol>
-<blockquote>
-<p>项目参数表中 <code>b</code> 对应 <code>XTLS + Reality</code>。不要使用 <code>-l</code> 极速模式：它会自动安装多种协议，不适合只想搭建一个 Reality 节点的新手。</p>
-</blockquote>
-<p>安装通常需要几分钟。完成后，终端会显示节点链接、二维码或客户端订阅信息。立即把需要的信息保存到自己的密码管理器中，不要发到群聊或公开网页。</p>
-<h2 id="🧱-五、放行实际节点端口"><a href="#🧱-五、放行实际节点端口" class="headerlink" title="🧱 五、放行实际节点端口"></a>🧱 五、放行实际节点端口</h2><p>先在安装结果中确认 Reality 节点的实际端口。如果使用的是 <code>443</code>，需要在云厂商控制台的安全组或防火墙中放行：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">协议：TCP</span><br><span class="line">端口：443</span><br><span class="line">来源：0.0.0.0/0</span><br></pre></td></tr></table></figure>
-
-<p>如果脚本分配的是其他端口，就放行实际端口，不要照抄 443。</p>
-<p>脚本目前会自动检测 UFW，并在 UFW 未启用时使用 iptables 管理规则；但是它无法替你修改阿里云、腾讯云、AWS、甲骨文等云厂商控制台中的安全组，因此云端规则必须自己确认。</p>
-<p>检查端口是否正在监听：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你的节点不是 443，请把命令中的 <code>443</code> 换成实际端口。</p>
-<h2 id="📱-六、导入客户端"><a href="#📱-六、导入客户端" class="headerlink" title="📱 六、导入客户端"></a>📱 六、导入客户端</h2><p>安装完成后，可以随时重新显示节点信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
-
-<p>常见导入方法：</p>
-<ul>
-<li>**v2rayN：**复制 <code>vless://</code> 链接，在客户端中选择“从剪贴板导入”。</li>
-<li>**Shadowrocket：**扫描脚本输出的二维码，或复制链接后从剪贴板导入。</li>
-<li>**Clash Verge：**使用脚本生成的 Clash&#x2F;Mihomo 订阅或配置，不要把普通 <code>vless://</code> 链接直接当作 Clash 订阅地址。</li>
-<li>**sing-box 客户端：**使用脚本导出的对应 sing-box 配置。</li>
-</ul>
-<p>导入后选择新节点，开启系统代理，再访问网站测试连接。</p>
-<h2 id="✅-七、检查服务状态"><a href="#✅-七、检查服务状态" class="headerlink" title="✅ 七、检查服务状态"></a>✅ 七、检查服务状态</h2><p>查看 sing-box 服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>看到 <code>active (running)</code> 表示服务正在运行。</p>
-<p>查看最近日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box -n 50 --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>检查公网时间，Reality 对系统时间比较敏感：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
-
-<h2 id="🛠️-八、常用管理命令"><a href="#🛠️-八、常用管理命令" class="headerlink" title="🛠️ 八、常用管理命令"></a>🛠️ 八、常用管理命令</h2><p>安装完成后，直接输入以下命令打开管理菜单：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb</span><br></pre></td></tr></table></figure>
-
-<p>常用参数：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n    <span class="comment"># 显示节点信息</span></span><br><span class="line">sb -d    <span class="comment"># 修改节点参数</span></span><br><span class="line">sb -s    <span class="comment"># 停止或启动 sing-box 服务</span></span><br><span class="line">sb -r    <span class="comment"># 添加或删除协议</span></span><br><span class="line">sb -u    <span class="comment"># 卸载</span></span><br></pre></td></tr></table></figure>
-
-<p>需要修改端口、Reality SNI、节点名称、UUID 或服务器 IP 时，优先使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -d</span><br></pre></td></tr></table></figure>
-
-<p>修改完成后再次执行 <code>sb -n</code>，重新导出并更新客户端节点。</p>
-<h2 id="❌-九、连接失败排查"><a href="#❌-九、连接失败排查" class="headerlink" title="❌ 九、连接失败排查"></a>❌ 九、连接失败排查</h2><h3 id="1-云厂商安全组没有放行"><a href="#1-云厂商安全组没有放行" class="headerlink" title="1. 云厂商安全组没有放行"></a>1. 云厂商安全组没有放行</h3><p>最常见原因是 VPS 内部已经监听端口，但云厂商控制台仍然拦截。确认安全组已放行节点的实际 TCP 端口。</p>
-<h3 id="2-端口被其他程序占用"><a href="#2-端口被其他程序占用" class="headerlink" title="2. 端口被其他程序占用"></a>2. 端口被其他程序占用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 443 已被 Nginx、Apache、3X-UI 或其他节点使用，通过 <code>sb -d</code> 把 Reality 改为一个未占用的 TCP 端口，并同步修改安全组与客户端。</p>
-<h3 id="3-客户端参数不一致"><a href="#3-客户端参数不一致" class="headerlink" title="3. 客户端参数不一致"></a>3. 客户端参数不一致</h3><p>出现 <code>REALITY authentication failed</code> 时，重点核对：</p>
-<ul>
-<li>VPS 地址和端口</li>
-<li>UUID</li>
-<li>Flow 是否为 <code>xtls-rprx-vision</code></li>
-<li>Reality 公钥</li>
-<li>Short ID</li>
-<li>SNI &#x2F; Server Name</li>
-<li>客户端指纹是否为 <code>chrome</code></li>
-</ul>
-<p>不要把服务端的 Reality 私钥填入客户端。客户端使用的是公钥。</p>
-<h3 id="4-修改服务端后仍使用旧链接"><a href="#4-修改服务端后仍使用旧链接" class="headerlink" title="4. 修改服务端后仍使用旧链接"></a>4. 修改服务端后仍使用旧链接</h3><p>运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
-
-<p>重新复制最新节点链接，删除客户端旧节点后再导入。</p>
-<h3 id="5-系统时间不正确"><a href="#5-系统时间不正确" class="headerlink" title="5. 系统时间不正确"></a>5. 系统时间不正确</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl set-ntp <span class="literal">true</span></span><br><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
-
-<p>等待系统完成时间同步后重试。</p>
-<h2 id="🔄-十、一键脚本和手动配置怎么选"><a href="#🔄-十、一键脚本和手动配置怎么选" class="headerlink" title="🔄 十、一键脚本和手动配置怎么选"></a>🔄 十、一键脚本和手动配置怎么选</h2><table>
-<thead>
-<tr>
-<th>方式</th>
-<th>优点</th>
-<th>缺点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>一键脚本</td>
-<td>安装快、自动生成参数、自动导出客户端</td>
-<td>依赖第三方维护，配置内容较多</td>
-</tr>
-<tr>
-<td>手动配置</td>
-<td>结构透明、便于学习、容易精确控制</td>
-<td>步骤更多，需要编辑 JSON</td>
-</tr>
-</tbody></table>
-<p>只想尽快搭建节点，可以使用本文的一键脚本方案。希望真正理解每个参数，建议继续阅读：</p>
-<a class="btn-beautify blue larger" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="sing-box VLESS + Reality 手动配置教程"><i class="fas fa-book"></i><span>sing-box VLESS + Reality 手动配置教程</span></a>
-
-<h2 id="🔒-十一、安全提醒"><a href="#🔒-十一、安全提醒" class="headerlink" title="🔒 十一、安全提醒"></a>🔒 十一、安全提醒</h2><ul>
-<li>不要公开节点链接、订阅地址、UUID、Reality 私钥和 Short ID。</li>
-<li>不要在存有重要业务数据的服务器上直接运行陌生的一键脚本。</li>
-<li>脚本和 sing-box 都会持续更新，执行前应查看项目 README 与近期变更。</li>
-<li>节点只供自己管理的设备和合法用途使用，并遵守服务器所在地及使用地的法律法规。</li>
-</ul>
-<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
-<li><a href="https://github.com/fscarmen/sing-box">fscarmen&#x2F;sing-box 一键脚本项目</a></li>
-<li><a href="https://sing-box.sagernet.org/installation/package-manager/">sing-box 官方安装文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/inbound/vless/">sing-box 官方 VLESS 入站文档</a></li>
-<li><a href="https://sing-box.sagernet.org/configuration/shared/tls/#reality-fields">sing-box 官方 Reality 配置文档</a></li>
-</ul>
-<hr>
-<p>如果这篇教程对你有帮助，欢迎订阅 Skyline YouTube 频道。后续会继续更新 sing-box、VLESS Reality、Hysteria2 和 VPS 实操教程。</p>
-<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>Debian</tag>
-        <tag>Reality协议</tag>
-        <tag>VLESS</tag>
-        <tag>sing-box</tag>
-        <tag>一键脚本</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
-    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
-<blockquote>
-<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
-</blockquote>
-<hr>
-<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
-<hr>
-<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
-<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
-<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
-</ul>
-<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
-<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
-<hr>
-<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
-<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
-<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
-<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
-<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
-</ol>
-<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
-<hr>
-<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
-<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
-<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
-<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
-<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
-</ol>
-<hr>
-<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
-<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
-<p><strong>Q2：提示 “Read-only file system”</strong></p>
-<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
-<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
-<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
-<h2 id="📺-观看更多视频教程"><a href="#📺-观看更多视频教程" class="headerlink" title="📺 观看更多视频教程"></a>📺 观看更多视频教程</h2><p>更多 macOS、VPS 和服务器运维实操视频，请访问 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p>
-<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="前往 YouTube 频道"><i class="fab fa-youtube"></i><span>前往 YouTube 频道</span></a>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-      </categories>
-      <tags>
-        <tag>macOS</tag>
-        <tag>MDM</tag>
-        <tag>系统工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比</title>
-    <url>/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/</url>
-    <content><![CDATA[<blockquote>
-<p>更新于 2026 年 7 月。本文包含推广链接；通过链接购买可能为本站带来佣金，但不会增加你的购买价格。线路、库存、价格和流媒体解锁状态可能随时变化，请以下单页面与购买前实测为准。</p>
-</blockquote>
-<h2 id="2026-VPS-推荐：先看结论"><a href="#2026-VPS-推荐：先看结论" class="headerlink" title="2026 VPS 推荐：先看结论"></a>2026 VPS 推荐：先看结论</h2><p>如果你正在搜索“2026 VPS 推荐”“便宜年付 VPS”或“中国大陆访问快的 VPS”，可以先记住一句话：<strong>搬瓦工和 DMIT 主打中国方向精品线路，RackNerd 主打低价年付与通用计算，AkileCloud 更偏亚洲节点、原生 IP 与流媒体解锁。</strong></p>
-<ul>
-<li>**中国大陆访问与精品线路：**搬瓦工、DMIT；</li>
-<li>**便宜年付 VPS 与开发测试：**RackNerd；</li>
-<li>**TikTok、Netflix、原生 IP 与亚洲节点：**AkileCloud；</li>
-<li>**正式建站：**优先比较网络稳定性、IP 信誉、备份与售后，不要只看跑分。</li>
-</ul>
-<p>不同 VPS 的“好”并不是同一回事。建站更看重稳定性与 IP 信誉，跨境业务更看重地区和 IP 属性，个人开发与备份则往往更在意价格。下面按线路、价格、解锁能力和使用场景进行对比。</p>
-<h2 id="2026-VPS-推荐快速选型表"><a href="#2026-VPS-推荐快速选型表" class="headerlink" title="2026 VPS 推荐快速选型表"></a>2026 VPS 推荐快速选型表</h2><table>
-<thead>
-<tr>
-<th>厂商</th>
-<th>核心定位</th>
-<th>线路与节点特点</th>
-<th>主要优势</th>
-<th>更适合谁</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong><a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a></strong></td>
-<td>高端中国方向优化</td>
-<td>CN2 GIA、AS9929、CMI 等，具体以套餐可迁移机房为准</td>
-<td>线路选择多、端口带宽高、KiwiVM 迁移灵活</td>
-<td>预算充足，重视中国方向网络质量与可玩性</td>
-</tr>
-<tr>
-<td><strong><a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a></strong></td>
-<td>美亚精品云服务器</td>
-<td>LAX &#x2F; HKG &#x2F; TYO 的 Pro、EB、T1 等系列定位不同</td>
-<td>精品线路、硬件配置清晰，适合建站与高质量节点</td>
-<td>商务建站、精品线路用户、对稳定性要求较高的人</td>
-</tr>
-<tr>
-<td><strong><a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a></strong></td>
-<td>低价年付 VPS</td>
-<td>以普通国际线路和 1Gbps 端口为主，多机房可选</td>
-<td>年付门槛低、KVM、适合跑常驻轻量服务</td>
-<td>学生、新手、开发测试、备份和备用机</td>
-</tr>
-<tr>
-<td><strong><a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a></strong></td>
-<td>亚洲节点与解锁特色</td>
-<td>覆盖香港、日本、台湾、新加坡、美国等地，提供多种 BGP&#x2F;优化线路</td>
-<td>节点多、带宽方案丰富、部分产品强调原生 IP 或流媒体解锁</td>
-<td>TikTok、跨境业务、流媒体及亚洲低延迟需求</td>
-</tr>
-</tbody></table>
-<h2 id="1-搬瓦工-VPS：CN2-GIA-与多机房迁移"><a href="#1-搬瓦工-VPS：CN2-GIA-与多机房迁移" class="headerlink" title="1. 搬瓦工 VPS：CN2 GIA 与多机房迁移"></a>1. 搬瓦工 VPS：CN2 GIA 与多机房迁移</h2><p>搬瓦工（BandwagonHost）是老牌 VPS 厂商，核心竞争力不只是某一个机房，而是 <strong>CN2 GIA、AS9929、CMI 等多种中国方向优化线路，以及 KiwiVM 后台的机房迁移能力</strong>。</p>
-<h3 id="值得关注的优势"><a href="#值得关注的优势" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>线路覆盖丰富</strong>：常见选择包括洛杉矶 CN2 GIA、AS9929，以及香港、日本等亚洲节点；实际可用机房取决于具体套餐。</li>
-<li><strong>端口带宽高</strong>：部分高端套餐提供 2.5Gbps、10Gbps 等端口规格，适合大文件传输和高并发场景。</li>
-<li><strong>迁移方便</strong>：不少套餐支持在 KiwiVM 中迁移机房，适合比较不同线路，或在需求变化后调整节点。</li>
-<li><strong>生态成熟</strong>：使用教程、测速资料和社区经验较多，新手遇到问题更容易找到参考。</li>
-</ul>
-<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>高端线路的价格明显高于普通 VPS；而且“10Gbps 端口”代表端口上限，并不等于中国大陆晚高峰一定能跑满。购买前应结合所在运营商、地区和测试 IP 判断。</p>
-<h3 id="推荐人群"><a href="#推荐人群" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>预算较充足，希望中国方向延迟、抖动和丢包表现更稳；</li>
-<li>需要在多个机房之间灵活切换；</li>
-<li>希望一台机器兼顾代理节点、下载与轻量建站。</li>
-</ul>
-<p>**选购建议：**优先查看包含 DC6 CN2 GIA-E、AS9929 等机房的可迁移套餐；香港、日本产品延迟通常更低，但价格也更高。</p>
-<p>👉 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">查看搬瓦工当前可售套餐</a></p>
-<h2 id="2-DMIT-VPS：美西、香港与日本精品线路"><a href="#2-DMIT-VPS：美西、香港与日本精品线路" class="headerlink" title="2. DMIT VPS：美西、香港与日本精品线路"></a>2. DMIT VPS：美西、香港与日本精品线路</h2><p>DMIT 的产品线通常按地区和网络等级划分，例如 LAX、HKG、TYO，以及 Pro、EB、T1 等系列。它更适合愿意为线路质量、硬件和服务稳定性支付溢价的用户。</p>
-<h3 id="值得关注的优势-1"><a href="#值得关注的优势-1" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>美亚节点选择清晰</strong>：洛杉矶、香港、东京是重点区域，不同系列面向中国优化、高防或国际连接等不同需求。</li>
-<li><strong>精品线路产品成熟</strong>：Pro 系列通常是中国方向用户重点关注的产品线，但路由仍应以下单时官方说明和实测为准。</li>
-<li><strong>适合正式业务</strong>：相比纯低价促销机，DMIT 更适合作为博客、企业网站、API 或长期运行服务的主机。</li>
-<li><strong>部分产品提供防护能力</strong>：EB 等产品线侧重防御或特定网络能力，购买前应确认防护范围、清洗策略和端口限制。</li>
-</ul>
-<h3 id="需要注意-1"><a href="#需要注意-1" class="headerlink" title="需要注意"></a>需要注意</h3><p>“原生 IP”和流媒体解锁不是永久属性。平台风控、IP 数据库和版权政策变化后，解锁结果可能改变；如果这是核心需求，购买前应查看商家说明，并在开通后立即测试。</p>
-<h3 id="推荐人群-1"><a href="#推荐人群-1" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>需要长期稳定建站或部署线上服务；</li>
-<li>对美西、香港、日本精品线路有明确需求；</li>
-<li>希望线路、硬件和售后整体更均衡。</li>
-</ul>
-<p>**选购建议：**美西可重点比较 LAX.Pro 系列；亚洲低延迟需求可关注 HKG.Pro 与 TYO.Pro。套餐名称、库存和价格会调整，不建议只按旧促销名称下单。</p>
-<p>👉 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">查看 DMIT 当前产品</a></p>
-<h2 id="3-RackNerd-VPS：便宜年付与备用服务器"><a href="#3-RackNerd-VPS：便宜年付与备用服务器" class="headerlink" title="3. RackNerd VPS：便宜年付与备用服务器"></a>3. RackNerd VPS：便宜年付与备用服务器</h2><p>RackNerd 的优势非常直接：**低价年付、KVM 虚拟化、1Gbps 端口和多个海外机房。**它不以中国方向精品线路见长，但很适合对网络回程要求不高的轻量任务。</p>
-<h3 id="值得关注的优势-2"><a href="#值得关注的优势-2" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>购买门槛低</strong>：常规公开促销约从 21.99 美元&#x2F;年起；黑五、新年等限时活动偶尔会出现 10～20 美元档，但库存和续费政策要以活动页为准。</li>
-<li><strong>适合常驻小服务</strong>：可运行个人博客、Docker 小应用、RSS、监控探针、DNS 辅助服务或异地备份。</li>
-<li><strong>机房选择较多</strong>：美国多地及部分欧洲机房可选，适合根据目标用户位置选择。</li>
-<li><strong>KVM 与独立 IPv4</strong>：公开套餐通常提供 KVM、root 权限和独立 IPv4，部署自由度较高。</li>
-</ul>
-<h3 id="需要注意-2"><a href="#需要注意-2" class="headerlink" title="需要注意"></a>需要注意</h3><p>普通国际线路在中国大陆晚高峰可能出现延迟上升、绕路或丢包。它更适合作为低成本计算资源，不宜直接和 CN2 GIA 等精品线路比较。</p>
-<h3 id="推荐人群-2"><a href="#推荐人群-2" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>学生、新手和预算有限的开发者；</li>
-<li>需要备用节点、备份机或低成本常驻服务；</li>
-<li>访问人群主要位于海外，对中国方向网络要求不高。</li>
-</ul>
-<p>**选购建议：**优先根据目标访客所在地选机房。面向中国大陆时，洛杉矶通常比美国东部延迟更低，但仍建议先测试路由。</p>
-<p>👉 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">查看 RackNerd 当前年付套餐</a></p>
-<h2 id="4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁"><a href="#4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁" class="headerlink" title="4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁"></a>4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁</h2><p>AkileCloud 主打全球大带宽节点、BGP 优化和流媒体解锁，覆盖香港、日本、台湾、韩国、新加坡、美国及欧洲等地区。它的产品差异较大，选择时应重点看地区、IP 类型、流量和线路说明。</p>
-<h3 id="值得关注的优势-3"><a href="#值得关注的优势-3" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>亚洲节点丰富</strong>：适合希望靠近目标市场、降低业务访问延迟的用户。</li>
-<li><strong>部分产品强调原生 IP 与解锁</strong>：适合 Netflix、Disney+、TikTok 等有地区要求的场景。</li>
-<li><strong>线路类型多</strong>：官网列有 CN2、AS9929、CMI、SoftBank 等优化方向，不同产品的实际路由和带宽差异较大。</li>
-<li><strong>配置与计费选择灵活</strong>：适合按业务地区和流量规模精细挑选。</li>
-</ul>
-<h3 id="需要注意-3"><a href="#需要注意-3" class="headerlink" title="需要注意"></a>需要注意</h3><p>跨境电商或 TikTok 运营不能只看“原生 IP”。还应检查 IP 信誉、ASN 类型、DNS 区域、时区与账号环境一致性。任何平台解锁都可能因第三方策略变化而失效。</p>
-<h3 id="推荐人群-3"><a href="#推荐人群-3" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>TikTok、跨境电商和地区化业务；</li>
-<li>需要香港、日本、台湾、新加坡等亚洲节点；</li>
-<li>把流媒体解锁作为主要需求，并愿意在购买后持续验证。</li>
-</ul>
-<p>**选购建议：**先确定目标国家或地区，再选择明确标注 IP 属性与解锁范围的产品；不要仅按带宽数字判断体验。</p>
-<p>👉 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">注册 AkileCloud 并查看当前节点</a></p>
-<h2 id="2026-VPS-选购结论：四家厂商怎么选？"><a href="#2026-VPS-选购结论：四家厂商怎么选？" class="headerlink" title="2026 VPS 选购结论：四家厂商怎么选？"></a>2026 VPS 选购结论：四家厂商怎么选？</h2><ul>
-<li>**追求中国方向精品线路和灵活迁移：**优先考虑 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a>。</li>
-<li>**用于正式建站，希望线路与服务更均衡：**优先考虑 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a>。</li>
-<li>**预算有限，主要跑测试、备份或轻量服务：**优先考虑 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a>。</li>
-<li>**重点是 TikTok、流媒体解锁或亚洲节点：**优先考虑 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a>。</li>
-</ul>
-<h2 id="购买前的-5-个检查项"><a href="#购买前的-5-个检查项" class="headerlink" title="购买前的 5 个检查项"></a>购买前的 5 个检查项</h2><ol>
-<li>用测试 IP 或 Looking Glass 检查本地运营商的去程与回程。</li>
-<li>确认端口带宽、月流量、超额计费和限速规则。</li>
-<li>检查 IPv4 是否独享，以及 IP 信誉和目标平台解锁情况。</li>
-<li>阅读退款、续费、迁移和数据备份政策。</li>
-<li>重要业务至少准备异地备份，不要把“在线率高”等同于“数据不会丢失”。</li>
-</ol>
-<p>选好服务器后，可以继续阅读本站的 <a href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/">Debian VPS 搭建、BBR 与安全配置教程</a>；准备部署节点的读者可参考 <a href="/2026/07/21/sing-box-one-click-vless-reality-beginner/">sing-box VLESS + Reality 一键搭建教程</a>。</p>
-<h2 id="VPS-选购常见问题"><a href="#VPS-选购常见问题" class="headerlink" title="VPS 选购常见问题"></a>VPS 选购常见问题</h2><h3 id="中国大陆访问，搬瓦工和-DMIT-哪个更好？"><a href="#中国大陆访问，搬瓦工和-DMIT-哪个更好？" class="headerlink" title="中国大陆访问，搬瓦工和 DMIT 哪个更好？"></a>中国大陆访问，搬瓦工和 DMIT 哪个更好？</h3><p>两家都有面向中国方向的精品线路。搬瓦工的优势是可迁移机房和线路选择丰富；DMIT 更适合看重美西、香港、日本精品产品与长期建站的用户。最终应使用测试 IP，结合所在省份和电信、联通、移动运营商实测。</p>
-<h3 id="便宜年付-VPS-推荐哪一家？"><a href="#便宜年付-VPS-推荐哪一家？" class="headerlink" title="便宜年付 VPS 推荐哪一家？"></a>便宜年付 VPS 推荐哪一家？</h3><p>如果用途是开发测试、个人博客备份、监控探针或轻量 Docker 服务，RackNerd 的低价年付套餐通常更合适。需要注意，它主要是普通国际线路，不应按 CN2 GIA 的晚高峰表现来预期。</p>
-<h3 id="TikTok、Netflix-和原生-IP-应该选哪家？"><a href="#TikTok、Netflix-和原生-IP-应该选哪家？" class="headerlink" title="TikTok、Netflix 和原生 IP 应该选哪家？"></a>TikTok、Netflix 和原生 IP 应该选哪家？</h3><p>AkileCloud 的亚洲节点和解锁型产品更贴近这类需求。但“原生 IP”不等于账号环境一定安全，购买前后都应检查 IP 信誉、ASN、DNS 区域和目标平台的实际解锁结果。</p>
-<h3 id="CN2-GIA、AS9929-和-CMI-有什么区别？"><a href="#CN2-GIA、AS9929-和-CMI-有什么区别？" class="headerlink" title="CN2 GIA、AS9929 和 CMI 有什么区别？"></a>CN2 GIA、AS9929 和 CMI 有什么区别？</h3><p>它们分别对应不同运营商和跨境网络资源，实际体验还受地区、入口、回程、拥塞和商家带宽策略影响。线路名称只能用于初筛，不能替代晚高峰测试。</p>
-<h3 id="VPS-端口是-10Gbps，实际速度就一定快吗？"><a href="#VPS-端口是-10Gbps，实际速度就一定快吗？" class="headerlink" title="VPS 端口是 10Gbps，实际速度就一定快吗？"></a>VPS 端口是 10Gbps，实际速度就一定快吗？</h3><p>不一定。端口速率只是理论上限，实际速度还取决于共享情况、月流量限制、国际出口、路由拥塞、客户端网络和单连接性能。</p>
-<p>没有任何一家 VPS 能在所有维度都胜出。先明确自己最看重的是线路、预算、地区、解锁还是稳定性，再选产品，通常比单纯追逐“跑分最高”更可靠。</p>
-]]></content>
-      <categories>
-        <category>VPS 选购</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>搬瓦工</tag>
-        <tag>DMIT</tag>
-        <tag>RackNerd</tag>
-        <tag>AkileCloud</tag>
-        <tag>CN2 GIA</tag>
-        <tag>流媒体解锁</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</title>
     <url>/2026/05/05/sing-box-vps-vless-reality-vision-beginner/</url>
     <content><![CDATA[<div class="video-container">
@@ -1762,6 +1008,760 @@
         <tag>VLESS</tag>
         <tag>Vision</tag>
         <tag>sing-box</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比</title>
+    <url>/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/</url>
+    <content><![CDATA[<blockquote>
+<p>更新于 2026 年 7 月。本文包含推广链接；通过链接购买可能为本站带来佣金，但不会增加你的购买价格。线路、库存、价格和流媒体解锁状态可能随时变化，请以下单页面与购买前实测为准。</p>
+</blockquote>
+<h2 id="2026-VPS-推荐：先看结论"><a href="#2026-VPS-推荐：先看结论" class="headerlink" title="2026 VPS 推荐：先看结论"></a>2026 VPS 推荐：先看结论</h2><p>如果你正在搜索“2026 VPS 推荐”“便宜年付 VPS”或“中国大陆访问快的 VPS”，可以先记住一句话：<strong>搬瓦工和 DMIT 主打中国方向精品线路，RackNerd 主打低价年付与通用计算，AkileCloud 更偏亚洲节点、原生 IP 与流媒体解锁。</strong></p>
+<ul>
+<li>**中国大陆访问与精品线路：**搬瓦工、DMIT；</li>
+<li>**便宜年付 VPS 与开发测试：**RackNerd；</li>
+<li>**TikTok、Netflix、原生 IP 与亚洲节点：**AkileCloud；</li>
+<li>**正式建站：**优先比较网络稳定性、IP 信誉、备份与售后，不要只看跑分。</li>
+</ul>
+<p>不同 VPS 的“好”并不是同一回事。建站更看重稳定性与 IP 信誉，跨境业务更看重地区和 IP 属性，个人开发与备份则往往更在意价格。下面按线路、价格、解锁能力和使用场景进行对比。</p>
+<h2 id="2026-VPS-推荐快速选型表"><a href="#2026-VPS-推荐快速选型表" class="headerlink" title="2026 VPS 推荐快速选型表"></a>2026 VPS 推荐快速选型表</h2><table>
+<thead>
+<tr>
+<th>厂商</th>
+<th>核心定位</th>
+<th>线路与节点特点</th>
+<th>主要优势</th>
+<th>更适合谁</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a></strong></td>
+<td>高端中国方向优化</td>
+<td>CN2 GIA、AS9929、CMI 等，具体以套餐可迁移机房为准</td>
+<td>线路选择多、端口带宽高、KiwiVM 迁移灵活</td>
+<td>预算充足，重视中国方向网络质量与可玩性</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a></strong></td>
+<td>美亚精品云服务器</td>
+<td>LAX &#x2F; HKG &#x2F; TYO 的 Pro、EB、T1 等系列定位不同</td>
+<td>精品线路、硬件配置清晰，适合建站与高质量节点</td>
+<td>商务建站、精品线路用户、对稳定性要求较高的人</td>
+</tr>
+<tr>
+<td><strong><a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a></strong></td>
+<td>低价年付 VPS</td>
+<td>以普通国际线路和 1Gbps 端口为主，多机房可选</td>
+<td>年付门槛低、KVM、适合跑常驻轻量服务</td>
+<td>学生、新手、开发测试、备份和备用机</td>
+</tr>
+<tr>
+<td><strong><a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a></strong></td>
+<td>亚洲节点与解锁特色</td>
+<td>覆盖香港、日本、台湾、新加坡、美国等地，提供多种 BGP&#x2F;优化线路</td>
+<td>节点多、带宽方案丰富、部分产品强调原生 IP 或流媒体解锁</td>
+<td>TikTok、跨境业务、流媒体及亚洲低延迟需求</td>
+</tr>
+</tbody></table>
+<h2 id="1-搬瓦工-VPS：CN2-GIA-与多机房迁移"><a href="#1-搬瓦工-VPS：CN2-GIA-与多机房迁移" class="headerlink" title="1. 搬瓦工 VPS：CN2 GIA 与多机房迁移"></a>1. 搬瓦工 VPS：CN2 GIA 与多机房迁移</h2><p>搬瓦工（BandwagonHost）是老牌 VPS 厂商，核心竞争力不只是某一个机房，而是 <strong>CN2 GIA、AS9929、CMI 等多种中国方向优化线路，以及 KiwiVM 后台的机房迁移能力</strong>。</p>
+<h3 id="值得关注的优势"><a href="#值得关注的优势" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>线路覆盖丰富</strong>：常见选择包括洛杉矶 CN2 GIA、AS9929，以及香港、日本等亚洲节点；实际可用机房取决于具体套餐。</li>
+<li><strong>端口带宽高</strong>：部分高端套餐提供 2.5Gbps、10Gbps 等端口规格，适合大文件传输和高并发场景。</li>
+<li><strong>迁移方便</strong>：不少套餐支持在 KiwiVM 中迁移机房，适合比较不同线路，或在需求变化后调整节点。</li>
+<li><strong>生态成熟</strong>：使用教程、测速资料和社区经验较多，新手遇到问题更容易找到参考。</li>
+</ul>
+<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>高端线路的价格明显高于普通 VPS；而且“10Gbps 端口”代表端口上限，并不等于中国大陆晚高峰一定能跑满。购买前应结合所在运营商、地区和测试 IP 判断。</p>
+<h3 id="推荐人群"><a href="#推荐人群" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>预算较充足，希望中国方向延迟、抖动和丢包表现更稳；</li>
+<li>需要在多个机房之间灵活切换；</li>
+<li>希望一台机器兼顾代理节点、下载与轻量建站。</li>
+</ul>
+<p>**选购建议：**优先查看包含 DC6 CN2 GIA-E、AS9929 等机房的可迁移套餐；香港、日本产品延迟通常更低，但价格也更高。</p>
+<p>👉 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">查看搬瓦工当前可售套餐</a></p>
+<h2 id="2-DMIT-VPS：美西、香港与日本精品线路"><a href="#2-DMIT-VPS：美西、香港与日本精品线路" class="headerlink" title="2. DMIT VPS：美西、香港与日本精品线路"></a>2. DMIT VPS：美西、香港与日本精品线路</h2><p>DMIT 的产品线通常按地区和网络等级划分，例如 LAX、HKG、TYO，以及 Pro、EB、T1 等系列。它更适合愿意为线路质量、硬件和服务稳定性支付溢价的用户。</p>
+<h3 id="值得关注的优势-1"><a href="#值得关注的优势-1" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>美亚节点选择清晰</strong>：洛杉矶、香港、东京是重点区域，不同系列面向中国优化、高防或国际连接等不同需求。</li>
+<li><strong>精品线路产品成熟</strong>：Pro 系列通常是中国方向用户重点关注的产品线，但路由仍应以下单时官方说明和实测为准。</li>
+<li><strong>适合正式业务</strong>：相比纯低价促销机，DMIT 更适合作为博客、企业网站、API 或长期运行服务的主机。</li>
+<li><strong>部分产品提供防护能力</strong>：EB 等产品线侧重防御或特定网络能力，购买前应确认防护范围、清洗策略和端口限制。</li>
+</ul>
+<h3 id="需要注意-1"><a href="#需要注意-1" class="headerlink" title="需要注意"></a>需要注意</h3><p>“原生 IP”和流媒体解锁不是永久属性。平台风控、IP 数据库和版权政策变化后，解锁结果可能改变；如果这是核心需求，购买前应查看商家说明，并在开通后立即测试。</p>
+<h3 id="推荐人群-1"><a href="#推荐人群-1" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>需要长期稳定建站或部署线上服务；</li>
+<li>对美西、香港、日本精品线路有明确需求；</li>
+<li>希望线路、硬件和售后整体更均衡。</li>
+</ul>
+<p>**选购建议：**美西可重点比较 LAX.Pro 系列；亚洲低延迟需求可关注 HKG.Pro 与 TYO.Pro。套餐名称、库存和价格会调整，不建议只按旧促销名称下单。</p>
+<p>👉 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">查看 DMIT 当前产品</a></p>
+<h2 id="3-RackNerd-VPS：便宜年付与备用服务器"><a href="#3-RackNerd-VPS：便宜年付与备用服务器" class="headerlink" title="3. RackNerd VPS：便宜年付与备用服务器"></a>3. RackNerd VPS：便宜年付与备用服务器</h2><p>RackNerd 的优势非常直接：**低价年付、KVM 虚拟化、1Gbps 端口和多个海外机房。**它不以中国方向精品线路见长，但很适合对网络回程要求不高的轻量任务。</p>
+<h3 id="值得关注的优势-2"><a href="#值得关注的优势-2" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>购买门槛低</strong>：常规公开促销约从 21.99 美元&#x2F;年起；黑五、新年等限时活动偶尔会出现 10～20 美元档，但库存和续费政策要以活动页为准。</li>
+<li><strong>适合常驻小服务</strong>：可运行个人博客、Docker 小应用、RSS、监控探针、DNS 辅助服务或异地备份。</li>
+<li><strong>机房选择较多</strong>：美国多地及部分欧洲机房可选，适合根据目标用户位置选择。</li>
+<li><strong>KVM 与独立 IPv4</strong>：公开套餐通常提供 KVM、root 权限和独立 IPv4，部署自由度较高。</li>
+</ul>
+<h3 id="需要注意-2"><a href="#需要注意-2" class="headerlink" title="需要注意"></a>需要注意</h3><p>普通国际线路在中国大陆晚高峰可能出现延迟上升、绕路或丢包。它更适合作为低成本计算资源，不宜直接和 CN2 GIA 等精品线路比较。</p>
+<h3 id="推荐人群-2"><a href="#推荐人群-2" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>学生、新手和预算有限的开发者；</li>
+<li>需要备用节点、备份机或低成本常驻服务；</li>
+<li>访问人群主要位于海外，对中国方向网络要求不高。</li>
+</ul>
+<p>**选购建议：**优先根据目标访客所在地选机房。面向中国大陆时，洛杉矶通常比美国东部延迟更低，但仍建议先测试路由。</p>
+<p>👉 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">查看 RackNerd 当前年付套餐</a></p>
+<h2 id="4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁"><a href="#4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁" class="headerlink" title="4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁"></a>4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁</h2><p>AkileCloud 主打全球大带宽节点、BGP 优化和流媒体解锁，覆盖香港、日本、台湾、韩国、新加坡、美国及欧洲等地区。它的产品差异较大，选择时应重点看地区、IP 类型、流量和线路说明。</p>
+<h3 id="值得关注的优势-3"><a href="#值得关注的优势-3" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>亚洲节点丰富</strong>：适合希望靠近目标市场、降低业务访问延迟的用户。</li>
+<li><strong>部分产品强调原生 IP 与解锁</strong>：适合 Netflix、Disney+、TikTok 等有地区要求的场景。</li>
+<li><strong>线路类型多</strong>：官网列有 CN2、AS9929、CMI、SoftBank 等优化方向，不同产品的实际路由和带宽差异较大。</li>
+<li><strong>配置与计费选择灵活</strong>：适合按业务地区和流量规模精细挑选。</li>
+</ul>
+<h3 id="需要注意-3"><a href="#需要注意-3" class="headerlink" title="需要注意"></a>需要注意</h3><p>跨境电商或 TikTok 运营不能只看“原生 IP”。还应检查 IP 信誉、ASN 类型、DNS 区域、时区与账号环境一致性。任何平台解锁都可能因第三方策略变化而失效。</p>
+<h3 id="推荐人群-3"><a href="#推荐人群-3" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>TikTok、跨境电商和地区化业务；</li>
+<li>需要香港、日本、台湾、新加坡等亚洲节点；</li>
+<li>把流媒体解锁作为主要需求，并愿意在购买后持续验证。</li>
+</ul>
+<p>**选购建议：**先确定目标国家或地区，再选择明确标注 IP 属性与解锁范围的产品；不要仅按带宽数字判断体验。</p>
+<p>👉 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">注册 AkileCloud 并查看当前节点</a></p>
+<h2 id="2026-VPS-选购结论：四家厂商怎么选？"><a href="#2026-VPS-选购结论：四家厂商怎么选？" class="headerlink" title="2026 VPS 选购结论：四家厂商怎么选？"></a>2026 VPS 选购结论：四家厂商怎么选？</h2><ul>
+<li>**追求中国方向精品线路和灵活迁移：**优先考虑 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a>。</li>
+<li>**用于正式建站，希望线路与服务更均衡：**优先考虑 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a>。</li>
+<li>**预算有限，主要跑测试、备份或轻量服务：**优先考虑 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a>。</li>
+<li>**重点是 TikTok、流媒体解锁或亚洲节点：**优先考虑 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a>。</li>
+</ul>
+<h2 id="购买前的-5-个检查项"><a href="#购买前的-5-个检查项" class="headerlink" title="购买前的 5 个检查项"></a>购买前的 5 个检查项</h2><ol>
+<li>用测试 IP 或 Looking Glass 检查本地运营商的去程与回程。</li>
+<li>确认端口带宽、月流量、超额计费和限速规则。</li>
+<li>检查 IPv4 是否独享，以及 IP 信誉和目标平台解锁情况。</li>
+<li>阅读退款、续费、迁移和数据备份政策。</li>
+<li>重要业务至少准备异地备份，不要把“在线率高”等同于“数据不会丢失”。</li>
+</ol>
+<p>选好服务器后，可以继续阅读本站的 <a href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/">Debian VPS 搭建、BBR 与安全配置教程</a>；准备部署节点的读者可参考 <a href="/2026/07/21/sing-box-one-click-vless-reality-beginner/">sing-box VLESS + Reality 一键搭建教程</a>。</p>
+<h2 id="VPS-选购常见问题"><a href="#VPS-选购常见问题" class="headerlink" title="VPS 选购常见问题"></a>VPS 选购常见问题</h2><h3 id="中国大陆访问，搬瓦工和-DMIT-哪个更好？"><a href="#中国大陆访问，搬瓦工和-DMIT-哪个更好？" class="headerlink" title="中国大陆访问，搬瓦工和 DMIT 哪个更好？"></a>中国大陆访问，搬瓦工和 DMIT 哪个更好？</h3><p>两家都有面向中国方向的精品线路。搬瓦工的优势是可迁移机房和线路选择丰富；DMIT 更适合看重美西、香港、日本精品产品与长期建站的用户。最终应使用测试 IP，结合所在省份和电信、联通、移动运营商实测。</p>
+<h3 id="便宜年付-VPS-推荐哪一家？"><a href="#便宜年付-VPS-推荐哪一家？" class="headerlink" title="便宜年付 VPS 推荐哪一家？"></a>便宜年付 VPS 推荐哪一家？</h3><p>如果用途是开发测试、个人博客备份、监控探针或轻量 Docker 服务，RackNerd 的低价年付套餐通常更合适。需要注意，它主要是普通国际线路，不应按 CN2 GIA 的晚高峰表现来预期。</p>
+<h3 id="TikTok、Netflix-和原生-IP-应该选哪家？"><a href="#TikTok、Netflix-和原生-IP-应该选哪家？" class="headerlink" title="TikTok、Netflix 和原生 IP 应该选哪家？"></a>TikTok、Netflix 和原生 IP 应该选哪家？</h3><p>AkileCloud 的亚洲节点和解锁型产品更贴近这类需求。但“原生 IP”不等于账号环境一定安全，购买前后都应检查 IP 信誉、ASN、DNS 区域和目标平台的实际解锁结果。</p>
+<h3 id="CN2-GIA、AS9929-和-CMI-有什么区别？"><a href="#CN2-GIA、AS9929-和-CMI-有什么区别？" class="headerlink" title="CN2 GIA、AS9929 和 CMI 有什么区别？"></a>CN2 GIA、AS9929 和 CMI 有什么区别？</h3><p>它们分别对应不同运营商和跨境网络资源，实际体验还受地区、入口、回程、拥塞和商家带宽策略影响。线路名称只能用于初筛，不能替代晚高峰测试。</p>
+<h3 id="VPS-端口是-10Gbps，实际速度就一定快吗？"><a href="#VPS-端口是-10Gbps，实际速度就一定快吗？" class="headerlink" title="VPS 端口是 10Gbps，实际速度就一定快吗？"></a>VPS 端口是 10Gbps，实际速度就一定快吗？</h3><p>不一定。端口速率只是理论上限，实际速度还取决于共享情况、月流量限制、国际出口、路由拥塞、客户端网络和单连接性能。</p>
+<p>没有任何一家 VPS 能在所有维度都胜出。先明确自己最看重的是线路、预算、地区、解锁还是稳定性，再选产品，通常比单纯追逐“跑分最高”更可靠。</p>
+]]></content>
+      <categories>
+        <category>VPS 选购</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>搬瓦工</tag>
+        <tag>DMIT</tag>
+        <tag>RackNerd</tag>
+        <tag>AkileCloud</tag>
+        <tag>CN2 GIA</tag>
+        <tag>流媒体解锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</title>
+    <url>/2026/07/21/sing-box-one-click-vless-reality-beginner/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/1UYMIMyTv9w"
+    title="sing-box 一键脚本搭建 VLESS Reality 节点零基础视频教程"
+    loading="lazy"
+    frameborder="0"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<a class="btn-beautify red larger" href="https://youtu.be/1UYMIMyTv9w" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+
+<h2 id="📖-前言"><a href="#📖-前言" class="headerlink" title="📖 前言"></a>📖 前言</h2><p>如果你觉得手动编写 sing-box JSON 配置太复杂，可以使用一键脚本自动完成 sing-box 安装、Reality 密钥生成、节点配置和客户端信息导出。</p>
+<p>本文采用 <code>fscarmen/sing-box</code> 开源项目，按最简单的路线只安装：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">VLESS + Reality + Vision</span><br></pre></td></tr></table></figure>
+
+<p>这套方案不需要购买域名、不需要申请 TLS 证书，也不需要安装面板。</p>
+<blockquote>
+<p><strong>重要说明：</strong>本文使用的是社区维护的第三方脚本，并非 sing-box 官方安装脚本。脚本会以 <code>root</code> 权限修改系统、安装服务并配置端口。建议只在纯净 VPS 上使用，并在执行前查看项目源码和近期更新记录。sing-box 官方脚本只负责安装核心，不会自动创建 Reality 节点。</p>
+</blockquote>
+<blockquote>
+<p>本文默认以 <code>root</code> 用户登录，因此命令中不添加 <code>sudo</code>。请勿公开节点链接、UUID、Reality 私钥或订阅地址。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="🧰-一、搭建前准备"><a href="#🧰-一、搭建前准备" class="headerlink" title="🧰 一、搭建前准备"></a>🧰 一、搭建前准备</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPS 系统</td>
+<td>Debian 12 &#x2F; 13 或 Ubuntu LTS 纯净系统</td>
+</tr>
+<tr>
+<td>CPU &#x2F; 内存</td>
+<td>1 核、512MB 以上</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>具有公网可达的 IPv4 或 IPv6</td>
+</tr>
+<tr>
+<td>登录权限</td>
+<td><code>root</code> 用户</td>
+</tr>
+<tr>
+<td>节点协议</td>
+<td>VLESS + Reality + Vision</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>v2rayN、Clash Verge、Shadowrocket 或 sing-box</td>
+</tr>
+</tbody></table>
+<p>还没有 VPS 的读者，可以先参考本站原有的 VPS 厂商推荐与购买说明。购买时优先选择支持 Debian、独立公网 IP 和自定义安全组的产品。</p>
+<h2 id="🔐-二、连接-VPS"><a href="#🔐-二、连接-VPS" class="headerlink" title="🔐 二、连接 VPS"></a>🔐 二、连接 VPS</h2><p>在 Windows Terminal 或 PowerShell 中输入：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root@<span class="number">1.2</span>.<span class="number">3.4</span></span><br></pre></td></tr></table></figure>
+
+<p>首次连接出现指纹确认时输入 <code>yes</code>，然后输入 VPS 的 root 密码。</p>
+<blockquote>
+<p>后面的命令全部在 VPS 终端中执行，不是在本地 Windows PowerShell 中执行。</p>
+</blockquote>
+<h2 id="🚀-三、更新系统并安装-wget"><a href="#🚀-三、更新系统并安装-wget" class="headerlink" title="🚀 三、更新系统并安装 wget"></a>🚀 三、更新系统并安装 wget</h2><p>更新 Debian 软件包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p>安装脚本需要的下载工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y wget</span><br></pre></td></tr></table></figure>
+
+<p>如果更新后提示需要重启，先执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>等待约一分钟，然后重新连接 VPS。</p>
+<h2 id="📦-四、运行-sing-box-一键脚本"><a href="#📦-四、运行-sing-box-一键脚本" class="headerlink" title="📦 四、运行 sing-box 一键脚本"></a>📦 四、运行 sing-box 一键脚本</h2><p>执行项目 README 提供的首次运行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh)</span><br></pre></td></tr></table></figure>
+
+<p>脚本进入主菜单后，输入 <code>5</code>，选择“安装 Sing-box”。这种方式不会额外安装 Argo 和 Nginx，配置更简单。</p>
+<p><img src="/img/posts/sing-box-one-click/01-install-sing-box.png" alt="sing-box 一键脚本主菜单选择安装 Sing-box"></p>
+<p>进入协议选择页面后输入 <code>b</code>，只安装 <code>XTLS + Reality</code>。不要直接回车，否则会选择默认的 <code>a</code> 并安装全部协议。</p>
+<p><img src="/img/posts/sing-box-one-click/02-select-xtls-reality.png" alt="sing-box 一键脚本选择 XTLS Reality 协议"></p>
+<p>确认协议后，在起始端口处输入 <code>443</code>。如果 443 已被其他程序占用，可以改用 <code>8443</code>，并在云厂商安全组中放行相同的 TCP 端口。</p>
+<p><img src="/img/posts/sing-box-one-click/03-set-port-443.png" alt="sing-box Reality 节点填写 443 起始端口"></p>
+<p>接下来按下面的原则继续：</p>
+<ol>
+<li>节点名称可填写容易识别的名称，例如 <code>Skyline-Reality</code>。</li>
+<li>UUID、Reality 密钥、Short ID 让脚本自动生成。</li>
+<li>新手暂时不启用 Argo、WARP、端口跳跃等额外功能。</li>
+<li>是否创建在线订阅可按需要选择；只使用一个节点时，可以不启用在线订阅，直接复制节点链接。</li>
+</ol>
+<blockquote>
+<p>项目参数表中 <code>b</code> 对应 <code>XTLS + Reality</code>。不要使用 <code>-l</code> 极速模式：它会自动安装多种协议，不适合只想搭建一个 Reality 节点的新手。</p>
+</blockquote>
+<p>安装通常需要几分钟。完成后，终端会显示节点链接、二维码或客户端订阅信息。立即把需要的信息保存到自己的密码管理器中，不要发到群聊或公开网页。</p>
+<h2 id="🧱-五、放行实际节点端口"><a href="#🧱-五、放行实际节点端口" class="headerlink" title="🧱 五、放行实际节点端口"></a>🧱 五、放行实际节点端口</h2><p>先在安装结果中确认 Reality 节点的实际端口。如果使用的是 <code>443</code>，需要在云厂商控制台的安全组或防火墙中放行：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">协议：TCP</span><br><span class="line">端口：443</span><br><span class="line">来源：0.0.0.0/0</span><br></pre></td></tr></table></figure>
+
+<p>如果脚本分配的是其他端口，就放行实际端口，不要照抄 443。</p>
+<p>脚本目前会自动检测 UFW，并在 UFW 未启用时使用 iptables 管理规则；但是它无法替你修改阿里云、腾讯云、AWS、甲骨文等云厂商控制台中的安全组，因此云端规则必须自己确认。</p>
+<p>检查端口是否正在监听：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你的节点不是 443，请把命令中的 <code>443</code> 换成实际端口。</p>
+<h2 id="📱-六、导入客户端"><a href="#📱-六、导入客户端" class="headerlink" title="📱 六、导入客户端"></a>📱 六、导入客户端</h2><p>安装完成后，可以随时重新显示节点信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
+
+<p>常见导入方法：</p>
+<ul>
+<li>**v2rayN：**复制 <code>vless://</code> 链接，在客户端中选择“从剪贴板导入”。</li>
+<li>**Shadowrocket：**扫描脚本输出的二维码，或复制链接后从剪贴板导入。</li>
+<li>**Clash Verge：**使用脚本生成的 Clash&#x2F;Mihomo 订阅或配置，不要把普通 <code>vless://</code> 链接直接当作 Clash 订阅地址。</li>
+<li>**sing-box 客户端：**使用脚本导出的对应 sing-box 配置。</li>
+</ul>
+<p>导入后选择新节点，开启系统代理，再访问网站测试连接。</p>
+<h2 id="✅-七、检查服务状态"><a href="#✅-七、检查服务状态" class="headerlink" title="✅ 七、检查服务状态"></a>✅ 七、检查服务状态</h2><p>查看 sing-box 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status sing-box --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>active (running)</code> 表示服务正在运行。</p>
+<p>查看最近日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u sing-box -n 50 --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>检查公网时间，Reality 对系统时间比较敏感：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠️-八、常用管理命令"><a href="#🛠️-八、常用管理命令" class="headerlink" title="🛠️ 八、常用管理命令"></a>🛠️ 八、常用管理命令</h2><p>安装完成后，直接输入以下命令打开管理菜单：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb</span><br></pre></td></tr></table></figure>
+
+<p>常用参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n    <span class="comment"># 显示节点信息</span></span><br><span class="line">sb -d    <span class="comment"># 修改节点参数</span></span><br><span class="line">sb -s    <span class="comment"># 停止或启动 sing-box 服务</span></span><br><span class="line">sb -r    <span class="comment"># 添加或删除协议</span></span><br><span class="line">sb -u    <span class="comment"># 卸载</span></span><br></pre></td></tr></table></figure>
+
+<p>需要修改端口、Reality SNI、节点名称、UUID 或服务器 IP 时，优先使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -d</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后再次执行 <code>sb -n</code>，重新导出并更新客户端节点。</p>
+<h2 id="❌-九、连接失败排查"><a href="#❌-九、连接失败排查" class="headerlink" title="❌ 九、连接失败排查"></a>❌ 九、连接失败排查</h2><h3 id="1-云厂商安全组没有放行"><a href="#1-云厂商安全组没有放行" class="headerlink" title="1. 云厂商安全组没有放行"></a>1. 云厂商安全组没有放行</h3><p>最常见原因是 VPS 内部已经监听端口，但云厂商控制台仍然拦截。确认安全组已放行节点的实际 TCP 端口。</p>
+<h3 id="2-端口被其他程序占用"><a href="#2-端口被其他程序占用" class="headerlink" title="2. 端口被其他程序占用"></a>2. 端口被其他程序占用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 443 已被 Nginx、Apache、3X-UI 或其他节点使用，通过 <code>sb -d</code> 把 Reality 改为一个未占用的 TCP 端口，并同步修改安全组与客户端。</p>
+<h3 id="3-客户端参数不一致"><a href="#3-客户端参数不一致" class="headerlink" title="3. 客户端参数不一致"></a>3. 客户端参数不一致</h3><p>出现 <code>REALITY authentication failed</code> 时，重点核对：</p>
+<ul>
+<li>VPS 地址和端口</li>
+<li>UUID</li>
+<li>Flow 是否为 <code>xtls-rprx-vision</code></li>
+<li>Reality 公钥</li>
+<li>Short ID</li>
+<li>SNI &#x2F; Server Name</li>
+<li>客户端指纹是否为 <code>chrome</code></li>
+</ul>
+<p>不要把服务端的 Reality 私钥填入客户端。客户端使用的是公钥。</p>
+<h3 id="4-修改服务端后仍使用旧链接"><a href="#4-修改服务端后仍使用旧链接" class="headerlink" title="4. 修改服务端后仍使用旧链接"></a>4. 修改服务端后仍使用旧链接</h3><p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sb -n</span><br></pre></td></tr></table></figure>
+
+<p>重新复制最新节点链接，删除客户端旧节点后再导入。</p>
+<h3 id="5-系统时间不正确"><a href="#5-系统时间不正确" class="headerlink" title="5. 系统时间不正确"></a>5. 系统时间不正确</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl set-ntp <span class="literal">true</span></span><br><span class="line">timedatectl status</span><br></pre></td></tr></table></figure>
+
+<p>等待系统完成时间同步后重试。</p>
+<h2 id="🔄-十、一键脚本和手动配置怎么选"><a href="#🔄-十、一键脚本和手动配置怎么选" class="headerlink" title="🔄 十、一键脚本和手动配置怎么选"></a>🔄 十、一键脚本和手动配置怎么选</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一键脚本</td>
+<td>安装快、自动生成参数、自动导出客户端</td>
+<td>依赖第三方维护，配置内容较多</td>
+</tr>
+<tr>
+<td>手动配置</td>
+<td>结构透明、便于学习、容易精确控制</td>
+<td>步骤更多，需要编辑 JSON</td>
+</tr>
+</tbody></table>
+<p>只想尽快搭建节点，可以使用本文的一键脚本方案。希望真正理解每个参数，建议继续阅读：</p>
+<a class="btn-beautify blue larger" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="sing-box VLESS + Reality 手动配置教程"><i class="fas fa-book"></i><span>sing-box VLESS + Reality 手动配置教程</span></a>
+
+<h2 id="🔒-十一、安全提醒"><a href="#🔒-十一、安全提醒" class="headerlink" title="🔒 十一、安全提醒"></a>🔒 十一、安全提醒</h2><ul>
+<li>不要公开节点链接、订阅地址、UUID、Reality 私钥和 Short ID。</li>
+<li>不要在存有重要业务数据的服务器上直接运行陌生的一键脚本。</li>
+<li>脚本和 sing-box 都会持续更新，执行前应查看项目 README 与近期变更。</li>
+<li>节点只供自己管理的设备和合法用途使用，并遵守服务器所在地及使用地的法律法规。</li>
+</ul>
+<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
+<li><a href="https://github.com/fscarmen/sing-box">fscarmen&#x2F;sing-box 一键脚本项目</a></li>
+<li><a href="https://sing-box.sagernet.org/installation/package-manager/">sing-box 官方安装文档</a></li>
+<li><a href="https://sing-box.sagernet.org/configuration/inbound/vless/">sing-box 官方 VLESS 入站文档</a></li>
+<li><a href="https://sing-box.sagernet.org/configuration/shared/tls/#reality-fields">sing-box 官方 Reality 配置文档</a></li>
+</ul>
+<hr>
+<p>如果这篇教程对你有帮助，欢迎订阅 Skyline YouTube 频道。后续会继续更新 sing-box、VLESS Reality、Hysteria2 和 VPS 实操教程。</p>
+<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>Debian</tag>
+        <tag>Reality协议</tag>
+        <tag>VLESS</tag>
+        <tag>sing-box</tag>
+        <tag>一键脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026 最新 macOS MDM 远程管理绕过教程：支持 M1/M2/M3/M4 及 Intel 芯片</title>
+    <url>/2026/03/04/%E7%BB%95%E8%BF%87MDM%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略"><a href="#2026-最新-macOS-MDM-远程管理（Remote-Management）绕过全攻略" class="headerlink" title="2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略"></a>2026 最新 macOS MDM 远程管理（Remote Management）绕过全攻略</h1><p>在重装 macOS 系统后，如果遇到”远程管理”（MDM）提示无法进入桌面，本教程将通过简单的自动化脚本，帮助你在<strong>恢复模式</strong>下跳过 MDM 注册流程。</p>
+<blockquote>
+<p><strong>免责声明：</strong> 本教程仅供个人技术研究和合法找回设备所有权使用。请勿用于任何违反法律或公司政策的用途。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-核心原理"><a href="#🔍-核心原理" class="headerlink" title="🔍 核心原理"></a>🔍 核心原理</h2><p>本方法利用 macOS 恢复模式下的终端权限，通过脚本修改系统 Hosts 文件屏蔽 Apple 的 MDM 验证域名，并手动创建本地管理员账户，从而跳过强制注册过程。</p>
+<hr>
+<h2 id="🛠️-第一阶段：进入恢复模式并准备"><a href="#🛠️-第一阶段：进入恢复模式并准备" class="headerlink" title="🛠️ 第一阶段：进入恢复模式并准备"></a>🛠️ 第一阶段：进入恢复模式并准备</h2><h3 id="1-强制关机并重新启动"><a href="#1-强制关机并重新启动" class="headerlink" title="1. 强制关机并重新启动"></a>1. 强制关机并重新启动</h3><ul>
+<li><strong>Apple Silicon（M 系列）：</strong> 关机后，按住<strong>电源按钮</strong>直到看到”正在加载启动选项”。点击<strong>选项（Options）→ 继续</strong>。</li>
+<li><strong>Intel 处理器：</strong> 重启时立即按住 <code>Command (⌘) + R</code> 键，直到出现 Apple Logo。</li>
+</ul>
+<h3 id="2-激活网络连接"><a href="#2-激活网络连接" class="headerlink" title="2. 激活网络连接"></a>2. 激活网络连接</h3><p>在菜单栏点击 Wi-Fi 图标并联网。<strong>注意：</strong> 脚本需要联网下载。</p>
+<h3 id="3-启动终端（Terminal）"><a href="#3-启动终端（Terminal）" class="headerlink" title="3. 启动终端（Terminal）"></a>3. 启动终端（Terminal）</h3><p>在顶部菜单栏选择 <strong>实用工具（Utilities）→ 终端（Terminal）</strong>。</p>
+<hr>
+<h2 id="🚀-第二阶段：执行-MDM-绕过脚本"><a href="#🚀-第二阶段：执行-MDM-绕过脚本" class="headerlink" title="🚀 第二阶段：执行 MDM 绕过脚本"></a>🚀 第二阶段：执行 MDM 绕过脚本</h2><p>在终端中粘贴以下命令并回车执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L https://raw.githubusercontent.com/assafdori/bypass-mdm/main/bypass-mdm-v2.sh -o bypass-mdm.sh &amp;&amp; <span class="built_in">chmod</span> +x ./bypass-mdm.sh &amp;&amp; ./bypass-mdm.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚本交互步骤说明"><a href="#脚本交互步骤说明" class="headerlink" title="脚本交互步骤说明"></a>脚本交互步骤说明</h3><ol>
+<li><strong>卷检测</strong>：脚本会自动识别 Macintosh HD 路径。</li>
+<li><strong>模式选择</strong>：输入 <code>1</code>，选择 “From Recovery Bypass MDM”。</li>
+<li><strong>账户设置</strong>：用户名建议使用默认 <code>Apple</code>（或自定义英文字符），密码设置一个简单的临时密码（如 <code>1234</code>），后续可以更改。</li>
+<li><strong>自动执行</strong>：脚本会自动执行”屏蔽 MDM 域”和”写入配置文件”操作。</li>
+</ol>
+<p>当看到 <strong>“MDM Bypass Successfully”</strong> 提示时，即可关闭终端并<strong>重新启动</strong>。</p>
+<hr>
+<h2 id="🔄-第三阶段：登录与账户清理"><a href="#🔄-第三阶段：登录与账户清理" class="headerlink" title="🔄 第三阶段：登录与账户清理"></a>🔄 第三阶段：登录与账户清理</h2><ol>
+<li>使用脚本创建的 <code>Apple</code> 账户登录。</li>
+<li>登录后出现的设置向导全部选择”稍后设置”或”跳过”。</li>
+<li>前往 <strong>系统设置 → 用户与组</strong>，新建你自己的管理员账户。</li>
+<li>切换到新账户后，删除最初的临时 <code>Apple</code> 账户。</li>
+</ol>
+<hr>
+<h2 id="❓-常见问题排查（FAQ）"><a href="#❓-常见问题排查（FAQ）" class="headerlink" title="❓ 常见问题排查（FAQ）"></a>❓ 常见问题排查（FAQ）</h2><p><strong>Q1：脚本报错 “Could not resolve host”</strong></p>
+<p>原因是 Wi-Fi 未连接或 DNS 解析失败。检查恢复模式右上角的网络图标，确保已联网后重试。</p>
+<p><strong>Q2：提示 “Read-only file system”</strong></p>
+<p>磁盘未挂载或处于保护状态。打开”磁盘工具”，选择主硬盘卷（如 Macintosh HD），点击”挂载”，输入密码后重试脚本。</p>
+<p><strong>Q3：重启后 MDM 弹窗又出现了</strong></p>
+<p>确保脚本运行中成功执行了”Block MDM Domains”步骤。如未生效，可手动在 <code>/etc/hosts</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 iprofiles.apple.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-总结"><a href="#💡-总结" class="headerlink" title="💡 总结"></a>💡 总结</h2><p>通过上述步骤，可以解决二手 Mac 或公司回收设备在重装系统后的 MDM 锁定问题。</p>
+<h2 id="📺-观看更多视频教程"><a href="#📺-观看更多视频教程" class="headerlink" title="📺 观看更多视频教程"></a>📺 观看更多视频教程</h2><p>更多 macOS、VPS 和服务器运维实操视频，请访问 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong>。</p>
+<a class="btn-beautify red larger" href="https://www.youtube.com/@guo1986" title="前往 YouTube 频道"><i class="fab fa-youtube"></i><span>前往 YouTube 频道</span></a>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>MDM</tag>
+        <tag>系统工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</title>
+    <url>/2026/06/15/hysteria2-cloudflare-dns-vps/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/ELCVRcb8KfQ"
+    title="Hysteria2 服务端搭建教程：Cloudflare DNS + VPS 部署视频"
+    loading="lazy"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+
+<p>本文记录如何使用自己的域名和 VPS 搭建 Hysteria2 服务端。示例中使用的子域名是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
+
+<p>请把文中的域名、邮箱和 VPS IP 替换成你自己的真实信息。</p>
+<p>本文只适合合法自用、远程办公、授权测试和个人网络环境优化。不要用于违法用途，也不要用于违反服务条款的场景。</p>
+<span id="more"></span>
+
+<h2 id="💡-一、准备工作"><a href="#💡-一、准备工作" class="headerlink" title="💡 一、准备工作"></a>💡 一、准备工作</h2><p>开始之前，你需要准备好以下内容：</p>
+<ul>
+<li>一个自己的域名；</li>
+<li>一台 VPS，建议使用 Debian 12 或 Debian 13 纯净系统；</li>
+<li>VPS 的公网 IPv4 地址；</li>
+<li>可以 SSH 登录 VPS 的 root 权限；</li>
+<li>域名 DNS 管理权限，例如 Cloudflare。</li>
+</ul>
+<p>本文默认使用的服务端域名是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
+
+<p>后面所有命令里的 <code>hy2.example.com</code>、<code>your@email.com</code> 和 <code>你的VPS_IP</code> 都需要替换。</p>
+<h2 id="🌐-二、进入-DNS-设置页面"><a href="#🌐-二、进入-DNS-设置页面" class="headerlink" title="🌐 二、进入 DNS 设置页面"></a>🌐 二、进入 DNS 设置页面</h2><p>先找到你的域名 DNS 设置页面。</p>
+<p>如果你使用 Cloudflare，常见路径是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">网站 -&gt; DNS -&gt; Records</span><br></pre></td></tr></table></figure>
+
+<p>进入 DNS Records 页面后，准备添加一条新的 DNS 记录。</p>
+<h2 id="🧭-三、添加子域名解析"><a href="#🧭-三、添加子域名解析" class="headerlink" title="🧭 三、添加子域名解析"></a>🧭 三、添加子域名解析</h2><p>添加一条 <code>A</code> 记录：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>内容</th>
+<th>TTL</th>
+<th>代理状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>hy2</td>
+<td>你的 VPS IPv4 地址</td>
+<td>Auto 或 300</td>
+<td>DNS only &#x2F; 灰云</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>内容</th>
+<th>TTL</th>
+<th>代理状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>hy2</td>
+<td>123.123.123.123</td>
+<td>Auto</td>
+<td>DNS only</td>
+</tr>
+</tbody></table>
+<p>这里的最终访问域名就是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hy2.example.com</span><br></pre></td></tr></table></figure>
+
+<p>注意，Cloudflare 里一定不要开启橙云代理，要保持 <code>DNS only</code>，也就是灰云状态。</p>
+<p>原因很简单：普通 Cloudflare CDN 不会直接代理 Hysteria2 的 UDP 443 流量。开启橙云后，客户端连接到的是 Cloudflare，而不是你的 VPS，Hysteria2 会连不上。</p>
+<h2 id="⏳-四、等待-DNS-生效"><a href="#⏳-四、等待-DNS-生效" class="headerlink" title="⏳ 四、等待 DNS 生效"></a>⏳ 四、等待 DNS 生效</h2><p>添加 DNS 记录后，等待几分钟。</p>
+<p>可以在本地电脑或 VPS 上测试：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping hy2.example.com</span><br></pre></td></tr></table></figure>
+
+<p>如果能解析到你的 VPS IPv4 地址，说明 DNS 已经生效。</p>
+<p>如果暂时没有解析到，先等几分钟再试。DNS 生效时间和本地缓存、运营商缓存、域名服务商有关。</p>
+<h2 id="🔐-五、SSH-登录-VPS"><a href="#🔐-五、SSH-登录-VPS" class="headerlink" title="🔐 五、SSH 登录 VPS"></a>🔐 五、SSH 登录 VPS</h2><p>DNS 准备好后，SSH 登录 VPS：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@123.123.123.123</span><br></pre></td></tr></table></figure>
+
+<p>登录后再继续执行下面的命令。</p>
+<h2 id="🚀-六、更新系统并安装基础工具"><a href="#🚀-六、更新系统并安装基础工具" class="headerlink" title="🚀 六、更新系统并安装基础工具"></a>🚀 六、更新系统并安装基础工具</h2><p>先更新系统：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p>安装基础工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install -y curl wget nano openssl ca-certificates nftables</span><br></pre></td></tr></table></figure>
+
+<p>这些工具后面会用于下载安装脚本、编辑配置文件、生成随机密码和处理证书相关请求。</p>
+<h2 id="⚡-七、开启-BBR-网络优化"><a href="#⚡-七、开启-BBR-网络优化" class="headerlink" title="⚡ 七、开启 BBR 网络优化"></a>⚡ 七、开启 BBR 网络优化</h2><p>BBR 不是 Hysteria2 的必需项，因为 Hysteria2 主要使用 UDP&#x2F;QUIC，<code>net.ipv4.tcp_congestion_control=bbr</code> 直接优化的是 TCP 拥塞控制。</p>
+<p>不过 VPS 上通常还会跑 SSH、证书申请、网站伪装页、订阅服务或其他 TCP 服务，所以建议把 BBR 作为基础网络优化一起开启。</p>
+<p>先写入 BBR 配置。注意：请点击代码块右上角的复制按钮完整复制，确保粘贴到终端时包含换行。下面这一段要从第一行复制到 <code>EOF</code>，作为一个整体执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tee</span> /etc/sysctl.d/99-bbr.conf &gt; /dev/null &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc=fq</span><br><span class="line">net.ipv4.tcp_congestion_control=bbr</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>再应用系统参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>检查是否生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下可以看到类似结果：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>lsmod | grep bbr</code> 没有输出，但前面的 <code>sysctl</code> 已经显示 <code>bbr</code>，通常也可以继续部署。部分内核会把 BBR 编进内核，不一定以模块形式显示。</p>
+<h2 id="🛡️-八、安装并配置-UFW-防火墙"><a href="#🛡️-八、安装并配置-UFW-防火墙" class="headerlink" title="🛡️ 八、安装并配置 UFW 防火墙"></a>🛡️ 八、安装并配置 UFW 防火墙</h2><p>Debian 可以直接安装 UFW：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install -y ufw</span><br></pre></td></tr></table></figure>
+
+<p>先确认 SSH 实际监听端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出是 <code>port 22</code>，再放行以下必要端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/udp</span><br></pre></td></tr></table></figure>
+
+<p>启用 UFW：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<p>查看状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>注意：一定要先放行 SSH 的实际端口，再执行 <code>ufw enable</code>。如果 SSH 不是 22 端口，请把命令中的 <code>22</code> 换成真实端口，否则可能会断开远程连接。</p>
+<p>如果你的 VPS 服务商还有额外的安全组、防火墙或云防火墙，也需要同步放行：</p>
+<ul>
+<li><code>22/tcp</code>：SSH 登录；</li>
+<li><code>80/tcp</code>：本文明确使用 ACME HTTP 验证申请证书；</li>
+<li><code>443/udp</code>：Hysteria2 连接端口。</li>
+</ul>
+<h2 id="📦-九、安装-Hysteria2"><a href="#📦-九、安装-Hysteria2" class="headerlink" title="📦 九、安装 Hysteria2"></a>📦 九、安装 Hysteria2</h2><p>执行官方安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -fsSL https://get.hy2.sh/)</span><br></pre></td></tr></table></figure>
+
+<p>安装脚本会获取当前稳定版。安装后检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hysteria version</span><br></pre></td></tr></table></figure>
+
+<p>建议服务端和客户端都使用当前稳定版。官方更新日志显示 2.8.2 包含重要安全修复；若版本更旧，请重新运行上面的官方脚本升级。</p>
+<p>安装完成后，生成认证密码和混淆密码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">AUTH=$(openssl rand -<span class="built_in">base64</span> 32)</span><br><span class="line">OBFS=$(openssl rand -<span class="built_in">base64</span> 32)</span><br></pre></td></tr></table></figure>
+
+<p>这两个变量会写入 Hysteria2 配置文件。</p>
+<h2 id="📝-十、创建-Hysteria2-配置文件"><a href="#📝-十、创建-Hysteria2-配置文件" class="headerlink" title="📝 十、创建 Hysteria2 配置文件"></a>📝 十、创建 Hysteria2 配置文件</h2><p>执行下面的命令创建配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/hysteria/config.yaml &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">listen: &quot;:443&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">acme:</span></span><br><span class="line"><span class="string">  domains:</span></span><br><span class="line"><span class="string">    - hy2.example.com</span></span><br><span class="line"><span class="string">  email: your@email.com</span></span><br><span class="line"><span class="string">  type: http</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth:</span></span><br><span class="line"><span class="string">  type: password</span></span><br><span class="line"><span class="string">  password: &quot;$AUTH&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">obfs:</span></span><br><span class="line"><span class="string">  type: salamander</span></span><br><span class="line"><span class="string">  salamander:</span></span><br><span class="line"><span class="string">    password: &quot;$OBFS&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">masquerade:</span></span><br><span class="line"><span class="string">  type: proxy</span></span><br><span class="line"><span class="string">  proxy:</span></span><br><span class="line"><span class="string">    url: &quot;https://www.microsoft.com/&quot;</span></span><br><span class="line"><span class="string">    rewriteHost: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;auth password: <span class="variable">$AUTH</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obfs password: <span class="variable">$OBFS</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里需要替换两处：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">hy2.example.com</span></span><br><span class="line"><span class="string">your@email.com</span></span><br></pre></td></tr></table></figure>
+
+<p><code>hy2.example.com</code> 改成你自己的 Hysteria2 子域名，<code>your@email.com</code> 改成你的邮箱。</p>
+<p>命令执行完成后，终端会输出两项重要信息：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">auth password: xxxxx</span><br><span class="line">obfs password: xxxxx</span><br></pre></td></tr></table></figure>
+
+<p>请保存好这两个密码，后面配置客户端时会用到。</p>
+<h2 id="✅-十一、检查配置文件"><a href="#✅-十一、检查配置文件" class="headerlink" title="✅ 十一、检查配置文件"></a>✅ 十一、检查配置文件</h2><p>写入配置后，先检查一下文件内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> -n /etc/hysteria/config.yaml</span><br></pre></td></tr></table></figure>
+
+<p>重点确认下面几项：</p>
+<ul>
+<li>域名是否是你的真实域名；</li>
+<li>邮箱是否填写正确；</li>
+<li><code>acme.type</code> 是否为 <code>http</code>；</li>
+<li><code>listen</code> 是否是 <code>&quot;:443&quot;</code>；</li>
+<li><code>auth.password</code> 是否已经生成；</li>
+<li><code>obfs.salamander.password</code> 是否已经生成；</li>
+<li>YAML 缩进是否正常。</li>
+</ul>
+<h2 id="▶️-十二、启动并检查服务"><a href="#▶️-十二、启动并检查服务" class="headerlink" title="▶️ 十二、启动并检查服务"></a>▶️ 十二、启动并检查服务</h2><p>启用开机启动并立即启动 Hysteria2 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now hysteria-server.service</span><br></pre></td></tr></table></figure>
+
+<p>查看服务状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
+
+<p>如果正常运行，应该可以看到类似状态：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
+
+<p>这表示 Hysteria2 服务端已经启动成功。</p>
+<h2 id="🔀-十三、可选：是否开启端口跳跃"><a href="#🔀-十三、可选：是否开启端口跳跃" class="headerlink" title="🔀 十三、可选：是否开启端口跳跃"></a>🔀 十三、可选：是否开启端口跳跃</h2><p>端口跳跃不是必选项。普通 VPS 如果 <code>443/udp</code> 稳定能连，建议继续保持前面的默认配置，不要一开始就放行一大段端口。</p>
+<p>它主要适合下面这种情况：</p>
+<ul>
+<li>固定 UDP 端口晚高峰经常断流；</li>
+<li><code>443/udp</code> 经常被限速，但换一个 UDP 端口后又恢复；</li>
+<li>SSH、网页、TCP 服务正常，只有 Hysteria2 的 UDP 连接不稳定；</li>
+<li>你使用的客户端明确支持 Hysteria2 端口范围或端口跳跃。</li>
+</ul>
+<p>如果要开启，可以把服务端配置里的：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:443&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>改成一个 UDP 端口范围，例如：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">listen:</span> <span class="string">&quot;:20000-20100&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Linux 版 Hysteria2 当前支持直接监听端口范围，并通过 nftables 或 iptables 建立转发规则。此功能需要 root 或 <code>CAP_NET_ADMIN</code> 权限；如果重启后日志提示防火墙权限错误，请先恢复单端口 <code>443</code>，不要盲目扩大权限。</p>
+<p>然后放行这段 UDP 端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 20000:20100/udp</span><br></pre></td></tr></table></figure>
+
+<p>如果 VPS 服务商后台还有安全组、防火墙或云防火墙，也要同步放行：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000-20100/udp</span><br></pre></td></tr></table></figure>
+
+<p>改完后重启服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart hysteria-server.service</span><br><span class="line">systemctl status hysteria-server.service</span><br></pre></td></tr></table></figure>
+
+<p>客户端配置也要对应改成端口范围：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span> <span class="string">hy2.example.com:20000-20100</span></span><br><span class="line"></span><br><span class="line"><span class="attr">transport:</span></span><br><span class="line">  <span class="attr">udp:</span></span><br><span class="line">    <span class="attr">minHopInterval:</span> <span class="string">15s</span></span><br><span class="line">    <span class="attr">maxHopInterval:</span> <span class="string">45s</span></span><br></pre></td></tr></table></figure>
+
+<p>如果是手机图形客户端，要确认它是否支持 <code>20000-20100</code> 这种端口范围。客户端不支持的话，就不要开启端口跳跃，继续使用单端口 <code>443/udp</code> 更稳。</p>
+<p>注意：端口跳跃不能解决 Cloudflare 橙云代理问题。Hysteria2 仍然需要 Cloudflare DNS 保持 <code>DNS only</code>，也就是灰云。</p>
+<h2 id="🛠️-十四、常见问题排查"><a href="#🛠️-十四、常见问题排查" class="headerlink" title="🛠️ 十四、常见问题排查"></a>🛠️ 十四、常见问题排查</h2><h3 id="1-服务没有启动成功"><a href="#1-服务没有启动成功" class="headerlink" title="1. 服务没有启动成功"></a>1. 服务没有启动成功</h3><p>查看服务日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl --no-pager -e -u hysteria-server.service</span><br></pre></td></tr></table></figure>
+
+<p>优先检查：</p>
+<ul>
+<li>DNS 是否已经解析到 VPS；</li>
+<li>Cloudflare 是否保持灰云；</li>
+<li>VPS 防火墙是否放行 <code>80/tcp</code> 和 <code>443/udp</code>；</li>
+<li>如果开启了端口跳跃，VPS 防火墙和云厂商安全组是否放行对应的 UDP 端口范围；</li>
+<li>配置文件缩进是否正确；</li>
+<li>邮箱和域名是否填写正确。</li>
+</ul>
+<h3 id="2-客户端无法连接"><a href="#2-客户端无法连接" class="headerlink" title="2. 客户端无法连接"></a>2. 客户端无法连接</h3><p>先检查 UFW：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>确认里面有：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">443/udp</span><br></pre></td></tr></table></figure>
+
+<p>如果你开启了端口跳跃，还要确认里面有对应的 UDP 端口范围，例如：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">20000:20100/udp</span><br></pre></td></tr></table></figure>
+
+<p>然后再检查 Cloudflare DNS 记录，代理状态必须是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">DNS only</span><br></pre></td></tr></table></figure>
+
+<p>也就是灰云，不能是橙云。</p>
+<h3 id="3-域名能-ping-通但服务仍然连不上"><a href="#3-域名能-ping-通但服务仍然连不上" class="headerlink" title="3. 域名能 ping 通但服务仍然连不上"></a>3. 域名能 ping 通但服务仍然连不上</h3><p><code>ping</code> 只能说明域名解析到了某个 IP，并不代表 UDP 443 一定通。</p>
+<p>继续检查：</p>
+<ul>
+<li>VPS 系统防火墙；</li>
+<li>VPS 服务商安全组；</li>
+<li>Hysteria2 服务状态；</li>
+<li>Hysteria2 日志；</li>
+<li>客户端里的认证密码和混淆密码是否填写正确。</li>
+<li>如果开启了端口跳跃，客户端端口范围是否和服务端 <code>listen</code> 范围一致。</li>
+</ul>
+<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>整个流程可以概括为：</p>
+<ol>
+<li>在 Cloudflare 添加 <code>hy2</code> 的 A 记录；</li>
+<li>代理状态保持 <code>DNS only</code>，不要开启橙云；</li>
+<li>等待 DNS 解析生效；</li>
+<li>SSH 登录 VPS；</li>
+<li>安装基础工具；</li>
+<li>开启 BBR 基础网络优化；</li>
+<li>安装 UFW，并放行 <code>22/tcp</code>、<code>80/tcp</code>、<code>443/udp</code>；</li>
+<li>安装 Hysteria2；</li>
+<li>写入 <code>/etc/hysteria/config.yaml</code>；</li>
+<li>重启并检查 <code>hysteria-server.service</code>。</li>
+</ol>
+<p>如果你的网络环境对固定 UDP 端口有限速或阻断，再考虑开启端口跳跃；如果 <code>443/udp</code> 已经稳定，就不需要额外配置。</p>
+<p>最后服务状态显示：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
+
+<p>就说明 Hysteria2 服务端已经正常运行，可以继续配置客户端。</p>
+<h2 id="📺-观看配套视频"><a href="#📺-观看配套视频" class="headerlink" title="📺 观看配套视频"></a>📺 观看配套视频</h2><p>如果你更习惯跟着画面操作，可以观看本教程的完整视频。视频中会演示 Cloudflare DNS、VPS 命令和 Hysteria2 配置过程。</p>
+<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=ELCVRcb8KfQ" title="在 YouTube 观看 Hysteria2 完整教程"><i class="fab fa-youtube"></i><span>在 YouTube 观看 Hysteria2 完整教程</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline，获取更多 VPS 教程"><i class="fab fa-youtube"></i><span>订阅 Skyline，获取更多 VPS 教程</span></a>
+
+<h2 id="📚-官方参考资料"><a href="#📚-官方参考资料" class="headerlink" title="📚 官方参考资料"></a>📚 官方参考资料</h2><ul>
+<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Server/">Hysteria2 官方服务端教程</a></li>
+<li><a href="https://v2.hysteria.network/zh/docs/getting-started/Installation/">Hysteria2 官方安装说明</a></li>
+<li><a href="https://v2.hysteria.network/zh/docs/advanced/Full-Server-Config/">Hysteria2 服务端完整配置</a></li>
+<li><a href="https://v2.hysteria.network/zh/docs/advanced/Port-Hopping/">Hysteria2 端口跳跃说明</a></li>
+<li><a href="https://v2.hysteria.network/docs/Changelog/">Hysteria2 更新日志</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>Hysteria2</tag>
+        <tag>Cloudflare</tag>
+        <tag>DNS</tag>
+        <tag>UFW</tag>
+        <tag>BBR</tag>
+        <tag>端口跳跃</tag>
       </tags>
   </entry>
 </search>
