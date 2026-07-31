@@ -12,6 +12,7 @@ profile:
   store-selected: true
   store-fake-ip: true
 geodata-mode: true
+geodata-loader: memconservative
 geo-auto-update: true
 geo-update-interval: 24
 geox-url:
@@ -20,6 +21,9 @@ geox-url:
   mmdb: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
 sniffer:
   enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
   sniff:
     TLS:
       ports:
@@ -132,17 +136,8 @@ proxy-groups:
 - name: PROXY
   type: select
   proxies:
-  - AUTO
   - 自建节点-1
   - DIRECT
-- name: AUTO
-  type: url-test
-  proxies:
-  - 自建节点-1
-  url: https://www.gstatic.com/generate_204
-  interval: 300
-  tolerance: 50
-  lazy: true
 dns:
   enable: true
   listen: 127.0.0.1:1053
@@ -156,6 +151,7 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-range6: fdfe:dcba:9876::1/64
+  fake-ip-filter-mode: blacklist
   fake-ip-filter:
   - "*.lan"
   - "*.local"
@@ -208,6 +204,9 @@ dns:
     "geosite:private,cn,geolocation-cn,apple-cn,microsoft@cn,steam@cn":
     - 223.5.5.5
     - 119.29.29.29
+    "geosite:microsoft":
+    - 223.5.5.5
+    - 119.29.29.29
     "+.speedtest.net":
     - 223.5.5.5
     - 119.29.29.29
@@ -220,70 +219,7 @@ dns:
     "+.measurementlab.net":
     - 223.5.5.5
     - 119.29.29.29
-    "+.microsoft.com":
-    - 223.5.5.5
-    - 119.29.29.29
-    "+.live.com":
-    - 223.5.5.5
-    - 119.29.29.29
-    "+.office.com":
-    - 223.5.5.5
-    - 119.29.29.29
-    "+.microsoftonline.com":
-    - 223.5.5.5
-    - 119.29.29.29
-    "+.sharepointonline.com":
-    - 223.5.5.5
-    - 119.29.29.29
-    "geosite:github":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.google.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.googleapis.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.googleapis.cn":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.gstatic.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.gvt1.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.gvt2.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.gvt3.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.googleusercontent.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.ggpht.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.android.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.xn--ngstr-lra8j.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.openai.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.chatgpt.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.anthropic.com":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "+.claude.ai":
-    - https://1.1.1.1/dns-query#PROXY
-    - https://dns.google/dns-query#PROXY
-    "geosite:geolocation-!cn":
+    "geosite:github,google,youtube,telegram,geolocation-!cn":
     - https://1.1.1.1/dns-query#PROXY
     - https://dns.google/dns-query#PROXY
   nameserver:
@@ -305,6 +241,8 @@ dns:
   fallback-filter:
     geoip: true
     geoip-code: CN
+    geosite:
+    - geolocation-!cn
     ipcidr:
     - 240.0.0.0/4
 rules:
