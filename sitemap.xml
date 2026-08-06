@@ -92,16 +92,7 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/script/</loc>
-    
-    <lastmod>2026-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/</loc>
+    <loc>https://skylink9119.github.io/categories/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -119,7 +110,16 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/categories/</loc>
+    <loc>https://skylink9119.github.io/tags/</loc>
+    
+    <lastmod>2026-07-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/script/</loc>
     
     <lastmod>2026-07-18</lastmod>
     
@@ -263,6 +263,27 @@
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/tags/macOS/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/MDM/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/tags/%E6%90%AC%E7%93%A6%E5%B7%A5/</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -299,27 +320,6 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%A3%E9%94%81/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/macOS/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/MDM/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
