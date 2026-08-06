@@ -227,6 +227,61 @@ body {
     backdrop-filter: blur(14px) saturate(180%);
 }
 
+/* RackNerd 侧栏推广横幅：替换原归档卡片位置 */
+#aside-content .side-media-card {
+    order: 0;
+    padding: 16px !important;
+    text-align: center;
+}
+
+#aside-content .side-media-link {
+    display: block;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.34);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.86),
+        0 12px 28px rgba(30, 75, 118, 0.16);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#aside-content .side-media-link:hover {
+    transform: translateY(-3px) scale(1.015);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        0 17px 36px rgba(30, 94, 148, 0.24);
+}
+
+#aside-content .side-media-link img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 6 / 5;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+#aside-content .side-media-note {
+    margin-top: 9px;
+    color: var(--font-color);
+    font-size: 0.75rem;
+    letter-spacing: 0.3px;
+    opacity: 0.58;
+}
+
+html[data-theme='dark'] #aside-content .side-media-link {
+    border-color: rgba(170, 215, 255, 0.24);
+    background: rgba(20, 29, 43, 0.44);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 14px 32px rgba(0, 0, 0, 0.34);
+}
+
 /* 深色模式：保留通透感，同时保证文字对比度 */
 html[data-theme='dark'] #recent-posts .recent-post-item {
     border-color: rgba(170, 215, 255, 0.20) !important;
