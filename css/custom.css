@@ -59,23 +59,54 @@ body {
    3. 首页文章卡片：Apple 风格液态玻璃
 ----------------------------------------------- */
 
+/* 玻璃后的环境光：透明卡片需要有背景层才能显出折射感 */
+body:has(#recent-posts) #body-wrap {
+    background:
+        radial-gradient(ellipse 48% 34% at 3% 42%, rgba(75, 178, 255, 0.20), transparent 72%),
+        radial-gradient(ellipse 44% 36% at 98% 64%, rgba(137, 113, 255, 0.14), transparent 74%),
+        radial-gradient(ellipse 38% 24% at 48% 92%, rgba(69, 207, 205, 0.10), transparent 72%),
+        linear-gradient(145deg, #f7fbff 0%, #f2f8ff 46%, #faf8ff 100%);
+    background-attachment: fixed;
+}
+
+#recent-posts {
+    position: relative;
+    isolation: isolate;
+}
+
+#recent-posts::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -110px -70px;
+    background:
+        radial-gradient(ellipse 48% 28% at 12% 12%, rgba(82, 181, 255, 0.24), transparent 72%),
+        radial-gradient(ellipse 42% 32% at 92% 42%, rgba(125, 112, 255, 0.18), transparent 74%),
+        radial-gradient(ellipse 44% 26% at 25% 88%, rgba(84, 215, 216, 0.14), transparent 72%);
+    filter: blur(16px);
+    pointer-events: none;
+}
+
 #recent-posts .recent-post-item {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.78) !important;
+    border: 1px solid rgba(255, 255, 255, 0.62) !important;
     border-radius: 24px !important;
     background:
-        radial-gradient(circle at 8% 0%, rgba(255, 255, 255, 0.96), transparent 34%),
-        radial-gradient(circle at 92% 110%, rgba(100, 190, 255, 0.18), transparent 42%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(245, 250, 255, 0.48)) !important;
+        linear-gradient(
+            132deg,
+            rgba(255, 255, 255, 0.23) 0%,
+            rgba(255, 255, 255, 0.07) 48%,
+            rgba(205, 232, 255, 0.13) 100%
+        ) !important;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.96),
-        inset 0 -1px 0 rgba(130, 170, 210, 0.14),
-        0 14px 42px rgba(31, 50, 76, 0.10),
-        0 2px 8px rgba(31, 50, 76, 0.05) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(175%);
-    backdrop-filter: blur(24px) saturate(175%);
+        inset 0 1px 0 rgba(255, 255, 255, 0.78),
+        inset 0 -1px 0 rgba(105, 158, 205, 0.10),
+        0 18px 46px rgba(31, 68, 104, 0.10),
+        0 3px 10px rgba(31, 50, 76, 0.04) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
     transition:
         transform 0.35s cubic-bezier(.2, .8, .2, 1),
         box-shadow 0.35s ease,
@@ -86,14 +117,25 @@ body {
 #recent-posts .recent-post-item::before {
     content: '';
     position: absolute;
-    z-index: -1;
-    inset: -45% -20%;
+    z-index: 0;
+    inset: 0;
     background:
-        linear-gradient(115deg, transparent 34%, rgba(255, 255, 255, 0.62) 47%, transparent 60%),
-        radial-gradient(circle at 25% 35%, rgba(130, 210, 255, 0.22), transparent 30%);
-    opacity: 0.62;
-    transform: translate3d(-9%, -2%, 0) rotate(-2deg);
-    transition: transform 0.65s cubic-bezier(.2, .8, .2, 1), opacity 0.35s ease;
+        linear-gradient(118deg, rgba(255, 255, 255, 0.42) 0%, transparent 32%, transparent 68%, rgba(157, 210, 255, 0.10) 100%),
+        radial-gradient(ellipse 34% 90% at 4% 0%, rgba(255, 255, 255, 0.32), transparent 72%);
+    opacity: 0.72;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+/* 玻璃边缘的内层亮线，让透明框在浅色背景上仍清晰可见 */
+#recent-posts .recent-post-item::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: 1px;
+    border-top: 1px solid rgba(255, 255, 255, 0.72);
+    border-left: 1px solid rgba(255, 255, 255, 0.46);
+    border-radius: 22px;
     pointer-events: none;
 }
 
@@ -104,17 +146,16 @@ body {
 
 #recent-posts .recent-post-item:hover {
     transform: translateY(-7px) scale(1.006);
-    border-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(255, 255, 255, 0.88) !important;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 1),
-        inset 0 -1px 0 rgba(104, 170, 230, 0.18),
-        0 22px 54px rgba(31, 76, 120, 0.16),
-        0 5px 16px rgba(31, 50, 76, 0.08) !important;
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(104, 170, 230, 0.13),
+        0 24px 58px rgba(31, 76, 120, 0.15),
+        0 5px 16px rgba(31, 50, 76, 0.06) !important;
 }
 
 #recent-posts .recent-post-item:hover::before {
-    opacity: 0.9;
-    transform: translate3d(12%, 2%, 0) rotate(2deg);
+    opacity: 1;
 }
 
 /* 首页文章标题：加大、加粗，提升视觉层级 */
@@ -284,15 +325,39 @@ html[data-theme='dark'] #aside-content .side-media-link {
 
 /* 深色模式：保留通透感，同时保证文字对比度 */
 html[data-theme='dark'] #recent-posts .recent-post-item {
-    border-color: rgba(170, 215, 255, 0.20) !important;
+    border-color: rgba(170, 215, 255, 0.25) !important;
     background:
-        radial-gradient(circle at 8% 0%, rgba(150, 205, 255, 0.15), transparent 34%),
-        radial-gradient(circle at 92% 110%, rgba(99, 102, 241, 0.18), transparent 42%),
-        linear-gradient(135deg, rgba(28, 36, 50, 0.74), rgba(18, 25, 38, 0.60)) !important;
+        linear-gradient(
+            132deg,
+            rgba(36, 49, 68, 0.50) 0%,
+            rgba(19, 28, 42, 0.28) 52%,
+            rgba(32, 44, 66, 0.38) 100%
+        ) !important;
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.13),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.24),
-        0 16px 44px rgba(0, 0, 0, 0.30) !important;
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 18px 48px rgba(0, 0, 0, 0.28) !important;
+}
+
+html[data-theme='dark'] body:has(#recent-posts) #body-wrap {
+    background:
+        radial-gradient(ellipse 48% 34% at 3% 42%, rgba(17, 116, 196, 0.24), transparent 72%),
+        radial-gradient(ellipse 44% 36% at 98% 64%, rgba(82, 57, 183, 0.20), transparent 74%),
+        radial-gradient(ellipse 38% 24% at 48% 92%, rgba(21, 142, 144, 0.13), transparent 72%),
+        linear-gradient(145deg, #0d1421 0%, #111a29 48%, #141323 100%);
+    background-attachment: fixed;
+}
+
+html[data-theme='dark'] #recent-posts::before {
+    background:
+        radial-gradient(ellipse 48% 28% at 12% 12%, rgba(24, 148, 255, 0.28), transparent 72%),
+        radial-gradient(ellipse 42% 32% at 92% 42%, rgba(106, 79, 255, 0.24), transparent 74%),
+        radial-gradient(ellipse 44% 26% at 25% 88%, rgba(32, 187, 193, 0.16), transparent 72%);
+}
+
+html[data-theme='dark'] #recent-posts .recent-post-item::after {
+    border-top-color: rgba(202, 230, 255, 0.24);
+    border-left-color: rgba(202, 230, 255, 0.14);
 }
 
 html[data-theme='dark'] #aside-content .card-widget {
