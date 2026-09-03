@@ -1,563 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</title>
-    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/rbvd4RZQaNY"
-    title="Debian VPS 搭建 VLESS Reality、3X-UI、BBR 与 UFW 视频教程"
-    frameborder="0"
-    loading="lazy"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=rbvd4RZQaNY" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<p>这是一份面向 <strong>Debian 纯净系统</strong>的完整教程，不混用 Ubuntu、CentOS 或 Alpine 命令。请严格按照本文顺序操作：先确认 SSH 可以登录，再开启防火墙；安装面板并取得实际端口后，才放行面板端口；创建 Reality 入站后，才放行节点端口。</p>
-<p>REALITY 不要求你购买域名，也不需要为节点单独申请 TLS 证书。它会利用目标 HTTPS 站点的握手特征和证书外观进行伪装，但并不是把目标网站的证书复制或安装到你的 VPS。</p>
-<blockquote>
-<p>本文默认使用 <code>root</code> 用户，因此命令中不添加 <code>sudo</code>。</p>
-</blockquote>
-<h2 id="🛠️-一、选择-VPS-与厂商推荐"><a href="#🛠️-一、选择-VPS-与厂商推荐" class="headerlink" title="🛠️ 一、选择 VPS 与厂商推荐"></a>🛠️ 一、选择 VPS 与厂商推荐</h2><p>在开始搭建前，需要准备一台具有公网可达 IP 的海外 VPS。线路质量、机房位置和晚高峰拥塞情况，都会直接影响实际体验。</p>
-<h3 id="核心选购指标"><a href="#核心选购指标" class="headerlink" title="核心选购指标"></a>核心选购指标</h3><ul>
-<li><strong>线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现取决于所在地、运营商、路由和晚高峰拥塞。</li>
-<li><strong>机房位置</strong>：通常距离越近，基础延迟越低，但应以测试 IP 的 <code>ping</code>、路由追踪、丢包率和晚高峰测速为准。</li>
-<li><strong>系统支持</strong>：确认服务商可以安装 Debian 12 或 Debian 13 64 位纯净系统。</li>
-<li><strong>公网 IP</strong>：确认 VPS 具有公网可达 IP，并了解服务商是否额外提供安全组或云防火墙。</li>
-<li><strong>付款方式</strong>：根据自己的需求选择月付或年付，首次购买不建议一次预付太长时间。</li>
-</ul>
-<h3 id="VPS-服务商对比"><a href="#VPS-服务商对比" class="headerlink" title="VPS 服务商对比"></a>VPS 服务商对比</h3><table>
-<thead>
-<tr>
-<th align="left">服务商</th>
-<th align="left">主要特点</th>
-<th align="left">推荐线路&#x2F;地区</th>
-<th align="left">适用场景</th>
-<th align="left">价格定位</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
-<td align="left">线路质量较高，提供多种优化网络产品</td>
-<td align="left">CN2 GIA &#x2F; 香港 &#x2F; 日本 &#x2F; 美国</td>
-<td align="left">对线路稳定性要求较高</td>
-<td align="left">较高</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="搬瓦工"><i class="anzhiyu-icon-gift"></i><span>搬瓦工</span></a></strong></td>
-<td align="left">支持多个机房和线路方案</td>
-<td align="left">CN2 GIA-E &#x2F; 日本软银等</td>
-<td align="left">需要灵活切换机房</td>
-<td align="left">中高</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
-<td align="left">支持按量或月付，地区选择较多</td>
-<td align="left">香港 &#x2F; 台湾 &#x2F; 日本 &#x2F; 韩国等</td>
-<td align="left">临时测试和短期项目</td>
-<td align="left">中低</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
-<td align="left">年付产品价格较低</td>
-<td align="left">美国常规线路</td>
-<td align="left">预算有限、博客和测试环境</td>
-<td align="left">较低</td>
-</tr>
-<tr>
-<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
-<td align="left">全球机房较多，支持按小时计费和 API</td>
-<td align="left">国际标准 BGP</td>
-<td align="left">临时部署和开发测试</td>
-<td align="left">中等</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>线路、IP 属性、库存和价格会随时变化，请以服务商实时页面及测试 IP 为准。上表部分按钮包含推广参数，购买价格通常不因此增加。</p>
-</blockquote>
-<hr>
-<h2 id="💡-二、搭建前准备"><a href="#💡-二、搭建前准备" class="headerlink" title="💡 二、搭建前准备"></a>💡 二、搭建前准备</h2><ul>
-<li>一台具有公网可达 IP 的 VPS，优先选择 <strong>Debian 13 64 位</strong>，也可使用 <strong>Debian 12 64 位</strong>。</li>
-<li>VPS 的公网 IP，以及服务商提供的 <code>root</code> 初始登录凭据。</li>
-<li>SSH 工具：Windows 可使用 Windows Terminal &#x2F; PowerShell，macOS 可使用系统自带终端。</li>
-<li>一个部署时经过测试的 Reality Target&#x2F;SNI。无需拥有这个域名，但不能把网上的示例当成永久可用配置。</li>
-</ul>
-<p>截至 2026 年 7 月，Debian 11 LTS 将于 2026 年 8 月 31 日结束，不建议再用于新装服务器。Debian 12 LTS 持续至 2028 年 6 月 30 日。</p>
-<hr>
-<h2 id="🚀-三、更新-Debian-并安装基础工具"><a href="#🚀-三、更新-Debian-并安装基础工具" class="headerlink" title="🚀 三、更新 Debian 并安装基础工具"></a>🚀 三、更新 Debian 并安装基础工具</h2><p>通过 SSH 登录 VPS：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>你的VPS_IP</code> 替换为真实公网 IP。登录后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install -y curl wget ca-certificates tar ufw</span><br></pre></td></tr></table></figure>
-
-<p>如果系统更新了内核，建议先重启，再重新连接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="⚡-四、开启并验证-BBR"><a href="#⚡-四、开启并验证-BBR" class="headerlink" title="⚡ 四、开启并验证 BBR"></a>⚡ 四、开启并验证 BBR</h2><p>使用独立配置文件，避免重复执行时不断向 <code>/etc/sysctl.conf</code> 追加相同内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>验证当前算法及内核可用算法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-
-<p>第一条应显示当前算法为 <code>bbr</code>，第二条的列表中也应包含 <code>bbr</code>。不要只依靠 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核时可能不会出现在模块列表中。</p>
-<hr>
-<h2 id="🛡️-五、配置-UFW：此时只放行-SSH"><a href="#🛡️-五、配置-UFW：此时只放行-SSH" class="headerlink" title="🛡️ 五、配置 UFW：此时只放行 SSH"></a>🛡️ 五、配置 UFW：此时只放行 SSH</h2><h3 id="1-确认-SSH-实际端口"><a href="#1-确认-SSH-实际端口" class="headerlink" title="1. 确认 SSH 实际端口"></a>1. 确认 SSH 实际端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果输出是 <code>port 22</code>，下面使用 <code>22</code>；如果输出为其他端口，必须把命令中的 <code>22</code> 换成实际值。</p>
-<h3 id="2-设置策略、放行-SSH-并开启-UFW"><a href="#2-设置策略、放行-SSH-并开启-UFW" class="headerlink" title="2. 设置策略、放行 SSH 并开启 UFW"></a>2. 设置策略、放行 SSH 并开启 UFW</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line">ufw allow 22/tcp comment <span class="string">&#x27;SSH&#x27;</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure>
-
-<p>看到 <code>Status: active</code> 和实际 SSH 端口规则后，不要立即关闭当前窗口。先新开一个终端再次连接 VPS，确认 SSH 仍然可用。</p>
-<blockquote>
-<p>此时 3X-UI 尚未安装，Reality 入站也尚未创建，因此不要提前开放面板端口、<code>443</code> 或 <code>2096</code>。</p>
-</blockquote>
-<hr>
-<h2 id="🖥️-六、安装-3X-UI-面板"><a href="#🖥️-六、安装-3X-UI-面板" class="headerlink" title="🖥️ 六、安装 3X-UI 面板"></a>🖥️ 六、安装 3X-UI 面板</h2><p>执行 3X-UI 官方安装脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
-
-<p>安装脚本会持续更新，应以屏幕上的实际提示为准。当前版本会生成随机用户名、密码和 WebBasePath，并在安装结束时显示面板端口、访问地址、账号以及 API Token。请立即保存完整输出，不要套用旧教程中的默认账号、固定端口或固定路径。</p>
-<p>如果安装器提供 HTTPS、IP 证书、反向代理或仅监听 <code>127.0.0.1</code> 等选项，请根据实际访问方式选择。公网 HTTP 会明文传输面板登录信息，不适合长期使用。</p>
-<h3 id="安装完成后再放行面板端口"><a href="#安装完成后再放行面板端口" class="headerlink" title="安装完成后再放行面板端口"></a>安装完成后再放行面板端口</h3><p>假设安装结果显示面板端口为 <code>28530</code>，有固定公网 IP 时，建议只允许自己的 IP：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>必须把 <code>你的公网IP</code> 和 <code>28530</code> 换成真实值，不能原样执行。</p>
-<p>没有固定 IP、确实需要临时公网访问时，可以开放实际面板端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>更安全的方式是不向公网开放面板端口，而是在本地建立 SSH 隧道：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-L</span> <span class="number">28530</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">28530</span> root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
-
-<p>随后通过 <code>http://127.0.0.1:28530/你的WebBasePath/</code> 访问。端口和路径都必须使用安装器实际给出的值。</p>
-<hr>
-<h2 id="📡-七、配置-VLESS-REALITY-XTLS-Vision"><a href="#📡-七、配置-VLESS-REALITY-XTLS-Vision" class="headerlink" title="📡 七、配置 VLESS + REALITY + XTLS Vision"></a>📡 七、配置 VLESS + REALITY + XTLS Vision</h2><p>登录面板，进入 <strong>入站列表（Inbounds）</strong>，点击 <strong>添加入站（Add Inbound）</strong>。</p>
-<h3 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h3><table>
-<thead>
-<tr>
-<th align="left">配置项</th>
-<th align="left">填写内容</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">备注（Remark）</td>
-<td align="left"><code>VLESS-REALITY</code></td>
-<td align="left">仅用于自己识别</td>
-</tr>
-<tr>
-<td align="left">协议（Protocol）</td>
-<td align="left"><code>VLESS</code></td>
-<td align="left">入站协议</td>
-</tr>
-<tr>
-<td align="left">监听 IP</td>
-<td align="left"><code>0.0.0.0</code></td>
-<td align="left">监听服务器公网网卡</td>
-</tr>
-<tr>
-<td align="left">端口（Port）</td>
-<td align="left"><code>443</code>（示例）</td>
-<td align="left">使用前确认没有被网站或其他服务占用</td>
-</tr>
-<tr>
-<td align="left">客户端 ID &#x2F; UUID</td>
-<td align="left">点击生成</td>
-<td align="left">每位用户建议使用独立 UUID</td>
-</tr>
-<tr>
-<td align="left">Flow</td>
-<td align="left"><code>xtls-rprx-vision</code></td>
-<td align="left">与 TCP&#x2F;RAW + Reality 配合</td>
-</tr>
-<tr>
-<td align="left">传输方式</td>
-<td align="left"><code>TCP</code>，新版内核可能显示 <code>RAW</code></td>
-<td align="left">以当前面板字段为准</td>
-</tr>
-<tr>
-<td align="left">安全（Security）</td>
-<td align="left"><code>reality</code></td>
-<td align="left">开启 Reality</td>
-</tr>
-<tr>
-<td align="left">Fingerprint &#x2F; uTLS</td>
-<td align="left"><code>chrome</code></td>
-<td align="left">客户端也要使用兼容指纹</td>
-</tr>
-<tr>
-<td align="left">Private&#x2F;Public Key</td>
-<td align="left">点击生成</td>
-<td align="left">私钥只保留在服务器端，客户端使用公钥</td>
-</tr>
-<tr>
-<td align="left">Short ID</td>
-<td align="left">点击生成</td>
-<td align="left">必须为偶数长度的十六进制字符串，最长 16 个字符</td>
-</tr>
-</tbody></table>
-<h3 id="Target-与-SNI"><a href="#Target-与-SNI" class="headerlink" title="Target 与 SNI"></a>Target 与 SNI</h3><p>旧教程中常见 <code>dl.google.com:443</code>、<code>www.microsoft.com:443</code> 或 <code>itunes.apple.com:443</code>，但它们只能作为候选示例，不能保证在所有 VPS、地区和时间都适用。</p>
-<ul>
-<li>Target（旧版界面可能显示 Dest）应填写经过测试的 HTTPS 站点和端口。</li>
-<li>Server Names &#x2F; SNI 通常应与 Target 接受的证书域名一致。</li>
-<li>Target 应支持所需 TLS 特性，并且从 VPS 所在网络能够稳定访问。</li>
-<li>不要机械照抄 CDN 或特殊目标。未通过 Reality 验证的流量可能被转发至 Target，错误选择可能导致服务器被滥用为转发器。</li>
-</ul>
-<p>设置完成后点击 <strong>添加（Add）</strong> 保存入站。</p>
-<h3 id="保存入站后再放行节点端口"><a href="#保存入站后再放行节点端口" class="headerlink" title="保存入站后再放行节点端口"></a>保存入站后再放行节点端口</h3><p>本例使用 TCP <code>443</code>，因此执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 443/tcp comment <span class="string">&#x27;VLESS Reality&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
-
-<p>如果入站使用其他端口，就把 <code>443</code> 换成实际端口。本文采用 TCP&#x2F;RAW + Reality，不需要额外执行 <code>ufw allow 443/udp</code>。只有服务确实监听 UDP 时才开放 UDP。</p>
-<p>如果面板端口和入站端口相同，或者 <code>443</code> 已被 Nginx、Caddy 等程序占用，入站将无法正常启动。可先检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="📱-八、导出节点并连接客户端"><a href="#📱-八、导出节点并连接客户端" class="headerlink" title="📱 八、导出节点并连接客户端"></a>📱 八、导出节点并连接客户端</h2><p>在入站列表中找到刚创建的记录，点击二维码或复制链接，获取 <code>vless://</code> 节点链接。导入后核对服务器地址、端口、公钥、SNI、Short ID、Fingerprint 和 Flow。</p>
-<table>
-<thead>
-<tr>
-<th align="left">平台</th>
-<th align="left">可选客户端</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Windows</td>
-<td align="left">v2rayN、sing-box</td>
-</tr>
-<tr>
-<td align="left">macOS</td>
-<td align="left">sing-box 等支持 Reality 的客户端</td>
-</tr>
-<tr>
-<td align="left">Android</td>
-<td align="left">v2rayNG、NekoBox、sing-box</td>
-</tr>
-<tr>
-<td align="left">iOS &#x2F; iPadOS</td>
-<td align="left">Shadowrocket、Stash、sing-box</td>
-</tr>
-</tbody></table>
-<p>Shadowrocket（小火箭）本身没有固定服务器端口。它连接哪个端口，取决于你创建的入站配置。</p>
-<hr>
-<h2 id="☁️-九、同步检查云厂商安全组"><a href="#☁️-九、同步检查云厂商安全组" class="headerlink" title="☁️ 九、同步检查云厂商安全组"></a>☁️ 九、同步检查云厂商安全组</h2><p>如果使用阿里云、腾讯云、AWS、Oracle Cloud 等带有安全组或云防火墙的平台，还必须在服务商控制台同步开放实际使用的端口：</p>
-<ul>
-<li>SSH 的实际 TCP 端口。</li>
-<li>面板的实际 TCP 端口——仅当面板需要公网访问时。</li>
-<li>Reality 入站的实际 TCP 端口。</li>
-</ul>
-<p>云安全组和 UFW 是两道独立防火墙。任何一层没有放行，外部都无法访问。不要为了省事开放全部端口或 <code>0-65535</code>。</p>
-<hr>
-<h2 id="🛠️-十、排查与维护命令"><a href="#🛠️-十、排查与维护命令" class="headerlink" title="🛠️ 十、排查与维护命令"></a>🛠️ 十、排查与维护命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 3X-UI 管理菜单</span></span><br><span class="line">x-ui</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看面板服务状态</span></span><br><span class="line">systemctl status x-ui --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查节点端口和面板端口（按实际端口替换）</span></span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(443|28530)\b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙规则</span></span><br><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改规则后重新加载</span></span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
-
-<p>如果服务正在监听但外部无法访问，应依次检查：服务商安全组、UFW、入站端口、客户端参数、VPS 系统时间和 Target 可达性。不要直接关闭全部防火墙来排错。</p>
-<p>若误封 SSH，请通过 VPS 服务商的 VNC、Web Console 或 Serial Console 登录，修正规则后再继续。</p>
-<hr>
-<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>正确的安全顺序是：</p>
-<ol>
-<li>选择支持 Debian 和公网 IP 的 VPS。</li>
-<li>更新 Debian 并确认 SSH 登录。</li>
-<li>开启并验证 BBR。</li>
-<li>只放行 SSH 后开启 UFW。</li>
-<li>安装 3X-UI，取得真实面板端口后再决定是否放行。</li>
-<li>创建 VLESS + Reality 入站，保存后只开放实际节点 TCP 端口。</li>
-<li>同步检查云厂商安全组，最后导入客户端测试。</li>
-</ol>
-<p>如果这篇教程对你有帮助，欢迎前往 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong> 观看配套视频。视频会展示面板界面和实际操作过程，后续更新也会优先发布在频道中。</p>
-<p>官方参考：<a href="https://www.debian.org/News/2026/20260712">Debian 版本支持周期</a>、<a href="https://manpages.debian.org/bookworm/ufw/ufw.8.en.html">Debian UFW 手册</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>Debian</tag>
-        <tag>Reality协议</tag>
-        <tag>3X-UI</tag>
-        <tag>服务器运维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程</title>
-    <url>/2026/07/30/2026-august-debian-vless-tcp-raw-reality-vision/</url>
-    <content><![CDATA[<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/f-tnS52pb9Y"
-    title="2026年8月 Debian 搭建 VLESS TCP RAW REALITY Vision 视频教程"
-    loading="lazy"
-    frameborder="0"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<style>
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
-
-<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=f-tnS52pb9Y" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
-<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
-
-<h2 id="📖-摘要"><a href="#📖-摘要" class="headerlink" title="📖 摘要"></a>📖 摘要</h2><p>如果把优先级明确设为“稳定第一、兼容第二、前沿第三”，那么在这份 <strong>2026 年 8 月版教程</strong>中，推荐长期使用的默认基线依然是：</p>
-<p><code>VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</code></p>
-<p>这套方案不是概念最新的一套，但它仍然是当前 Xray 体系里最成熟、最少变量、最容易长期稳定运行的组合。相比 <code>XHTTP + ECH + 后量子</code> 这类更前沿的路线，它更适合日常主力节点。</p>
-<span id="more"></span>
-
-<h2 id="🎯-为什么现在仍然推荐这套方案"><a href="#🎯-为什么现在仍然推荐这套方案" class="headerlink" title="🎯 为什么现在仍然推荐这套方案"></a>🎯 为什么现在仍然推荐这套方案</h2><p>原因很简单：<strong>变量越少，稳定性越高</strong>。</p>
-<ul>
-<li>不叠加 WebSocket、XHTTP、ECH、后量子等新变量，故障点更少</li>
-<li><code>REALITY + Vision</code> 仍然是官方长期维护、文档明确支持的成熟组合</li>
-<li>客户端兼容面更广，导入订阅后更不容易出兼容问题</li>
-<li>排障更简单，节点异常时更容易定位问题来源</li>
-</ul>
-<p>如果你的目标是“长期稳定不死”，那就不要先追求参数花样，而要先追求链路干净。</p>
-<h2 id="🧰-一、底层环境准备"><a href="#🧰-一、底层环境准备" class="headerlink" title="🧰 一、底层环境准备"></a>🧰 一、底层环境准备</h2><p>登录 Debian VPS 后，按下面顺序执行即可。</p>
-<blockquote>
-<p>如果你当前就是 <code>root</code> 登录，推荐直接用 <code>apt-get</code>，不需要再额外写 <code>sudo</code>。</p>
-</blockquote>
-<h3 id="1-先更新系统"><a href="#1-先更新系统" class="headerlink" title="1. 先更新系统"></a>1. 先更新系统</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get full-upgrade -y</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-安装基础工具"><a href="#2-安装基础工具" class="headerlink" title="2. 安装基础工具"></a>2. 安装基础工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install -y curl wget vim socat ca-certificates lsb-release gnupg ufw</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-设置时区"><a href="#3-设置时区" class="headerlink" title="3. 设置时区"></a>3. 设置时区</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
-
-<p>这样拆开执行更好，因为：</p>
-<ul>
-<li>如果第一步更新失败，你能马上知道</li>
-<li>不会一串命令里前面报错，后面还继续跑</li>
-<li>更方便排查到底卡在哪一步</li>
-</ul>
-<h3 id="4-开启-BBR"><a href="#4-开启-BBR" class="headerlink" title="4. 开启 BBR"></a>4. 开启 BBR</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&#x27;echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf&#x27;</span></span><br><span class="line">sh -c <span class="string">&#x27;echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf&#x27;</span></span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
-
-<p>如果 <code>lsmod | grep bbr</code> 有返回值，就说明 BBR 已启用。</p>
-<blockquote>
-<p>注意：前两行是追加写入，重复执行会在 <code>/etc/sysctl.conf</code> 里留下重复配置，因此正常执行一次即可。</p>
-</blockquote>
-<h2 id="🖥️-二、安装-3x-ui-面板"><a href="#🖥️-二、安装-3x-ui-面板" class="headerlink" title="🖥️ 二、安装 3x-ui 面板"></a>🖥️ 二、安装 3x-ui 面板</h2><h3 id="1-执行官方安装脚本"><a href="#1-执行官方安装脚本" class="headerlink" title="1. 执行官方安装脚本"></a>1. 执行官方安装脚本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-安装时记住这三项"><a href="#2-安装时记住这三项" class="headerlink" title="2. 安装时记住这三项"></a>2. 安装时记住这三项</h3><ul>
-<li>面板用户名</li>
-<li>面板密码</li>
-<li>面板端口</li>
-</ul>
-<p>建议避开 <code>80</code>、<code>443</code>、<code>8080</code>，例如使用 <code>54321</code>。</p>
-<blockquote>
-<p>面板端口只是给管理后台用，不要和你后面节点入站端口混在一起。</p>
-</blockquote>
-<p>截至 <strong>2026 年 7 月 30 日</strong>，3x-ui 官方稳定发布页显示最新版本为 <strong>v3.6.0</strong>，并集成 <strong>Xray-core v26.7.28</strong>。Xray-core 官方将该核心版本标记为预发布，因此新手建议使用 3x-ui 的稳定更新通道，不要切换到 Dev 通道；安装后再到面板中确认实际版本。</p>
-<h3 id="安装完成后立即开启防火墙"><a href="#安装完成后立即开启防火墙" class="headerlink" title="安装完成后立即开启防火墙"></a>安装完成后立即开启防火墙</h3><p>面板装好后，不要急着直接裸奔使用，先把系统防火墙开起来。</p>
-<p>如果你是 <code>root</code> 登录，直接执行下面这组命令即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line"></span><br><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/tcp</span><br><span class="line">ufw allow 你的面板端口/tcp</span><br><span class="line"></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>这几条规则分别对应：</p>
-<ul>
-<li><code>22/tcp</code> 是 SSH 远程登录端口</li>
-<li><code>80/tcp</code> 是给 Let’s Encrypt 申请和续签证书用的</li>
-<li><code>443/tcp</code> 是后面节点常见使用端口</li>
-<li><code>你的面板端口/tcp</code> 指的是你安装 3x-ui 时自己设置的管理面板端口，例如 <code>54321/tcp</code></li>
-</ul>
-<blockquote>
-<p>如果你的 SSH 端口不是 <code>22</code>，这里也要改成真实端口，否则可能把自己锁在服务器外面。</p>
-</blockquote>
-<blockquote>
-<p>另外，除了系统里的 <code>ufw</code>，云厂商后台的安全组也要同步放行对应端口。很多人以为自己已经开了防火墙，结果其实是被安全组挡住了。</p>
-</blockquote>
-<h3 id="开了防火墙后，怎么查自己的订阅端口"><a href="#开了防火墙后，怎么查自己的订阅端口" class="headerlink" title="开了防火墙后，怎么查自己的订阅端口"></a>开了防火墙后，怎么查自己的订阅端口</h3><p>很多人第一次装好 <code>3x-ui / x-ui</code> 后，只记住了面板端口和节点端口，结果开了 <code>ufw</code> 以后发现：</p>
-<ul>
-<li>面板能登录</li>
-<li>节点本身也在监听</li>
-<li>但客户端更新订阅一直提示超时</li>
-</ul>
-<p>这时候最常见的原因不是节点坏了，而是<strong>订阅端口没有放行</strong>。</p>
-<p>先把这 3 类端口分清楚：</p>
-<ul>
-<li>面板端口：登录 <code>3x-ui</code> 后台用</li>
-<li>节点端口：客户端实际连接入站用，例如 <code>443</code></li>
-<li>订阅端口：客户端拉取订阅链接时访问的端口</li>
-</ul>
-<p>它们完全可以不同。比如：</p>
-<ul>
-<li>面板端口：<code>54321</code></li>
-<li>节点端口：<code>443</code></li>
-<li>订阅端口：<code>2096</code></li>
-</ul>
-<h4 id="1-直接看订阅链接本身"><a href="#1-直接看订阅链接本身" class="headerlink" title="1. 直接看订阅链接本身"></a>1. 直接看订阅链接本身</h4><p>这是最直接的办法。</p>
-<ul>
-<li>如果链接是 <code>https://example.com:2096/sub/...</code>，那客户端实际访问的订阅端口就是 <code>2096</code></li>
-<li>如果链接是 <code>https://example.com/sub/...</code>，那对客户端来说默认就是 <code>443</code></li>
-<li>如果链接是 <code>http://example.com/sub/...</code>，那默认就是 <code>80</code></li>
-</ul>
-<p>也就是说，<strong>订阅链接里显式写了端口，就看那个端口；没写端口，就按协议默认端口算。</strong></p>
-<h4 id="2-在服务器日志里看-Sub-server"><a href="#2-在服务器日志里看-Sub-server" class="headerlink" title="2. 在服务器日志里看 Sub server"></a>2. 在服务器日志里看 <code>Sub server</code></h4><p>如果你有服务器权限，直接看 <code>x-ui</code> 日志最稳：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u x-ui -n 50 --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>你通常会看到类似输出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Web server running HTTPS on [::]:25731</span><br><span class="line">Sub server running HTTPS on [::]:2096</span><br></pre></td></tr></table></figure>
-
-<p>这里：</p>
-<ul>
-<li><code>Web server</code> 后面的端口是面板端口</li>
-<li><code>Sub server</code> 后面的端口才是订阅服务端口</li>
-</ul>
-<h4 id="3-用监听端口反查"><a href="#3-用监听端口反查" class="headerlink" title="3. 用监听端口反查"></a>3. 用监听端口反查</h4><p>如果你不想翻太多日志，也可以直接看 <code>x-ui</code> 当前监听了哪些端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tlnp | grep x-ui</span><br></pre></td></tr></table></figure>
-
-<p>通常你会同时看到面板端口和订阅端口都被 <code>x-ui</code> 监听。</p>
-<h4 id="4-开了-ufw-记得把订阅端口也一起放行"><a href="#4-开了-ufw-记得把订阅端口也一起放行" class="headerlink" title="4. 开了 ufw 记得把订阅端口也一起放行"></a>4. 开了 <code>ufw</code> 记得把订阅端口也一起放行</h4><p>如果你确认订阅端口是 <code>2096</code>，那除了节点端口和面板端口，还要额外放行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 2096/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
-
-<p>如果你开了云厂商安全组，也要同步把这个端口放行。</p>
-<blockquote>
-<p>注意：如果你的订阅链接前面套了 <code>Nginx</code> 或 <code>Caddy</code> 反代，那么客户端真正访问的可能是 <code>443</code>，而不是 <code>x-ui</code> 内部的订阅监听端口。最终以你<strong>客户端实际访问的订阅链接</strong>为准。</p>
-</blockquote>
-<h3 id="首次登录后怎么修改面板密码并开启-2FA"><a href="#首次登录后怎么修改面板密码并开启-2FA" class="headerlink" title="首次登录后怎么修改面板密码并开启 2FA"></a>首次登录后怎么修改面板密码并开启 2FA</h3><p>第一次打开面板后，建议立刻把认证信息处理好，再去建入站。</p>
-<h3 id="面板里按这个顺序操作"><a href="#面板里按这个顺序操作" class="headerlink" title="面板里按这个顺序操作"></a>面板里按这个顺序操作</h3><ol>
-<li>登录 3x-ui 面板</li>
-<li>进入 <code>Panel Settings</code></li>
-<li>找到 <code>Authentication</code></li>
-<li>修改用户名和密码</li>
-<li>开启 <code>Two-Factor Authentication</code></li>
-</ol>
-<p>如果你安装时已经让脚本生成了一组随机用户名和随机密码，也可以先不改用户名，但密码一定要确保足够强。</p>
-<p>开启 2FA 时，一般会看到二维码或一串密钥。<br>这时用手机上的验证器 App 扫码即可，例如：</p>
-<ul>
-<li><code>Google Authenticator</code></li>
-<li><code>Microsoft Authenticator</code></li>
-<li><code>Aegis</code></li>
-</ul>
-<p>扫码后，App 会每 30 秒生成一个新的 6 位验证码。把当前验证码填回 3x-ui 面板并保存，之后你登录面板时就会多一道动态验证码校验。</p>
-<h3 id="这里有两个细节一定别省"><a href="#这里有两个细节一定别省" class="headerlink" title="这里有两个细节一定别省"></a>这里有两个细节一定别省</h3><ul>
-<li>把 2FA 的密钥或恢复信息单独保存好，不要只留在手机里</li>
-<li>开完 2FA 后，退出面板重新登录一次，确认用户名、密码和动态验证码都正常</li>
-</ul>
-<p>如果你后面忘了面板密码，或者 2FA 配错导致进不去，可以在服务器里执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
-
-<p>然后走重置账号密码流程。新版菜单里也会问你是否禁用当前已经配置好的 2FA，到时按提示操作即可。</p>
-<h2 id="🚀-三、添加-VLESS-REALITY-Vision-入站"><a href="#🚀-三、添加-VLESS-REALITY-Vision-入站" class="headerlink" title="🚀 三、添加 VLESS + REALITY + Vision 入站"></a>🚀 三、添加 VLESS + REALITY + Vision 入站</h2><p>在 3x-ui 面板中进入“入站列表”，点击“添加入站”，按下面填写：</p>
-<h3 id="基础设置"><a href="#基础设置" class="headerlink" title="基础设置"></a>基础设置</h3><ul>
-<li>协议：<code>vless</code></li>
-<li>监听 IP：留空</li>
-<li>端口：<code>443</code></li>
-<li>客户端 ID：随机 UUID</li>
-<li>Email：随意填写</li>
-<li>Flow：<strong>必须选择</strong> <code>xtls-rprx-vision</code></li>
-</ul>
-<h3 id="传输设置"><a href="#传输设置" class="headerlink" title="传输设置"></a>传输设置</h3><ul>
-<li>网络：<code>tcp</code> 或 <code>raw</code></li>
-<li>安全：<code>reality</code></li>
-</ul>
-<p>说明一下：新版 Xray 文档中，<code>TCP</code> 的主名已改成 <code>RAW</code>，但在很多面板和客户端里仍然会显示成 <code>TCP</code>，两者本质上是同一类传输。</p>
-<h2 id="🔐-四、REALITY-核心参数怎么填"><a href="#🔐-四、REALITY-核心参数怎么填" class="headerlink" title="🔐 四、REALITY 核心参数怎么填"></a>🔐 四、REALITY 核心参数怎么填</h2><p>REALITY 开启后，重点只看这几项：</p>
-<ul>
-<li><code>target</code> &#x2F; <code>dest</code>：伪装目标站，例如 <code>dl.google.com:443</code></li>
-<li><code>serverNames</code>：对应 SNI，例如 <code>dl.google.com</code></li>
-<li><code>privateKey</code>：点击生成 X25519 密钥</li>
-<li><code>shortIds</code>：随机生成</li>
-<li><code>fingerprint</code> &#x2F; uTLS：<code>chrome</code></li>
-<li><code>spiderX</code>：留空或填 <code>/</code></li>
-</ul>
-<p>这里有几个稳定派原则：</p>
-<ul>
-<li>目标站必须能从当前 VPS 正常访问，并支持 TLS 1.3、证书与 SNI 匹配</li>
-<li>示例使用 <code>dl.google.com</code>，但不同 VPS 线路的可用性可能不同，不能机械照抄</li>
-<li>如果客户端反复出现 <code>REALITY authentication failed</code> 或连接超时，应先检查 SNI、密钥和 Short ID，再更换一个从 VPS 实测可访问的目标站</li>
-<li><code>uTLS</code> 用 <code>chrome</code> 就够了，不建议乱改</li>
-<li><code>spiderX</code> 保持简单即可，没必要过度设计</li>
-</ul>
-<h2 id="✅-五、保存并重启核心"><a href="#✅-五、保存并重启核心" class="headerlink" title="✅ 五、保存并重启核心"></a>✅ 五、保存并重启核心</h2><p>配置完成后保存入站，然后重启 Xray 核心。<br>接着在入站列表中复制节点链接或二维码，导入客户端。</p>
-<h3 id="导入客户端后重点确认这几项"><a href="#导入客户端后重点确认这几项" class="headerlink" title="导入客户端后重点确认这几项"></a>导入客户端后重点确认这几项</h3><ul>
-<li>Security：<code>reality</code></li>
-<li>Network：<code>tcp</code> &#x2F; <code>raw</code></li>
-<li>Flow：<code>xtls-rprx-vision</code></li>
-<li>SNI：与你填写的伪装域名一致</li>
-<li>Public Key：服务端生成的公钥</li>
-<li>Short ID：与你分配的一致</li>
-<li>Fingerprint：<code>chrome</code></li>
-</ul>
-<h2 id="🧪-六、为什么不把-XHTTP-ECH-后量子当默认主力"><a href="#🧪-六、为什么不把-XHTTP-ECH-后量子当默认主力" class="headerlink" title="🧪 六、为什么不把 XHTTP &#x2F; ECH &#x2F; 后量子当默认主力"></a>🧪 六、为什么不把 XHTTP &#x2F; ECH &#x2F; 后量子当默认主力</h2><p>这些技术并不差，但它们更适合进阶用户，而不是所有人的默认首选。</p>
-<ul>
-<li><code>XHTTP</code> 参数空间更大，配置复杂度更高</li>
-<li><code>ECH</code> 在部分网络环境下可用性仍不稳定</li>
-<li>后量子签名会增加握手材料体积，提高排障难度</li>
-<li>新特性常常要求更高版本的客户端和更完整的兼容链路</li>
-</ul>
-<p>所以更现实的策略是：</p>
-<ul>
-<li>主力节点：<code>VLESS + TCP(RAW) + REALITY + Vision</code></li>
-<li>实验节点：<code>XHTTP + REALITY</code> 或 <code>TLS + ECH</code></li>
-<li>不要让实验方案直接替代主力方案</li>
-</ul>
-<h2 id="❓-FAQ"><a href="#❓-FAQ" class="headerlink" title="❓ FAQ"></a>❓ FAQ</h2><h3 id="1-现在最稳的方案到底是不是-VLESS-TCP-REALITY-Vision？"><a href="#1-现在最稳的方案到底是不是-VLESS-TCP-REALITY-Vision？" class="headerlink" title="1. 现在最稳的方案到底是不是 VLESS + TCP + REALITY + Vision？"></a>1. 现在最稳的方案到底是不是 VLESS + TCP + REALITY + Vision？</h3><p>如果你的目标是“长期稳定、尽量少折腾、兼容尽可能广”，那么在这份 <strong>2026 年 8 月版教程</strong>中，它依然是稳妥的默认基线。</p>
-<h3 id="2-TCP-和-RAW-有什么区别？"><a href="#2-TCP-和-RAW-有什么区别？" class="headerlink" title="2. TCP 和 RAW 有什么区别？"></a>2. TCP 和 RAW 有什么区别？</h3><p>没有本质区别。新版 Xray 文档把原来的 TCP 主名改成了 RAW，旧写法仍兼容。</p>
-<h3 id="3-Flow-为什么必须开-xtls-rprx-vision？"><a href="#3-Flow-为什么必须开-xtls-rprx-vision？" class="headerlink" title="3. Flow 为什么必须开 xtls-rprx-vision？"></a>3. Flow 为什么必须开 <code>xtls-rprx-vision</code>？</h3><p>因为 Vision 才是这套稳定派方案的核心之一。不开它，你得到的只是普通 VLESS + REALITY，而不是默认推荐的 Vision 组合。</p>
-<h3 id="4-spiderX-一定要精细配置吗？"><a href="#4-spiderX-一定要精细配置吗？" class="headerlink" title="4. spiderX 一定要精细配置吗？"></a>4. <code>spiderX</code> 一定要精细配置吗？</h3><p>不一定。日常求稳可以直接留空或写 <code>/</code>。对大多数用户来说，这不是决定节点生死的关键项。</p>
-<h3 id="5-要不要直接上-XHTTP-REALITY-后量子？"><a href="#5-要不要直接上-XHTTP-REALITY-后量子？" class="headerlink" title="5. 要不要直接上 XHTTP + REALITY + 后量子？"></a>5. 要不要直接上 XHTTP + REALITY + 后量子？</h3><p>如果你追求的是实验性增强和进阶玩法，可以单独开一条测试节点；如果你追求的是主力稳定性，不建议它直接取代 TCP(RAW) + REALITY + Vision。</p>
-<h2 id="📝-结尾总结"><a href="#📝-结尾总结" class="headerlink" title="📝 结尾总结"></a>📝 结尾总结</h2><p>在 <strong>2026 年 8 月版教程</strong>中，如果只看“长期稳定、少踩坑、兼容更广”这三个指标，那么值得作为默认基线的仍然是：</p>
-<p><code>VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</code></p>
-<p>真正适合长期使用的节点，核心不是参数有多新，而是链路足够干净、变量足够少、客户端足够好适配。<br>在今天这个阶段，<strong>大道至简，仍然是最稳的答案</strong>。</p>
-<h2 id="🔗-参考来源"><a href="#🔗-参考来源" class="headerlink" title="🔗 参考来源"></a>🔗 参考来源</h2><ul>
-<li><a href="https://xtls.github.io/en/config/inbounds/vless.html">Project X VLESS Inbound 文档</a></li>
-<li><a href="https://xtls.github.io/en/config/outbounds/vless.html">Project X VLESS Outbound 文档</a></li>
-<li><a href="https://xtls.github.io/en/config/transport.html">Project X Transport &#x2F; REALITY 文档</a></li>
-<li><a href="https://github.com/XTLS/Xray-core/releases">Xray-core Releases</a></li>
-<li><a href="https://github.com/MHSanaei/3x-ui/releases">3x-ui Releases</a></li>
-<li><a href="https://github.com/XTLS/Xray-examples">XTLS&#x2F;Xray-examples 官方示例库</a></li>
-<li><a href="https://github.com/XTLS/Xray-examples/tree/main/VLESS-TCP-XTLS-Vision-REALITY">VLESS-TCP-XTLS-Vision-REALITY 官方示例</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>网络链路</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-        <tag>Xray</tag>
-        <tag>3x-ui</tag>
-        <tag>VLESS</tag>
-        <tag>REALITY</tag>
-        <tag>Vision</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>🚀 Hysteria2 服务端搭建教程：Cloudflare DNS、VPS 与端口跳跃</title>
     <url>/2026/06/15/hysteria2-cloudflare-dns-vps/</url>
     <content><![CDATA[<div class="video-container">
@@ -862,8 +305,8 @@
         <category>网络链路</category>
       </categories>
       <tags>
-        <tag>VPS</tag>
         <tag>Hysteria2</tag>
+        <tag>VPS</tag>
         <tag>Cloudflare</tag>
         <tag>DNS</tag>
         <tag>UFW</tag>
@@ -1100,11 +543,881 @@
       </categories>
       <tags>
         <tag>VPS</tag>
-        <tag>Debian</tag>
-        <tag>Reality协议</tag>
-        <tag>VLESS</tag>
         <tag>sing-box</tag>
+        <tag>VLESS</tag>
+        <tag>Reality协议</tag>
         <tag>一键脚本</tag>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</title>
+    <url>/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/</url>
+    <content><![CDATA[<h2 id="📖-前言"><a href="#📖-前言" class="headerlink" title="📖 前言"></a>📖 前言</h2><p>搭建完 3x-ui 后，第一次打开管理面板，不少人会在浏览器地址栏看到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">此站点的连接不安全</span><br></pre></td></tr></table></figure>
+
+<p>或者直接进入“您的连接不是私密连接”错误页，并显示以下代码之一：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">NET::ERR_CERT_AUTHORITY_INVALID</span><br><span class="line">NET::ERR_CERT_COMMON_NAME_INVALID</span><br><span class="line">NET::ERR_CERT_DATE_INVALID</span><br><span class="line">ERR_SSL_PROTOCOL_ERROR</span><br></pre></td></tr></table></figure>
+
+<p>这通常不是 Xray 节点损坏，而是 <strong>3x-ui 管理面板的 HTTPS 没有正确配置</strong>。节点入站和管理面板是两个相对独立的部分：节点能正常连接，不代表面板已经受到 HTTPS 保护。</p>
+<blockquote>
+<p>3x-ui 面板会传输管理员账号、密码、会话 Cookie 和配置数据。只要面板能够从公网访问，就不应该长期使用明文 HTTP，更不建议点击“继续访问”后直接输入管理员密码。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="🔍-一、为什么会显示“连接不安全”"><a href="#🔍-一、为什么会显示“连接不安全”" class="headerlink" title="🔍 一、为什么会显示“连接不安全”"></a>🔍 一、为什么会显示“连接不安全”</h2><p>浏览器是否信任一个 HTTPS 网站，主要检查三件事：</p>
+<ol>
+<li>当前连接是否真正使用 HTTPS 加密。</li>
+<li>服务器证书是否由浏览器信任的证书机构签发。</li>
+<li>证书中的域名或 IP 是否与地址栏中的访问地址一致。</li>
+</ol>
+<p>只要其中一项不满足，浏览器就可能发出警告。</p>
+<h3 id="原因-1：正在使用普通-HTTP"><a href="#原因-1：正在使用普通-HTTP" class="headerlink" title="原因 1：正在使用普通 HTTP"></a>原因 1：正在使用普通 HTTP</h3><p>例如：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://1.2.3.4:2053/abc123/</span><br></pre></td></tr></table></figure>
+
+<p>地址以 <code>http://</code> 开头，数据没有经过 TLS 加密，因此浏览器显示“不安全”属于正常现象。它不是浏览器误报，也不能通过清理缓存解决。</p>
+<h3 id="原因-2：证书签发给域名，却通过-IP-访问"><a href="#原因-2：证书签发给域名，却通过-IP-访问" class="headerlink" title="原因 2：证书签发给域名，却通过 IP 访问"></a>原因 2：证书签发给域名，却通过 IP 访问</h3><p>假设证书签发给：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">panel.example.com</span><br></pre></td></tr></table></figure>
+
+<p>正确访问方式是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://panel.example.com:2053/abc123/</span><br></pre></td></tr></table></figure>
+
+<p>如果改用下面的 IP 地址访问：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://1.2.3.4:2053/abc123/</span><br></pre></td></tr></table></figure>
+
+<p>浏览器会发现地址栏里的 IP 不在证书有效名称中，于是报告：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_COMMON_NAME_INVALID</span><br></pre></td></tr></table></figure>
+
+<h3 id="原因-3：使用了自签名证书"><a href="#原因-3：使用了自签名证书" class="headerlink" title="原因 3：使用了自签名证书"></a>原因 3：使用了自签名证书</h3><p>自签名证书同样可以加密连接，但它不是由浏览器默认信任的公共证书机构签发，因此经常出现：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_AUTHORITY_INVALID</span><br></pre></td></tr></table></figure>
+
+<p>在完全由自己管理的内网环境中，可以把自己的 CA 导入每台设备；面向公网使用时，更省事的做法是申请 Let’s Encrypt 等公共证书。</p>
+<h3 id="原因-4：证书过期或访问设备时间错误"><a href="#原因-4：证书过期或访问设备时间错误" class="headerlink" title="原因 4：证书过期或访问设备时间错误"></a>原因 4：证书过期或访问设备时间错误</h3><p>证书有明确的生效时间和失效时间。证书已经过期、尚未生效，或者正在访问面板的电脑、手机日期明显错误，都可能触发：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_DATE_INVALID</span><br></pre></td></tr></table></figure>
+
+<p>浏览器主要根据访问设备的时间检查证书有效期。VPS 时间错误通常会影响证书申请、自动续期和日志记录，但不是浏览器验证一张既有证书时的直接时间依据。</p>
+<h3 id="原因-5：3x-ui-的证书路径不完整或错误"><a href="#原因-5：3x-ui-的证书路径不完整或错误" class="headerlink" title="原因 5：3x-ui 的证书路径不完整或错误"></a>原因 5：3x-ui 的证书路径不完整或错误</h3><p>3x-ui 面板自身启用 HTTPS，需要同时设置：</p>
+<ul>
+<li><code>webCertFile</code>：完整证书链文件</li>
+<li><code>webKeyFile</code>：与证书配对的私钥文件</li>
+</ul>
+<p>只设置一项、文件不存在、权限不足，或把两个路径填反，都可能导致 HTTPS 无法启动。证书文件建议使用 <code>fullchain.pem</code>，不要只使用缺少中间证书的单证书文件。</p>
+<h3 id="原因-6：反向代理的协议配置不一致"><a href="#原因-6：反向代理的协议配置不一致" class="headerlink" title="原因 6：反向代理的协议配置不一致"></a>原因 6：反向代理的协议配置不一致</h3><p>如果前面还有 Nginx、Caddy 或 Cloudflare，常见错误包括：</p>
+<ul>
+<li>浏览器到 Nginx 使用 HTTPS，但 Nginx 的证书配置错误</li>
+<li>3x-ui 只提供 HTTP，反向代理却按 HTTPS 回源</li>
+<li>3x-ui 已经启用 HTTPS，反向代理仍按 HTTP 回源</li>
+<li>443 端口被多个程序争用</li>
+</ul>
+<p>这类问题常表现为 <code>ERR_SSL_PROTOCOL_ERROR</code>、502 错误或页面完全打不开。</p>
+<h2 id="✅-二、推荐方案：域名-Let’s-Encrypt-证书"><a href="#✅-二、推荐方案：域名-Let’s-Encrypt-证书" class="headerlink" title="✅ 二、推荐方案：域名 + Let’s Encrypt 证书"></a>✅ 二、推荐方案：域名 + Let’s Encrypt 证书</h2><p>这是大多数用户最适合的方案。以下示例假设：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>示例值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>面板域名</td>
+<td><code>panel.example.com</code></td>
+</tr>
+<tr>
+<td>VPS 公网 IP</td>
+<td><code>1.2.3.4</code></td>
+</tr>
+<tr>
+<td>面板端口</td>
+<td><code>2053</code></td>
+</tr>
+<tr>
+<td>面板路径</td>
+<td><code>abc123</code></td>
+</tr>
+</tbody></table>
+<p>操作时请替换成自己的真实信息。</p>
+<h3 id="第-1-步：添加-DNS-解析"><a href="#第-1-步：添加-DNS-解析" class="headerlink" title="第 1 步：添加 DNS 解析"></a>第 1 步：添加 DNS 解析</h3><p>在域名 DNS 管理页面添加一条 <code>A</code> 记录：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">类型：A</span><br><span class="line">主机记录：panel</span><br><span class="line">记录值：1.2.3.4</span><br></pre></td></tr></table></figure>
+
+<p>如果服务器没有配置公网 IPv6，不要添加 <code>AAAA</code> 记录；已经存在但指向错误服务器的 <code>AAAA</code> 记录也应删除，否则部分设备可能优先连接错误的 IPv6 地址。</p>
+<p>等待解析生效后检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">getent ahosts panel.example.com</span><br></pre></td></tr></table></figure>
+
+<p>返回地址应包含当前 VPS 的公网 IP。</p>
+<h3 id="第-2-步：确认-80-端口可用于验证"><a href="#第-2-步：确认-80-端口可用于验证" class="headerlink" title="第 2 步：确认 80 端口可用于验证"></a>第 2 步：确认 80 端口可用于验证</h3><p>3x-ui 内置的域名证书申请通常通过 ACME HTTP 验证完成，需要公网能够访问 TCP 80。</p>
+<p>使用 UFW 时可以执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow from 你的固定公网IP to any port 2053 proto tcp</span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>如果没有固定的管理员公网 IP，可以临时使用 <code>ufw allow 2053/tcp</code> 完成测试，确认后再收紧访问来源。如果面板端口不是 <code>2053</code>，请换成实际端口。云服务器控制台中的安全组也必须同步设置。</p>
+<p>这里不必默认开放 <code>443</code>：只有 Nginx、Caddy、3x-ui 或其他公网服务实际监听 443 时才需要开放。启用 UFW 之前，还必须先放行真实的 SSH 端口，避免把自己锁在服务器外面。</p>
+<p>检查 80 端口是否已被其他程序占用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:80 &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 Nginx、Apache 或 Caddy 正在占用 80 端口，可暂时停止对应服务后申请证书，或者改用后文的 Cloudflare DNS 验证方案。</p>
+<h3 id="第-3-步：在-3x-ui-菜单申请证书"><a href="#第-3-步：在-3x-ui-菜单申请证书" class="headerlink" title="第 3 步：在 3x-ui 菜单申请证书"></a>第 3 步：在 3x-ui 菜单申请证书</h3><p>SSH 登录 VPS，运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
+
+<p>进入 <code>SSL Certificate Management</code>。不同版本的菜单编号可能变化，新版通常显示为 <code>20</code>，操作时以屏幕中的文字为准。</p>
+<p>依次选择：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Get SSL (Domain)</span><br></pre></td></tr></table></figure>
+
+<p>输入：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">panel.example.com</span><br></pre></td></tr></table></figure>
+
+<p>申请成功后，证书一般位于：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">/root/cert/panel.example.com/fullchain.pem</span><br><span class="line">/root/cert/panel.example.com/privkey.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="第-4-步：把证书路径绑定到面板"><a href="#第-4-步：把证书路径绑定到面板" class="headerlink" title="第 4 步：把证书路径绑定到面板"></a>第 4 步：把证书路径绑定到面板</h3><p>继续在证书管理菜单中选择：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Set Cert paths for the panel</span><br></pre></td></tr></table></figure>
+
+<p>确认对应关系：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Certificate File Path: /root/cert/panel.example.com/fullchain.pem</span><br><span class="line">Key File Path:         /root/cert/panel.example.com/privkey.pem</span><br></pre></td></tr></table></figure>
+
+<p>然后重启面板：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui restart</span><br></pre></td></tr></table></figure>
+
+<p>3x-ui 只有在证书文件和私钥文件两项都正确设置后，面板才会切换到 HTTPS。</p>
+<h3 id="第-5-步：使用正确地址访问"><a href="#第-5-步：使用正确地址访问" class="headerlink" title="第 5 步：使用正确地址访问"></a>第 5 步：使用正确地址访问</h3><p>现在应该使用：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://panel.example.com:2053/abc123/</span><br></pre></td></tr></table></figure>
+
+<p>注意四个细节：</p>
+<ul>
+<li>必须是 <code>https://</code></li>
+<li>必须使用证书对应的域名</li>
+<li>自定义面板端口不能漏掉</li>
+<li>随机面板路径不能漏掉，结尾最好保留 <code>/</code></li>
+</ul>
+<p>不要继续通过服务器 IP 访问域名证书。</p>
+<h2 id="🌐-三、没有域名：申请裸-IP-证书"><a href="#🌐-三、没有域名：申请裸-IP-证书" class="headerlink" title="🌐 三、没有域名：申请裸 IP 证书"></a>🌐 三、没有域名：申请裸 IP 证书</h2><p>较新的 3x-ui 版本提供了：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Get SSL for IP Address</span><br></pre></td></tr></table></figure>
+
+<p>它可以为公网 IP 申请短期证书。进入方式通常为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">x-ui → SSL Certificate Management → Get SSL for IP Address</span><br></pre></td></tr></table></figure>
+
+<p>签发完成后，同样选择 <code>Set Cert paths for the panel</code>，再重启 3x-ui。之后通过证书绑定的公网 IP 访问。</p>
+<p>官方文档说明，这类 IP 证书有效期约 6 天，需要依赖自动续期。建议定期检查续期状态；如果长期使用管理面板，域名证书仍然更直观。</p>
+<blockquote>
+<p>如果旧版 3x-ui 菜单中没有 IP 证书选项，请先备份数据库和配置，再按照官方升级方法更新，不要随意运行来源不明的改版脚本。</p>
+</blockquote>
+<h2 id="☁️-四、Cloudflare-用户：使用-DNS-01-验证"><a href="#☁️-四、Cloudflare-用户：使用-DNS-01-验证" class="headerlink" title="☁️ 四、Cloudflare 用户：使用 DNS-01 验证"></a>☁️ 四、Cloudflare 用户：使用 DNS-01 验证</h2><p>遇到以下情况时，适合使用 Cloudflare DNS 验证：</p>
+<ul>
+<li>服务器 80 端口无法从公网访问</li>
+<li>域名开启了 Cloudflare 橙色云代理</li>
+<li>需要申请通配符证书</li>
+<li>80 端口正被其他网站占用，不方便停止</li>
+</ul>
+<p>前提是域名 DNS 已经托管到 Cloudflare。</p>
+<h3 id="创建最小权限-API-Token"><a href="#创建最小权限-API-Token" class="headerlink" title="创建最小权限 API Token"></a>创建最小权限 API Token</h3><p>在 Cloudflare 控制台创建 API Token，仅授予目标域名区域：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Zone → DNS → Edit</span><br></pre></td></tr></table></figure>
+
+<p>不要把 Global API Key 粘贴到不可信脚本中。最小权限 Token 泄露后的影响范围更小。</p>
+<h3 id="在-3x-ui-中申请"><a href="#在-3x-ui-中申请" class="headerlink" title="在 3x-ui 中申请"></a>在 3x-ui 中申请</h3><p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
+
+<p>选择 <code>Cloudflare SSL Certificate</code>，然后选择 API Token 模式，输入域名和 Token。签发成功后，再把证书路径设置给面板并重启。</p>
+<p>DNS-01 验证通过临时 TXT 记录证明域名控制权，因此不依赖公网 80 端口。</p>
+<p>如果域名开启 Cloudflare 橙色云，还要确认面板端口属于 Cloudflare 支持的 HTTPS 代理端口。常见支持端口包括 <code>443</code>、<code>2053</code>、<code>2083</code>、<code>2087</code>、<code>2096</code> 和 <code>8443</code>；任意自定义高位端口不一定能被代理。</p>
+<h2 id="🔁-五、进阶方案：Nginx-或-Caddy-反向代理"><a href="#🔁-五、进阶方案：Nginx-或-Caddy-反向代理" class="headerlink" title="🔁 五、进阶方案：Nginx 或 Caddy 反向代理"></a>🔁 五、进阶方案：Nginx 或 Caddy 反向代理</h2><p>另一种思路是让 3x-ui 只在服务器本机提供 HTTP，由 Nginx 或 Caddy 统一处理公网 HTTPS：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器 ──HTTPS──&gt; Nginx/Caddy ──HTTP──&gt; 127.0.0.1:2053</span><br></pre></td></tr></table></figure>
+
+<p>这种结构适合服务器上已经运行网站、需要统一使用 443 端口的用户。</p>
+<p>下面是一个简化的 Nginx 反向代理片段：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:2053;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整的 HTTPS <code>server</code> 配置还需要证书路径、私钥路径和域名。配置完成后先检查语法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+
+<p>然后重新加载：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<p>使用反向代理终止 TLS 时，应注意：</p>
+<ul>
+<li>3x-ui 和 Nginx 的回源协议必须对应</li>
+<li>最好让 3x-ui 只监听 <code>127.0.0.1</code>，或用防火墙禁止公网直接访问面板端口</li>
+<li>不要让 Nginx 和 3x-ui 同时监听公网 443</li>
+<li>面板设置中的 URL 和路径要保持一致</li>
+</ul>
+<p>如果只是第一次搭建，直接给 3x-ui 配置域名证书通常更简单；已经熟悉 Nginx&#x2F;Caddy 再考虑反向代理。</p>
+<h2 id="🧪-六、如何检查证书是否真的正常"><a href="#🧪-六、如何检查证书是否真的正常" class="headerlink" title="🧪 六、如何检查证书是否真的正常"></a>🧪 六、如何检查证书是否真的正常</h2><h3 id="1-检查-3x-ui-服务"><a href="#1-检查-3x-ui-服务" class="headerlink" title="1. 检查 3x-ui 服务"></a>1. 检查 3x-ui 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui status</span><br><span class="line">systemctl status x-ui --no-pager</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-查看最近日志"><a href="#2-查看最近日志" class="headerlink" title="2. 查看最近日志"></a>2. 查看最近日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u x-ui -n 100 --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>重点搜索：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">certificate</span><br><span class="line">private key</span><br><span class="line">permission denied</span><br><span class="line">no such file</span><br><span class="line">bind</span><br><span class="line">address already in use</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-检查监听端口"><a href="#3-检查监听端口" class="headerlink" title="3. 检查监听端口"></a>3. 检查监听端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp</span><br></pre></td></tr></table></figure>
+
+<p>确认面板实际监听的是哪个端口，以及该端口有没有被其他程序占用。</p>
+<h3 id="4-检查证书有效期和签发对象"><a href="#4-检查证书有效期和签发对象" class="headerlink" title="4. 检查证书有效期和签发对象"></a>4. 检查证书有效期和签发对象</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl s_client \</span><br><span class="line">  -connect panel.example.com:2053 \</span><br><span class="line">  -servername panel.example.com &lt;/dev/null 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -subject -issuer -dates</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下会显示：</p>
+<ul>
+<li><code>subject</code>：证书对应的域名</li>
+<li><code>issuer</code>：证书签发机构</li>
+<li><code>notBefore</code>：生效时间</li>
+<li><code>notAfter</code>：到期时间</li>
+</ul>
+<p>检查证书包含的域名：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl s_client \</span><br><span class="line">  -connect panel.example.com:2053 \</span><br><span class="line">  -servername panel.example.com &lt;/dev/null 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -ext subjectAltName</span><br></pre></td></tr></table></figure>
+
+<p>输出中应包含 <code>DNS:panel.example.com</code>。</p>
+<h3 id="5-使用-curl-检查握手"><a href="#5-使用-curl-检查握手" class="headerlink" title="5. 使用 curl 检查握手"></a>5. 使用 curl 检查握手</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -Iv https://panel.example.com:2053/</span><br></pre></td></tr></table></figure>
+
+<p>如果面板使用随机路径，根目录返回 404 不一定代表 HTTPS 失败；只要 TLS 握手和证书验证成功，再访问完整面板路径即可。</p>
+<h2 id="❌-七、根据错误代码快速定位"><a href="#❌-七、根据错误代码快速定位" class="headerlink" title="❌ 七、根据错误代码快速定位"></a>❌ 七、根据错误代码快速定位</h2><table>
+<thead>
+<tr>
+<th>浏览器提示</th>
+<th>常见原因</th>
+<th>处理方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>地址栏显示“不安全”</td>
+<td>使用普通 HTTP</td>
+<td>配置证书并改用 <code>https://</code></td>
+</tr>
+<tr>
+<td><code>ERR_CERT_AUTHORITY_INVALID</code></td>
+<td>自签名证书、证书链不完整、本机根证书异常或 HTTPS 检查软件替换证书</td>
+<td>检查实际返回的签发者，使用公共证书并指向 <code>fullchain.pem</code></td>
+</tr>
+<tr>
+<td><code>ERR_CERT_COMMON_NAME_INVALID</code></td>
+<td>访问地址与证书名称不一致</td>
+<td>使用证书对应域名，或申请匹配的 IP 证书</td>
+</tr>
+<tr>
+<td><code>ERR_CERT_DATE_INVALID</code></td>
+<td>证书过期、尚未生效或访问设备时间错误</td>
+<td>续签证书并校准电脑或手机时间；同时检查 VPS 时间以免影响续期</td>
+</tr>
+<tr>
+<td><code>ERR_SSL_PROTOCOL_ERROR</code></td>
+<td>HTTPS 访问了 HTTP 端口、证书路径错误</td>
+<td>核对协议、端口、证书路径和日志</td>
+</tr>
+<tr>
+<td>连接超时</td>
+<td>防火墙、安全组或 DNS 错误</td>
+<td>放行实际端口并检查 A&#x2F;AAAA 记录</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>反向代理无法连接 3x-ui</td>
+<td>核对回源地址、端口、HTTP&#x2F;HTTPS 协议</td>
+</tr>
+</tbody></table>
+<h2 id="🛠️-八、几个最容易踩的坑"><a href="#🛠️-八、几个最容易踩的坑" class="headerlink" title="🛠️ 八、几个最容易踩的坑"></a>🛠️ 八、几个最容易踩的坑</h2><h3 id="1-申请成功，但没有设置给面板"><a href="#1-申请成功，但没有设置给面板" class="headerlink" title="1. 申请成功，但没有设置给面板"></a>1. 申请成功，但没有设置给面板</h3><p>“证书已经签发”和“面板正在使用证书”是两件事。申请完成后还要执行 <code>Set Cert paths for the panel</code> 并重启服务。</p>
+<h3 id="2-用-cert-pem-代替-fullchain-pem"><a href="#2-用-cert-pem-代替-fullchain-pem" class="headerlink" title="2. 用 cert.pem 代替 fullchain.pem"></a>2. 用 <code>cert.pem</code> 代替 <code>fullchain.pem</code></h3><p>部分浏览器可能因缺少中间证书而不信任连接。给面板配置时优先使用：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fullchain.pem</span><br><span class="line">privkey.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Cloudflare-开了代理，却仍用错误方式验证"><a href="#3-Cloudflare-开了代理，却仍用错误方式验证" class="headerlink" title="3. Cloudflare 开了代理，却仍用错误方式验证"></a>3. Cloudflare 开了代理，却仍用错误方式验证</h3><p>开启橙色云后，访问流量先到 Cloudflare。若 HTTP 验证反复失败，可以临时关闭代理，或者直接使用 Cloudflare DNS-01 验证。</p>
+<h3 id="4-忘记云厂商安全组"><a href="#4-忘记云厂商安全组" class="headerlink" title="4. 忘记云厂商安全组"></a>4. 忘记云厂商安全组</h3><p>UFW 显示允许，不代表公网一定能访问。AWS、Google Cloud、阿里云、腾讯云、Oracle Cloud 等平台通常还有独立安全组或网络防火墙。</p>
+<h3 id="5-修好证书后仍用旧书签"><a href="#5-修好证书后仍用旧书签" class="headerlink" title="5. 修好证书后仍用旧书签"></a>5. 修好证书后仍用旧书签</h3><p>旧书签可能保存的是 <code>http://IP:端口/路径</code>。请重新保存完整的 HTTPS 域名地址。</p>
+<h3 id="6-面板路径直接暴露"><a href="#6-面板路径直接暴露" class="headerlink" title="6. 面板路径直接暴露"></a>6. 面板路径直接暴露</h3><p>HTTPS 只能保护传输过程，不能代替访问控制。建议同时做到：</p>
+<ul>
+<li>使用非默认面板端口</li>
+<li>使用足够长的随机面板路径</li>
+<li>修改默认账号和密码</li>
+<li>开启 2FA</li>
+<li>只允许自己的固定 IP 访问，或通过 VPN&#x2F;SSH 隧道管理</li>
+<li>不公开面板地址、API Token 和证书私钥</li>
+</ul>
+<h2 id="❓-九、常见问题"><a href="#❓-九、常见问题" class="headerlink" title="❓ 九、常见问题"></a>❓ 九、常见问题</h2><h3 id="节点正常，但面板提示不安全，会影响节点吗？"><a href="#节点正常，但面板提示不安全，会影响节点吗？" class="headerlink" title="节点正常，但面板提示不安全，会影响节点吗？"></a>节点正常，但面板提示不安全，会影响节点吗？</h3><p>不一定。节点入站和面板 Web 服务可以使用不同端口、不同 TLS 配置。面板证书错误通常不会直接导致 REALITY 节点失效，但管理员登录数据仍存在安全风险，应尽快修复。</p>
+<h3 id="可以一直点击“高级-→-继续访问”吗？"><a href="#可以一直点击“高级-→-继续访问”吗？" class="headerlink" title="可以一直点击“高级 → 继续访问”吗？"></a>可以一直点击“高级 → 继续访问”吗？</h3><p>不建议。你无法仅凭页面外观判断是自己的自签名证书，还是连接遭到中间人替换。公网管理面板应该使用能够正常验证的证书。</p>
+<h3 id="证书续签后需要修改路径吗？"><a href="#证书续签后需要修改路径吗？" class="headerlink" title="证书续签后需要修改路径吗？"></a>证书续签后需要修改路径吗？</h3><p>正常情况下不需要。让续签程序在原路径更新 <code>fullchain.pem</code> 和 <code>privkey.pem</code> 即可。续签后重启 3x-ui，让面板重新读取证书：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="REALITY-入站需要使用这个面板证书吗？"><a href="#REALITY-入站需要使用这个面板证书吗？" class="headerlink" title="REALITY 入站需要使用这个面板证书吗？"></a>REALITY 入站需要使用这个面板证书吗？</h3><p>不需要。REALITY 与传统 TLS 入站的工作方式不同，不应因为面板配置 HTTPS，就随意把面板证书填进 REALITY 入站。本文处理的是 <strong>3x-ui 管理页面的 HTTPS</strong>。</p>
+<h2 id="📝-总结"><a href="#📝-总结" class="headerlink" title="📝 总结"></a>📝 总结</h2><p>3x-ui 出现“此站点的连接不安全”，本质上通常只有三类问题：</p>
+<ol>
+<li>使用的是明文 HTTP。</li>
+<li>证书不受信任、已过期或链不完整。</li>
+<li>证书与当前访问的域名&#x2F;IP 不匹配。</li>
+</ol>
+<p>对大多数用户，最稳妥的处理顺序是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">域名解析到 VPS</span><br><span class="line">→ 申请 Let&#x27;s Encrypt 证书</span><br><span class="line">→ 设置 fullchain.pem 与 privkey.pem</span><br><span class="line">→ 重启 3x-ui</span><br><span class="line">→ 使用 HTTPS 域名访问</span><br></pre></td></tr></table></figure>
+
+<p>没有域名可以使用新版 3x-ui 的裸 IP 证书；已经使用 Nginx、Caddy 或 Cloudflare，则应明确由哪一层负责 TLS，避免重复配置和协议混乱。</p>
+<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
+<li><a href="https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/zh/config/ssl-certificates.mdx">3x-ui 官方 SSL 证书文档（中文）</a></li>
+<li><a href="https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/panel.mdx">3x-ui 面板设置与 TLS 说明</a></li>
+<li><a href="https://github.com/MHSanaei/3x-ui/wiki/Configuration">3x-ui 官方 Wiki：证书与反向代理配置</a></li>
+<li><a href="https://support.google.com/chrome/answer/95669?hl=zh-Hans">Google Chrome：证书与连接错误说明</a></li>
+<li><a href="https://developers.cloudflare.com/fundamentals/reference/network-ports/">Cloudflare：支持代理的网络端口</a></li>
+</ul>
+<hr>
+<p>如果这篇教程帮你解决了问题，欢迎收藏本站。配置过程中不要在评论区公开服务器 IP、面板路径、管理员密码、API Token 或证书私钥。</p>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>服务器运维</category>
+      </categories>
+      <tags>
+        <tag>Cloudflare</tag>
+        <tag>3x-ui</tag>
+        <tag>HTTPS</tag>
+        <tag>SSL证书</tag>
+        <tag>Let&#39;s Encrypt</tag>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>🚀 Debian VPS 搭建 VLESS + REALITY 全流程：3X-UI、BBR 与 UFW</title>
+    <url>/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/rbvd4RZQaNY"
+    title="Debian VPS 搭建 VLESS Reality、3X-UI、BBR 与 UFW 视频教程"
+    frameborder="0"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=rbvd4RZQaNY" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+
+<p>这是一份面向 <strong>Debian 纯净系统</strong>的完整教程，不混用 Ubuntu、CentOS 或 Alpine 命令。请严格按照本文顺序操作：先确认 SSH 可以登录，再开启防火墙；安装面板并取得实际端口后，才放行面板端口；创建 Reality 入站后，才放行节点端口。</p>
+<p>REALITY 不要求你购买域名，也不需要为节点单独申请 TLS 证书。它会利用目标 HTTPS 站点的握手特征和证书外观进行伪装，但并不是把目标网站的证书复制或安装到你的 VPS。</p>
+<blockquote>
+<p>本文默认使用 <code>root</code> 用户，因此命令中不添加 <code>sudo</code>。</p>
+</blockquote>
+<h2 id="🛠️-一、选择-VPS-与厂商推荐"><a href="#🛠️-一、选择-VPS-与厂商推荐" class="headerlink" title="🛠️ 一、选择 VPS 与厂商推荐"></a>🛠️ 一、选择 VPS 与厂商推荐</h2><p>在开始搭建前，需要准备一台具有公网可达 IP 的海外 VPS。线路质量、机房位置和晚高峰拥塞情况，都会直接影响实际体验。</p>
+<h3 id="核心选购指标"><a href="#核心选购指标" class="headerlink" title="核心选购指标"></a>核心选购指标</h3><ul>
+<li><strong>线路质量</strong>：可优先测试 <strong>CN2-GIA</strong>（电信）、<strong>AS9929</strong>（联通）或 <strong>CMI</strong>（移动）等优化线路。实际表现取决于所在地、运营商、路由和晚高峰拥塞。</li>
+<li><strong>机房位置</strong>：通常距离越近，基础延迟越低，但应以测试 IP 的 <code>ping</code>、路由追踪、丢包率和晚高峰测速为准。</li>
+<li><strong>系统支持</strong>：确认服务商可以安装 Debian 12 或 Debian 13 64 位纯净系统。</li>
+<li><strong>公网 IP</strong>：确认 VPS 具有公网可达 IP，并了解服务商是否额外提供安全组或云防火墙。</li>
+<li><strong>付款方式</strong>：根据自己的需求选择月付或年付，首次购买不建议一次预付太长时间。</li>
+</ul>
+<h3 id="VPS-服务商对比"><a href="#VPS-服务商对比" class="headerlink" title="VPS 服务商对比"></a>VPS 服务商对比</h3><table>
+<thead>
+<tr>
+<th align="left">服务商</th>
+<th align="left">主要特点</th>
+<th align="left">推荐线路&#x2F;地区</th>
+<th align="left">适用场景</th>
+<th align="left">价格定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.dmit.io/aff.php?aff=18635" title="DMIT"><i class="anzhiyu-icon-external-link"></i><span>DMIT</span></a></strong></td>
+<td align="left">线路质量较高，提供多种优化网络产品</td>
+<td align="left">CN2 GIA &#x2F; 香港 &#x2F; 日本 &#x2F; 美国</td>
+<td align="left">对线路稳定性要求较高</td>
+<td align="left">较高</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://bandwagonhost.com/aff.php?aff=80916" title="搬瓦工"><i class="anzhiyu-icon-gift"></i><span>搬瓦工</span></a></strong></td>
+<td align="left">支持多个机房和线路方案</td>
+<td align="left">CN2 GIA-E &#x2F; 日本软银等</td>
+<td align="left">需要灵活切换机房</td>
+<td align="left">中高</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://akile.io/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" title="Akile Cloud"><i class="anzhiyu-icon-gift"></i><span>Akile Cloud</span></a></strong></td>
+<td align="left">支持按量或月付，地区选择较多</td>
+<td align="left">香港 &#x2F; 台湾 &#x2F; 日本 &#x2F; 韩国等</td>
+<td align="left">临时测试和短期项目</td>
+<td align="left">中低</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify orange" href="https://my.racknerd.com/aff.php?aff=18647" title="RackNerd"><i class="anzhiyu-icon-gift"></i><span>RackNerd</span></a></strong></td>
+<td align="left">年付产品价格较低</td>
+<td align="left">美国常规线路</td>
+<td align="left">预算有限、博客和测试环境</td>
+<td align="left">较低</td>
+</tr>
+<tr>
+<td align="left"><strong><a class="btn-beautify blue" href="https://www.vultr.com/?ref=9876529" title="Vultr"><i class="anzhiyu-icon-gift"></i><span>Vultr</span></a></strong></td>
+<td align="left">全球机房较多，支持按小时计费和 API</td>
+<td align="left">国际标准 BGP</td>
+<td align="left">临时部署和开发测试</td>
+<td align="left">中等</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>线路、IP 属性、库存和价格会随时变化，请以服务商实时页面及测试 IP 为准。上表部分按钮包含推广参数，购买价格通常不因此增加。</p>
+</blockquote>
+<hr>
+<h2 id="💡-二、搭建前准备"><a href="#💡-二、搭建前准备" class="headerlink" title="💡 二、搭建前准备"></a>💡 二、搭建前准备</h2><ul>
+<li>一台具有公网可达 IP 的 VPS，优先选择 <strong>Debian 13 64 位</strong>，也可使用 <strong>Debian 12 64 位</strong>。</li>
+<li>VPS 的公网 IP，以及服务商提供的 <code>root</code> 初始登录凭据。</li>
+<li>SSH 工具：Windows 可使用 Windows Terminal &#x2F; PowerShell，macOS 可使用系统自带终端。</li>
+<li>一个部署时经过测试的 Reality Target&#x2F;SNI。无需拥有这个域名，但不能把网上的示例当成永久可用配置。</li>
+</ul>
+<p>截至 2026 年 7 月，Debian 11 LTS 将于 2026 年 8 月 31 日结束，不建议再用于新装服务器。Debian 12 LTS 持续至 2028 年 6 月 30 日。</p>
+<hr>
+<h2 id="🚀-三、更新-Debian-并安装基础工具"><a href="#🚀-三、更新-Debian-并安装基础工具" class="headerlink" title="🚀 三、更新 Debian 并安装基础工具"></a>🚀 三、更新 Debian 并安装基础工具</h2><p>通过 SSH 登录 VPS：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>你的VPS_IP</code> 替换为真实公网 IP。登录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install -y curl wget ca-certificates tar ufw</span><br></pre></td></tr></table></figure>
+
+<p>如果系统更新了内核，建议先重启，再重新连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚡-四、开启并验证-BBR"><a href="#⚡-四、开启并验证-BBR" class="headerlink" title="⚡ 四、开启并验证 BBR"></a>⚡ 四、开启并验证 BBR</h2><p>使用独立配置文件，避免重复执行时不断向 <code>/etc/sysctl.conf</code> 追加相同内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>验证当前算法及内核可用算法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>第一条应显示当前算法为 <code>bbr</code>，第二条的列表中也应包含 <code>bbr</code>。不要只依靠 <code>lsmod | grep bbr</code> 判断，因为 BBR 编译进内核时可能不会出现在模块列表中。</p>
+<hr>
+<h2 id="🛡️-五、配置-UFW：此时只放行-SSH"><a href="#🛡️-五、配置-UFW：此时只放行-SSH" class="headerlink" title="🛡️ 五、配置 UFW：此时只放行 SSH"></a>🛡️ 五、配置 UFW：此时只放行 SSH</h2><h3 id="1-确认-SSH-实际端口"><a href="#1-确认-SSH-实际端口" class="headerlink" title="1. 确认 SSH 实际端口"></a>1. 确认 SSH 实际端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sshd -T | grep <span class="string">&#x27;^port &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出是 <code>port 22</code>，下面使用 <code>22</code>；如果输出为其他端口，必须把命令中的 <code>22</code> 换成实际值。</p>
+<h3 id="2-设置策略、放行-SSH-并开启-UFW"><a href="#2-设置策略、放行-SSH-并开启-UFW" class="headerlink" title="2. 设置策略、放行 SSH 并开启 UFW"></a>2. 设置策略、放行 SSH 并开启 UFW</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line">ufw allow 22/tcp comment <span class="string">&#x27;SSH&#x27;</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>Status: active</code> 和实际 SSH 端口规则后，不要立即关闭当前窗口。先新开一个终端再次连接 VPS，确认 SSH 仍然可用。</p>
+<blockquote>
+<p>此时 3X-UI 尚未安装，Reality 入站也尚未创建，因此不要提前开放面板端口、<code>443</code> 或 <code>2096</code>。</p>
+</blockquote>
+<hr>
+<h2 id="🖥️-六、安装-3X-UI-面板"><a href="#🖥️-六、安装-3X-UI-面板" class="headerlink" title="🖥️ 六、安装 3X-UI 面板"></a>🖥️ 六、安装 3X-UI 面板</h2><p>执行 3X-UI 官方安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<p>安装脚本会持续更新，应以屏幕上的实际提示为准。当前版本会生成随机用户名、密码和 WebBasePath，并在安装结束时显示面板端口、访问地址、账号以及 API Token。请立即保存完整输出，不要套用旧教程中的默认账号、固定端口或固定路径。</p>
+<p>如果安装器提供 HTTPS、IP 证书、反向代理或仅监听 <code>127.0.0.1</code> 等选项，请根据实际访问方式选择。公网 HTTP 会明文传输面板登录信息，不适合长期使用。</p>
+<h3 id="安装完成后再放行面板端口"><a href="#安装完成后再放行面板端口" class="headerlink" title="安装完成后再放行面板端口"></a>安装完成后再放行面板端口</h3><p>假设安装结果显示面板端口为 <code>28530</code>，有固定公网 IP 时，建议只允许自己的 IP：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow from 你的公网IP to any port 28530 proto tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>必须把 <code>你的公网IP</code> 和 <code>28530</code> 换成真实值，不能原样执行。</p>
+<p>没有固定 IP、确实需要临时公网访问时，可以开放实际面板端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 28530/tcp comment <span class="string">&#x27;3X-UI Admin&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>更安全的方式是不向公网开放面板端口，而是在本地建立 SSH 隧道：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-L</span> <span class="number">28530</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">28530</span> root<span class="selector-tag">@</span>你的VPS_IP</span><br></pre></td></tr></table></figure>
+
+<p>随后通过 <code>http://127.0.0.1:28530/你的WebBasePath/</code> 访问。端口和路径都必须使用安装器实际给出的值。</p>
+<hr>
+<h2 id="📡-七、配置-VLESS-REALITY-XTLS-Vision"><a href="#📡-七、配置-VLESS-REALITY-XTLS-Vision" class="headerlink" title="📡 七、配置 VLESS + REALITY + XTLS Vision"></a>📡 七、配置 VLESS + REALITY + XTLS Vision</h2><p>登录面板，进入 <strong>入站列表（Inbounds）</strong>，点击 <strong>添加入站（Add Inbound）</strong>。</p>
+<h3 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h3><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">填写内容</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">备注（Remark）</td>
+<td align="left"><code>VLESS-REALITY</code></td>
+<td align="left">仅用于自己识别</td>
+</tr>
+<tr>
+<td align="left">协议（Protocol）</td>
+<td align="left"><code>VLESS</code></td>
+<td align="left">入站协议</td>
+</tr>
+<tr>
+<td align="left">监听 IP</td>
+<td align="left"><code>0.0.0.0</code></td>
+<td align="left">监听服务器公网网卡</td>
+</tr>
+<tr>
+<td align="left">端口（Port）</td>
+<td align="left"><code>443</code>（示例）</td>
+<td align="left">使用前确认没有被网站或其他服务占用</td>
+</tr>
+<tr>
+<td align="left">客户端 ID &#x2F; UUID</td>
+<td align="left">点击生成</td>
+<td align="left">每位用户建议使用独立 UUID</td>
+</tr>
+<tr>
+<td align="left">Flow</td>
+<td align="left"><code>xtls-rprx-vision</code></td>
+<td align="left">与 TCP&#x2F;RAW + Reality 配合</td>
+</tr>
+<tr>
+<td align="left">传输方式</td>
+<td align="left"><code>TCP</code>，新版内核可能显示 <code>RAW</code></td>
+<td align="left">以当前面板字段为准</td>
+</tr>
+<tr>
+<td align="left">安全（Security）</td>
+<td align="left"><code>reality</code></td>
+<td align="left">开启 Reality</td>
+</tr>
+<tr>
+<td align="left">Fingerprint &#x2F; uTLS</td>
+<td align="left"><code>chrome</code></td>
+<td align="left">客户端也要使用兼容指纹</td>
+</tr>
+<tr>
+<td align="left">Private&#x2F;Public Key</td>
+<td align="left">点击生成</td>
+<td align="left">私钥只保留在服务器端，客户端使用公钥</td>
+</tr>
+<tr>
+<td align="left">Short ID</td>
+<td align="left">点击生成</td>
+<td align="left">必须为偶数长度的十六进制字符串，最长 16 个字符</td>
+</tr>
+</tbody></table>
+<h3 id="Target-与-SNI"><a href="#Target-与-SNI" class="headerlink" title="Target 与 SNI"></a>Target 与 SNI</h3><p>旧教程中常见 <code>dl.google.com:443</code>、<code>www.microsoft.com:443</code> 或 <code>itunes.apple.com:443</code>，但它们只能作为候选示例，不能保证在所有 VPS、地区和时间都适用。</p>
+<ul>
+<li>Target（旧版界面可能显示 Dest）应填写经过测试的 HTTPS 站点和端口。</li>
+<li>Server Names &#x2F; SNI 通常应与 Target 接受的证书域名一致。</li>
+<li>Target 应支持所需 TLS 特性，并且从 VPS 所在网络能够稳定访问。</li>
+<li>不要机械照抄 CDN 或特殊目标。未通过 Reality 验证的流量可能被转发至 Target，错误选择可能导致服务器被滥用为转发器。</li>
+</ul>
+<p>设置完成后点击 <strong>添加（Add）</strong> 保存入站。</p>
+<h3 id="保存入站后再放行节点端口"><a href="#保存入站后再放行节点端口" class="headerlink" title="保存入站后再放行节点端口"></a>保存入站后再放行节点端口</h3><p>本例使用 TCP <code>443</code>，因此执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 443/tcp comment <span class="string">&#x27;VLESS Reality&#x27;</span></span><br><span class="line">ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>如果入站使用其他端口，就把 <code>443</code> 换成实际端口。本文采用 TCP&#x2F;RAW + Reality，不需要额外执行 <code>ufw allow 443/udp</code>。只有服务确实监听 UDP 时才开放 UDP。</p>
+<p>如果面板端口和入站端口相同，或者 <code>443</code> 已被 Nginx、Caddy 等程序占用，入站将无法正常启动。可先检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:443&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📱-八、导出节点并连接客户端"><a href="#📱-八、导出节点并连接客户端" class="headerlink" title="📱 八、导出节点并连接客户端"></a>📱 八、导出节点并连接客户端</h2><p>在入站列表中找到刚创建的记录，点击二维码或复制链接，获取 <code>vless://</code> 节点链接。导入后核对服务器地址、端口、公钥、SNI、Short ID、Fingerprint 和 Flow。</p>
+<table>
+<thead>
+<tr>
+<th align="left">平台</th>
+<th align="left">可选客户端</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Windows</td>
+<td align="left">v2rayN、sing-box</td>
+</tr>
+<tr>
+<td align="left">macOS</td>
+<td align="left">sing-box 等支持 Reality 的客户端</td>
+</tr>
+<tr>
+<td align="left">Android</td>
+<td align="left">v2rayNG、NekoBox、sing-box</td>
+</tr>
+<tr>
+<td align="left">iOS &#x2F; iPadOS</td>
+<td align="left">Shadowrocket、Stash、sing-box</td>
+</tr>
+</tbody></table>
+<p>Shadowrocket（小火箭）本身没有固定服务器端口。它连接哪个端口，取决于你创建的入站配置。</p>
+<hr>
+<h2 id="☁️-九、同步检查云厂商安全组"><a href="#☁️-九、同步检查云厂商安全组" class="headerlink" title="☁️ 九、同步检查云厂商安全组"></a>☁️ 九、同步检查云厂商安全组</h2><p>如果使用阿里云、腾讯云、AWS、Oracle Cloud 等带有安全组或云防火墙的平台，还必须在服务商控制台同步开放实际使用的端口：</p>
+<ul>
+<li>SSH 的实际 TCP 端口。</li>
+<li>面板的实际 TCP 端口——仅当面板需要公网访问时。</li>
+<li>Reality 入站的实际 TCP 端口。</li>
+</ul>
+<p>云安全组和 UFW 是两道独立防火墙。任何一层没有放行，外部都无法访问。不要为了省事开放全部端口或 <code>0-65535</code>。</p>
+<hr>
+<h2 id="🛠️-十、排查与维护命令"><a href="#🛠️-十、排查与维护命令" class="headerlink" title="🛠️ 十、排查与维护命令"></a>🛠️ 十、排查与维护命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 3X-UI 管理菜单</span></span><br><span class="line">x-ui</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看面板服务状态</span></span><br><span class="line">systemctl status x-ui --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查节点端口和面板端口（按实际端口替换）</span></span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(443|28530)\b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙规则</span></span><br><span class="line">ufw status verbose</span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改规则后重新加载</span></span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<p>如果服务正在监听但外部无法访问，应依次检查：服务商安全组、UFW、入站端口、客户端参数、VPS 系统时间和 Target 可达性。不要直接关闭全部防火墙来排错。</p>
+<p>若误封 SSH，请通过 VPS 服务商的 VNC、Web Console 或 Serial Console 登录，修正规则后再继续。</p>
+<hr>
+<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><p>正确的安全顺序是：</p>
+<ol>
+<li>选择支持 Debian 和公网 IP 的 VPS。</li>
+<li>更新 Debian 并确认 SSH 登录。</li>
+<li>开启并验证 BBR。</li>
+<li>只放行 SSH 后开启 UFW。</li>
+<li>安装 3X-UI，取得真实面板端口后再决定是否放行。</li>
+<li>创建 VLESS + Reality 入站，保存后只开放实际节点 TCP 端口。</li>
+<li>同步检查云厂商安全组，最后导入客户端测试。</li>
+</ol>
+<p>如果这篇教程对你有帮助，欢迎前往 <strong><a href="https://www.youtube.com/@guo1986">Skyline YouTube 技术频道</a></strong> 观看配套视频。视频会展示面板界面和实际操作过程，后续更新也会优先发布在频道中。</p>
+<p>官方参考：<a href="https://www.debian.org/News/2026/20260712">Debian 版本支持周期</a>、<a href="https://manpages.debian.org/bookworm/ufw/ufw.8.en.html">Debian UFW 手册</a>、<a href="https://github.com/MHSanaei/3x-ui/wiki/Installation">3X-UI 安装说明</a>、<a href="https://xtls.github.io/config/transports/reality.html">Xray REALITY 配置说明</a></p>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VPS</tag>
+        <tag>Reality协议</tag>
+        <tag>Debian</tag>
+        <tag>3X-UI</tag>
+        <tag>服务器运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程</title>
+    <url>/2026/07/30/2026-august-debian-vless-tcp-raw-reality-vision/</url>
+    <content><![CDATA[<div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/f-tnS52pb9Y"
+    title="2026年8月 Debian 搭建 VLESS TCP RAW REALITY Vision 视频教程"
+    loading="lazy"
+    frameborder="0"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<a class="btn-beautify red larger" href="https://www.youtube.com/watch?v=f-tnS52pb9Y" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" href="https://www.youtube.com/@guo1986" title="订阅 Skyline YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 Skyline YouTube 频道</span></a>
+
+<h2 id="📖-摘要"><a href="#📖-摘要" class="headerlink" title="📖 摘要"></a>📖 摘要</h2><p>如果把优先级明确设为“稳定第一、兼容第二、前沿第三”，那么在这份 <strong>2026 年 8 月版教程</strong>中，推荐长期使用的默认基线依然是：</p>
+<p><code>VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</code></p>
+<p>这套方案不是概念最新的一套，但它仍然是当前 Xray 体系里最成熟、最少变量、最容易长期稳定运行的组合。相比 <code>XHTTP + ECH + 后量子</code> 这类更前沿的路线，它更适合日常主力节点。</p>
+<span id="more"></span>
+
+<h2 id="🎯-为什么现在仍然推荐这套方案"><a href="#🎯-为什么现在仍然推荐这套方案" class="headerlink" title="🎯 为什么现在仍然推荐这套方案"></a>🎯 为什么现在仍然推荐这套方案</h2><p>原因很简单：<strong>变量越少，稳定性越高</strong>。</p>
+<ul>
+<li>不叠加 WebSocket、XHTTP、ECH、后量子等新变量，故障点更少</li>
+<li><code>REALITY + Vision</code> 仍然是官方长期维护、文档明确支持的成熟组合</li>
+<li>客户端兼容面更广，导入订阅后更不容易出兼容问题</li>
+<li>排障更简单，节点异常时更容易定位问题来源</li>
+</ul>
+<p>如果你的目标是“长期稳定不死”，那就不要先追求参数花样，而要先追求链路干净。</p>
+<h2 id="🧰-一、底层环境准备"><a href="#🧰-一、底层环境准备" class="headerlink" title="🧰 一、底层环境准备"></a>🧰 一、底层环境准备</h2><p>登录 Debian VPS 后，按下面顺序执行即可。</p>
+<blockquote>
+<p>如果你当前就是 <code>root</code> 登录，推荐直接用 <code>apt-get</code>，不需要再额外写 <code>sudo</code>。</p>
+</blockquote>
+<h3 id="1-先更新系统"><a href="#1-先更新系统" class="headerlink" title="1. 先更新系统"></a>1. 先更新系统</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get full-upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装基础工具"><a href="#2-安装基础工具" class="headerlink" title="2. 安装基础工具"></a>2. 安装基础工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install -y curl wget vim socat ca-certificates lsb-release gnupg ufw</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-设置时区"><a href="#3-设置时区" class="headerlink" title="3. 设置时区"></a>3. 设置时区</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
+
+<p>这样拆开执行更好，因为：</p>
+<ul>
+<li>如果第一步更新失败，你能马上知道</li>
+<li>不会一串命令里前面报错，后面还继续跑</li>
+<li>更方便排查到底卡在哪一步</li>
+</ul>
+<h3 id="4-开启-BBR"><a href="#4-开启-BBR" class="headerlink" title="4. 开启 BBR"></a>4. 开启 BBR</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&#x27;echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf&#x27;</span></span><br><span class="line">sh -c <span class="string">&#x27;echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf&#x27;</span></span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>lsmod | grep bbr</code> 有返回值，就说明 BBR 已启用。</p>
+<blockquote>
+<p>注意：前两行是追加写入，重复执行会在 <code>/etc/sysctl.conf</code> 里留下重复配置，因此正常执行一次即可。</p>
+</blockquote>
+<h2 id="🖥️-二、安装-3x-ui-面板"><a href="#🖥️-二、安装-3x-ui-面板" class="headerlink" title="🖥️ 二、安装 3x-ui 面板"></a>🖥️ 二、安装 3x-ui 面板</h2><h3 id="1-执行官方安装脚本"><a href="#1-执行官方安装脚本" class="headerlink" title="1. 执行官方安装脚本"></a>1. 执行官方安装脚本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装时记住这三项"><a href="#2-安装时记住这三项" class="headerlink" title="2. 安装时记住这三项"></a>2. 安装时记住这三项</h3><ul>
+<li>面板用户名</li>
+<li>面板密码</li>
+<li>面板端口</li>
+</ul>
+<p>建议避开 <code>80</code>、<code>443</code>、<code>8080</code>，例如使用 <code>54321</code>。</p>
+<blockquote>
+<p>面板端口只是给管理后台用，不要和你后面节点入站端口混在一起。</p>
+</blockquote>
+<p>截至 <strong>2026 年 7 月 30 日</strong>，3x-ui 官方稳定发布页显示最新版本为 <strong>v3.6.0</strong>，并集成 <strong>Xray-core v26.7.28</strong>。Xray-core 官方将该核心版本标记为预发布，因此新手建议使用 3x-ui 的稳定更新通道，不要切换到 Dev 通道；安装后再到面板中确认实际版本。</p>
+<h3 id="安装完成后立即开启防火墙"><a href="#安装完成后立即开启防火墙" class="headerlink" title="安装完成后立即开启防火墙"></a>安装完成后立即开启防火墙</h3><p>面板装好后，不要急着直接裸奔使用，先把系统防火墙开起来。</p>
+<p>如果你是 <code>root</code> 登录，直接执行下面这组命令即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line"></span><br><span class="line">ufw allow 22/tcp</span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/tcp</span><br><span class="line">ufw allow 你的面板端口/tcp</span><br><span class="line"></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>这几条规则分别对应：</p>
+<ul>
+<li><code>22/tcp</code> 是 SSH 远程登录端口</li>
+<li><code>80/tcp</code> 是给 Let’s Encrypt 申请和续签证书用的</li>
+<li><code>443/tcp</code> 是后面节点常见使用端口</li>
+<li><code>你的面板端口/tcp</code> 指的是你安装 3x-ui 时自己设置的管理面板端口，例如 <code>54321/tcp</code></li>
+</ul>
+<blockquote>
+<p>如果你的 SSH 端口不是 <code>22</code>，这里也要改成真实端口，否则可能把自己锁在服务器外面。</p>
+</blockquote>
+<blockquote>
+<p>另外，除了系统里的 <code>ufw</code>，云厂商后台的安全组也要同步放行对应端口。很多人以为自己已经开了防火墙，结果其实是被安全组挡住了。</p>
+</blockquote>
+<h3 id="开了防火墙后，怎么查自己的订阅端口"><a href="#开了防火墙后，怎么查自己的订阅端口" class="headerlink" title="开了防火墙后，怎么查自己的订阅端口"></a>开了防火墙后，怎么查自己的订阅端口</h3><p>很多人第一次装好 <code>3x-ui / x-ui</code> 后，只记住了面板端口和节点端口，结果开了 <code>ufw</code> 以后发现：</p>
+<ul>
+<li>面板能登录</li>
+<li>节点本身也在监听</li>
+<li>但客户端更新订阅一直提示超时</li>
+</ul>
+<p>这时候最常见的原因不是节点坏了，而是<strong>订阅端口没有放行</strong>。</p>
+<p>先把这 3 类端口分清楚：</p>
+<ul>
+<li>面板端口：登录 <code>3x-ui</code> 后台用</li>
+<li>节点端口：客户端实际连接入站用，例如 <code>443</code></li>
+<li>订阅端口：客户端拉取订阅链接时访问的端口</li>
+</ul>
+<p>它们完全可以不同。比如：</p>
+<ul>
+<li>面板端口：<code>54321</code></li>
+<li>节点端口：<code>443</code></li>
+<li>订阅端口：<code>2096</code></li>
+</ul>
+<h4 id="1-直接看订阅链接本身"><a href="#1-直接看订阅链接本身" class="headerlink" title="1. 直接看订阅链接本身"></a>1. 直接看订阅链接本身</h4><p>这是最直接的办法。</p>
+<ul>
+<li>如果链接是 <code>https://example.com:2096/sub/...</code>，那客户端实际访问的订阅端口就是 <code>2096</code></li>
+<li>如果链接是 <code>https://example.com/sub/...</code>，那对客户端来说默认就是 <code>443</code></li>
+<li>如果链接是 <code>http://example.com/sub/...</code>，那默认就是 <code>80</code></li>
+</ul>
+<p>也就是说，<strong>订阅链接里显式写了端口，就看那个端口；没写端口，就按协议默认端口算。</strong></p>
+<h4 id="2-在服务器日志里看-Sub-server"><a href="#2-在服务器日志里看-Sub-server" class="headerlink" title="2. 在服务器日志里看 Sub server"></a>2. 在服务器日志里看 <code>Sub server</code></h4><p>如果你有服务器权限，直接看 <code>x-ui</code> 日志最稳：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u x-ui -n 50 --no-pager</span><br></pre></td></tr></table></figure>
+
+<p>你通常会看到类似输出：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Web server running HTTPS on [::]:25731</span><br><span class="line">Sub server running HTTPS on [::]:2096</span><br></pre></td></tr></table></figure>
+
+<p>这里：</p>
+<ul>
+<li><code>Web server</code> 后面的端口是面板端口</li>
+<li><code>Sub server</code> 后面的端口才是订阅服务端口</li>
+</ul>
+<h4 id="3-用监听端口反查"><a href="#3-用监听端口反查" class="headerlink" title="3. 用监听端口反查"></a>3. 用监听端口反查</h4><p>如果你不想翻太多日志，也可以直接看 <code>x-ui</code> 当前监听了哪些端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tlnp | grep x-ui</span><br></pre></td></tr></table></figure>
+
+<p>通常你会同时看到面板端口和订阅端口都被 <code>x-ui</code> 监听。</p>
+<h4 id="4-开了-ufw-记得把订阅端口也一起放行"><a href="#4-开了-ufw-记得把订阅端口也一起放行" class="headerlink" title="4. 开了 ufw 记得把订阅端口也一起放行"></a>4. 开了 <code>ufw</code> 记得把订阅端口也一起放行</h4><p>如果你确认订阅端口是 <code>2096</code>，那除了节点端口和面板端口，还要额外放行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 2096/tcp</span><br><span class="line">ufw reload</span><br></pre></td></tr></table></figure>
+
+<p>如果你开了云厂商安全组，也要同步把这个端口放行。</p>
+<blockquote>
+<p>注意：如果你的订阅链接前面套了 <code>Nginx</code> 或 <code>Caddy</code> 反代，那么客户端真正访问的可能是 <code>443</code>，而不是 <code>x-ui</code> 内部的订阅监听端口。最终以你<strong>客户端实际访问的订阅链接</strong>为准。</p>
+</blockquote>
+<h3 id="首次登录后怎么修改面板密码并开启-2FA"><a href="#首次登录后怎么修改面板密码并开启-2FA" class="headerlink" title="首次登录后怎么修改面板密码并开启 2FA"></a>首次登录后怎么修改面板密码并开启 2FA</h3><p>第一次打开面板后，建议立刻把认证信息处理好，再去建入站。</p>
+<h3 id="面板里按这个顺序操作"><a href="#面板里按这个顺序操作" class="headerlink" title="面板里按这个顺序操作"></a>面板里按这个顺序操作</h3><ol>
+<li>登录 3x-ui 面板</li>
+<li>进入 <code>Panel Settings</code></li>
+<li>找到 <code>Authentication</code></li>
+<li>修改用户名和密码</li>
+<li>开启 <code>Two-Factor Authentication</code></li>
+</ol>
+<p>如果你安装时已经让脚本生成了一组随机用户名和随机密码，也可以先不改用户名，但密码一定要确保足够强。</p>
+<p>开启 2FA 时，一般会看到二维码或一串密钥。<br>这时用手机上的验证器 App 扫码即可，例如：</p>
+<ul>
+<li><code>Google Authenticator</code></li>
+<li><code>Microsoft Authenticator</code></li>
+<li><code>Aegis</code></li>
+</ul>
+<p>扫码后，App 会每 30 秒生成一个新的 6 位验证码。把当前验证码填回 3x-ui 面板并保存，之后你登录面板时就会多一道动态验证码校验。</p>
+<h3 id="这里有两个细节一定别省"><a href="#这里有两个细节一定别省" class="headerlink" title="这里有两个细节一定别省"></a>这里有两个细节一定别省</h3><ul>
+<li>把 2FA 的密钥或恢复信息单独保存好，不要只留在手机里</li>
+<li>开完 2FA 后，退出面板重新登录一次，确认用户名、密码和动态验证码都正常</li>
+</ul>
+<p>如果你后面忘了面板密码，或者 2FA 配错导致进不去，可以在服务器里执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
+
+<p>然后走重置账号密码流程。新版菜单里也会问你是否禁用当前已经配置好的 2FA，到时按提示操作即可。</p>
+<h2 id="🚀-三、添加-VLESS-REALITY-Vision-入站"><a href="#🚀-三、添加-VLESS-REALITY-Vision-入站" class="headerlink" title="🚀 三、添加 VLESS + REALITY + Vision 入站"></a>🚀 三、添加 VLESS + REALITY + Vision 入站</h2><p>在 3x-ui 面板中进入“入站列表”，点击“添加入站”，按下面填写：</p>
+<h3 id="基础设置"><a href="#基础设置" class="headerlink" title="基础设置"></a>基础设置</h3><ul>
+<li>协议：<code>vless</code></li>
+<li>监听 IP：留空</li>
+<li>端口：<code>443</code></li>
+<li>客户端 ID：随机 UUID</li>
+<li>Email：随意填写</li>
+<li>Flow：<strong>必须选择</strong> <code>xtls-rprx-vision</code></li>
+</ul>
+<h3 id="传输设置"><a href="#传输设置" class="headerlink" title="传输设置"></a>传输设置</h3><ul>
+<li>网络：<code>tcp</code> 或 <code>raw</code></li>
+<li>安全：<code>reality</code></li>
+</ul>
+<p>说明一下：新版 Xray 文档中，<code>TCP</code> 的主名已改成 <code>RAW</code>，但在很多面板和客户端里仍然会显示成 <code>TCP</code>，两者本质上是同一类传输。</p>
+<h2 id="🔐-四、REALITY-核心参数怎么填"><a href="#🔐-四、REALITY-核心参数怎么填" class="headerlink" title="🔐 四、REALITY 核心参数怎么填"></a>🔐 四、REALITY 核心参数怎么填</h2><p>REALITY 开启后，重点只看这几项：</p>
+<ul>
+<li><code>target</code> &#x2F; <code>dest</code>：伪装目标站，例如 <code>dl.google.com:443</code></li>
+<li><code>serverNames</code>：对应 SNI，例如 <code>dl.google.com</code></li>
+<li><code>privateKey</code>：点击生成 X25519 密钥</li>
+<li><code>shortIds</code>：随机生成</li>
+<li><code>fingerprint</code> &#x2F; uTLS：<code>chrome</code></li>
+<li><code>spiderX</code>：留空或填 <code>/</code></li>
+</ul>
+<p>这里有几个稳定派原则：</p>
+<ul>
+<li>目标站必须能从当前 VPS 正常访问，并支持 TLS 1.3、证书与 SNI 匹配</li>
+<li>示例使用 <code>dl.google.com</code>，但不同 VPS 线路的可用性可能不同，不能机械照抄</li>
+<li>如果客户端反复出现 <code>REALITY authentication failed</code> 或连接超时，应先检查 SNI、密钥和 Short ID，再更换一个从 VPS 实测可访问的目标站</li>
+<li><code>uTLS</code> 用 <code>chrome</code> 就够了，不建议乱改</li>
+<li><code>spiderX</code> 保持简单即可，没必要过度设计</li>
+</ul>
+<h2 id="✅-五、保存并重启核心"><a href="#✅-五、保存并重启核心" class="headerlink" title="✅ 五、保存并重启核心"></a>✅ 五、保存并重启核心</h2><p>配置完成后保存入站，然后重启 Xray 核心。<br>接着在入站列表中复制节点链接或二维码，导入客户端。</p>
+<h3 id="导入客户端后重点确认这几项"><a href="#导入客户端后重点确认这几项" class="headerlink" title="导入客户端后重点确认这几项"></a>导入客户端后重点确认这几项</h3><ul>
+<li>Security：<code>reality</code></li>
+<li>Network：<code>tcp</code> &#x2F; <code>raw</code></li>
+<li>Flow：<code>xtls-rprx-vision</code></li>
+<li>SNI：与你填写的伪装域名一致</li>
+<li>Public Key：服务端生成的公钥</li>
+<li>Short ID：与你分配的一致</li>
+<li>Fingerprint：<code>chrome</code></li>
+</ul>
+<h2 id="🧪-六、为什么不把-XHTTP-ECH-后量子当默认主力"><a href="#🧪-六、为什么不把-XHTTP-ECH-后量子当默认主力" class="headerlink" title="🧪 六、为什么不把 XHTTP &#x2F; ECH &#x2F; 后量子当默认主力"></a>🧪 六、为什么不把 XHTTP &#x2F; ECH &#x2F; 后量子当默认主力</h2><p>这些技术并不差，但它们更适合进阶用户，而不是所有人的默认首选。</p>
+<ul>
+<li><code>XHTTP</code> 参数空间更大，配置复杂度更高</li>
+<li><code>ECH</code> 在部分网络环境下可用性仍不稳定</li>
+<li>后量子签名会增加握手材料体积，提高排障难度</li>
+<li>新特性常常要求更高版本的客户端和更完整的兼容链路</li>
+</ul>
+<p>所以更现实的策略是：</p>
+<ul>
+<li>主力节点：<code>VLESS + TCP(RAW) + REALITY + Vision</code></li>
+<li>实验节点：<code>XHTTP + REALITY</code> 或 <code>TLS + ECH</code></li>
+<li>不要让实验方案直接替代主力方案</li>
+</ul>
+<h2 id="❓-FAQ"><a href="#❓-FAQ" class="headerlink" title="❓ FAQ"></a>❓ FAQ</h2><h3 id="1-现在最稳的方案到底是不是-VLESS-TCP-REALITY-Vision？"><a href="#1-现在最稳的方案到底是不是-VLESS-TCP-REALITY-Vision？" class="headerlink" title="1. 现在最稳的方案到底是不是 VLESS + TCP + REALITY + Vision？"></a>1. 现在最稳的方案到底是不是 VLESS + TCP + REALITY + Vision？</h3><p>如果你的目标是“长期稳定、尽量少折腾、兼容尽可能广”，那么在这份 <strong>2026 年 8 月版教程</strong>中，它依然是稳妥的默认基线。</p>
+<h3 id="2-TCP-和-RAW-有什么区别？"><a href="#2-TCP-和-RAW-有什么区别？" class="headerlink" title="2. TCP 和 RAW 有什么区别？"></a>2. TCP 和 RAW 有什么区别？</h3><p>没有本质区别。新版 Xray 文档把原来的 TCP 主名改成了 RAW，旧写法仍兼容。</p>
+<h3 id="3-Flow-为什么必须开-xtls-rprx-vision？"><a href="#3-Flow-为什么必须开-xtls-rprx-vision？" class="headerlink" title="3. Flow 为什么必须开 xtls-rprx-vision？"></a>3. Flow 为什么必须开 <code>xtls-rprx-vision</code>？</h3><p>因为 Vision 才是这套稳定派方案的核心之一。不开它，你得到的只是普通 VLESS + REALITY，而不是默认推荐的 Vision 组合。</p>
+<h3 id="4-spiderX-一定要精细配置吗？"><a href="#4-spiderX-一定要精细配置吗？" class="headerlink" title="4. spiderX 一定要精细配置吗？"></a>4. <code>spiderX</code> 一定要精细配置吗？</h3><p>不一定。日常求稳可以直接留空或写 <code>/</code>。对大多数用户来说，这不是决定节点生死的关键项。</p>
+<h3 id="5-要不要直接上-XHTTP-REALITY-后量子？"><a href="#5-要不要直接上-XHTTP-REALITY-后量子？" class="headerlink" title="5. 要不要直接上 XHTTP + REALITY + 后量子？"></a>5. 要不要直接上 XHTTP + REALITY + 后量子？</h3><p>如果你追求的是实验性增强和进阶玩法，可以单独开一条测试节点；如果你追求的是主力稳定性，不建议它直接取代 TCP(RAW) + REALITY + Vision。</p>
+<h2 id="📝-结尾总结"><a href="#📝-结尾总结" class="headerlink" title="📝 结尾总结"></a>📝 结尾总结</h2><p>在 <strong>2026 年 8 月版教程</strong>中，如果只看“长期稳定、少踩坑、兼容更广”这三个指标，那么值得作为默认基线的仍然是：</p>
+<p><code>VLESS + TCP(RAW) + REALITY + xtls-rprx-vision</code></p>
+<p>真正适合长期使用的节点，核心不是参数有多新，而是链路足够干净、变量足够少、客户端足够好适配。<br>在今天这个阶段，<strong>大道至简，仍然是最稳的答案</strong>。</p>
+<h2 id="🔗-参考来源"><a href="#🔗-参考来源" class="headerlink" title="🔗 参考来源"></a>🔗 参考来源</h2><ul>
+<li><a href="https://xtls.github.io/en/config/inbounds/vless.html">Project X VLESS Inbound 文档</a></li>
+<li><a href="https://xtls.github.io/en/config/outbounds/vless.html">Project X VLESS Outbound 文档</a></li>
+<li><a href="https://xtls.github.io/en/config/transport.html">Project X Transport &#x2F; REALITY 文档</a></li>
+<li><a href="https://github.com/XTLS/Xray-core/releases">Xray-core Releases</a></li>
+<li><a href="https://github.com/MHSanaei/3x-ui/releases">3x-ui Releases</a></li>
+<li><a href="https://github.com/XTLS/Xray-examples">XTLS&#x2F;Xray-examples 官方示例库</a></li>
+<li><a href="https://github.com/XTLS/Xray-examples/tree/main/VLESS-TCP-XTLS-Vision-REALITY">VLESS-TCP-XTLS-Vision-REALITY 官方示例</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>网络链路</category>
+      </categories>
+      <tags>
+        <tag>VLESS</tag>
+        <tag>Debian</tag>
+        <tag>3x-ui</tag>
+        <tag>Xray</tag>
+        <tag>REALITY</tag>
+        <tag>Vision</tag>
       </tags>
   </entry>
   <entry>
@@ -1162,153 +1475,6 @@
         <tag>macOS</tag>
         <tag>MDM</tag>
         <tag>系统工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比</title>
-    <url>/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/</url>
-    <content><![CDATA[<blockquote>
-<p>更新于 2026 年 7 月。本文包含推广链接；通过链接购买可能为本站带来佣金，但不会增加你的购买价格。线路、库存、价格和流媒体解锁状态可能随时变化，请以下单页面与购买前实测为准。</p>
-</blockquote>
-<h2 id="2026-VPS-推荐：先看结论"><a href="#2026-VPS-推荐：先看结论" class="headerlink" title="2026 VPS 推荐：先看结论"></a>2026 VPS 推荐：先看结论</h2><p>如果你正在搜索“2026 VPS 推荐”“便宜年付 VPS”或“中国大陆访问快的 VPS”，可以先记住一句话：<strong>搬瓦工和 DMIT 主打中国方向精品线路，RackNerd 主打低价年付与通用计算，AkileCloud 更偏亚洲节点、原生 IP 与流媒体解锁。</strong></p>
-<ul>
-<li>**中国大陆访问与精品线路：**搬瓦工、DMIT；</li>
-<li>**便宜年付 VPS 与开发测试：**RackNerd；</li>
-<li>**TikTok、Netflix、原生 IP 与亚洲节点：**AkileCloud；</li>
-<li>**正式建站：**优先比较网络稳定性、IP 信誉、备份与售后，不要只看跑分。</li>
-</ul>
-<p>不同 VPS 的“好”并不是同一回事。建站更看重稳定性与 IP 信誉，跨境业务更看重地区和 IP 属性，个人开发与备份则往往更在意价格。下面按线路、价格、解锁能力和使用场景进行对比。</p>
-<h2 id="2026-VPS-推荐快速选型表"><a href="#2026-VPS-推荐快速选型表" class="headerlink" title="2026 VPS 推荐快速选型表"></a>2026 VPS 推荐快速选型表</h2><table>
-<thead>
-<tr>
-<th>厂商</th>
-<th>核心定位</th>
-<th>线路与节点特点</th>
-<th>主要优势</th>
-<th>更适合谁</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong><a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a></strong></td>
-<td>高端中国方向优化</td>
-<td>CN2 GIA、AS9929、CMI 等，具体以套餐可迁移机房为准</td>
-<td>线路选择多、端口带宽高、KiwiVM 迁移灵活</td>
-<td>预算充足，重视中国方向网络质量与可玩性</td>
-</tr>
-<tr>
-<td><strong><a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a></strong></td>
-<td>美亚精品云服务器</td>
-<td>LAX &#x2F; HKG &#x2F; TYO 的 Pro、EB、T1 等系列定位不同</td>
-<td>精品线路、硬件配置清晰，适合建站与高质量节点</td>
-<td>商务建站、精品线路用户、对稳定性要求较高的人</td>
-</tr>
-<tr>
-<td><strong><a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a></strong></td>
-<td>低价年付 VPS</td>
-<td>以普通国际线路和 1Gbps 端口为主，多机房可选</td>
-<td>年付门槛低、KVM、适合跑常驻轻量服务</td>
-<td>学生、新手、开发测试、备份和备用机</td>
-</tr>
-<tr>
-<td><strong><a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a></strong></td>
-<td>亚洲节点与解锁特色</td>
-<td>覆盖香港、日本、台湾、新加坡、美国等地，提供多种 BGP&#x2F;优化线路</td>
-<td>节点多、带宽方案丰富、部分产品强调原生 IP 或流媒体解锁</td>
-<td>TikTok、跨境业务、流媒体及亚洲低延迟需求</td>
-</tr>
-</tbody></table>
-<h2 id="1-搬瓦工-VPS：CN2-GIA-与多机房迁移"><a href="#1-搬瓦工-VPS：CN2-GIA-与多机房迁移" class="headerlink" title="1. 搬瓦工 VPS：CN2 GIA 与多机房迁移"></a>1. 搬瓦工 VPS：CN2 GIA 与多机房迁移</h2><p>搬瓦工（BandwagonHost）是老牌 VPS 厂商，核心竞争力不只是某一个机房，而是 <strong>CN2 GIA、AS9929、CMI 等多种中国方向优化线路，以及 KiwiVM 后台的机房迁移能力</strong>。</p>
-<h3 id="值得关注的优势"><a href="#值得关注的优势" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>线路覆盖丰富</strong>：常见选择包括洛杉矶 CN2 GIA、AS9929，以及香港、日本等亚洲节点；实际可用机房取决于具体套餐。</li>
-<li><strong>端口带宽高</strong>：部分高端套餐提供 2.5Gbps、10Gbps 等端口规格，适合大文件传输和高并发场景。</li>
-<li><strong>迁移方便</strong>：不少套餐支持在 KiwiVM 中迁移机房，适合比较不同线路，或在需求变化后调整节点。</li>
-<li><strong>生态成熟</strong>：使用教程、测速资料和社区经验较多，新手遇到问题更容易找到参考。</li>
-</ul>
-<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>高端线路的价格明显高于普通 VPS；而且“10Gbps 端口”代表端口上限，并不等于中国大陆晚高峰一定能跑满。购买前应结合所在运营商、地区和测试 IP 判断。</p>
-<h3 id="推荐人群"><a href="#推荐人群" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>预算较充足，希望中国方向延迟、抖动和丢包表现更稳；</li>
-<li>需要在多个机房之间灵活切换；</li>
-<li>希望一台机器兼顾代理节点、下载与轻量建站。</li>
-</ul>
-<p>**选购建议：**优先查看包含 DC6 CN2 GIA-E、AS9929 等机房的可迁移套餐；香港、日本产品延迟通常更低，但价格也更高。</p>
-<p>👉 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">查看搬瓦工当前可售套餐</a></p>
-<h2 id="2-DMIT-VPS：美西、香港与日本精品线路"><a href="#2-DMIT-VPS：美西、香港与日本精品线路" class="headerlink" title="2. DMIT VPS：美西、香港与日本精品线路"></a>2. DMIT VPS：美西、香港与日本精品线路</h2><p>DMIT 的产品线通常按地区和网络等级划分，例如 LAX、HKG、TYO，以及 Pro、EB、T1 等系列。它更适合愿意为线路质量、硬件和服务稳定性支付溢价的用户。</p>
-<h3 id="值得关注的优势-1"><a href="#值得关注的优势-1" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>美亚节点选择清晰</strong>：洛杉矶、香港、东京是重点区域，不同系列面向中国优化、高防或国际连接等不同需求。</li>
-<li><strong>精品线路产品成熟</strong>：Pro 系列通常是中国方向用户重点关注的产品线，但路由仍应以下单时官方说明和实测为准。</li>
-<li><strong>适合正式业务</strong>：相比纯低价促销机，DMIT 更适合作为博客、企业网站、API 或长期运行服务的主机。</li>
-<li><strong>部分产品提供防护能力</strong>：EB 等产品线侧重防御或特定网络能力，购买前应确认防护范围、清洗策略和端口限制。</li>
-</ul>
-<h3 id="需要注意-1"><a href="#需要注意-1" class="headerlink" title="需要注意"></a>需要注意</h3><p>“原生 IP”和流媒体解锁不是永久属性。平台风控、IP 数据库和版权政策变化后，解锁结果可能改变；如果这是核心需求，购买前应查看商家说明，并在开通后立即测试。</p>
-<h3 id="推荐人群-1"><a href="#推荐人群-1" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>需要长期稳定建站或部署线上服务；</li>
-<li>对美西、香港、日本精品线路有明确需求；</li>
-<li>希望线路、硬件和售后整体更均衡。</li>
-</ul>
-<p>**选购建议：**美西可重点比较 LAX.Pro 系列；亚洲低延迟需求可关注 HKG.Pro 与 TYO.Pro。套餐名称、库存和价格会调整，不建议只按旧促销名称下单。</p>
-<p>👉 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">查看 DMIT 当前产品</a></p>
-<h2 id="3-RackNerd-VPS：便宜年付与备用服务器"><a href="#3-RackNerd-VPS：便宜年付与备用服务器" class="headerlink" title="3. RackNerd VPS：便宜年付与备用服务器"></a>3. RackNerd VPS：便宜年付与备用服务器</h2><p>RackNerd 的优势非常直接：**低价年付、KVM 虚拟化、1Gbps 端口和多个海外机房。**它不以中国方向精品线路见长，但很适合对网络回程要求不高的轻量任务。</p>
-<h3 id="值得关注的优势-2"><a href="#值得关注的优势-2" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>购买门槛低</strong>：常规公开促销约从 21.99 美元&#x2F;年起；黑五、新年等限时活动偶尔会出现 10～20 美元档，但库存和续费政策要以活动页为准。</li>
-<li><strong>适合常驻小服务</strong>：可运行个人博客、Docker 小应用、RSS、监控探针、DNS 辅助服务或异地备份。</li>
-<li><strong>机房选择较多</strong>：美国多地及部分欧洲机房可选，适合根据目标用户位置选择。</li>
-<li><strong>KVM 与独立 IPv4</strong>：公开套餐通常提供 KVM、root 权限和独立 IPv4，部署自由度较高。</li>
-</ul>
-<h3 id="需要注意-2"><a href="#需要注意-2" class="headerlink" title="需要注意"></a>需要注意</h3><p>普通国际线路在中国大陆晚高峰可能出现延迟上升、绕路或丢包。它更适合作为低成本计算资源，不宜直接和 CN2 GIA 等精品线路比较。</p>
-<h3 id="推荐人群-2"><a href="#推荐人群-2" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>学生、新手和预算有限的开发者；</li>
-<li>需要备用节点、备份机或低成本常驻服务；</li>
-<li>访问人群主要位于海外，对中国方向网络要求不高。</li>
-</ul>
-<p>**选购建议：**优先根据目标访客所在地选机房。面向中国大陆时，洛杉矶通常比美国东部延迟更低，但仍建议先测试路由。</p>
-<p>👉 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">查看 RackNerd 当前年付套餐</a></p>
-<h2 id="4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁"><a href="#4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁" class="headerlink" title="4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁"></a>4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁</h2><p>AkileCloud 主打全球大带宽节点、BGP 优化和流媒体解锁，覆盖香港、日本、台湾、韩国、新加坡、美国及欧洲等地区。它的产品差异较大，选择时应重点看地区、IP 类型、流量和线路说明。</p>
-<h3 id="值得关注的优势-3"><a href="#值得关注的优势-3" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
-<li><strong>亚洲节点丰富</strong>：适合希望靠近目标市场、降低业务访问延迟的用户。</li>
-<li><strong>部分产品强调原生 IP 与解锁</strong>：适合 Netflix、Disney+、TikTok 等有地区要求的场景。</li>
-<li><strong>线路类型多</strong>：官网列有 CN2、AS9929、CMI、SoftBank 等优化方向，不同产品的实际路由和带宽差异较大。</li>
-<li><strong>配置与计费选择灵活</strong>：适合按业务地区和流量规模精细挑选。</li>
-</ul>
-<h3 id="需要注意-3"><a href="#需要注意-3" class="headerlink" title="需要注意"></a>需要注意</h3><p>跨境电商或 TikTok 运营不能只看“原生 IP”。还应检查 IP 信誉、ASN 类型、DNS 区域、时区与账号环境一致性。任何平台解锁都可能因第三方策略变化而失效。</p>
-<h3 id="推荐人群-3"><a href="#推荐人群-3" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
-<li>TikTok、跨境电商和地区化业务；</li>
-<li>需要香港、日本、台湾、新加坡等亚洲节点；</li>
-<li>把流媒体解锁作为主要需求，并愿意在购买后持续验证。</li>
-</ul>
-<p>**选购建议：**先确定目标国家或地区，再选择明确标注 IP 属性与解锁范围的产品；不要仅按带宽数字判断体验。</p>
-<p>👉 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">注册 AkileCloud 并查看当前节点</a></p>
-<h2 id="2026-VPS-选购结论：四家厂商怎么选？"><a href="#2026-VPS-选购结论：四家厂商怎么选？" class="headerlink" title="2026 VPS 选购结论：四家厂商怎么选？"></a>2026 VPS 选购结论：四家厂商怎么选？</h2><ul>
-<li>**追求中国方向精品线路和灵活迁移：**优先考虑 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a>。</li>
-<li>**用于正式建站，希望线路与服务更均衡：**优先考虑 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a>。</li>
-<li>**预算有限，主要跑测试、备份或轻量服务：**优先考虑 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a>。</li>
-<li>**重点是 TikTok、流媒体解锁或亚洲节点：**优先考虑 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a>。</li>
-</ul>
-<h2 id="购买前的-5-个检查项"><a href="#购买前的-5-个检查项" class="headerlink" title="购买前的 5 个检查项"></a>购买前的 5 个检查项</h2><ol>
-<li>用测试 IP 或 Looking Glass 检查本地运营商的去程与回程。</li>
-<li>确认端口带宽、月流量、超额计费和限速规则。</li>
-<li>检查 IPv4 是否独享，以及 IP 信誉和目标平台解锁情况。</li>
-<li>阅读退款、续费、迁移和数据备份政策。</li>
-<li>重要业务至少准备异地备份，不要把“在线率高”等同于“数据不会丢失”。</li>
-</ol>
-<p>选好服务器后，可以继续阅读本站的 <a href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/">Debian VPS 搭建、BBR 与安全配置教程</a>；准备部署节点的读者可参考 <a href="/2026/07/21/sing-box-one-click-vless-reality-beginner/">sing-box VLESS + Reality 一键搭建教程</a>。</p>
-<h2 id="VPS-选购常见问题"><a href="#VPS-选购常见问题" class="headerlink" title="VPS 选购常见问题"></a>VPS 选购常见问题</h2><h3 id="中国大陆访问，搬瓦工和-DMIT-哪个更好？"><a href="#中国大陆访问，搬瓦工和-DMIT-哪个更好？" class="headerlink" title="中国大陆访问，搬瓦工和 DMIT 哪个更好？"></a>中国大陆访问，搬瓦工和 DMIT 哪个更好？</h3><p>两家都有面向中国方向的精品线路。搬瓦工的优势是可迁移机房和线路选择丰富；DMIT 更适合看重美西、香港、日本精品产品与长期建站的用户。最终应使用测试 IP，结合所在省份和电信、联通、移动运营商实测。</p>
-<h3 id="便宜年付-VPS-推荐哪一家？"><a href="#便宜年付-VPS-推荐哪一家？" class="headerlink" title="便宜年付 VPS 推荐哪一家？"></a>便宜年付 VPS 推荐哪一家？</h3><p>如果用途是开发测试、个人博客备份、监控探针或轻量 Docker 服务，RackNerd 的低价年付套餐通常更合适。需要注意，它主要是普通国际线路，不应按 CN2 GIA 的晚高峰表现来预期。</p>
-<h3 id="TikTok、Netflix-和原生-IP-应该选哪家？"><a href="#TikTok、Netflix-和原生-IP-应该选哪家？" class="headerlink" title="TikTok、Netflix 和原生 IP 应该选哪家？"></a>TikTok、Netflix 和原生 IP 应该选哪家？</h3><p>AkileCloud 的亚洲节点和解锁型产品更贴近这类需求。但“原生 IP”不等于账号环境一定安全，购买前后都应检查 IP 信誉、ASN、DNS 区域和目标平台的实际解锁结果。</p>
-<h3 id="CN2-GIA、AS9929-和-CMI-有什么区别？"><a href="#CN2-GIA、AS9929-和-CMI-有什么区别？" class="headerlink" title="CN2 GIA、AS9929 和 CMI 有什么区别？"></a>CN2 GIA、AS9929 和 CMI 有什么区别？</h3><p>它们分别对应不同运营商和跨境网络资源，实际体验还受地区、入口、回程、拥塞和商家带宽策略影响。线路名称只能用于初筛，不能替代晚高峰测试。</p>
-<h3 id="VPS-端口是-10Gbps，实际速度就一定快吗？"><a href="#VPS-端口是-10Gbps，实际速度就一定快吗？" class="headerlink" title="VPS 端口是 10Gbps，实际速度就一定快吗？"></a>VPS 端口是 10Gbps，实际速度就一定快吗？</h3><p>不一定。端口速率只是理论上限，实际速度还取决于共享情况、月流量限制、国际出口、路由拥塞、客户端网络和单连接性能。</p>
-<p>没有任何一家 VPS 能在所有维度都胜出。先明确自己最看重的是线路、预算、地区、解锁还是稳定性，再选产品，通常比单纯追逐“跑分最高”更可靠。</p>
-]]></content>
-      <categories>
-        <category>VPS 选购</category>
-      </categories>
-      <tags>
-        <tag>VPS</tag>
-        <tag>搬瓦工</tag>
-        <tag>DMIT</tag>
-        <tag>RackNerd</tag>
-        <tag>AkileCloud</tag>
-        <tag>CN2 GIA</tag>
-        <tag>流媒体解锁</tag>
       </tags>
   </entry>
   <entry>
@@ -1757,324 +1923,158 @@
       </categories>
       <tags>
         <tag>VPS</tag>
-        <tag>Debian</tag>
-        <tag>Reality协议</tag>
-        <tag>VLESS</tag>
-        <tag>Vision</tag>
         <tag>sing-box</tag>
+        <tag>VLESS</tag>
+        <tag>Reality协议</tag>
+        <tag>Debian</tag>
+        <tag>Vision</tag>
       </tags>
   </entry>
   <entry>
-    <title>3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</title>
-    <url>/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/</url>
-    <content><![CDATA[<h2 id="📖-前言"><a href="#📖-前言" class="headerlink" title="📖 前言"></a>📖 前言</h2><p>搭建完 3x-ui 后，第一次打开管理面板，不少人会在浏览器地址栏看到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">此站点的连接不安全</span><br></pre></td></tr></table></figure>
-
-<p>或者直接进入“您的连接不是私密连接”错误页，并显示以下代码之一：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">NET::ERR_CERT_AUTHORITY_INVALID</span><br><span class="line">NET::ERR_CERT_COMMON_NAME_INVALID</span><br><span class="line">NET::ERR_CERT_DATE_INVALID</span><br><span class="line">ERR_SSL_PROTOCOL_ERROR</span><br></pre></td></tr></table></figure>
-
-<p>这通常不是 Xray 节点损坏，而是 <strong>3x-ui 管理面板的 HTTPS 没有正确配置</strong>。节点入站和管理面板是两个相对独立的部分：节点能正常连接，不代表面板已经受到 HTTPS 保护。</p>
-<blockquote>
-<p>3x-ui 面板会传输管理员账号、密码、会话 Cookie 和配置数据。只要面板能够从公网访问，就不应该长期使用明文 HTTP，更不建议点击“继续访问”后直接输入管理员密码。</p>
+    <title>2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比</title>
+    <url>/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/</url>
+    <content><![CDATA[<blockquote>
+<p>更新于 2026 年 7 月。本文包含推广链接；通过链接购买可能为本站带来佣金，但不会增加你的购买价格。线路、库存、价格和流媒体解锁状态可能随时变化，请以下单页面与购买前实测为准。</p>
 </blockquote>
-<span id="more"></span>
-
-<h2 id="🔍-一、为什么会显示“连接不安全”"><a href="#🔍-一、为什么会显示“连接不安全”" class="headerlink" title="🔍 一、为什么会显示“连接不安全”"></a>🔍 一、为什么会显示“连接不安全”</h2><p>浏览器是否信任一个 HTTPS 网站，主要检查三件事：</p>
-<ol>
-<li>当前连接是否真正使用 HTTPS 加密。</li>
-<li>服务器证书是否由浏览器信任的证书机构签发。</li>
-<li>证书中的域名或 IP 是否与地址栏中的访问地址一致。</li>
-</ol>
-<p>只要其中一项不满足，浏览器就可能发出警告。</p>
-<h3 id="原因-1：正在使用普通-HTTP"><a href="#原因-1：正在使用普通-HTTP" class="headerlink" title="原因 1：正在使用普通 HTTP"></a>原因 1：正在使用普通 HTTP</h3><p>例如：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://1.2.3.4:2053/abc123/</span><br></pre></td></tr></table></figure>
-
-<p>地址以 <code>http://</code> 开头，数据没有经过 TLS 加密，因此浏览器显示“不安全”属于正常现象。它不是浏览器误报，也不能通过清理缓存解决。</p>
-<h3 id="原因-2：证书签发给域名，却通过-IP-访问"><a href="#原因-2：证书签发给域名，却通过-IP-访问" class="headerlink" title="原因 2：证书签发给域名，却通过 IP 访问"></a>原因 2：证书签发给域名，却通过 IP 访问</h3><p>假设证书签发给：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">panel.example.com</span><br></pre></td></tr></table></figure>
-
-<p>正确访问方式是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://panel.example.com:2053/abc123/</span><br></pre></td></tr></table></figure>
-
-<p>如果改用下面的 IP 地址访问：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://1.2.3.4:2053/abc123/</span><br></pre></td></tr></table></figure>
-
-<p>浏览器会发现地址栏里的 IP 不在证书有效名称中，于是报告：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_COMMON_NAME_INVALID</span><br></pre></td></tr></table></figure>
-
-<h3 id="原因-3：使用了自签名证书"><a href="#原因-3：使用了自签名证书" class="headerlink" title="原因 3：使用了自签名证书"></a>原因 3：使用了自签名证书</h3><p>自签名证书同样可以加密连接，但它不是由浏览器默认信任的公共证书机构签发，因此经常出现：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_AUTHORITY_INVALID</span><br></pre></td></tr></table></figure>
-
-<p>在完全由自己管理的内网环境中，可以把自己的 CA 导入每台设备；面向公网使用时，更省事的做法是申请 Let’s Encrypt 等公共证书。</p>
-<h3 id="原因-4：证书过期或访问设备时间错误"><a href="#原因-4：证书过期或访问设备时间错误" class="headerlink" title="原因 4：证书过期或访问设备时间错误"></a>原因 4：证书过期或访问设备时间错误</h3><p>证书有明确的生效时间和失效时间。证书已经过期、尚未生效，或者正在访问面板的电脑、手机日期明显错误，都可能触发：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ERR_CERT_DATE_INVALID</span><br></pre></td></tr></table></figure>
-
-<p>浏览器主要根据访问设备的时间检查证书有效期。VPS 时间错误通常会影响证书申请、自动续期和日志记录，但不是浏览器验证一张既有证书时的直接时间依据。</p>
-<h3 id="原因-5：3x-ui-的证书路径不完整或错误"><a href="#原因-5：3x-ui-的证书路径不完整或错误" class="headerlink" title="原因 5：3x-ui 的证书路径不完整或错误"></a>原因 5：3x-ui 的证书路径不完整或错误</h3><p>3x-ui 面板自身启用 HTTPS，需要同时设置：</p>
+<h2 id="2026-VPS-推荐：先看结论"><a href="#2026-VPS-推荐：先看结论" class="headerlink" title="2026 VPS 推荐：先看结论"></a>2026 VPS 推荐：先看结论</h2><p>如果你正在搜索“2026 VPS 推荐”“便宜年付 VPS”或“中国大陆访问快的 VPS”，可以先记住一句话：<strong>搬瓦工和 DMIT 主打中国方向精品线路，RackNerd 主打低价年付与通用计算，AkileCloud 更偏亚洲节点、原生 IP 与流媒体解锁。</strong></p>
 <ul>
-<li><code>webCertFile</code>：完整证书链文件</li>
-<li><code>webKeyFile</code>：与证书配对的私钥文件</li>
+<li>**中国大陆访问与精品线路：**搬瓦工、DMIT；</li>
+<li>**便宜年付 VPS 与开发测试：**RackNerd；</li>
+<li>**TikTok、Netflix、原生 IP 与亚洲节点：**AkileCloud；</li>
+<li>**正式建站：**优先比较网络稳定性、IP 信誉、备份与售后，不要只看跑分。</li>
 </ul>
-<p>只设置一项、文件不存在、权限不足，或把两个路径填反，都可能导致 HTTPS 无法启动。证书文件建议使用 <code>fullchain.pem</code>，不要只使用缺少中间证书的单证书文件。</p>
-<h3 id="原因-6：反向代理的协议配置不一致"><a href="#原因-6：反向代理的协议配置不一致" class="headerlink" title="原因 6：反向代理的协议配置不一致"></a>原因 6：反向代理的协议配置不一致</h3><p>如果前面还有 Nginx、Caddy 或 Cloudflare，常见错误包括：</p>
-<ul>
-<li>浏览器到 Nginx 使用 HTTPS，但 Nginx 的证书配置错误</li>
-<li>3x-ui 只提供 HTTP，反向代理却按 HTTPS 回源</li>
-<li>3x-ui 已经启用 HTTPS，反向代理仍按 HTTP 回源</li>
-<li>443 端口被多个程序争用</li>
-</ul>
-<p>这类问题常表现为 <code>ERR_SSL_PROTOCOL_ERROR</code>、502 错误或页面完全打不开。</p>
-<h2 id="✅-二、推荐方案：域名-Let’s-Encrypt-证书"><a href="#✅-二、推荐方案：域名-Let’s-Encrypt-证书" class="headerlink" title="✅ 二、推荐方案：域名 + Let’s Encrypt 证书"></a>✅ 二、推荐方案：域名 + Let’s Encrypt 证书</h2><p>这是大多数用户最适合的方案。以下示例假设：</p>
-<table>
+<p>不同 VPS 的“好”并不是同一回事。建站更看重稳定性与 IP 信誉，跨境业务更看重地区和 IP 属性，个人开发与备份则往往更在意价格。下面按线路、价格、解锁能力和使用场景进行对比。</p>
+<h2 id="2026-VPS-推荐快速选型表"><a href="#2026-VPS-推荐快速选型表" class="headerlink" title="2026 VPS 推荐快速选型表"></a>2026 VPS 推荐快速选型表</h2><table>
 <thead>
 <tr>
-<th>项目</th>
-<th>示例值</th>
+<th>厂商</th>
+<th>核心定位</th>
+<th>线路与节点特点</th>
+<th>主要优势</th>
+<th>更适合谁</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>面板域名</td>
-<td><code>panel.example.com</code></td>
+<td><strong><a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a></strong></td>
+<td>高端中国方向优化</td>
+<td>CN2 GIA、AS9929、CMI 等，具体以套餐可迁移机房为准</td>
+<td>线路选择多、端口带宽高、KiwiVM 迁移灵活</td>
+<td>预算充足，重视中国方向网络质量与可玩性</td>
 </tr>
 <tr>
-<td>VPS 公网 IP</td>
-<td><code>1.2.3.4</code></td>
+<td><strong><a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a></strong></td>
+<td>美亚精品云服务器</td>
+<td>LAX &#x2F; HKG &#x2F; TYO 的 Pro、EB、T1 等系列定位不同</td>
+<td>精品线路、硬件配置清晰，适合建站与高质量节点</td>
+<td>商务建站、精品线路用户、对稳定性要求较高的人</td>
 </tr>
 <tr>
-<td>面板端口</td>
-<td><code>2053</code></td>
+<td><strong><a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a></strong></td>
+<td>低价年付 VPS</td>
+<td>以普通国际线路和 1Gbps 端口为主，多机房可选</td>
+<td>年付门槛低、KVM、适合跑常驻轻量服务</td>
+<td>学生、新手、开发测试、备份和备用机</td>
 </tr>
 <tr>
-<td>面板路径</td>
-<td><code>abc123</code></td>
+<td><strong><a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a></strong></td>
+<td>亚洲节点与解锁特色</td>
+<td>覆盖香港、日本、台湾、新加坡、美国等地，提供多种 BGP&#x2F;优化线路</td>
+<td>节点多、带宽方案丰富、部分产品强调原生 IP 或流媒体解锁</td>
+<td>TikTok、跨境业务、流媒体及亚洲低延迟需求</td>
 </tr>
 </tbody></table>
-<p>操作时请替换成自己的真实信息。</p>
-<h3 id="第-1-步：添加-DNS-解析"><a href="#第-1-步：添加-DNS-解析" class="headerlink" title="第 1 步：添加 DNS 解析"></a>第 1 步：添加 DNS 解析</h3><p>在域名 DNS 管理页面添加一条 <code>A</code> 记录：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">类型：A</span><br><span class="line">主机记录：panel</span><br><span class="line">记录值：1.2.3.4</span><br></pre></td></tr></table></figure>
-
-<p>如果服务器没有配置公网 IPv6，不要添加 <code>AAAA</code> 记录；已经存在但指向错误服务器的 <code>AAAA</code> 记录也应删除，否则部分设备可能优先连接错误的 IPv6 地址。</p>
-<p>等待解析生效后检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">getent ahosts panel.example.com</span><br></pre></td></tr></table></figure>
-
-<p>返回地址应包含当前 VPS 的公网 IP。</p>
-<h3 id="第-2-步：确认-80-端口可用于验证"><a href="#第-2-步：确认-80-端口可用于验证" class="headerlink" title="第 2 步：确认 80 端口可用于验证"></a>第 2 步：确认 80 端口可用于验证</h3><p>3x-ui 内置的域名证书申请通常通过 ACME HTTP 验证完成，需要公网能够访问 TCP 80。</p>
-<p>使用 UFW 时可以执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow from 你的固定公网IP to any port 2053 proto tcp</span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure>
-
-<p>如果没有固定的管理员公网 IP，可以临时使用 <code>ufw allow 2053/tcp</code> 完成测试，确认后再收紧访问来源。如果面板端口不是 <code>2053</code>，请换成实际端口。云服务器控制台中的安全组也必须同步设置。</p>
-<p>这里不必默认开放 <code>443</code>：只有 Nginx、Caddy、3x-ui 或其他公网服务实际监听 443 时才需要开放。启用 UFW 之前，还必须先放行真实的 SSH 端口，避免把自己锁在服务器外面。</p>
-<p>检查 80 端口是否已被其他程序占用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp | grep <span class="string">&#x27;:80 &#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 Nginx、Apache 或 Caddy 正在占用 80 端口，可暂时停止对应服务后申请证书，或者改用后文的 Cloudflare DNS 验证方案。</p>
-<h3 id="第-3-步：在-3x-ui-菜单申请证书"><a href="#第-3-步：在-3x-ui-菜单申请证书" class="headerlink" title="第 3 步：在 3x-ui 菜单申请证书"></a>第 3 步：在 3x-ui 菜单申请证书</h3><p>SSH 登录 VPS，运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
-
-<p>进入 <code>SSL Certificate Management</code>。不同版本的菜单编号可能变化，新版通常显示为 <code>20</code>，操作时以屏幕中的文字为准。</p>
-<p>依次选择：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Get SSL (Domain)</span><br></pre></td></tr></table></figure>
-
-<p>输入：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">panel.example.com</span><br></pre></td></tr></table></figure>
-
-<p>申请成功后，证书一般位于：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">/root/cert/panel.example.com/fullchain.pem</span><br><span class="line">/root/cert/panel.example.com/privkey.pem</span><br></pre></td></tr></table></figure>
-
-<h3 id="第-4-步：把证书路径绑定到面板"><a href="#第-4-步：把证书路径绑定到面板" class="headerlink" title="第 4 步：把证书路径绑定到面板"></a>第 4 步：把证书路径绑定到面板</h3><p>继续在证书管理菜单中选择：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Set Cert paths for the panel</span><br></pre></td></tr></table></figure>
-
-<p>确认对应关系：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Certificate File Path: /root/cert/panel.example.com/fullchain.pem</span><br><span class="line">Key File Path:         /root/cert/panel.example.com/privkey.pem</span><br></pre></td></tr></table></figure>
-
-<p>然后重启面板：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui restart</span><br></pre></td></tr></table></figure>
-
-<p>3x-ui 只有在证书文件和私钥文件两项都正确设置后，面板才会切换到 HTTPS。</p>
-<h3 id="第-5-步：使用正确地址访问"><a href="#第-5-步：使用正确地址访问" class="headerlink" title="第 5 步：使用正确地址访问"></a>第 5 步：使用正确地址访问</h3><p>现在应该使用：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://panel.example.com:2053/abc123/</span><br></pre></td></tr></table></figure>
-
-<p>注意四个细节：</p>
-<ul>
-<li>必须是 <code>https://</code></li>
-<li>必须使用证书对应的域名</li>
-<li>自定义面板端口不能漏掉</li>
-<li>随机面板路径不能漏掉，结尾最好保留 <code>/</code></li>
+<h2 id="1-搬瓦工-VPS：CN2-GIA-与多机房迁移"><a href="#1-搬瓦工-VPS：CN2-GIA-与多机房迁移" class="headerlink" title="1. 搬瓦工 VPS：CN2 GIA 与多机房迁移"></a>1. 搬瓦工 VPS：CN2 GIA 与多机房迁移</h2><p>搬瓦工（BandwagonHost）是老牌 VPS 厂商，核心竞争力不只是某一个机房，而是 <strong>CN2 GIA、AS9929、CMI 等多种中国方向优化线路，以及 KiwiVM 后台的机房迁移能力</strong>。</p>
+<h3 id="值得关注的优势"><a href="#值得关注的优势" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>线路覆盖丰富</strong>：常见选择包括洛杉矶 CN2 GIA、AS9929，以及香港、日本等亚洲节点；实际可用机房取决于具体套餐。</li>
+<li><strong>端口带宽高</strong>：部分高端套餐提供 2.5Gbps、10Gbps 等端口规格，适合大文件传输和高并发场景。</li>
+<li><strong>迁移方便</strong>：不少套餐支持在 KiwiVM 中迁移机房，适合比较不同线路，或在需求变化后调整节点。</li>
+<li><strong>生态成熟</strong>：使用教程、测速资料和社区经验较多，新手遇到问题更容易找到参考。</li>
 </ul>
-<p>不要继续通过服务器 IP 访问域名证书。</p>
-<h2 id="🌐-三、没有域名：申请裸-IP-证书"><a href="#🌐-三、没有域名：申请裸-IP-证书" class="headerlink" title="🌐 三、没有域名：申请裸 IP 证书"></a>🌐 三、没有域名：申请裸 IP 证书</h2><p>较新的 3x-ui 版本提供了：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Get SSL for IP Address</span><br></pre></td></tr></table></figure>
-
-<p>它可以为公网 IP 申请短期证书。进入方式通常为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">x-ui → SSL Certificate Management → Get SSL for IP Address</span><br></pre></td></tr></table></figure>
-
-<p>签发完成后，同样选择 <code>Set Cert paths for the panel</code>，再重启 3x-ui。之后通过证书绑定的公网 IP 访问。</p>
-<p>官方文档说明，这类 IP 证书有效期约 6 天，需要依赖自动续期。建议定期检查续期状态；如果长期使用管理面板，域名证书仍然更直观。</p>
-<blockquote>
-<p>如果旧版 3x-ui 菜单中没有 IP 证书选项，请先备份数据库和配置，再按照官方升级方法更新，不要随意运行来源不明的改版脚本。</p>
-</blockquote>
-<h2 id="☁️-四、Cloudflare-用户：使用-DNS-01-验证"><a href="#☁️-四、Cloudflare-用户：使用-DNS-01-验证" class="headerlink" title="☁️ 四、Cloudflare 用户：使用 DNS-01 验证"></a>☁️ 四、Cloudflare 用户：使用 DNS-01 验证</h2><p>遇到以下情况时，适合使用 Cloudflare DNS 验证：</p>
-<ul>
-<li>服务器 80 端口无法从公网访问</li>
-<li>域名开启了 Cloudflare 橙色云代理</li>
-<li>需要申请通配符证书</li>
-<li>80 端口正被其他网站占用，不方便停止</li>
+<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>高端线路的价格明显高于普通 VPS；而且“10Gbps 端口”代表端口上限，并不等于中国大陆晚高峰一定能跑满。购买前应结合所在运营商、地区和测试 IP 判断。</p>
+<h3 id="推荐人群"><a href="#推荐人群" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>预算较充足，希望中国方向延迟、抖动和丢包表现更稳；</li>
+<li>需要在多个机房之间灵活切换；</li>
+<li>希望一台机器兼顾代理节点、下载与轻量建站。</li>
 </ul>
-<p>前提是域名 DNS 已经托管到 Cloudflare。</p>
-<h3 id="创建最小权限-API-Token"><a href="#创建最小权限-API-Token" class="headerlink" title="创建最小权限 API Token"></a>创建最小权限 API Token</h3><p>在 Cloudflare 控制台创建 API Token，仅授予目标域名区域：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Zone → DNS → Edit</span><br></pre></td></tr></table></figure>
-
-<p>不要把 Global API Key 粘贴到不可信脚本中。最小权限 Token 泄露后的影响范围更小。</p>
-<h3 id="在-3x-ui-中申请"><a href="#在-3x-ui-中申请" class="headerlink" title="在 3x-ui 中申请"></a>在 3x-ui 中申请</h3><p>运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui</span><br></pre></td></tr></table></figure>
-
-<p>选择 <code>Cloudflare SSL Certificate</code>，然后选择 API Token 模式，输入域名和 Token。签发成功后，再把证书路径设置给面板并重启。</p>
-<p>DNS-01 验证通过临时 TXT 记录证明域名控制权，因此不依赖公网 80 端口。</p>
-<p>如果域名开启 Cloudflare 橙色云，还要确认面板端口属于 Cloudflare 支持的 HTTPS 代理端口。常见支持端口包括 <code>443</code>、<code>2053</code>、<code>2083</code>、<code>2087</code>、<code>2096</code> 和 <code>8443</code>；任意自定义高位端口不一定能被代理。</p>
-<h2 id="🔁-五、进阶方案：Nginx-或-Caddy-反向代理"><a href="#🔁-五、进阶方案：Nginx-或-Caddy-反向代理" class="headerlink" title="🔁 五、进阶方案：Nginx 或 Caddy 反向代理"></a>🔁 五、进阶方案：Nginx 或 Caddy 反向代理</h2><p>另一种思路是让 3x-ui 只在服务器本机提供 HTTP，由 Nginx 或 Caddy 统一处理公网 HTTPS：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器 ──HTTPS──&gt; Nginx/Caddy ──HTTP──&gt; 127.0.0.1:2053</span><br></pre></td></tr></table></figure>
-
-<p>这种结构适合服务器上已经运行网站、需要统一使用 443 端口的用户。</p>
-<p>下面是一个简化的 Nginx 反向代理片段：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:2053;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>完整的 HTTPS <code>server</code> 配置还需要证书路径、私钥路径和域名。配置完成后先检查语法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
-
-<p>然后重新加载：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
-
-<p>使用反向代理终止 TLS 时，应注意：</p>
-<ul>
-<li>3x-ui 和 Nginx 的回源协议必须对应</li>
-<li>最好让 3x-ui 只监听 <code>127.0.0.1</code>，或用防火墙禁止公网直接访问面板端口</li>
-<li>不要让 Nginx 和 3x-ui 同时监听公网 443</li>
-<li>面板设置中的 URL 和路径要保持一致</li>
+<p>**选购建议：**优先查看包含 DC6 CN2 GIA-E、AS9929 等机房的可迁移套餐；香港、日本产品延迟通常更低，但价格也更高。</p>
+<p>👉 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">查看搬瓦工当前可售套餐</a></p>
+<h2 id="2-DMIT-VPS：美西、香港与日本精品线路"><a href="#2-DMIT-VPS：美西、香港与日本精品线路" class="headerlink" title="2. DMIT VPS：美西、香港与日本精品线路"></a>2. DMIT VPS：美西、香港与日本精品线路</h2><p>DMIT 的产品线通常按地区和网络等级划分，例如 LAX、HKG、TYO，以及 Pro、EB、T1 等系列。它更适合愿意为线路质量、硬件和服务稳定性支付溢价的用户。</p>
+<h3 id="值得关注的优势-1"><a href="#值得关注的优势-1" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>美亚节点选择清晰</strong>：洛杉矶、香港、东京是重点区域，不同系列面向中国优化、高防或国际连接等不同需求。</li>
+<li><strong>精品线路产品成熟</strong>：Pro 系列通常是中国方向用户重点关注的产品线，但路由仍应以下单时官方说明和实测为准。</li>
+<li><strong>适合正式业务</strong>：相比纯低价促销机，DMIT 更适合作为博客、企业网站、API 或长期运行服务的主机。</li>
+<li><strong>部分产品提供防护能力</strong>：EB 等产品线侧重防御或特定网络能力，购买前应确认防护范围、清洗策略和端口限制。</li>
 </ul>
-<p>如果只是第一次搭建，直接给 3x-ui 配置域名证书通常更简单；已经熟悉 Nginx&#x2F;Caddy 再考虑反向代理。</p>
-<h2 id="🧪-六、如何检查证书是否真的正常"><a href="#🧪-六、如何检查证书是否真的正常" class="headerlink" title="🧪 六、如何检查证书是否真的正常"></a>🧪 六、如何检查证书是否真的正常</h2><h3 id="1-检查-3x-ui-服务"><a href="#1-检查-3x-ui-服务" class="headerlink" title="1. 检查 3x-ui 服务"></a>1. 检查 3x-ui 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui status</span><br><span class="line">systemctl status x-ui --no-pager</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-查看最近日志"><a href="#2-查看最近日志" class="headerlink" title="2. 查看最近日志"></a>2. 查看最近日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u x-ui -n 100 --no-pager</span><br></pre></td></tr></table></figure>
-
-<p>重点搜索：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">certificate</span><br><span class="line">private key</span><br><span class="line">permission denied</span><br><span class="line">no such file</span><br><span class="line">bind</span><br><span class="line">address already in use</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-检查监听端口"><a href="#3-检查监听端口" class="headerlink" title="3. 检查监听端口"></a>3. 检查监听端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -lntp</span><br></pre></td></tr></table></figure>
-
-<p>确认面板实际监听的是哪个端口，以及该端口有没有被其他程序占用。</p>
-<h3 id="4-检查证书有效期和签发对象"><a href="#4-检查证书有效期和签发对象" class="headerlink" title="4. 检查证书有效期和签发对象"></a>4. 检查证书有效期和签发对象</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl s_client \</span><br><span class="line">  -connect panel.example.com:2053 \</span><br><span class="line">  -servername panel.example.com &lt;/dev/null 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -subject -issuer -dates</span><br></pre></td></tr></table></figure>
-
-<p>正常情况下会显示：</p>
-<ul>
-<li><code>subject</code>：证书对应的域名</li>
-<li><code>issuer</code>：证书签发机构</li>
-<li><code>notBefore</code>：生效时间</li>
-<li><code>notAfter</code>：到期时间</li>
+<h3 id="需要注意-1"><a href="#需要注意-1" class="headerlink" title="需要注意"></a>需要注意</h3><p>“原生 IP”和流媒体解锁不是永久属性。平台风控、IP 数据库和版权政策变化后，解锁结果可能改变；如果这是核心需求，购买前应查看商家说明，并在开通后立即测试。</p>
+<h3 id="推荐人群-1"><a href="#推荐人群-1" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>需要长期稳定建站或部署线上服务；</li>
+<li>对美西、香港、日本精品线路有明确需求；</li>
+<li>希望线路、硬件和售后整体更均衡。</li>
 </ul>
-<p>检查证书包含的域名：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl s_client \</span><br><span class="line">  -connect panel.example.com:2053 \</span><br><span class="line">  -servername panel.example.com &lt;/dev/null 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -ext subjectAltName</span><br></pre></td></tr></table></figure>
-
-<p>输出中应包含 <code>DNS:panel.example.com</code>。</p>
-<h3 id="5-使用-curl-检查握手"><a href="#5-使用-curl-检查握手" class="headerlink" title="5. 使用 curl 检查握手"></a>5. 使用 curl 检查握手</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -Iv https://panel.example.com:2053/</span><br></pre></td></tr></table></figure>
-
-<p>如果面板使用随机路径，根目录返回 404 不一定代表 HTTPS 失败；只要 TLS 握手和证书验证成功，再访问完整面板路径即可。</p>
-<h2 id="❌-七、根据错误代码快速定位"><a href="#❌-七、根据错误代码快速定位" class="headerlink" title="❌ 七、根据错误代码快速定位"></a>❌ 七、根据错误代码快速定位</h2><table>
-<thead>
-<tr>
-<th>浏览器提示</th>
-<th>常见原因</th>
-<th>处理方法</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>地址栏显示“不安全”</td>
-<td>使用普通 HTTP</td>
-<td>配置证书并改用 <code>https://</code></td>
-</tr>
-<tr>
-<td><code>ERR_CERT_AUTHORITY_INVALID</code></td>
-<td>自签名证书、证书链不完整、本机根证书异常或 HTTPS 检查软件替换证书</td>
-<td>检查实际返回的签发者，使用公共证书并指向 <code>fullchain.pem</code></td>
-</tr>
-<tr>
-<td><code>ERR_CERT_COMMON_NAME_INVALID</code></td>
-<td>访问地址与证书名称不一致</td>
-<td>使用证书对应域名，或申请匹配的 IP 证书</td>
-</tr>
-<tr>
-<td><code>ERR_CERT_DATE_INVALID</code></td>
-<td>证书过期、尚未生效或访问设备时间错误</td>
-<td>续签证书并校准电脑或手机时间；同时检查 VPS 时间以免影响续期</td>
-</tr>
-<tr>
-<td><code>ERR_SSL_PROTOCOL_ERROR</code></td>
-<td>HTTPS 访问了 HTTP 端口、证书路径错误</td>
-<td>核对协议、端口、证书路径和日志</td>
-</tr>
-<tr>
-<td>连接超时</td>
-<td>防火墙、安全组或 DNS 错误</td>
-<td>放行实际端口并检查 A&#x2F;AAAA 记录</td>
-</tr>
-<tr>
-<td>502 Bad Gateway</td>
-<td>反向代理无法连接 3x-ui</td>
-<td>核对回源地址、端口、HTTP&#x2F;HTTPS 协议</td>
-</tr>
-</tbody></table>
-<h2 id="🛠️-八、几个最容易踩的坑"><a href="#🛠️-八、几个最容易踩的坑" class="headerlink" title="🛠️ 八、几个最容易踩的坑"></a>🛠️ 八、几个最容易踩的坑</h2><h3 id="1-申请成功，但没有设置给面板"><a href="#1-申请成功，但没有设置给面板" class="headerlink" title="1. 申请成功，但没有设置给面板"></a>1. 申请成功，但没有设置给面板</h3><p>“证书已经签发”和“面板正在使用证书”是两件事。申请完成后还要执行 <code>Set Cert paths for the panel</code> 并重启服务。</p>
-<h3 id="2-用-cert-pem-代替-fullchain-pem"><a href="#2-用-cert-pem-代替-fullchain-pem" class="headerlink" title="2. 用 cert.pem 代替 fullchain.pem"></a>2. 用 <code>cert.pem</code> 代替 <code>fullchain.pem</code></h3><p>部分浏览器可能因缺少中间证书而不信任连接。给面板配置时优先使用：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fullchain.pem</span><br><span class="line">privkey.pem</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-Cloudflare-开了代理，却仍用错误方式验证"><a href="#3-Cloudflare-开了代理，却仍用错误方式验证" class="headerlink" title="3. Cloudflare 开了代理，却仍用错误方式验证"></a>3. Cloudflare 开了代理，却仍用错误方式验证</h3><p>开启橙色云后，访问流量先到 Cloudflare。若 HTTP 验证反复失败，可以临时关闭代理，或者直接使用 Cloudflare DNS-01 验证。</p>
-<h3 id="4-忘记云厂商安全组"><a href="#4-忘记云厂商安全组" class="headerlink" title="4. 忘记云厂商安全组"></a>4. 忘记云厂商安全组</h3><p>UFW 显示允许，不代表公网一定能访问。AWS、Google Cloud、阿里云、腾讯云、Oracle Cloud 等平台通常还有独立安全组或网络防火墙。</p>
-<h3 id="5-修好证书后仍用旧书签"><a href="#5-修好证书后仍用旧书签" class="headerlink" title="5. 修好证书后仍用旧书签"></a>5. 修好证书后仍用旧书签</h3><p>旧书签可能保存的是 <code>http://IP:端口/路径</code>。请重新保存完整的 HTTPS 域名地址。</p>
-<h3 id="6-面板路径直接暴露"><a href="#6-面板路径直接暴露" class="headerlink" title="6. 面板路径直接暴露"></a>6. 面板路径直接暴露</h3><p>HTTPS 只能保护传输过程，不能代替访问控制。建议同时做到：</p>
-<ul>
-<li>使用非默认面板端口</li>
-<li>使用足够长的随机面板路径</li>
-<li>修改默认账号和密码</li>
-<li>开启 2FA</li>
-<li>只允许自己的固定 IP 访问，或通过 VPN&#x2F;SSH 隧道管理</li>
-<li>不公开面板地址、API Token 和证书私钥</li>
+<p>**选购建议：**美西可重点比较 LAX.Pro 系列；亚洲低延迟需求可关注 HKG.Pro 与 TYO.Pro。套餐名称、库存和价格会调整，不建议只按旧促销名称下单。</p>
+<p>👉 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">查看 DMIT 当前产品</a></p>
+<h2 id="3-RackNerd-VPS：便宜年付与备用服务器"><a href="#3-RackNerd-VPS：便宜年付与备用服务器" class="headerlink" title="3. RackNerd VPS：便宜年付与备用服务器"></a>3. RackNerd VPS：便宜年付与备用服务器</h2><p>RackNerd 的优势非常直接：**低价年付、KVM 虚拟化、1Gbps 端口和多个海外机房。**它不以中国方向精品线路见长，但很适合对网络回程要求不高的轻量任务。</p>
+<h3 id="值得关注的优势-2"><a href="#值得关注的优势-2" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>购买门槛低</strong>：常规公开促销约从 21.99 美元&#x2F;年起；黑五、新年等限时活动偶尔会出现 10～20 美元档，但库存和续费政策要以活动页为准。</li>
+<li><strong>适合常驻小服务</strong>：可运行个人博客、Docker 小应用、RSS、监控探针、DNS 辅助服务或异地备份。</li>
+<li><strong>机房选择较多</strong>：美国多地及部分欧洲机房可选，适合根据目标用户位置选择。</li>
+<li><strong>KVM 与独立 IPv4</strong>：公开套餐通常提供 KVM、root 权限和独立 IPv4，部署自由度较高。</li>
 </ul>
-<h2 id="❓-九、常见问题"><a href="#❓-九、常见问题" class="headerlink" title="❓ 九、常见问题"></a>❓ 九、常见问题</h2><h3 id="节点正常，但面板提示不安全，会影响节点吗？"><a href="#节点正常，但面板提示不安全，会影响节点吗？" class="headerlink" title="节点正常，但面板提示不安全，会影响节点吗？"></a>节点正常，但面板提示不安全，会影响节点吗？</h3><p>不一定。节点入站和面板 Web 服务可以使用不同端口、不同 TLS 配置。面板证书错误通常不会直接导致 REALITY 节点失效，但管理员登录数据仍存在安全风险，应尽快修复。</p>
-<h3 id="可以一直点击“高级-→-继续访问”吗？"><a href="#可以一直点击“高级-→-继续访问”吗？" class="headerlink" title="可以一直点击“高级 → 继续访问”吗？"></a>可以一直点击“高级 → 继续访问”吗？</h3><p>不建议。你无法仅凭页面外观判断是自己的自签名证书，还是连接遭到中间人替换。公网管理面板应该使用能够正常验证的证书。</p>
-<h3 id="证书续签后需要修改路径吗？"><a href="#证书续签后需要修改路径吗？" class="headerlink" title="证书续签后需要修改路径吗？"></a>证书续签后需要修改路径吗？</h3><p>正常情况下不需要。让续签程序在原路径更新 <code>fullchain.pem</code> 和 <code>privkey.pem</code> 即可。续签后重启 3x-ui，让面板重新读取证书：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x-ui restart</span><br></pre></td></tr></table></figure>
-
-<h3 id="REALITY-入站需要使用这个面板证书吗？"><a href="#REALITY-入站需要使用这个面板证书吗？" class="headerlink" title="REALITY 入站需要使用这个面板证书吗？"></a>REALITY 入站需要使用这个面板证书吗？</h3><p>不需要。REALITY 与传统 TLS 入站的工作方式不同，不应因为面板配置 HTTPS，就随意把面板证书填进 REALITY 入站。本文处理的是 <strong>3x-ui 管理页面的 HTTPS</strong>。</p>
-<h2 id="📝-总结"><a href="#📝-总结" class="headerlink" title="📝 总结"></a>📝 总结</h2><p>3x-ui 出现“此站点的连接不安全”，本质上通常只有三类问题：</p>
-<ol>
-<li>使用的是明文 HTTP。</li>
-<li>证书不受信任、已过期或链不完整。</li>
-<li>证书与当前访问的域名&#x2F;IP 不匹配。</li>
+<h3 id="需要注意-2"><a href="#需要注意-2" class="headerlink" title="需要注意"></a>需要注意</h3><p>普通国际线路在中国大陆晚高峰可能出现延迟上升、绕路或丢包。它更适合作为低成本计算资源，不宜直接和 CN2 GIA 等精品线路比较。</p>
+<h3 id="推荐人群-2"><a href="#推荐人群-2" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>学生、新手和预算有限的开发者；</li>
+<li>需要备用节点、备份机或低成本常驻服务；</li>
+<li>访问人群主要位于海外，对中国方向网络要求不高。</li>
+</ul>
+<p>**选购建议：**优先根据目标访客所在地选机房。面向中国大陆时，洛杉矶通常比美国东部延迟更低，但仍建议先测试路由。</p>
+<p>👉 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">查看 RackNerd 当前年付套餐</a></p>
+<h2 id="4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁"><a href="#4-AkileCloud-VPS：亚洲节点、原生-IP-与流媒体解锁" class="headerlink" title="4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁"></a>4. AkileCloud VPS：亚洲节点、原生 IP 与流媒体解锁</h2><p>AkileCloud 主打全球大带宽节点、BGP 优化和流媒体解锁，覆盖香港、日本、台湾、韩国、新加坡、美国及欧洲等地区。它的产品差异较大，选择时应重点看地区、IP 类型、流量和线路说明。</p>
+<h3 id="值得关注的优势-3"><a href="#值得关注的优势-3" class="headerlink" title="值得关注的优势"></a>值得关注的优势</h3><ul>
+<li><strong>亚洲节点丰富</strong>：适合希望靠近目标市场、降低业务访问延迟的用户。</li>
+<li><strong>部分产品强调原生 IP 与解锁</strong>：适合 Netflix、Disney+、TikTok 等有地区要求的场景。</li>
+<li><strong>线路类型多</strong>：官网列有 CN2、AS9929、CMI、SoftBank 等优化方向，不同产品的实际路由和带宽差异较大。</li>
+<li><strong>配置与计费选择灵活</strong>：适合按业务地区和流量规模精细挑选。</li>
+</ul>
+<h3 id="需要注意-3"><a href="#需要注意-3" class="headerlink" title="需要注意"></a>需要注意</h3><p>跨境电商或 TikTok 运营不能只看“原生 IP”。还应检查 IP 信誉、ASN 类型、DNS 区域、时区与账号环境一致性。任何平台解锁都可能因第三方策略变化而失效。</p>
+<h3 id="推荐人群-3"><a href="#推荐人群-3" class="headerlink" title="推荐人群"></a>推荐人群</h3><ul>
+<li>TikTok、跨境电商和地区化业务；</li>
+<li>需要香港、日本、台湾、新加坡等亚洲节点；</li>
+<li>把流媒体解锁作为主要需求，并愿意在购买后持续验证。</li>
+</ul>
+<p>**选购建议：**先确定目标国家或地区，再选择明确标注 IP 属性与解锁范围的产品；不要仅按带宽数字判断体验。</p>
+<p>👉 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">注册 AkileCloud 并查看当前节点</a></p>
+<h2 id="2026-VPS-选购结论：四家厂商怎么选？"><a href="#2026-VPS-选购结论：四家厂商怎么选？" class="headerlink" title="2026 VPS 选购结论：四家厂商怎么选？"></a>2026 VPS 选购结论：四家厂商怎么选？</h2><ul>
+<li>**追求中国方向精品线路和灵活迁移：**优先考虑 <a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener">搬瓦工</a>。</li>
+<li>**用于正式建站，希望线路与服务更均衡：**优先考虑 <a href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener">DMIT</a>。</li>
+<li>**预算有限，主要跑测试、备份或轻量服务：**优先考虑 <a href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener">RackNerd</a>。</li>
+<li>**重点是 TikTok、流媒体解锁或亚洲节点：**优先考虑 <a href="https://akile.ai/register?aff_code=0be67084-ae2e-4095-a586-2a3ee5c970f0" target="_blank" rel="sponsored noopener">AkileCloud</a>。</li>
+</ul>
+<h2 id="购买前的-5-个检查项"><a href="#购买前的-5-个检查项" class="headerlink" title="购买前的 5 个检查项"></a>购买前的 5 个检查项</h2><ol>
+<li>用测试 IP 或 Looking Glass 检查本地运营商的去程与回程。</li>
+<li>确认端口带宽、月流量、超额计费和限速规则。</li>
+<li>检查 IPv4 是否独享，以及 IP 信誉和目标平台解锁情况。</li>
+<li>阅读退款、续费、迁移和数据备份政策。</li>
+<li>重要业务至少准备异地备份，不要把“在线率高”等同于“数据不会丢失”。</li>
 </ol>
-<p>对大多数用户，最稳妥的处理顺序是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">域名解析到 VPS</span><br><span class="line">→ 申请 Let&#x27;s Encrypt 证书</span><br><span class="line">→ 设置 fullchain.pem 与 privkey.pem</span><br><span class="line">→ 重启 3x-ui</span><br><span class="line">→ 使用 HTTPS 域名访问</span><br></pre></td></tr></table></figure>
-
-<p>没有域名可以使用新版 3x-ui 的裸 IP 证书；已经使用 Nginx、Caddy 或 Cloudflare，则应明确由哪一层负责 TLS，避免重复配置和协议混乱。</p>
-<h2 id="📚-参考资料"><a href="#📚-参考资料" class="headerlink" title="📚 参考资料"></a>📚 参考资料</h2><ul>
-<li><a href="https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/zh/config/ssl-certificates.mdx">3x-ui 官方 SSL 证书文档（中文）</a></li>
-<li><a href="https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/panel.mdx">3x-ui 面板设置与 TLS 说明</a></li>
-<li><a href="https://github.com/MHSanaei/3x-ui/wiki/Configuration">3x-ui 官方 Wiki：证书与反向代理配置</a></li>
-<li><a href="https://support.google.com/chrome/answer/95669?hl=zh-Hans">Google Chrome：证书与连接错误说明</a></li>
-<li><a href="https://developers.cloudflare.com/fundamentals/reference/network-ports/">Cloudflare：支持代理的网络端口</a></li>
-</ul>
-<hr>
-<p>如果这篇教程帮你解决了问题，欢迎收藏本站。配置过程中不要在评论区公开服务器 IP、面板路径、管理员密码、API Token 或证书私钥。</p>
+<p>选好服务器后，可以继续阅读本站的 <a href="/2026/03/04/2026%20VPS%20%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B/">Debian VPS 搭建、BBR 与安全配置教程</a>；准备部署节点的读者可参考 <a href="/2026/07/21/sing-box-one-click-vless-reality-beginner/">sing-box VLESS + Reality 一键搭建教程</a>。</p>
+<h2 id="VPS-选购常见问题"><a href="#VPS-选购常见问题" class="headerlink" title="VPS 选购常见问题"></a>VPS 选购常见问题</h2><h3 id="中国大陆访问，搬瓦工和-DMIT-哪个更好？"><a href="#中国大陆访问，搬瓦工和-DMIT-哪个更好？" class="headerlink" title="中国大陆访问，搬瓦工和 DMIT 哪个更好？"></a>中国大陆访问，搬瓦工和 DMIT 哪个更好？</h3><p>两家都有面向中国方向的精品线路。搬瓦工的优势是可迁移机房和线路选择丰富；DMIT 更适合看重美西、香港、日本精品产品与长期建站的用户。最终应使用测试 IP，结合所在省份和电信、联通、移动运营商实测。</p>
+<h3 id="便宜年付-VPS-推荐哪一家？"><a href="#便宜年付-VPS-推荐哪一家？" class="headerlink" title="便宜年付 VPS 推荐哪一家？"></a>便宜年付 VPS 推荐哪一家？</h3><p>如果用途是开发测试、个人博客备份、监控探针或轻量 Docker 服务，RackNerd 的低价年付套餐通常更合适。需要注意，它主要是普通国际线路，不应按 CN2 GIA 的晚高峰表现来预期。</p>
+<h3 id="TikTok、Netflix-和原生-IP-应该选哪家？"><a href="#TikTok、Netflix-和原生-IP-应该选哪家？" class="headerlink" title="TikTok、Netflix 和原生 IP 应该选哪家？"></a>TikTok、Netflix 和原生 IP 应该选哪家？</h3><p>AkileCloud 的亚洲节点和解锁型产品更贴近这类需求。但“原生 IP”不等于账号环境一定安全，购买前后都应检查 IP 信誉、ASN、DNS 区域和目标平台的实际解锁结果。</p>
+<h3 id="CN2-GIA、AS9929-和-CMI-有什么区别？"><a href="#CN2-GIA、AS9929-和-CMI-有什么区别？" class="headerlink" title="CN2 GIA、AS9929 和 CMI 有什么区别？"></a>CN2 GIA、AS9929 和 CMI 有什么区别？</h3><p>它们分别对应不同运营商和跨境网络资源，实际体验还受地区、入口、回程、拥塞和商家带宽策略影响。线路名称只能用于初筛，不能替代晚高峰测试。</p>
+<h3 id="VPS-端口是-10Gbps，实际速度就一定快吗？"><a href="#VPS-端口是-10Gbps，实际速度就一定快吗？" class="headerlink" title="VPS 端口是 10Gbps，实际速度就一定快吗？"></a>VPS 端口是 10Gbps，实际速度就一定快吗？</h3><p>不一定。端口速率只是理论上限，实际速度还取决于共享情况、月流量限制、国际出口、路由拥塞、客户端网络和单连接性能。</p>
+<p>没有任何一家 VPS 能在所有维度都胜出。先明确自己最看重的是线路、预算、地区、解锁还是稳定性，再选产品，通常比单纯追逐“跑分最高”更可靠。</p>
 ]]></content>
       <categories>
-        <category>技术教程</category>
-        <category>服务器运维</category>
+        <category>VPS 选购</category>
       </categories>
       <tags>
-        <tag>3x-ui</tag>
-        <tag>Cloudflare</tag>
-        <tag>HTTPS</tag>
-        <tag>SSL证书</tag>
-        <tag>Let&#39;s Encrypt</tag>
-        <tag>Nginx</tag>
+        <tag>VPS</tag>
+        <tag>搬瓦工</tag>
+        <tag>DMIT</tag>
+        <tag>RackNerd</tag>
+        <tag>AkileCloud</tag>
+        <tag>CN2 GIA</tag>
+        <tag>流媒体解锁</tag>
       </tags>
   </entry>
 </search>

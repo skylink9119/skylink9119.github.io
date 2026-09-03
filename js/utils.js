@@ -243,7 +243,8 @@
                   ],
                   right: ['slideshow', 'thumbs', 'close']
                 }
-              }
+              },
+              hideScrollbar: false
             }
           } else {
             options = {
@@ -274,7 +275,8 @@
                     maxScale: 4
                   }
                 }
-              }
+              },
+              hideScrollbar: false
             }
           }
 

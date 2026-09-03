@@ -995,8 +995,11 @@ document.addEventListener('DOMContentLoaded', () => {
     GLOBAL_CONFIG_SITE.pageType === 'home' && scrollDownInIndex()
     scrollFn()
 
-    forPostFn()
-    GLOBAL_CONFIG_SITE.pageType !== 'shuoshuo' && btf.switchComments(document)
+    if (GLOBAL_CONFIG_SITE.pageType !== 'shuoshuo') {
+      forPostFn()
+      btf.switchComments(document)
+    }
+
     openMobileMenu()
   }
 
@@ -1012,4 +1015,6 @@ document.addEventListener('DOMContentLoaded', () => {
       fn()
     })
   })
+
+  document.addEventListener('shuoshuo:rendered', forPostFn)
 })
