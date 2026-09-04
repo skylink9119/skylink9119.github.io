@@ -1,7 +1,7 @@
 ---
 title: 2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流
 date: 2026-09-03 21:51:00
-updated: 2026-09-04 20:58:11
+updated: 2026-09-04 21:02:40
 tags: [R76S, iStoreOS, PassWall2, Xray, VLESS, REALITY, Vision]
 categories: [技术教程, 网络链路]
 keywords: R76S PassWall2教程,iStoreOS安装PassWall2,aarch64_generic,VLESS REALITY Vision,PassWall2国内外分流,Xray分流教程
@@ -11,15 +11,45 @@ aside: true
 toc: true
 ---
 
+<div class="passwall2-video-container">
+  <iframe
+    src="https://www.youtube.com/embed/bK5zV9IRT90"
+    title="R76S 上安装和配置 PassWall2：VLESS REALITY Vision 国内外分流视频教程"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.passwall2-video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.passwall2-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+</style>
+
+{% btn 'https://youtu.be/bK5zV9IRT90', ' 在 YouTube 观看完整视频 ', 'fab fa-youtube', 'red larger' %}
+{% btn 'https://www.youtube.com/@guo1986', ' 订阅 Skyline YouTube 频道 ', 'fab fa-youtube', 'blue larger' %}
+
 > 本文适用于 FriendlyElec NanoPi R76S、iStoreOS 24.10.8、OPKG 软件包管理器，以及 `aarch64_generic` 架构。示例版本为 PassWall2 26.9.2，节点为自建 VLESS + REALITY + `xtls-rprx-vision`。
 >
 > 发布时间：2026-09-03
 
 本文的下载地址固定到 26.9.2-1，以保证前端、中文包和依赖版本相互匹配。未来使用新版本时，应从官方 Releases 同一版本页面下载全部文件，不要混装不同版本的前端和依赖。
-
-## 视频教程
-
-[▶ 在 YouTube 观看：R76S 上安装和配置 PassWall2 全流程](https://youtu.be/bK5zV9IRT90)
 
 ## 最终效果
 
