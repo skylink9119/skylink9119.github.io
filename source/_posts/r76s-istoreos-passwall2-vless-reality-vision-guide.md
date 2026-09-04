@@ -1,7 +1,7 @@
 ---
 title: 2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流
 date: 2026-09-03 21:51:00
-updated: 2026-09-03 21:51:00
+updated: 2026-09-04 20:58:11
 tags: [R76S, iStoreOS, PassWall2, Xray, VLESS, REALITY, Vision]
 categories: [技术教程, 网络链路]
 keywords: R76S PassWall2教程,iStoreOS安装PassWall2,aarch64_generic,VLESS REALITY Vision,PassWall2国内外分流,Xray分流教程
@@ -16,6 +16,10 @@ toc: true
 > 发布时间：2026-09-03
 
 本文的下载地址固定到 26.9.2-1，以保证前端、中文包和依赖版本相互匹配。未来使用新版本时，应从官方 Releases 同一版本页面下载全部文件，不要混装不同版本的前端和依赖。
+
+## 视频教程
+
+[▶ 在 YouTube 观看：R76S 上安装和配置 PassWall2 全流程](https://youtu.be/bK5zV9IRT90)
 
 ## 最终效果
 
