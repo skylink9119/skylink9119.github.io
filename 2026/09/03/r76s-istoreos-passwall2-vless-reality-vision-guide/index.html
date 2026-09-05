@@ -1,0 +1,739 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="R76S 与 iStoreOS 24.10.8 安装配置 PassWall2 26.9.2 全流程，覆盖 ARM64 依赖、中文包、Xray Core、自建 VLESS REALITY Vision 节点、CN 国内直连分流和常见故障排查。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流">
+<meta property="og:url" content="https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/">
+<meta property="og:site_name" content="SKYBYTE">
+<meta property="og:description" content="R76S 与 iStoreOS 24.10.8 安装配置 PassWall2 26.9.2 全流程，覆盖 ARM64 依赖、中文包、Xray Core、自建 VLESS REALITY Vision 节点、CN 国内直连分流和常见故障排查。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-09-03T13:51:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T13:02:40.000Z">
+<meta property="article:author" content="SKYBYTE">
+<meta property="article:tag" content="PassWall2">
+<meta property="article:tag" content="R76S">
+<meta property="article:tag" content="REALITY">
+<meta property="article:tag" content="VLESS">
+<meta property="article:tag" content="Vision">
+<meta property="article:tag" content="Xray">
+<meta property="article:tag" content="iStoreOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流",
+  "url": "https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/"
+  },
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "description": "R76S 与 iStoreOS 24.10.8 安装配置 PassWall2 26.9.2 全流程，覆盖 ARM64 依赖、中文包、Xray Core、自建 VLESS REALITY Vision 节点、CN 国内直连分流和常见故障排查。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-09-03T13:51:00.000Z",
+  "dateModified": "2026-09-04T13:02:40.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SKYBYTE",
+      "url": "https://www.youtube.com/@SKYBYTE9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Person",
+    "name": "SKYBYTE",
+    "url": "https://skylink9119.github.io/"
+  }
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const start = 6
+              const end = 18
+              const isNight =
+                start < end
+                    ? hour < start || hour >= end
+                    : hour >= start || hour < end
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SKYBYTE","link":"链接: ","source":"来源: SKYBYTE","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"SKYBYTE","url":"https://skylink9119.github.io/about/","image":"https://skylink9119.github.io/img/icon.jpg","sameAs":["https://www.youtube.com/@SKYBYTE9119"]}</script><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SKYBYTE" type="application/atom+xml">
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SKYBYTE</span></a><a class="nav-page-title" href="/"><span class="site-name">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-03T13:51:00.000Z" title="发表于 2026-09-03 21:51:00">2026-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-04T13:02:40.000Z" title="更新于 2026-09-04 21:02:40">2026-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/">网络链路</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;本文已有&quot;,&quot;messageNext&quot;:&quot;天未更新，内容可能已过时，请以最新资料为准。&quot;,&quot;postUpdate&quot;:&quot;2026-09-04 21:02:40&quot;}" hidden></div><div class="passwall2-video-container">
+  <iframe
+    src="https://www.youtube.com/embed/bK5zV9IRT90"
+    title="R76S 上安装和配置 PassWall2：VLESS REALITY Vision 国内外分流视频教程"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+.passwall2-video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.passwall2-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+</style>
+
+<a class="btn-beautify red larger" target="_blank" rel="noopener" href="https://youtu.be/bK5zV9IRT90" title="在 YouTube 观看完整视频"><i class="fab fa-youtube"></i><span>在 YouTube 观看完整视频</span></a>
+<a class="btn-beautify blue larger" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119" title="订阅 SKYBYTE YouTube 频道"><i class="fab fa-youtube"></i><span>订阅 SKYBYTE YouTube 频道</span></a>
+
+<blockquote>
+<p>本文适用于 FriendlyElec NanoPi R76S、iStoreOS 24.10.8、OPKG 软件包管理器，以及 <code>aarch64_generic</code> 架构。示例版本为 PassWall2 26.9.2，节点为自建 VLESS + REALITY + <code>xtls-rprx-vision</code>。</p>
+<p>发布时间：2026-09-03</p>
+</blockquote>
+<p>本文的下载地址固定到 26.9.2-1，以保证前端、中文包和依赖版本相互匹配。未来使用新版本时，应从官方 Releases 同一版本页面下载全部文件，不要混装不同版本的前端和依赖。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p>完成本文后，路由器将实现：</p>
+<ul>
+<li>国内域名和国内 IP 直接连接；</li>
+<li>其他流量通过自建的 VLESS REALITY 节点；</li>
+<li>路由器本机和局域网设备自动使用透明代理；</li>
+<li>不需要在手机、电脑、电视上逐台设置代理；</li>
+<li>OpenClash 可以保留安装，但不会与 PassWall2 同时运行。</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="一、开始前需要准备什么"><a href="#一、开始前需要准备什么" class="headerlink" title="一、开始前需要准备什么"></a>一、开始前需要准备什么</h2><p>你需要准备以下信息：</p>
+<ul>
+<li>VPS 地址，可以是 IP 或域名；</li>
+<li>服务端监听端口；</li>
+<li>VLESS UUID；</li>
+<li>REALITY 公钥；</li>
+<li>REALITY Short ID；</li>
+<li>SNI，也就是服务端 <code>serverNames</code> 中使用的域名；</li>
+<li>服务端流控为 <code>xtls-rprx-vision</code>。</li>
+</ul>
+<p>安全提醒：完整的 <code>vless://</code> 链接和 UUID 相当于访问凭据，不要公开到博客、截图或聊天记录中。客户端只需要 REALITY 公钥，绝对不要把服务端的 REALITY 私钥填入路由器。</p>
+<h2 id="二、确认设备架构"><a href="#二、确认设备架构" class="headerlink" title="二、确认设备架构"></a>二、确认设备架构</h2><p>通过 iStoreOS 的“系统 → 终端”执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/openwrt_release</span><br><span class="line">opkg print-architecture</span><br></pre></td></tr></table></figure>
+
+<p>R76S 在本文环境下应该能看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aarch64_generic</span><br></pre></td></tr></table></figure>
+
+<p>R76S 使用 Rockchip RK3576，是 64 位 ARM 设备，OpenWrt 目标为 <code>rockchip/armv8</code>。不要下载 <code>x86_64</code>、<code>aarch64_cortex-a53</code> 或其他架构的软件包，也不要使用 <code>--force-architecture</code> 强制安装。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://openwrt.org/toh/hwdata/friendlyarm/friendlyarm_nanopi_r76s">OpenWrt NanoPi R76S 硬件资料</a></p>
+<h2 id="三、避免与-OpenClash-冲突"><a href="#三、避免与-OpenClash-冲突" class="headerlink" title="三、避免与 OpenClash 冲突"></a>三、避免与 OpenClash 冲突</h2><p>OpenClash 和 PassWall2 可以同时安装，但不要同时开启透明代理。两者都会修改 DNS、dnsmasq 和 Firewall4&#x2F;NFTables 规则，同时运行容易出现断网、DNS 异常或流量重复转发。</p>
+<p>如果当前正在运行 OpenClash，先执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/openclash stop</span><br><span class="line">/etc/init.d/openclash <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+
+<p>这不会卸载 OpenClash，只是停止服务并关闭开机启动。以后想换回 OpenClash，应先关闭 PassWall2。</p>
+<h2 id="四、更新软件包列表"><a href="#四、更新软件包列表" class="headerlink" title="四、更新软件包列表"></a>四、更新软件包列表</h2><p>执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br></pre></td></tr></table></figure>
+
+<p>看到多个 <code>Signature check passed.</code> 即表示软件源签名验证正常。最后若仅出现下面这种清理锁文件警告，一般不影响更新结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg_conf_deinit: Couldn&#x27;t unlink /var/lock/opkg.lock: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、安装-PassWall2-依赖"><a href="#五、安装-PassWall2-依赖" class="headerlink" title="五、安装 PassWall2 依赖"></a>五、安装 PassWall2 依赖</h2><p>PassWall2 的 LuCI 前端包是 <code>all.ipk</code>，但 <code>tcping</code>、<code>geoview</code> 等依赖仍然必须与 CPU 架构匹配。OpenWrt 官方源通常没有这些 PassWall2 专用依赖，因此从 PassWall2 官方发行版下载 <code>aarch64_generic</code> 依赖包。</p>
+<p>先创建临时目录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /tmp/pw2-install</span><br><span class="line"><span class="built_in">cd</span> /tmp/pw2-install</span><br></pre></td></tr></table></figure>
+
+<p>下载安装包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O passwall-deps.zip <span class="string">&#x27;https://github.com/Openwrt-Passwall/openwrt-passwall2/releases/download/26.9.2-1/passwall_packages_ipk_aarch64_generic.zip&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>解压：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -o passwall-deps.zip</span><br></pre></td></tr></table></figure>
+
+<p>如果提示 <code>unzip: not found</code>，先安装解压工具：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg install unzip</span><br><span class="line">unzip -o passwall-deps.zip</span><br></pre></td></tr></table></figure>
+
+<p>安装必要依赖：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg install ./tcping_0.3-r1_aarch64_generic.ipk</span><br><span class="line">opkg install ./geoview_0.2.6-r1_aarch64_generic.ipk</span><br></pre></td></tr></table></figure>
+
+<p>不要一次安装压缩包里的全部代理核心。本文只使用 Xray，其他 Shadowsocks 服务端、旧协议核心没有必要占用存储空间。</p>
+<h2 id="六、安装-PassWall2-和简体中文包"><a href="#六、安装-PassWall2-和简体中文包" class="headerlink" title="六、安装 PassWall2 和简体中文包"></a>六、安装 PassWall2 和简体中文包</h2><p>下载 PassWall2：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O passwall2.ipk <span class="string">&#x27;https://github.com/Openwrt-Passwall/openwrt-passwall2/releases/download/26.9.2-1/luci-app-passwall2_26.9.2-r1_all.ipk&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>下载简体中文语言包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O passwall2-zh-cn.ipk <span class="string">&#x27;https://github.com/Openwrt-Passwall/openwrt-passwall2/releases/download/26.9.2-1/luci-i18n-passwall2-zh-cn_26.9.2_all.ipk&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>依次安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg install ./passwall2.ipk</span><br><span class="line">opkg install ./passwall2-zh-cn.ipk</span><br></pre></td></tr></table></figure>
+
+<p>清理 LuCI 菜单缓存并重启后台服务：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f /tmp/luci-indexcache</span><br><span class="line">/etc/init.d/rpcd restart</span><br></pre></td></tr></table></figure>
+
+<p>刷新 iStoreOS 页面，进入“服务 → PassWall2”。安装文件均来自 <a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/releases/tag/26.9.2-1">PassWall2 官方 26.9.2-1 发行版</a>。</p>
+<h2 id="七、安装-Xray-Core"><a href="#七、安装-Xray-Core" class="headerlink" title="七、安装 Xray Core"></a>七、安装 Xray Core</h2><p>仅安装 PassWall2 前端后，“节点类型”下拉框可能是空的，因为 PassWall2 只有检测到核心程序后才显示对应的节点类型。</p>
+<p>进入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PassWall2 → 组件更新</span><br></pre></td></tr></table></figure>
+
+<p>找到“Xray 版本”一行：</p>
+<ol>
+<li>保持 Xray 程序路径为 <code>/usr/bin/xray</code>；</li>
+<li>点击“点击更新”；</li>
+<li>等待安装完成，不要中途刷新页面；</li>
+<li>确认“Xray 版本【无】”变成具体版本号，例如 <code>26.7.28</code>。</li>
+</ol>
+<p>对于单个 VLESS REALITY Vision 节点，不需要额外安装 Sing-box。Sing-box 更适合 TUIC、AnyTLS、SSH 或混合多协议订阅。</p>
+<h2 id="八、手动添加-VLESS-REALITY-Vision-节点"><a href="#八、手动添加-VLESS-REALITY-Vision-节点" class="headerlink" title="八、手动添加 VLESS REALITY Vision 节点"></a>八、手动添加 VLESS REALITY Vision 节点</h2><p>进入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PassWall2 → 节点列表 → 添加</span><br></pre></td></tr></table></figure>
+
+<p>填写以下参数：</p>
+<table>
+<thead>
+<tr>
+<th>PassWall2 字段</th>
+<th>填写内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>节点备注</td>
+<td>自定义，例如 <code>dmit</code></td>
+</tr>
+<tr>
+<td>别名</td>
+<td>保持 <code>default</code></td>
+</tr>
+<tr>
+<td>类型</td>
+<td><code>Xray</code></td>
+</tr>
+<tr>
+<td>协议</td>
+<td><code>VLESS</code></td>
+</tr>
+<tr>
+<td>地址</td>
+<td>VPS 的 IP 或域名</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>服务端监听端口，例如 <code>443</code></td>
+</tr>
+<tr>
+<td>ID</td>
+<td>VLESS UUID</td>
+</tr>
+<tr>
+<td>加密方式 encryption</td>
+<td><code>none</code></td>
+</tr>
+<tr>
+<td>flow</td>
+<td><code>xtls-rprx-vision</code></td>
+</tr>
+<tr>
+<td>TLS</td>
+<td>开启</td>
+</tr>
+<tr>
+<td>REALITY</td>
+<td>开启</td>
+</tr>
+<tr>
+<td>SNI 域名</td>
+<td>服务端 <code>serverNames</code> 中的域名，不带 <code>https://</code> 和端口</td>
+</tr>
+<tr>
+<td>Public Key</td>
+<td>服务端生成的 REALITY 公钥</td>
+</tr>
+<tr>
+<td>Short ID</td>
+<td>服务端 <code>shortIds</code> 中使用的值，不带 <code>0x</code></td>
+</tr>
+<tr>
+<td>Spider X</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td>Finger Print</td>
+<td><code>chrome</code></td>
+</tr>
+<tr>
+<td>传输方式</td>
+<td><code>RAW (TCP)</code></td>
+</tr>
+<tr>
+<td>伪装类型</td>
+<td><code>none</code></td>
+</tr>
+<tr>
+<td>Mux</td>
+<td>关闭</td>
+</tr>
+<tr>
+<td>ML-DSA-65</td>
+<td>未专门配置时关闭</td>
+</tr>
+</tbody></table>
+<p>当前版本的 PassWall2 将普通 TCP 显示为 <code>RAW (TCP)</code>，这是正常现象。字段定义可在 <a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/blob/main/luci-app-passwall2/luasrc/model/cbi/passwall2/client/type/2_xray.lua">PassWall2 官方 Xray 节点配置源码</a> 中核对。</p>
+<p>填写完成后点击“保存并应用”。</p>
+<h2 id="九、先验证单节点能否连接"><a href="#九、先验证单节点能否连接" class="headerlink" title="九、先验证单节点能否连接"></a>九、先验证单节点能否连接</h2><p>在配置分流前，先确认节点本身可用。这样出现问题时，能够区分是节点参数错误还是分流规则错误。</p>
+<p>进入“基本设置”，设置：</p>
+<ul>
+<li>主开关：开启；</li>
+<li>节点：直接选择 <code>Xray VLESS：[dmit]</code>；</li>
+<li>路由器本机代理：开启；</li>
+<li>客户端代理：开启；</li>
+<li>节点 Socks 监听端口：保持 <code>1070</code>；</li>
+<li>节点 Socks 本机监听：保持开启；</li>
+<li>Socks 主开关：不需要开启。</li>
+</ul>
+<p>点击“保存并应用”，等待顶部显示“Core 运行中”，然后测试 Google 和 GitHub 连接。</p>
+<p>注意：节点列表中的 TCP Ping 只代表服务器端口能够连接，不代表 UUID、REALITY 公钥、SNI 和 Short ID 一定正确。最终要以 Core 正常运行和 URL 测试成功为准。</p>
+<p>如果单节点无法连接，先不要继续配置分流，直接查看本文后面的故障排查部分。</p>
+<h2 id="十、更新-GeoIP-和-GeoSite-规则"><a href="#十、更新-GeoIP-和-GeoSite-规则" class="headerlink" title="十、更新 GeoIP 和 GeoSite 规则"></a>十、更新 GeoIP 和 GeoSite 规则</h2><p>国内外分流依赖 GeoIP 和 GeoSite 数据。进入“规则管理”中的规则更新区域：</p>
+<ul>
+<li>GeoIP 更新 URL：选择 <code>Loyalsoldier/geoip</code>；</li>
+<li>Geosite 更新 URL：选择 <code>Loyalsoldier/geosite</code>；</li>
+<li>Geo 资源文件目录：保持默认；</li>
+<li>执行一次手动更新。</li>
+</ul>
+<p>如果 GitHub 下载失败，再选择带 <code>(CDN)</code> 的版本。不要选择标有 <code>(IR)</code> 或 <code>(RU)</code> 的规则，它们分别面向伊朗和俄罗斯。</p>
+<h2 id="十一、创建“国内直连、其他代理”的分流节点"><a href="#十一、创建“国内直连、其他代理”的分流节点" class="headerlink" title="十一、创建“国内直连、其他代理”的分流节点"></a>十一、创建“国内直连、其他代理”的分流节点</h2><p>进入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PassWall2 → 节点列表 → 添加</span><br></pre></td></tr></table></figure>
+
+<p>设置：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>选择</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>节点备注</td>
+<td><code>国内外分流</code></td>
+</tr>
+<tr>
+<td>别名</td>
+<td><code>default</code></td>
+</tr>
+<tr>
+<td>类型</td>
+<td><code>Xray</code></td>
+</tr>
+<tr>
+<td>协议</td>
+<td><code>分流</code></td>
+</tr>
+<tr>
+<td>分流规则组</td>
+<td><code>CN</code></td>
+</tr>
+<tr>
+<td>Domain Strategy</td>
+<td><code>IPOnDemand</code></td>
+</tr>
+<tr>
+<td>Domain Matcher</td>
+<td><code>hybrid</code></td>
+</tr>
+<tr>
+<td>直连 DNS 结果写入 IPSet</td>
+<td>开启</td>
+</tr>
+<tr>
+<td>GeoIP 数据解析</td>
+<td>开启</td>
+</tr>
+<tr>
+<td>FakeDNS 主开关</td>
+<td>关闭</td>
+</tr>
+</tbody></table>
+<p>在页面下方的规则表中设置：</p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>节点选择</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CN</td>
+<td><code>直连</code></td>
+</tr>
+<tr>
+<td>DirectFront</td>
+<td><code>直连</code></td>
+</tr>
+<tr>
+<td>DirectGame</td>
+<td><code>直连</code></td>
+</tr>
+<tr>
+<td>ProxyFront</td>
+<td><code>使用默认节点</code></td>
+</tr>
+<tr>
+<td>ProxyGame</td>
+<td><code>使用默认节点</code></td>
+</tr>
+<tr>
+<td>默认</td>
+<td><code>Xray VLESS：[dmit]</code></td>
+</tr>
+</tbody></table>
+<p>FakeDNS 和前置代理全部保持关闭，然后点击“保存并应用”。</p>
+<p>PassWall2 默认 <code>CN</code> 规则使用 <code>geosite:cn</code> 和 <code>geoip:cn</code>，用于匹配国内域名与国内 IP。默认规则可参考 <a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/blob/main/luci-app-passwall2/root/usr/share/passwall2/0_default_config">PassWall2 官方默认配置</a>。</p>
+<h2 id="十二、启用国内外分流"><a href="#十二、启用国内外分流" class="headerlink" title="十二、启用国内外分流"></a>十二、启用国内外分流</h2><p>回到“基本设置”，把“节点”从具体的 dmit 节点改为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xray 分流：[国内外分流]</span><br></pre></td></tr></table></figure>
+
+<p>确认以下开关：</p>
+<ul>
+<li>主开关：开启；</li>
+<li>路由器本机代理：开启；</li>
+<li>客户端代理：开启；</li>
+<li>Socks 主开关：关闭。</li>
+</ul>
+<p>点击“保存并应用”。</p>
+<p>测试以下网站：</p>
+<ul>
+<li>国内直连：百度、淘宝、哔哩哔哩；</li>
+<li>代理访问：Google、GitHub；</li>
+<li>在运行日志中确认国内域名命中 <code>CN</code> 或直连规则。</li>
+</ul>
+<p>如果直接在“基本设置”里选择 <code>Xray VLESS：[dmit]</code>，未匹配分流规则的所有流量都会使用该节点，国内网站可能明显变慢。日常使用应选择刚创建的“国内外分流”节点。</p>
+<h2 id="十三、DNS-和-FakeDNS-怎么设置"><a href="#十三、DNS-和-FakeDNS-怎么设置" class="headerlink" title="十三、DNS 和 FakeDNS 怎么设置"></a>十三、DNS 和 FakeDNS 怎么设置</h2><p>第一次配置时建议保持 DNS 页面的默认值，不要同时修改太多选项。</p>
+<p>建议：</p>
+<ul>
+<li>FakeDNS：关闭；</li>
+<li>直连 DNS：保持系统默认或使用可靠的国内 DNS；</li>
+<li>远程 DNS：保持 PassWall2 默认值；</li>
+<li>浏览器若单独启用了“安全 DNS”，出现解析异常时可暂时关闭后测试。</li>
+</ul>
+<p>FakeDNS 适合流媒体 DNS 解锁、需要让远端节点获取目标域名、或特殊 DNS 优化场景。单个 VLESS REALITY 节点的普通国内外分流不需要开启 FakeDNS，贸然开启反而可能增加排查难度。</p>
+<h2 id="十四、Socks-配置是什么"><a href="#十四、Socks-配置是什么" class="headerlink" title="十四、Socks 配置是什么"></a>十四、Socks 配置是什么</h2><p>PassWall2 页面底部还有一个独立的“Socks 配置”。它用于给电脑或其他软件提供显式 SOCKS5 地址，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">路由器IP:1081</span><br></pre></td></tr></table></figure>
+
+<p>这不是透明代理的必要功能。只要“主开关”和“客户端代理”已经开启，局域网设备就会自动经过 PassWall2。Socks 行显示红色 <code>X</code>，通常只是因为“Socks 主开关”没有开启，并不代表主透明代理故障。</p>
+<h2 id="十五、常见问题排查"><a href="#十五、常见问题排查" class="headerlink" title="十五、常见问题排查"></a>十五、常见问题排查</h2><h3 id="1-安装时提示缺少-tcping-或-geoview"><a href="#1-安装时提示缺少-tcping-或-geoview" class="headerlink" title="1. 安装时提示缺少 tcping 或 geoview"></a>1. 安装时提示缺少 tcping 或 geoview</h3><p>确认架构：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg print-architecture</span><br></pre></td></tr></table></figure>
+
+<p>必须包含 <code>aarch64_generic</code>。然后重新执行本文第五部分的依赖安装命令。不要使用 <code>--force-architecture</code>。</p>
+<h3 id="2-“类型”下拉框是空的"><a href="#2-“类型”下拉框是空的" class="headerlink" title="2. “类型”下拉框是空的"></a>2. “类型”下拉框是空的</h3><p>原因通常是 Xray Core 尚未安装。进入“组件更新”，安装 Xray。程序路径保持：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/xray</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Core-显示“未运行”"><a href="#3-Core-显示“未运行”" class="headerlink" title="3. Core 显示“未运行”"></a>3. Core 显示“未运行”</h3><p>先关闭主开关，避免全网断线，然后查看：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 100 /tmp/log/passwall2.<span class="built_in">log</span></span><br><span class="line">logread | grep -i passwall2 | <span class="built_in">tail</span> -n 100</span><br></pre></td></tr></table></figure>
+
+<p>重点检查：</p>
+<ul>
+<li>UUID 是否正确；</li>
+<li>地址和端口是否正确；</li>
+<li>SNI 是否与服务端 <code>serverNames</code> 一致；</li>
+<li>Public Key 是否误填成服务端私钥；</li>
+<li>Short ID 是否一致；</li>
+<li>flow 是否为 <code>xtls-rprx-vision</code>；</li>
+<li>传输方式是否为 <code>RAW (TCP)</code>。</li>
+</ul>
+<h3 id="4-开启后整个局域网无法上网"><a href="#4-开启后整个局域网无法上网" class="headerlink" title="4. 开启后整个局域网无法上网"></a>4. 开启后整个局域网无法上网</h3><p>先恢复网络：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/passwall2 stop</span><br></pre></td></tr></table></figure>
+
+<p>然后检查：</p>
+<ul>
+<li>OpenClash 是否仍在运行；</li>
+<li>基本设置是否选择了无效的示例节点；</li>
+<li>Xray Core 是否已经安装；</li>
+<li>单节点是否通过 URL 测试；</li>
+<li>运行日志中的第一条实际错误。</li>
+</ul>
+<h3 id="5-国外网站正常，但国内网站很慢"><a href="#5-国外网站正常，但国内网站很慢" class="headerlink" title="5. 国外网站正常，但国内网站很慢"></a>5. 国外网站正常，但国内网站很慢</h3><p>通常是国内流量也经过了境外节点。检查：</p>
+<ul>
+<li>基本设置应选择 <code>Xray 分流：[国内外分流]</code>，而不是直接选择 dmit；</li>
+<li><code>CN</code>、<code>DirectFront</code>、<code>DirectGame</code> 必须设置为“直连”；</li>
+<li>GeoIP 和 GeoSite 是否更新成功；</li>
+<li>OpenClash 是否已停止。</li>
+</ul>
+<h3 id="6-百度正常，Google-GitHub-不通"><a href="#6-百度正常，Google-GitHub-不通" class="headerlink" title="6. 百度正常，Google&#x2F;GitHub 不通"></a>6. 百度正常，Google&#x2F;GitHub 不通</h3><p>这通常说明路由器本身能联网，但代理节点未成功工作。先把基本节点改成具体的 dmit 节点进行单节点测试，再查看运行日志。不要一开始就同时排查 DNS、FakeDNS 和分流规则。</p>
+<h2 id="十六、备份配置"><a href="#十六、备份配置" class="headerlink" title="十六、备份配置"></a>十六、备份配置</h2><p>配置成功后建议立即备份：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> /etc/config/passwall2 /etc/config/passwall2.backup</span><br></pre></td></tr></table></figure>
+
+<p>该文件包含节点访问参数，应避免公开。升级前也建议通过 PassWall2 的维护页面导出配置。</p>
+<h2 id="十七、卸载和干净重装"><a href="#十七、卸载和干净重装" class="headerlink" title="十七、卸载和干净重装"></a>十七、卸载和干净重装</h2><p>普通卸载可能保留被修改过的 <code>/etc/config/passwall2</code>，因此重新安装后旧问题仍可能存在。需要干净重装时，先确认已经记录节点参数。</p>
+<p>备份并卸载：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[ -f /etc/config/passwall2 ] &amp;&amp; <span class="built_in">cp</span> /etc/config/passwall2 /etc/config/passwall2.before-reinstall.bak</span><br><span class="line"></span><br><span class="line">/etc/init.d/passwall2 stop 2&gt;/dev/null</span><br><span class="line">opkg remove luci-i18n-passwall2-zh-cn</span><br><span class="line">opkg remove luci-app-passwall2</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -f /etc/config/passwall2</span><br><span class="line"><span class="built_in">rm</span> -rf /tmp/etc/passwall2</span><br><span class="line"><span class="built_in">rm</span> -f /tmp/log/passwall2.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">rm</span> -f /tmp/log/passwall2_server.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">rm</span> -f /tmp/luci-indexcache</span><br><span class="line"></span><br><span class="line">/etc/init.d/rpcd restart</span><br></pre></td></tr></table></figure>
+
+<p>然后重新执行本文第五、六、七部分。<code>tcping</code>、<code>geoview</code> 和 <code>/usr/bin/xray</code> 可以保留复用，不必每次删除。</p>
+<h2 id="十八、核心选择建议"><a href="#十八、核心选择建议" class="headerlink" title="十八、核心选择建议"></a>十八、核心选择建议</h2><p>对于本文的自建 VLESS REALITY Vision 节点，建议使用 Xray：</p>
+<ul>
+<li>REALITY 和 Vision 配置直接；</li>
+<li>只需要一个核心，结构更简单；</li>
+<li>减少不必要的软件包和排查变量。</li>
+</ul>
+<p>以下情况再考虑 Sing-box：</p>
+<ul>
+<li>使用 TUIC、AnyTLS 或 SSH 节点；</li>
+<li>同时使用多个不同协议，希望由一个核心统一处理；</li>
+<li>某个节点明确要求 Sing-box；</li>
+<li>相同配置在 Xray 上存在兼容问题，需要替代核心测试。</li>
+</ul>
+<p>PassWall2 当前支持的核心和协议列表可参考 <a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2#-features">官方项目说明</a>。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>R76S 的性能足以运行 PassWall2，实际稳定性更多取决于正确的软件包架构、节点参数、DNS 和分流规则。最稳妥的配置顺序始终是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">确认架构</span><br><span class="line">→ 安装依赖与前端</span><br><span class="line">→ 安装 Xray Core</span><br><span class="line">→ 验证单节点</span><br><span class="line">→ 更新 GeoIP/GeoSite</span><br><span class="line">→ 创建 CN 分流</span><br><span class="line">→ 最后再调整 DNS 或高级功能</span><br></pre></td></tr></table></figure>
+
+<p>遇到问题时先关闭 PassWall2 恢复网络，再查看运行日志中的第一条错误。不要同时开启 OpenClash，也不要在基础连接尚未验证前启用 FakeDNS、前置代理或复杂规则。</p>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2">PassWall2 官方项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/releases/tag/26.9.2-1">PassWall2 26.9.2-1 官方发行版</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/blob/main/luci-app-passwall2/luasrc/model/cbi/passwall2/client/type/2_xray.lua">PassWall2 Xray 节点配置源码</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Openwrt-Passwall/openwrt-passwall2/blob/main/luci-app-passwall2/root/usr/share/passwall2/0_default_config">PassWall2 默认分流配置</a></li>
+<li><a target="_blank" rel="noopener" href="https://openwrt.org/toh/hwdata/friendlyarm/friendlyarm_nanopi_r76s">OpenWrt NanoPi R76S 硬件资料</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119">SKYBYTE</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/">https://skylink9119.github.io/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">SKYBYTE</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Xray/">Xray</a><a class="post-meta__tags" href="/tags/VLESS/">VLESS</a><a class="post-meta__tags" href="/tags/REALITY/">REALITY</a><a class="post-meta__tags" href="/tags/Vision/">Vision</a><a class="post-meta__tags" href="/tags/R76S/">R76S</a><a class="post-meta__tags" href="/tags/iStoreOS/">iStoreOS</a><a class="post-meta__tags" href="/tags/PassWall2/">PassWall2</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/" title="3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</div></div><div class="info-2"><div class="info-item-1">3x-ui 面板提示“此站点的连接不安全”的原因与解决方法，涵盖域名解析、Let's Encrypt 证书、裸 IP 证书、Cloudflare DNS 验证、反向代理及常见证书错误排查。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/07/30/2026-august-debian-vless-tcp-raw-reality-vision/" title="2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-30</div><div class="info-item-2">2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程</div></div><div class="info-2"><div class="info-item-1">2026年8月版 Debian 搭建教程，使用 3x-ui 部署 VLESS + TCP(RAW) + REALITY + Vision，包含系统准备、BBR、防火墙、面板、入站参数、订阅端口与排错步骤。</div></div></div></a><a class="pagination-related" href="/2026/05/05/sing-box-vps-vless-reality-vision-beginner/" title="🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-05</div><div class="info-item-2">🚀 sing-box VPS 部署 VLESS + Reality + Vision：无域名纯配置新手教程</div></div><div class="info-2"><div class="info-item-1">面向新手的 sing-box VPS 部署完整教程，使用 VLESS + Reality + Vision 搭建无域名节点，涵盖安装、密钥生成、服务端配置、防火墙、客户端参数、验证和故障排查。</div></div></div></a><a class="pagination-related" href="/2026/07/21/sing-box-one-click-vless-reality-beginner/" title="🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-21</div><div class="info-item-2">🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</div></div><div class="info-2"><div class="info-item-1">零基础搭建 sing-box VLESS + Reality + Vision 节点，使用第三方一键脚本完成安装，涵盖 VPS 准备、协议选择、端口放行、客户端导入、维护命令与故障排查。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">SKYBYTE</div><div class="author-info-description">实用技术教程 · YouTube @SKYBYTE9119</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@SKYBYTE9119" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">📺 图文教程均有视频版：<a href="https://www.youtube.com/@SKYBYTE9119" target="_blank" rel="noopener">前往 SKYBYTE YouTube 频道</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">最终效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%80%E5%A7%8B%E5%89%8D%E9%9C%80%E8%A6%81%E5%87%86%E5%A4%87%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、开始前需要准备什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A1%AE%E8%AE%A4%E8%AE%BE%E5%A4%87%E6%9E%B6%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">二、确认设备架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%81%BF%E5%85%8D%E4%B8%8E-OpenClash-%E5%86%B2%E7%AA%81"><span class="toc-number">4.</span> <span class="toc-text">三、避免与 OpenClash 冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%97%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">四、更新软件包列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%89%E8%A3%85-PassWall2-%E4%BE%9D%E8%B5%96"><span class="toc-number">6.</span> <span class="toc-text">五、安装 PassWall2 依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%89%E8%A3%85-PassWall2-%E5%92%8C%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E5%8C%85"><span class="toc-number">7.</span> <span class="toc-text">六、安装 PassWall2 和简体中文包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E8%A3%85-Xray-Core"><span class="toc-number">8.</span> <span class="toc-text">七、安装 Xray Core</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0-VLESS-REALITY-Vision-%E8%8A%82%E7%82%B9"><span class="toc-number">9.</span> <span class="toc-text">八、手动添加 VLESS REALITY Vision 节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%88%E9%AA%8C%E8%AF%81%E5%8D%95%E8%8A%82%E7%82%B9%E8%83%BD%E5%90%A6%E8%BF%9E%E6%8E%A5"><span class="toc-number">10.</span> <span class="toc-text">九、先验证单节点能否连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E6%96%B0-GeoIP-%E5%92%8C-GeoSite-%E8%A7%84%E5%88%99"><span class="toc-number">11.</span> <span class="toc-text">十、更新 GeoIP 和 GeoSite 规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E2%80%9C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E3%80%81%E5%85%B6%E4%BB%96%E4%BB%A3%E7%90%86%E2%80%9D%E7%9A%84%E5%88%86%E6%B5%81%E8%8A%82%E7%82%B9"><span class="toc-number">12.</span> <span class="toc-text">十一、创建“国内直连、其他代理”的分流节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%90%AF%E7%94%A8%E5%9B%BD%E5%86%85%E5%A4%96%E5%88%86%E6%B5%81"><span class="toc-number">13.</span> <span class="toc-text">十二、启用国内外分流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81DNS-%E5%92%8C-FakeDNS-%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE"><span class="toc-number">14.</span> <span class="toc-text">十三、DNS 和 FakeDNS 怎么设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81Socks-%E9%85%8D%E7%BD%AE%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">15.</span> <span class="toc-text">十四、Socks 配置是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">16.</span> <span class="toc-text">十五、常见问题排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E6%97%B6%E6%8F%90%E7%A4%BA%E7%BC%BA%E5%B0%91-tcping-%E6%88%96-geoview"><span class="toc-number">16.1.</span> <span class="toc-text">1. 安装时提示缺少 tcping 或 geoview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E2%80%9C%E7%B1%BB%E5%9E%8B%E2%80%9D%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%AF%E7%A9%BA%E7%9A%84"><span class="toc-number">16.2.</span> <span class="toc-text">2. “类型”下拉框是空的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Core-%E6%98%BE%E7%A4%BA%E2%80%9C%E6%9C%AA%E8%BF%90%E8%A1%8C%E2%80%9D"><span class="toc-number">16.3.</span> <span class="toc-text">3. Core 显示“未运行”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BC%80%E5%90%AF%E5%90%8E%E6%95%B4%E4%B8%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91"><span class="toc-number">16.4.</span> <span class="toc-text">4. 开启后整个局域网无法上网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%9B%BD%E5%A4%96%E7%BD%91%E7%AB%99%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E5%9B%BD%E5%86%85%E7%BD%91%E7%AB%99%E5%BE%88%E6%85%A2"><span class="toc-number">16.5.</span> <span class="toc-text">5. 国外网站正常，但国内网站很慢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%99%BE%E5%BA%A6%E6%AD%A3%E5%B8%B8%EF%BC%8CGoogle-GitHub-%E4%B8%8D%E9%80%9A"><span class="toc-number">16.6.</span> <span class="toc-text">6. 百度正常，Google&#x2F;GitHub 不通</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E5%A4%87%E4%BB%BD%E9%85%8D%E7%BD%AE"><span class="toc-number">17.</span> <span class="toc-text">十六、备份配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E5%8D%B8%E8%BD%BD%E5%92%8C%E5%B9%B2%E5%87%80%E9%87%8D%E8%A3%85"><span class="toc-number">18.</span> <span class="toc-text">十七、卸载和干净重装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%85%AB%E3%80%81%E6%A0%B8%E5%BF%83%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">19.</span> <span class="toc-text">十八、核心选择建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">20.</span> <span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-number">21.</span> <span class="toc-text">资料来源</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/" title="2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</a><time datetime="2026-09-03T13:51:00.000Z" title="发表于 2026-09-03 21:51:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/" title="3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程">3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</a><time datetime="2026-08-14T11:30:00.000Z" title="发表于 2026-08-14 19:30:00">2026-08-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/30/2026-august-debian-vless-tcp-raw-reality-vision/" title="2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程">2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程</a><time datetime="2026-07-30T02:30:00.000Z" title="发表于 2026-07-30 10:30:00">2026-07-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/" title="2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比">2026 VPS 推荐与选购指南：搬瓦工、DMIT、RackNerd、AkileCloud 对比</a><time datetime="2026-07-28T07:20:00.000Z" title="发表于 2026-07-28 15:20:00">2026-07-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/21/sing-box-one-click-vless-reality-beginner/" title="🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）">🚀 搭建 sing-box 节点：一键脚本零基础详细教程（新手推荐）</a><time datetime="2026-07-21T07:30:00.000Z" title="发表于 2026-07-21 15:30:00">2026-07-21</time></div></div></div></div><div class="card-widget side-media-card"><a class="side-media-link" href="/go/vps-offer/" target="_blank" rel="nofollow noopener noreferrer" aria-label="访问 RackNerd VPS 优惠页面（推广链接）"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/vps-card.gif" alt="RackNerd VPS 推广横幅" width="300" height="250" decoding="async"></a><div class="side-media-note">推广链接 · Affiliate</div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By SKYBYTE</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
