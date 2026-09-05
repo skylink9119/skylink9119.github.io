@@ -48,353 +48,319 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    line-height: 1.75;
 }
 
-/* 文章正文行距 */
-#article-container p {
+/* Comfortable reading width and consistent rhythm across posts and pages. */
+#content-inner.layout { max-width: 1280px; scroll-margin-top: 76px; }
+#content-inner.layout > div:first-child { min-width: 0; }
+#post #article-container { max-width: 48rem; margin-inline: auto; }
+#article-container {
+    font-size: 1.0625rem;
     line-height: 1.85;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+#article-container p { margin: 0 0 1.2em; line-height: inherit; }
+#article-container :is(h1, h2, h3, h4, h5, h6) {
+    margin: 1.8em 0 .75em;
+    font-weight: 650;
+    line-height: 1.45;
+    letter-spacing: 0;
+    text-wrap: pretty;
+    scroll-margin-top: 84px;
+}
+#article-container h1 { font-size: 1.875rem; }
+#article-container h2 { font-size: 1.5rem; }
+#article-container h3 { font-size: 1.25rem; }
+#article-container :is(h4, h5, h6) { font-size: 1.0625rem; }
+#article-container > :first-child { margin-top: 0; }
+#article-container :is(ul, ol) { padding-left: 1.5em; margin-block: .75em 1.3em; }
+#article-container li { margin-block: .4em; }
+#article-container li > p { margin-bottom: .5em; }
+#article-container li > :is(ul, ol) { margin-block: .4em; }
+#article-container blockquote { padding: 1em 1.2em; font-size: .9375rem; line-height: 1.85; }
+#article-container blockquote > :last-child { margin-bottom: 0; }
+#article-container .table-wrap { margin: 1.5em 0; overflow-x: auto; }
+#article-container table { font-size: .9375rem; line-height: 1.7; }
+#article-container :is(th, td) { padding: .8em 1em; min-width: 7em; word-break: normal; }
+#article-container th { font-weight: 600; }
+#article-container figure.highlight { margin: 1.4em 0; font-size: .875rem; line-height: 1.7; }
+#article-container figure.highlight :is(table, td) { font-size: inherit; line-height: inherit; min-width: 0; }
+#article-container figure.highlight td { padding: 0; }
+#article-container code { font-size: .875em; }
+#article-container figure.highlight code { font-size: inherit; }
+#article-container .download-card h2 { margin: 0 0 .65em; font-size: 1.375rem; font-weight: 650; }
+#article-container .download-meta { font-size: .875rem; line-height: 1.75; }
+#article-container .download-button { font-size: .9375rem; line-height: 1.6; }
+
+/* Let titles and summaries determine card height, including at larger text sizes. */
+#recent-posts .recent-post-item { height: auto; margin-bottom: 24px; }
+#recent-posts .recent-post-item > .recent-post-info.no-cover { padding: 30px 34px; }
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap {
+    margin: 12px 0 14px;
+    font-size: .875rem;
+    line-height: 1.8;
+}
+#recent-posts .recent-post-info > .content { font-size: 1rem; }
+
+/* Compact supporting text stays readable without competing with article titles. */
+#aside-content { font-size: .9375rem; line-height: 1.75; }
+#aside-content .card-widget { padding: 24px; margin-bottom: 24px; }
+#aside-content .card-info .author-info-name { margin-top: 10px; font-size: 1.375rem; line-height: 1.5; font-weight: 600; }
+#aside-content .card-info .author-info-description { margin-top: 8px; font-size: .875rem; line-height: 1.8; text-wrap: pretty; }
+#aside-content .site-data .headline { font-size: .8125rem; }
+#aside-content .site-data .length-num { font-size: 1.125rem; line-height: 1.6; font-variant-numeric: tabular-nums; }
+#aside-content .item-headline { padding-bottom: 12px; font-size: 1.0625rem; font-weight: 600; line-height: 1.5; }
+#aside-content .aside-list > .aside-list-item { padding-block: 10px; }
+#aside-content .aside-list > .aside-list-item .content { word-break: normal; overflow-wrap: anywhere; }
+#aside-content .aside-list > .aside-list-item .content > .title { font-size: .875rem; line-height: 1.65; -webkit-line-clamp: 3; }
+#aside-content .aside-list > .aside-list-item .content > time { display: inline-block; margin-top: 5px; font-size: .8125rem; line-height: 1.5; }
+#aside-content .card-tag-cloud { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+#aside-content .card-tag-cloud a { padding: 2px 0; font-size: .875rem !important; line-height: 1.75; }
+#aside-content #card-toc .toc-content { font-size: .875rem; line-height: 1.75; }
+#aside-content #card-toc .toc-content .toc-link { padding-block: 5px; }
+
+/* Archive and search results use the same title / detail hierarchy. */
+.article-sort-title { font-size: 1.5rem; line-height: 1.5; }
+.article-sort-item.year { font-size: 1.25rem; font-weight: 600; }
+.article-sort-item.no-article-cover { height: auto; min-height: 80px; padding-block: 8px; }
+.article-sort-item-info { min-width: 0; }
+.article-sort-item-title { display: block; font-size: 1rem; line-height: 1.65; -webkit-line-clamp: unset; overflow-wrap: anywhere; }
+.article-sort-item-time { margin-bottom: 5px; font-size: .8125rem; }
+.tag-cloud-list a { font-size: 1rem !important; line-height: 1.75; zoom: 1; }
+.category-lists .category-list { font-size: 1rem; line-height: 1.8; }
+.search-dialog { font-size: 1rem; line-height: 1.75; }
+.search-dialog .search-nav { font-size: 1.25rem; line-height: 1.5; }
+.search-dialog .local-search-input input { font-size: 1rem; line-height: 1.5; padding-block: 10px; }
+.search-dialog .search-result-list .local-search-hit-item { margin-block: 16px; }
+.search-dialog .search-result-list .search-result { margin-top: 6px; font-size: .875rem; line-height: 1.8; word-break: normal; overflow-wrap: anywhere; }
+#footer-wrap { font-size: .875rem; line-height: 1.8; }
+
+@media (min-width: 901px) {
+    #content-inner.layout:not(.hide-aside) { gap: 24px; }
+    #content-inner.layout:not(.hide-aside) > div:first-child { width: calc(100% - 304px); }
+    #content-inner.layout:not(.hide-aside) #aside-content { width: 280px; flex-shrink: 0; padding: 0; }
+}
+@media (max-width: 768px) {
+    #content-inner.layout { padding: 24px 12px; }
+    #content-inner.layout > div:first-child:not(.nc) { padding: 28px 20px; }
+    #recent-posts .recent-post-item > .recent-post-info.no-cover { padding: 24px 22px; }
+    #recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap { margin-block: 10px 12px; font-size: .8125rem; }
+    #recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap > span { display: inline-block; }
+    #recent-posts .recent-post-item > .recent-post-info > .content { -webkit-line-clamp: 3; }
+    #article-container { font-size: 1rem; }
+    #article-container h1 { font-size: 1.625rem; }
+    #article-container h2 { font-size: 1.375rem; }
+    #article-container h3 { font-size: 1.1875rem; }
+    #article-container blockquote { padding: .85em 1em; }
+    #aside-content .card-widget { padding: 22px; }
 }
 
-/* -----------------------------------------------
-   3. 首页文章卡片：Apple 风格液态玻璃
------------------------------------------------ */
+/* 3. Liquid glass: clear content, refracted backdrop, specular rim. */
+:root {
+    --glass-ink: #172b42;
+    --glass-muted: #4a6077;
+    --glass-film: rgba(255,255,255,.24);
+    --glass-line: rgba(255,255,255,.8);
+    --glass-shadow: rgba(28,65,100,.22);
+    --glass-highlight: rgba(255,255,255,.76);
+    --glass-radius: 28px;
+}
 
-/* 玻璃后的环境光：透明卡片需要有背景层才能显出折射感 */
+/* Quiet, neutral lighting behind the glass; no stripes or repeating motif. */
 body:has(#recent-posts) #body-wrap {
     background:
-        radial-gradient(ellipse 48% 34% at 3% 42%, rgba(75, 178, 255, 0.20), transparent 72%),
-        radial-gradient(ellipse 44% 36% at 98% 64%, rgba(137, 113, 255, 0.14), transparent 74%),
-        radial-gradient(ellipse 38% 24% at 48% 92%, rgba(69, 207, 205, 0.10), transparent 72%),
-        linear-gradient(145deg, #f7fbff 0%, #f2f8ff 46%, #faf8ff 100%);
+        radial-gradient(ellipse 75% 65% at 0% 0%, rgba(218,225,234,.5), transparent 80%),
+        radial-gradient(ellipse 70% 60% at 100% 100%, rgba(220,224,232,.45), transparent 80%),
+        #eff1f4;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
+#recent-posts { position: relative; isolation: auto; }
+#recent-posts::before { content: none; }
 
-#recent-posts {
-    position: relative;
-    isolation: isolate;
-}
-
-#recent-posts::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: -110px -70px;
-    background:
-        radial-gradient(ellipse 48% 28% at 12% 12%, rgba(82, 181, 255, 0.24), transparent 72%),
-        radial-gradient(ellipse 42% 32% at 92% 42%, rgba(125, 112, 255, 0.18), transparent 74%),
-        radial-gradient(ellipse 44% 26% at 25% 88%, rgba(84, 215, 216, 0.14), transparent 72%);
-    filter: blur(16px);
-    pointer-events: none;
-}
-
-#recent-posts .recent-post-item {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.62) !important;
-    border-radius: 24px !important;
-    background:
-        linear-gradient(
-            132deg,
-            rgba(255, 255, 255, 0.23) 0%,
-            rgba(255, 255, 255, 0.07) 48%,
-            rgba(205, 232, 255, 0.13) 100%
-        ) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.78),
-        inset 0 -1px 0 rgba(105, 158, 205, 0.10),
-        0 18px 46px rgba(31, 68, 104, 0.10),
-        0 3px 10px rgba(31, 50, 76, 0.04) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    backdrop-filter: blur(20px) saturate(150%);
-    transition:
-        transform 0.35s cubic-bezier(.2, .8, .2, 1),
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-}
-
-/* 玻璃表面的柔和折射高光 */
-#recent-posts .recent-post-item::before {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    background:
-        linear-gradient(118deg, rgba(255, 255, 255, 0.42) 0%, transparent 32%, transparent 68%, rgba(157, 210, 255, 0.10) 100%),
-        radial-gradient(ellipse 34% 90% at 4% 0%, rgba(255, 255, 255, 0.32), transparent 72%);
-    opacity: 0.72;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-}
-
-/* 玻璃边缘的内层亮线，让透明框在浅色背景上仍清晰可见 */
-#recent-posts .recent-post-item::after {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    inset: 1px;
-    border-top: 1px solid rgba(255, 255, 255, 0.72);
-    border-left: 1px solid rgba(255, 255, 255, 0.46);
-    border-radius: 22px;
-    pointer-events: none;
-}
-
-#recent-posts .recent-post-item .recent-post-info {
-    position: relative;
-    z-index: 1;
-}
-
-#recent-posts .recent-post-item:hover {
-    transform: translateY(-7px) scale(1.006);
-    border-color: rgba(255, 255, 255, 0.88) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.92),
-        inset 0 -1px 0 rgba(104, 170, 230, 0.13),
-        0 24px 58px rgba(31, 76, 120, 0.15),
-        0 5px 16px rgba(31, 50, 76, 0.06) !important;
-}
-
-#recent-posts .recent-post-item:hover::before {
-    opacity: 1;
-}
-
-/* 首页文章标题：加大、加粗，提升视觉层级 */
-#recent-posts .recent-post-item .recent-post-info > .article-title {
-    font-size: clamp(1.85rem, 2.25vw, 2.3rem) !important;
-    font-weight: 800 !important;
-    line-height: 1.3 !important;
-    letter-spacing: 0.2px;
-}
-
-@media screen and (max-width: 768px) {
-    #recent-posts .recent-post-item .recent-post-info > .article-title {
-        font-size: 1.55rem !important;
-        line-height: 1.35 !important;
-    }
-}
-
-/* -----------------------------------------------
-   4. 侧边栏卡片：与首页统一的磨砂玻璃
------------------------------------------------ */
-
+#recent-posts .recent-post-item,
 #aside-content .card-widget {
+    --glass-x: 24%;
+    --glass-y: 0%;
+    --glass-angle: 145deg;
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.72) !important;
-    border-radius: 20px !important;
-    background:
-        radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.95), transparent 36%),
-        radial-gradient(circle at 100% 105%, rgba(94, 188, 255, 0.22), transparent 45%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(239, 248, 255, 0.38)) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.98),
-        inset 0 -1px 0 rgba(116, 178, 226, 0.16),
-        0 16px 42px rgba(31, 71, 108, 0.12),
-        0 3px 10px rgba(31, 50, 76, 0.05) !important;
-    -webkit-backdrop-filter: blur(26px) saturate(180%);
-    backdrop-filter: blur(26px) saturate(180%);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--glass-line) !important;
+    border-radius: var(--glass-radius) !important;
+    color: var(--glass-ink);
+    background: var(--glass-film) !important;
+    box-shadow: 0 2px 2px rgba(255,255,255,.34), 0 9px 22px -12px rgba(25,54,86,.32),
+        0 24px 48px -22px var(--glass-shadow), inset 0 1px 1px rgba(255,255,255,.96),
+        inset 1px 0 1px rgba(255,255,255,.64), inset 0 -1px 2px rgba(52,89,121,.2) !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
 }
 
+/* Filter the backdrop only. Keep text above this optical layer. */
+#recent-posts .recent-post-item::before,
 #aside-content .card-widget::before {
     content: '';
     position: absolute;
     z-index: -1;
-    inset: -42% -35%;
-    background:
-        linear-gradient(118deg, transparent 36%, rgba(255, 255, 255, 0.58) 49%, transparent 62%),
-        radial-gradient(circle at 28% 35%, rgba(121, 209, 255, 0.24), transparent 30%),
-        radial-gradient(circle at 75% 70%, rgba(190, 150, 255, 0.13), transparent 34%);
-    opacity: 0.72;
-    transform: translate3d(-12%, -3%, 0) rotate(-3deg);
-    transition: transform 0.65s cubic-bezier(.2, .8, .2, 1), opacity 0.35s ease;
+    inset: 0;
+    border-radius: inherit;
     pointer-events: none;
+    opacity: 1;
+    transform: none;
+    background:
+        radial-gradient(ellipse at var(--glass-x) var(--glass-y), rgba(255,255,255,.5), transparent 58%),
+        linear-gradient(155deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 42%, rgba(220,238,255,.14));
+    -webkit-backdrop-filter: blur(16px) saturate(135%);
+    backdrop-filter: blur(16px) saturate(135%);
+    box-shadow: inset 3px 3px 5px -3px rgba(255,255,255,.92),
+        inset -3px -4px 7px -5px rgba(26,71,112,.42), inset 0 -7px 10px -9px rgba(255,255,255,.9);
 }
 
+#recent-posts .recent-post-item::after,
 #aside-content .card-widget::after {
     content: '';
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     inset: 0;
+    padding: 1.5px;
+    border: 0;
     border-radius: inherit;
-    box-shadow:
-        inset 1px 1px 0 rgba(255, 255, 255, 0.68),
-        inset -1px -1px 0 rgba(92, 158, 214, 0.08);
     pointer-events: none;
+    background: conic-gradient(from var(--glass-angle) at 50% 50%,
+        transparent 0deg, var(--glass-highlight) 65deg, rgba(255,255,255,.98) 110deg,
+        rgba(255,255,255,.12) 170deg, rgba(82,149,200,.28) 215deg,
+        rgba(255,255,255,.94) 285deg, transparent 340deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 }
 
-#aside-content .card-widget > * {
-    position: relative;
-    z-index: 1;
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+    html.glass-refraction #recent-posts .recent-post-item[data-glass-ready]::before,
+    html.glass-refraction #aside-content .card-widget[data-glass-ready]::before {
+        backdrop-filter: var(--glass-filter) saturate(125%);
+    }
+    #recent-posts .recent-post-item:hover,
+    #aside-content .card-widget:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 2px 3px rgba(255,255,255,.38), 0 14px 26px -12px rgba(25,54,86,.29),
+            0 28px 54px -22px var(--glass-shadow), inset 0 1px 1px rgba(255,255,255,1),
+            inset 1px 0 1px rgba(255,255,255,.75), inset 0 -1px 2px rgba(52,89,121,.24) !important;
+    }
 }
-
-#aside-content .card-widget:hover {
-    transform: translateY(-4px) scale(1.008);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 1),
-        inset 0 -1px 0 rgba(116, 178, 226, 0.20),
-        0 22px 52px rgba(31, 92, 140, 0.17),
-        0 5px 14px rgba(31, 50, 76, 0.07) !important;
+#recent-posts .recent-post-item > *,
+#aside-content .card-widget > * { position: relative; z-index: 1; }
+#recent-posts .recent-post-item .recent-post-info > .article-title {
+    color: var(--glass-ink) !important;
+    display: block;
+    font-size: clamp(1.375rem, 1.8vw, 1.625rem) !important;
+    font-weight: 650 !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0;
+    text-shadow: none;
+    -webkit-line-clamp: unset;
+    text-wrap: pretty;
+    word-break: normal;
+    overflow-wrap: anywhere;
 }
-
-#aside-content .card-widget:hover::before {
-    opacity: 0.96;
-    transform: translate3d(11%, 2%, 0) rotate(2deg);
-}
-
-/* 作者头像与频道按钮也使用玻璃高光 */
+#recent-posts .recent-post-item .recent-post-info > .article-title:hover { color: #0065a5 !important; }
+#recent-posts .recent-post-item .recent-post-info > .article-meta-wrap,
+#recent-posts .recent-post-item .recent-post-info > .article-meta-wrap a { color: var(--glass-muted) !important; }
+#recent-posts .recent-post-item .content { color: var(--glass-muted); line-height: 1.8; }
+#aside-content .card-widget { --glass-radius: 26px; --glass-film: rgba(255,255,255,.18); }
+#aside-content .card-info .author-info-name,
+#aside-content .card-info .author-info-description,
+#aside-content .card-widget .item-headline { color: var(--glass-ink); }
 #aside-content .card-info .avatar-img {
-    padding: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.90);
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(164, 215, 255, 0.24));
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 1),
-        0 10px 26px rgba(48, 107, 154, 0.15);
-    -webkit-backdrop-filter: blur(16px) saturate(170%);
-    backdrop-filter: blur(16px) saturate(170%);
+    padding: 5px;
+    border: 1px solid rgba(255,255,255,.9);
+    background: rgba(255,255,255,.27);
+    box-shadow: 0 10px 24px -10px rgba(32,75,112,.35), inset 0 1px 2px #fff;
 }
-
 #aside-content #card-info-btn {
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.54);
-    border-radius: 12px;
-    background:
-        linear-gradient(115deg, rgba(73, 177, 245, 0.90), rgba(105, 151, 255, 0.78)) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        0 10px 24px rgba(50, 137, 210, 0.23);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    backdrop-filter: blur(14px) saturate(180%);
-}
-
-/* RackNerd 侧栏推广横幅：替换原归档卡片位置 */
-#aside-content .side-media-card {
-    order: 0;
-    padding: 16px !important;
-    text-align: center;
-}
-
-#aside-content .side-media-link {
-    display: block;
-    overflow: hidden;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 300px;
-    border: 1px solid rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255,255,255,.6);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.34);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.86),
-        0 12px 28px rgba(30, 75, 118, 0.16);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+    background: linear-gradient(135deg, #248fd7, #1276c7) !important;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,.42), 0 6px 14px -8px rgba(13,95,167,.7);
 }
 
-#aside-content .side-media-link:hover {
-    transform: translateY(-3px) scale(1.015);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.96),
-        0 17px 36px rgba(30, 94, 148, 0.24);
+/* Existing promotion artwork keeps its original dimensions. */
+#aside-content .side-media-card { order: 0; padding: 16px !important; text-align: center; }
+#aside-content .side-media-link {
+    display: block; overflow: hidden; margin: 0 auto; width: 100%; max-width: 300px;
+    border: 1px solid rgba(255,255,255,.65); border-radius: 16px;
+    background: rgba(255,255,255,.2); box-shadow: 0 8px 18px -12px rgba(25,54,86,.35);
 }
+#aside-content .side-media-link img { display: block; width: 100%; max-width: 300px; height: auto; aspect-ratio: 6 / 5; border-radius: 15px; object-fit: cover; }
+#aside-content .side-media-note { margin-top: 9px; color: var(--glass-muted); font-size: .75rem; letter-spacing: .3px; }
 
-#aside-content .side-media-link img {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    aspect-ratio: 6 / 5;
-    border-radius: 15px;
-    object-fit: cover;
+html[data-theme='dark'] {
+    --glass-ink: #e9f3ff; --glass-muted: #b0c4da; --glass-film: rgba(14,25,44,.54);
+    --glass-line: rgba(196,222,255,.28); --glass-highlight: rgba(186,219,255,.38);
+    --glass-shadow: rgba(0,7,22,.65);
 }
-
-#aside-content .side-media-note {
-    margin-top: 9px;
-    color: var(--font-color);
-    font-size: 0.75rem;
-    letter-spacing: 0.3px;
-    opacity: 0.58;
-}
-
-html[data-theme='dark'] #aside-content .side-media-link {
-    border-color: rgba(170, 215, 255, 0.24);
-    background: rgba(20, 29, 43, 0.44);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 14px 32px rgba(0, 0, 0, 0.34);
-}
-
-/* 深色模式：保留通透感，同时保证文字对比度 */
-html[data-theme='dark'] #recent-posts .recent-post-item {
-    border-color: rgba(170, 215, 255, 0.25) !important;
-    background:
-        linear-gradient(
-            132deg,
-            rgba(36, 49, 68, 0.50) 0%,
-            rgba(19, 28, 42, 0.28) 52%,
-            rgba(32, 44, 66, 0.38) 100%
-        ) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.13),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-        0 18px 48px rgba(0, 0, 0, 0.28) !important;
-}
-
 html[data-theme='dark'] body:has(#recent-posts) #body-wrap {
     background:
-        radial-gradient(ellipse 48% 34% at 3% 42%, rgba(17, 116, 196, 0.24), transparent 72%),
-        radial-gradient(ellipse 44% 36% at 98% 64%, rgba(82, 57, 183, 0.20), transparent 74%),
-        radial-gradient(ellipse 38% 24% at 48% 92%, rgba(21, 142, 144, 0.13), transparent 72%),
-        linear-gradient(145deg, #0d1421 0%, #111a29 48%, #141323 100%);
+        radial-gradient(ellipse 75% 65% at 0% 0%, rgba(59,66,78,.23), transparent 80%),
+        radial-gradient(ellipse 70% 60% at 100% 100%, rgba(48,53,64,.2), transparent 80%),
+        #14171c;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
-
-html[data-theme='dark'] #recent-posts::before {
-    background:
-        radial-gradient(ellipse 48% 28% at 12% 12%, rgba(24, 148, 255, 0.28), transparent 72%),
-        radial-gradient(ellipse 42% 32% at 92% 42%, rgba(106, 79, 255, 0.24), transparent 74%),
-        radial-gradient(ellipse 44% 26% at 25% 88%, rgba(32, 187, 193, 0.16), transparent 72%);
-}
-
-html[data-theme='dark'] #recent-posts .recent-post-item::after {
-    border-top-color: rgba(202, 230, 255, 0.24);
-    border-left-color: rgba(202, 230, 255, 0.14);
-}
-
+html[data-theme='dark'] #aside-content .card-widget { --glass-film: rgba(14,25,44,.44); }
+html[data-theme='dark'] #recent-posts .recent-post-item,
 html[data-theme='dark'] #aside-content .card-widget {
-    border-color: rgba(170, 215, 255, 0.18) !important;
-    background:
-        radial-gradient(circle at 12% 0%, rgba(142, 207, 255, 0.14), transparent 36%),
-        radial-gradient(circle at 100% 105%, rgba(94, 110, 255, 0.18), transparent 45%),
-        linear-gradient(145deg, rgba(29, 38, 53, 0.68), rgba(18, 25, 38, 0.52)) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 14px 38px rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 0 9px 22px -12px rgba(0,0,0,.6), 0 24px 48px -22px var(--glass-shadow),
+        inset 0 1px 1px rgba(222,239,255,.32), inset 1px 0 1px rgba(210,231,255,.16),
+        inset 0 -1px 2px rgba(0,0,0,.4) !important;
 }
-
+html[data-theme='dark'] #recent-posts .recent-post-item::after,
+html[data-theme='dark'] #aside-content .card-widget::after { opacity: .5; }
+html[data-theme='dark'] #recent-posts .recent-post-item::before,
+html[data-theme='dark'] #aside-content .card-widget::before {
+    background: radial-gradient(ellipse at var(--glass-x) var(--glass-y), rgba(190,224,255,.12), transparent 58%),
+        linear-gradient(155deg, rgba(160,196,236,.06), transparent 42%, rgba(110,161,213,.04));
+    box-shadow: inset 2px 2px 4px -3px rgba(212,235,255,.7), inset -2px -3px 5px -4px rgba(0,0,0,.8);
+}
+html[data-theme='dark'] #recent-posts .recent-post-item .article-title { text-shadow: none; }
+html[data-theme='dark'] #recent-posts .recent-post-item .article-title:hover { color: #8bd5ff !important; }
+#aside-content .card-announcement a { color: #0065a5; font-weight: 500; }
+html[data-theme='dark'] #aside-content .card-announcement a { color: #8bd5ff; }
 html[data-theme='dark'] #aside-content .card-info .avatar-img {
-    border-color: rgba(174, 218, 255, 0.25);
-    background: linear-gradient(145deg, rgba(98, 169, 224, 0.18), rgba(22, 30, 44, 0.56));
+    background: rgba(127,175,222,.12); border-color: rgba(222,240,255,.4);
+    box-shadow: 0 10px 24px -10px rgba(0,0,0,.5), inset 0 1px 2px rgba(255,255,255,.3);
 }
 
-/* 不支持背景模糊时，使用更实的背景保证可读性 */
-@supports not (backdrop-filter: blur(1px)) {
-    #recent-posts .recent-post-item,
-    #aside-content .card-widget {
-        background: rgba(250, 252, 255, 0.96) !important;
-    }
-
+@media (max-width: 768px) {
+    :root { --glass-radius: 22px; }
+    body:has(#recent-posts) #body-wrap,
+    html[data-theme='dark'] body:has(#recent-posts) #body-wrap { background-attachment: scroll; background-size: 100% 1200px; }
+    #recent-posts .recent-post-item .recent-post-info > .article-title { font-size: 1.3125rem !important; line-height: 1.5 !important; }
+    #recent-posts .recent-post-item::before,
+    #aside-content .card-widget::before { -webkit-backdrop-filter: blur(12px) saturate(120%); backdrop-filter: blur(12px) saturate(120%); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    #recent-posts .recent-post-item, #aside-content .card-widget { background: #f2f7fc !important; }
     html[data-theme='dark'] #recent-posts .recent-post-item,
-    html[data-theme='dark'] #aside-content .card-widget {
-        background: rgba(24, 32, 46, 0.96) !important;
-    }
+    html[data-theme='dark'] #aside-content .card-widget { background: #19273b !important; }
 }
-
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    #recent-posts .recent-post-item, #aside-content .card-widget { background: #f2f7fc !important; }
+    html[data-theme='dark'] #recent-posts .recent-post-item,
+    html[data-theme='dark'] #aside-content .card-widget { background: #19273b !important; }
+    #recent-posts .recent-post-item::before,
+    #aside-content .card-widget::before { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
     #recent-posts .recent-post-item,
-    #recent-posts .recent-post-item::before,
-    #aside-content .card-widget {
-        transition: none !important;
-    }
+    #aside-content .card-widget { transform: none !important; transition: none !important; }
 }
 
 /* -----------------------------------------------
@@ -407,10 +373,12 @@ html[data-theme='dark'] #aside-content .card-info .avatar-img {
     -webkit-backdrop-filter: blur(10px);
 }
 
-/* 桌面端导航文字与图标：更大、更醒目 */
+/* Stable navigation sizes prevent crowding on medium-width screens. */
+#nav { font-size: 1rem !important; line-height: 1.5; }
+#nav .site-name { font-size: 1.25rem; font-weight: 650; letter-spacing: .02em; }
 @media screen and (min-width: 1101px) {
     #nav {
-        font-size: clamp(1.25rem, 1.3vw, 1.45rem) !important;
+        font-size: 1.0625rem !important;
     }
 
     #nav #menus .menus_item {
@@ -420,7 +388,7 @@ html[data-theme='dark'] #aside-content .card-info .avatar-img {
 
 @media screen and (min-width: 769px) and (max-width: 1100px) {
     #nav {
-        font-size: 1.15rem !important;
+        font-size: 1rem !important;
     }
 
     #nav #menus .menus_item {
@@ -632,32 +600,51 @@ html[data-theme='dark'] #rightside #darkmode i::before {
 
 /* ── 文章页：信息区 ── */
 #page-header.post-bg #post-info {
-    position: absolute;
+    position: relative;
     z-index: 2;
+    bottom: auto;
+    max-width: 1280px;
+    margin: 130px auto 36px;
+    padding: 0 30px;
 }
+#page-header.post-bg { display: flex; align-items: flex-end; height: auto; min-height: 400px; }
+#page-header.post-bg #post-info > * { max-width: none; padding: 0; }
 
 /* 标题左侧霓虹竖条 */
 #page-header.post-bg #post-info h1.post-title {
-    border-left: 4px solid #ff50c8;
-    padding-left: 14px;
+    border-left: 3px solid rgba(255, 145, 219, .8);
+    padding-left: 18px;
     color: #ffffff !important;
-    font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
-    line-height: 1.25;
-    font-weight: 800 !important;
-    letter-spacing: 1.5px;
-    text-shadow:
-        0  0  8px  rgba(255, 255, 255, 1.0),
-        0  0  20px rgba(80, 220, 255, 0.9),
-        0  0  40px rgba(255, 80, 200, 0.6) !important;
+    display: block;
+    font-size: clamp(1.75rem, 2.6vw, 2.5rem) !important;
+    line-height: 1.45;
+    font-weight: 650 !important;
+    letter-spacing: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .3) !important;
+    -webkit-line-clamp: unset;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
 }
 
 /* ── 文章元信息（使用模板真实类名）── */
 #page-header.post-bg #post-info #post-meta,
 #page-header.post-bg #post-info #post-meta *,
 #page-header.post-bg #post-info #post-meta i {
-    color: rgba(160, 230, 255, 0.95) !important;
-    font-size: 13px;
-    letter-spacing: 0.5px;
+    color: rgba(220, 234, 247, .9) !important;
+    font-size: .875rem;
+    letter-spacing: 0;
+}
+#page-header.post-bg #post-info #post-meta { margin-top: 16px; line-height: 1.9; }
+#page-header.post-bg #post-meta .post-meta-categories { display: inline-block; }
+#page-header.post-bg #post-meta .meta-secondline { display: block; }
+#page-header #site-title { font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.3; letter-spacing: .025em; font-weight: 650; }
+#page-header #site-subtitle { margin-top: 14px; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.8; }
+@media (max-width: 768px) {
+    #page-header.post-bg { min-height: 360px; }
+    #page-header.post-bg #post-info { margin-block: 110px 30px; padding-inline: 22px; }
+    #page-header.post-bg #post-info h1.post-title { font-size: 1.5rem !important; padding-left: 12px; }
+    #page-header.post-bg #post-info #post-meta { font-size: .8125rem; }
+    #page-header.post-bg #post-info #post-meta * { font-size: inherit; }
 }
 
 /* ── 遮罩层（更轻，不压暗背景） ── */

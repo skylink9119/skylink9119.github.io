@@ -155,35 +155,7 @@
 
   
   <url>
-    <loc>https://skylink9119.github.io/tags/VPS/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://skylink9119.github.io/tags/Debian/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/3X-UI/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -219,6 +191,34 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/Vision/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/VPS/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/3X-UI/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -330,6 +330,27 @@
   </url>
   
   <url>
+    <loc>https://skylink9119.github.io/tags/macOS/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/MDM/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://skylink9119.github.io/tags/%E6%90%AC%E7%93%A6%E5%B7%A5/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -371,27 +392,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://skylink9119.github.io/tags/macOS/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/MDM/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://skylink9119.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -409,14 +409,14 @@
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/</loc>
+    <loc>https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/</loc>
+    <loc>https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
