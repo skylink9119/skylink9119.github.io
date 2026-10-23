@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <author>
     <name>SKYBYTE</name>
@@ -12,26 +12,26 @@
   <rights>All rights reserved 2026, SKYBYTE</rights>
   <subtitle>网络、硬件与效率工具，让技术更好用</subtitle>
   <title>SKYBYTE</title>
-  <updated>2026-10-23T13:04:00.000Z</updated>
+  <updated>2026-10-23T22:49:36.000Z</updated>
   <entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Hysteria2" scheme="https://skylink9119.github.io/tags/Hysteria2/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-hero">
 <div class="sb-guide-kicker">SKYBYTE · SING-BOX · 从安装到实际连接</div>
 <p class="sb-guide-lead">先搭通一个 Reality 节点，再按需增加 HY2、WARP 和用户管理。</p>
-<p>按 SKYBYTE Manager <strong>v2.8.6</strong> 的实际菜单编写，首次安装使用本版测试的 sing-box <strong>1.14.3</strong>。核对日期：2026-10-23。</p>
+<p>按 SKYBYTE Manager <strong>v2.8.7</strong> 的实际菜单编写，首次安装使用本版测试的 sing-box <strong>1.14.3</strong>。核对日期：2026-10-24。</p>
 <div class="sb-guide-actions"><a href="#reality">从 Reality 主线开始 ↓</a><a href="/sing-box/">打开安装命令与 VPS 选购页 ↗</a></div>
 </div>
-<div class="sb-guide-note"><strong>第一次搭建，按这条路线走：</strong>准备 VPS → 登录 SSH → 运行安装命令 → 选择 <code>1 → 1</code> → 放行实际 TCP 端口 → 导入客户端 → 做真实连接测试。HY2、BBR、WARP 和配额管理都可以在节点连通后再配置。</div>
-<p>本文中的 <code>1 → 1</code> 表示先在主菜单输入 <code>1</code>，再在子菜单输入 <code>1</code>，每次输入后按回车。一次操作结束后通常会回到主菜单，下一项操作重新按完整路径进入。</p>
+<div class="sb-guide-note"><strong>第一次搭建，按这条路线走：</strong>准备 VPS → 登录 SSH → 运行安装命令 → 选择 <code>a → 1</code> → 放行实际 TCP 端口 → 导入客户端 → 做真实连接测试。HY2、BBR、WARP 和配额管理都可以在节点连通后再配置。</div>
+<p>本文中的 <code>a → 1</code> 表示先在主菜单输入 <code>a</code>，再在子菜单输入 <code>1</code>，每次输入后按回车。主菜单使用字母（支持大小写），子菜单使用数字。操作完成、取消或失败后留在当前菜单，可继续选择下一项；输入 <code>0</code> 返回上一层，回到主菜单后输入 <code>q</code> 退出。下文完整路径用于说明从主菜单如何进入；已经在对应子菜单时，直接输入操作编号即可。</p>
 
 <h2 id="prepare">1. 准备 VPS、系统与端口</h2>
 <p>准备一台能通过 SSH 登录、能访问软件源与 GitHub 的 Ubuntu/Debian VPS，并保留服务商的网页控制台。本文以新装 Debian 12/13 或 Ubuntu 24.04 为例；脚本依赖 <code>systemd</code>，普通共享虚拟主机和缺少系统服务管理能力的容器不适合直接照做。</p>
 <p>需要掌握四项信息：<strong>VPS 公网 IP、SSH 端口、root 登录方式、服务商防火墙入口</strong>。SSH 端口可能不是 22，以服务商控制台和你自己的设置为准。尚未选购 VPS，可先看<a href="/sing-box/#vps-promotion-title">四家服务商的选购方向</a>，按预算、线路和 IP 需求选择。</p>
 <h3 id="protocols">先选一种部署方式</h3>
 <table><thead><tr><th>方案</th><th>安装入口</th><th>默认公网入站</th><th>域名与证书</th><th>适用情况</th></tr></thead><tbody>
-<tr><td>VLESS + Reality + Vision</td><td><code>1 → 1</code></td><td>TCP 443</td><td>无需自购域名或申请自己的 TLS 证书</td><td>先完成一个直连节点，作为本文主线</td></tr>
-<tr><td>Hysteria2（HY2）</td><td><code>1 → 2</code></td><td>UDP 443</td><td>需要 TLS；可自签、使用已有证书或托管 ACME</td><td>客户端和两端网络都支持所需 UDP 通信</td></tr>
-<tr><td>Reality + HY2 双协议</td><td><code>1 → 3</code></td><td>TCP 443 + UDP 443</td><td>Reality 与 HY2 各按自己的要求配置</td><td>希望保留两种连接方式用于比较与备用</td></tr>
+<tr><td>VLESS + Reality + Vision</td><td><code>a → 1</code></td><td>TCP 443</td><td>无需自购域名或申请自己的 TLS 证书</td><td>先完成一个直连节点，作为本文主线</td></tr>
+<tr><td>Hysteria2（HY2）</td><td><code>a → 2</code></td><td>UDP 443</td><td>需要 TLS；可自签、使用已有证书或托管 ACME</td><td>客户端和两端网络都支持所需 UDP 通信</td></tr>
+<tr><td>Reality + HY2 双协议</td><td><code>a → 3</code></td><td>TCP 443 + UDP 443</td><td>Reality 与 HY2 各按自己的要求配置</td><td>希望保留两种连接方式用于比较与备用</td></tr>
 </tbody></table>
-<p>TCP 443 与 UDP 443 是两种不同的传输协议，双协议可以同时使用数字 443。已有网站占用 TCP 443 时，普通 Reality 安装会报端口占用；改用 <code>1 → 6 → 3</code> 的自定义端口安装入口，或先规划已有服务的端口。</p>
+<p>TCP 443 与 UDP 443 是两种不同的传输协议，双协议可以同时使用数字 443。已有网站占用 TCP 443 时，普通 Reality 安装会报端口占用；改用 <code>a → 6 → 3</code> 的自定义端口安装入口，或先规划已有服务的端口。</p>
 <p>服务商控制台里的安全组/云防火墙与 VPS 内部的 UFW 是两层配置。<strong>脚本不会替你修改服务商安全组。</strong> 放行 TCP 443 也不会同时放行 UDP 443。</p>
 
 <h2 id="install">2. 登录 VPS，安装并打开管理脚本</h2>
@@ -47,39 +47,39 @@ systemctl --version</code></pre>
 <h3 id="bootstrap">执行一行安装命令</h3>
 <p>在 <strong>VPS 的 Bash 终端</strong>运行：</p>
 <pre><code class="language-bash" id="tutorial-install-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; script=$(curl -q -fsSL --max-time 60 https://raw.githubusercontent.com/skylink9119/sing-box-v2/main/bootstrap.sh) &amp;&amp; bash -c "$script")</code></pre>
-<p>没有 <code>curl</code> 时，这条命令会先安装 curl 与 CA 证书；仍需有可用的 APT 软件源和网络。启动入口会继续检查系统并下载管理脚本。下载失败时先处理显示的错误，再重试，不要把后面的菜单数字粘贴进尚未下载完成的终端。</p>
-<p>首次打开选择 <code>1. 简体中文</code> 或 <code>2. English</code>。中文主菜单如下，为 v2.8.6 菜单节选：</p>
-<pre><code>1. 节点安装
-2. 节点与订阅
-3. 服务与日志
-4. 服务器与网络
-5. 更新与备份
-6. 设置与卸载
-7. 用户与配额管理
-0. 退出</code></pre>
+<p>没有 <code>curl</code> 时，这条命令会先安装 curl 与 CA 证书；仍需有可用的 APT 软件源和网络。启动入口会继续检查系统并下载管理脚本。下载失败时先处理显示的错误，再重试，不要把后面的菜单选项粘贴进尚未下载完成的终端。</p>
+<p>首次打开选择 <code>1. 简体中文</code> 或 <code>2. English</code>。中文主菜单如下，为 v2.8.7 菜单节选：</p>
+<pre><code>a. 节点安装
+b. 节点与订阅
+c. 服务与日志
+d. 服务器与网络
+e. 更新与备份
+f. 设置与卸载
+g. 用户与配额管理
+q. 退出</code></pre>
 <p>重新登录 SSH 后输入 <code>sb</code> 可打开管理菜单。若当前终端仍缓存旧命令，运行 <code>hash -r</code> 或重新登录；遇到同名入口冲突时，按脚本提示处理，先保留原有自定义命令。</p>
 <div class="sb-guide-note"><strong>确认规则：</strong>看到 <code>[y/N]</code> 时，输入 <code>y</code> 或 <code>Y</code> 才确认；直接回车、<code>n</code> 或 <code>N</code> 都会取消。参数提示里的 <code>[默认值]</code> 则表示可回车采用该参数，两种提示含义不同。</div>
 
 <h2 id="reality">3. 主线：搭建 Reality + Vision 节点</h2>
-<p>在主菜单选择 <code>1. 节点安装</code>，再选择 <code>1. 安装 Reality + Vision</code>，即 <strong><code>1 → 1</code></strong>。脚本会展示声明，阅读后输入 <code>y</code> 确认安装。</p>
+<p>在主菜单选择 <code>a. 节点安装</code>，再选择 <code>1. 安装 Reality + Vision</code>，即 <strong><code>a → 1</code></strong>。脚本会展示声明，阅读后输入 <code>y</code> 确认安装。</p>
 <table><thead><tr><th>交互项</th><th>如何填写</th><th>说明</th></tr></thead><tbody>
 <tr><td>节点名称前缀</td><td>例如 <code>洛杉矶</code>，或直接回车</td><td>默认 <code>SKYBYTE</code>；导出会追加 <code>-Reality</code>，中文名称可用</td></tr>
 <tr><td>Reality 握手域名</td><td>可先回车采用 <code>addons.mozilla.org</code></td><td>它是握手目标的域名，不是你的 VPS 地址；在 VPS 所在网络中仍需可达</td></tr>
-<tr><td>监听端口</td><td>普通安装固定使用 TCP 443</td><td>需要其他端口时，从 <code>1 → 6 → 3</code> 安装，或部署后通过 <code>1 → 5</code> 修改</td></tr>
+<tr><td>监听端口</td><td>普通安装固定使用 TCP 443</td><td>需要其他端口时，从 <code>a → 6 → 3</code> 安装，或部署后通过 <code>a → 5</code> 修改</td></tr>
 </tbody></table>
 <p>这一流程会安装依赖、下载经摘要校验的官方 sing-box 核心，生成 UUID、Reality 密钥和 Short ID，检查配置后创建服务。<strong>Vision flow 已由脚本设置为 <code>xtls-rprx-vision</code></strong>，无需另外寻找一个“开启 Vision”的选项。字段含义可参考 <a href="https://sing-box.sagernet.org/configuration/inbound/vless/" target="_blank" rel="noopener noreferrer">sing-box 官方 VLESS 文档</a>。</p>
-<p>结束时应看到“部署完成；请检查云防火墙”，并显示各客户端的节点信息。默认名称类似 <code>SKYBYTE-Reality</code>。如果出现“发现已有配置，拒绝覆盖”，请先确认是不是已经安装过；已有托管节点应从 <code>1 → 5</code> 修改，不要反复尝试覆盖首次安装。</p>
+<p>结束时应看到“部署完成；请检查云防火墙”，并显示各客户端的节点信息。默认名称类似 <code>SKYBYTE-Reality</code>。如果出现“发现已有配置，拒绝覆盖”，请先确认是不是已经安装过；已有托管节点应从 <code>a → 5</code> 修改，不要反复尝试覆盖首次安装。</p>
 <p>请记住三类参数的区别：<strong>服务器地址</strong>是客户端连接的 VPS 公网 IP/域名；<strong>SNI</strong>是 Reality 握手域名；<strong>Reality 公钥</strong>用于客户端配置。服务端的私钥留在服务器，不需要导入手机或电脑。</p>
 
 <h2 id="hy2">4. 可选：安装 HY2 或双协议</h2>
-<p>还没有节点时，HY2 单协议选 <code>1 → 2</code>，双协议选 <code>1 → 3</code>。双协议安装会先询问 HY2 的证书方式，再询问 Reality 握手域名。已有 Reality 节点想追加 HY2，走 <strong><code>1 → 5 → 4</code> 添加协议</strong>，选择 Hysteria2，保留已有节点和凭据。</p>
+<p>还没有节点时，HY2 单协议选 <code>a → 2</code>，双协议选 <code>a → 3</code>。双协议安装会先询问 HY2 的证书方式，再询问 Reality 握手域名。已有 Reality 节点想追加 HY2，走 <strong><code>a → 5 → 4</code> 添加协议</strong>，选择 Hysteria2，保留已有节点和凭据。</p>
 <h3 id="hy2-certificate">HY2 的三种证书方式</h3>
 <table><thead><tr><th>选择</th><th>需要准备</th><th>客户端要求</th></tr></thead><tbody>
 <tr><td>1 无域名，自动自签名</td><td>脚本生成与实际公网 IP 身份匹配的证书</td><td>必须通过可信通道取得公开证书，并让客户端建立对应信任</td></tr>
 <tr><td>2 已有证书</td><td>证书域名、完整证书链路径、私钥路径</td><td>域名/IP 身份与证书一致，证书链可信且未过期</td></tr>
 <tr><td>3 托管 ACME</td><td>自有域名和验证条件；按提示输入邮箱、选择验证方式</td><td>使用签发成功的证书，并配置与证书匹配的 SNI</td></tr>
 </tbody></table>
-<p>HY2 使用 UDP/QUIC 并需要 TLS。想采用自有域名与公开 CA 证书，可使用脚本的托管 ACME：HTTP-01 要求域名解析正确、公网 TCP 80 可达且该端口没有被已有网站占用；Cloudflare DNS-01 则按提示提供限定授权范围的 DNS Token。管理入口是 <code>5 → 6</code>，自动续签需要显式开启。参考 <a href="https://sing-box.sagernet.org/configuration/inbound/hysteria2/" target="_blank" rel="noopener noreferrer">sing-box HY2 配置</a>和 <a href="https://v2.hysteria.network/docs/getting-started/Server/" target="_blank" rel="noopener noreferrer">Hysteria 官方部署说明</a>；本文使用的是 sing-box 实现，由 SKYBYTE 菜单生成配置。</p>
+<p>HY2 使用 UDP/QUIC 并需要 TLS。想采用自有域名与公开 CA 证书，可使用脚本的托管 ACME：HTTP-01 要求域名解析正确、公网 TCP 80 可达且该端口没有被已有网站占用；Cloudflare DNS-01 则按提示提供限定授权范围的 DNS Token。管理入口是 <code>e → 6</code>，自动续签需要显式开启。参考 <a href="https://sing-box.sagernet.org/configuration/inbound/hysteria2/" target="_blank" rel="noopener noreferrer">sing-box HY2 配置</a>和 <a href="https://v2.hysteria.network/docs/getting-started/Server/" target="_blank" rel="noopener noreferrer">Hysteria 官方部署说明</a>；本文使用的是 sing-box 实现，由 SKYBYTE 菜单生成配置。</p>
 <div class="sb-guide-note"><strong>无域名也需要验证证书。</strong>自签名模式的节点链接保持验证开启，复制 URI 本身不会让客户端自动信任证书。若客户端无法正确配置信任，优先使用它支持的受信任 CA 证书方案。</div>
 <p>双协议部署完成后应得到 <code>名称-Reality</code> 和 <code>名称-HY2</code> 两个节点。默认分别使用 TCP 443 和 UDP 443，随后到系统与云防火墙逐项确认。</p>
 
@@ -91,12 +91,12 @@ systemctl --version</code></pre>
 <tr><td>HY2</td><td>UDP</td><td>443</td><td>安装 HY2 或双协议</td></tr>
 <tr><td>HTTP-01 证书验证</td><td>TCP</td><td>80</td><td>选择对应 ACME 验证方式时</td></tr>
 </tbody></table>
-<p>脚本的 UFW 入口是 <strong><code>4 → 2</code></strong>：<code>1 安装 UFW</code>、<code>2 开启</code>、<code>3 关闭</code>、<code>4 查看状态</code>、<code>5 放行端口</code>、<code>6 删除规则</code>。尚未安装 UFW 时先选 1，输入 <code>y</code>；然后重新进入该菜单选 2，人工核实 SSH 端口后再确认开启。开启时会加入实际托管节点的端口规则。</p>
-<p>已经开启 UFW 的服务器，节点安装会尝试添加对应端口规则；仍建议通过状态页面核对。手动补规则时，选 <code>4 → 2 → 5</code>，填写数字端口，再填写 <code>tcp</code> 或 <code>udp</code>。两个协议需要分别操作。<code>4 → 3</code> 可检查规则，但它读不到云安全组。</p>
+<p>脚本的 UFW 入口是 <strong><code>d → 2</code></strong>：<code>1 安装 UFW</code>、<code>2 开启</code>、<code>3 关闭</code>、<code>4 查看状态</code>、<code>5 放行端口</code>、<code>6 删除规则</code>。尚未安装 UFW 时先选 1，输入 <code>y</code>；安装完成后仍停留在 UFW 菜单，直接选 <code>2</code>，人工核实 SSH 端口后再确认开启；随后可直接选 <code>4</code> 查看状态。无需重新输入 <code>d → 2</code>。输入 <code>0</code> 返回“服务器与网络”，再输入 <code>0</code> 才回到主菜单。开启时会加入实际托管节点的端口规则。</p>
+<p>已经开启 UFW 的服务器，节点安装会尝试添加对应端口规则；仍建议通过状态页面核对。手动补规则时，选 <code>d → 2 → 5</code>，填写数字端口，再填写 <code>tcp</code> 或 <code>udp</code>。两个协议需要分别操作。<code>d → 3</code> 可检查规则，但它读不到云安全组。</p>
 <p>开启防火墙前保留当前 SSH 会话和网页控制台。已有 Docker、Fail2ban 或其他防火墙的服务器，应结合现有策略检查，不要为了排错直接清空整机规则。脚本的“配置检查通过”说明配置可解析，<strong>不能证明公网 TCP/UDP 已连通</strong>。</p>
 
 <h2 id="clients">6. 导入手机与电脑客户端</h2>
-<p>通过 <code>2 → 1</code> 重新查看节点和各客户端格式，<code>2 → 2</code> 刷新本地导出，<code>2 → 4</code> 显示小火箭二维码。客户端需要支持相应协议；是否能导入与所选核心能否运行该协议，是两个检查点。</p>
+<p>通过 <code>b → 1</code> 重新查看节点和各客户端格式，<code>b → 2</code> 刷新本地导出，<code>b → 4</code> 显示小火箭二维码。客户端需要支持相应协议；是否能导入与所选核心能否运行该协议，是两个检查点。</p>
 <table><thead><tr><th>客户端/用途</th><th>可使用的导出</th><th>操作重点</th></tr></thead><tbody>
 <tr><td>Shadowrocket（小火箭）</td><td>专用节点链接、<code>shadowrocket-nodes.txt</code>、二维码</td><td>扫描/复制导入节点；HY2 自签证书还需处理信任</td></tr>
 <tr><td>v2rayN</td><td><code>v2rayn-nodes.txt</code> 或本地 Base64 订阅</td><td>从剪贴板/文件导入，再确认内核支持与节点参数</td></tr>
@@ -107,7 +107,7 @@ systemctl --version</code></pre>
 <p>完整配置与片段不要混用。经典 Clash 内核不具备这里所需的协议支持，应选用兼容的 Mihomo 客户端。以上导出均在 VPS 的 <code>/etc/singbox-v2/</code> 中；可通过 SSH/SFTP 安全取回。<strong>本地 Base64 订阅文件不是一个自动上线的 HTTPS 订阅地址。</strong></p>
 <h3 id="client-import">第一次导入，可以这样操作</h3>
 <ol>
-<li><strong>小火箭：</strong>在 VPS 选 <code>2 → 4</code>，用客户端的扫码功能导入二维码，或复制小火箭专用 URI 后使用剪贴板导入。选中新增节点、开启连接，并按系统提示允许建立 VPN 配置，再用浏览器测试。二维码只包含该节点的信息，自签 HY2 还需按下文建立信任。</li>
+<li><strong>小火箭：</strong>在 VPS 选 <code>b → 4</code>，用客户端的扫码功能导入二维码，或复制小火箭专用 URI 后使用剪贴板导入。选中新增节点、开启连接，并按系统提示允许建立 VPN 配置，再用浏览器测试。二维码只包含该节点的信息，自签 HY2 还需按下文建立信任。</li>
 <li><strong>v2rayN：</strong>复制 <code>v2rayn-nodes.txt</code> 中所需的单节点 URI，使用客户端的从剪贴板导入功能，选中节点。确认协议核心支持后启用系统代理或按需求启用 TUN，再测试实际网页访问。</li>
 <li><strong>Clash Verge Rev：</strong>通过 SFTP 将 <code>clash-verge.yaml</code> 取回电脑，作为本地配置导入并启用，在代理组选择目标节点，再开启需要的系统代理/TUN。不要把完整 YAML 当作单个节点链接粘贴。</li>
 </ol>
@@ -133,7 +133,7 @@ systemctl --version</code></pre>
 
 <h2 id="verify">7. 分三层确认节点真正可用</h2>
 <h3 id="verify-service">第一层：VPS 服务与配置</h3>
-<p>从 <code>3 → 1</code> 选择状态或配置检查；也可以在 VPS 运行：</p>
+<p>从 <code>c → 1</code> 选择状态或配置检查；也可以在 VPS 运行：</p>
 <pre><code class="language-bash">systemctl is-active sing-box
 systemctl is-enabled sing-box
 /usr/local/bin/sing-box check -c /etc/sing-box/config.json</code></pre>
@@ -151,12 +151,12 @@ ss -lnup 'sport = :443'</code></pre>
 
 <h2 id="optimize">8. 可选优化：BBR 与 WARP</h2>
 <h3 id="bbr">BBR + FQ：先确认内核支持</h3>
-<p>入口 <strong><code>4 → 4</code></strong>。脚本确认后尝试加载 BBR，检查内核可用算法，再设置 TCP 拥塞控制和 FQ 队列。它调整的是系统 TCP 参数，不代表 HY2 的 QUIC 拥塞控制也被切换，更不代表所有链路都会提速。</p>
+<p>入口 <strong><code>d → 4</code></strong>。脚本确认后尝试加载 BBR，检查内核可用算法，再设置 TCP 拥塞控制和 FQ 队列。它调整的是系统 TCP 参数，不代表 HY2 的 QUIC 拥塞控制也被切换，更不代表所有链路都会提速。</p>
 <p>可在 VPS 查看实际结果：</p>
 <pre><code class="language-bash">sysctl net.ipv4.tcp_congestion_control net.core.default_qdisc</code></pre>
 <p>成功应用本项设置后应分别为 <code>bbr</code> 和 <code>fq</code>。提示内核不支持时，先保留原系统，不必为完成基础节点搭建而继续强行修改。</p>
 <h3 id="warp">WARP：先验证出口，再选择平台</h3>
-<p>入口 <strong><code>4 → 9</code></strong>，按 v2.8.6 分组：</p>
+<p>入口 <strong><code>d → 9</code></strong>，按 v2.8.7 分组：</p>
 <table><thead><tr><th>选项</th><th>用途</th></tr></thead><tbody>
 <tr><td>1 / 2 / 3</td><td>安装官方本机代理 / 使用已有本机代理 / 导入 WireGuard 配置</td></tr>
 <tr><td>4</td><td>选择 Netflix、Disney+、ChatGPT、Gemini、组合或自定义域名后缀</td></tr>
@@ -171,7 +171,7 @@ ss -lnup 'sport = :443'</code></pre>
 <p>“全局 WARP”指本工具托管节点的流量，不改 VPS 操作系统的默认路由。指定域名模式依赖域名匹配与嗅探，IP 直连、ECH 和未覆盖域名可能不匹配。WARP 不保证某个国家或平台解锁，匿名网页检测也不等于账号登录、API 调用或实际播放成功。先搭通基础节点，再逐项开启这些可选功能，更容易判断问题来自哪里。</p>
 
 <h2 id="users">9. 多人使用：独立账户、配额与订阅</h2>
-<p>需要把节点交给其他人时，进入<strong>主菜单 <code>7</code></strong>。先选 1 初始化用户管理，再选 2 添加用户，填写用户名、上传与下载合计额度（GiB）和有效天数；选 9 查看该用户的节点与二维码。该功能需要先有 Reality/HY2 直连节点，独立 Argo 部署暂不支持受限账户。</p>
+<p>需要把节点交给其他人时，进入<strong>主菜单 <code>g</code></strong>。先选 1 初始化用户管理，再选 2 添加用户，填写用户名、上传与下载合计额度（GiB）和有效天数；选 9 查看该用户的节点与二维码。该功能需要先有 Reality/HY2 直连节点，独立 Argo 部署暂不支持受限账户。</p>
 <p>每个受限账户有自己的凭据、进程与端口。请把<strong>该用户的个人导出</strong>发给对方，不要分发管理员节点；管理员节点不受这些用户配额限制。云安全组还需放行个人节点实际分配的 TCP/UDP 端口，不能只留下管理员的 443。</p>
 <table><thead><tr><th>用户菜单</th><th>用途与注意点</th></tr></thead><tbody>
 <tr><td>3 / 4</td><td>查看用量 / 修改额度；修改额度保留原有效期与累计用量</td></tr>
@@ -180,32 +180,32 @@ ss -lnup 'sport = :443'</code></pre>
 <tr><td>14 / 15</td><td>用户故障诊断 / 进程与资源占用</td></tr>
 <tr><td>16</td><td>签发、重置或撤销个人 HTTPS 订阅 Token</td></tr>
 </tbody></table>
-<p>额度没有自动月度重置周期，续期也不会自动清空累计用量。人数上限统计的是未删除账户数量，不能识别真实使用人数。配额通过周期采样执行，适合日常额度管理；每个账户额外消耗内存、CPU 和端口，容量可通过 <code>4 → 7</code> 查看。</p>
-<p>如果需要在线订阅，先通过 <code>5 → 6</code> 准备受信任证书，再进入 <code>2 → 6</code> 配置 HTTPS 服务，使用用户菜单 16 管理个人链接，并放行实际 HTTPS 服务端口。订阅 URL 中的 Token 可以取得个人节点凭据，应私密保存；撤销订阅 Token 不会同时轮换已经泄露的节点密码。</p>
+<p>额度没有自动月度重置周期，续期也不会自动清空累计用量。人数上限统计的是未删除账户数量，不能识别真实使用人数。配额通过周期采样执行，适合日常额度管理；每个账户额外消耗内存、CPU 和端口，容量可通过 <code>d → 7</code> 查看。</p>
+<p>如果需要在线订阅，先通过 <code>e → 6</code> 准备受信任证书，再进入 <code>b → 6</code> 配置 HTTPS 服务，使用用户菜单 16 管理个人链接，并放行实际 HTTPS 服务端口。订阅 URL 中的 Token 可以取得个人节点凭据，应私密保存；撤销订阅 Token 不会同时轮换已经泄露的节点密码。</p>
 
 <h2 id="maintenance">10. 修改、更新、备份与卸载</h2>
 <table><thead><tr><th>要做什么</th><th>菜单路径</th><th>实际影响</th></tr></thead><tbody>
-<tr><td>重新查看节点 / 二维码</td><td><code>2 → 1</code> / <code>2 → 4</code></td><td>取最新导出，便于重新导入</td></tr>
-<tr><td>修改节点名称</td><td><code>2 → 3</code></td><td>改客户端显示名称，保留 UUID/密码</td></tr>
-<tr><td>改端口 / 连接地址 / SNI</td><td><code>1 → 5</code> 的 1 / 2 / 3</td><td>更新后重新导入，核对实际端口规则</td></tr>
-<tr><td>添加 / 移除协议</td><td><code>1 → 5</code> 的 4 / 5</td><td>已有部署使用这个入口，保留仍在使用的凭据与用量</td></tr>
-<tr><td>服务状态 / 重启 / 配置检查</td><td><code>3 → 1</code></td><td>子菜单 1 / 3 / 6</td></tr>
-<tr><td>查看日志</td><td><code>3 → 2</code></td><td>显示近期 sing-box 日志</td></tr>
-<tr><td>更新管理脚本</td><td><code>5 → 4</code></td><td>检查正式发布版本，确认后更新管理菜单与脚本功能</td></tr>
-<tr><td>更新 sing-box 核心</td><td><code>5 → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本，先做配置检查</td></tr>
-<tr><td>备份 / 恢复 / 管理备份</td><td><code>5 → 2</code> / <code>5 → 3</code> / <code>5 → 7</code></td><td>备份含配置、证书、凭据等私密数据，离机副本也需保护</td></tr>
-<tr><td>卸载</td><td><code>6 → 3</code></td><td>卸载前自动备份；保留的防火墙规则、BBR 参数等需另行管理</td></tr>
+<tr><td>重新查看节点 / 二维码</td><td><code>b → 1</code> / <code>b → 4</code></td><td>取最新导出，便于重新导入</td></tr>
+<tr><td>修改节点名称</td><td><code>b → 3</code></td><td>改客户端显示名称，保留 UUID/密码</td></tr>
+<tr><td>改端口 / 连接地址 / SNI</td><td><code>a → 5</code> 的 1 / 2 / 3</td><td>更新后重新导入，核对实际端口规则</td></tr>
+<tr><td>添加 / 移除协议</td><td><code>a → 5</code> 的 4 / 5</td><td>已有部署使用这个入口，保留仍在使用的凭据与用量</td></tr>
+<tr><td>服务状态 / 重启 / 配置检查</td><td><code>c → 1</code></td><td>子菜单 1 / 3 / 6</td></tr>
+<tr><td>查看日志</td><td><code>c → 2</code></td><td>显示近期 sing-box 日志</td></tr>
+<tr><td>更新管理脚本</td><td><code>e → 4</code></td><td>检查正式发布版本，确认后更新管理菜单与脚本功能</td></tr>
+<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本，先做配置检查</td></tr>
+<tr><td>备份 / 恢复 / 管理备份</td><td><code>e → 2</code> / <code>e → 3</code> / <code>e → 7</code></td><td>备份含配置、证书、凭据等私密数据，离机副本也需保护</td></tr>
+<tr><td>卸载</td><td><code>f → 3</code></td><td>卸载前自动备份；保留的防火墙规则、BBR 参数等需另行管理</td></tr>
 </tbody></table>
 <p>重要修改前先备份。更新管理脚本与更新协议核心是两件事；更新可能短暂重启此前运行的相关服务，选择合适的操作时间。脚本不做每周自动升级。</p>
-<p>如果启用了 HY2 端口跳跃，节点参数修改后原跳跃会关闭，需要按当前端口重新开启。刚入门时先使用一个明确的 UDP 端口完成验证，再从 <code>4 → 5</code> 配置跳跃范围，并同步放行云防火墙范围。</p>
+<p>如果启用了 HY2 端口跳跃，节点参数修改后原跳跃会关闭，需要按当前端口重新开启。刚入门时先使用一个明确的 UDP 端口完成验证，再从 <code>d → 5</code> 配置跳跃范围，并同步放行云防火墙范围。</p>
 <p>恢复会协调配置与服务，并保留当前仍存在用户的最新策略/累计用量。卸载保留备份、UFW 放行规则、BBR/FQ 设置等系统项，不能将其视为整台 VPS 恢复出厂。</p>
 
 <h2 id="troubleshoot">11. 常见问题：按错误发生的位置排查</h2>
 <table><thead><tr><th>现象</th><th>先检查什么</th><th>下一步</th></tr></thead><tbody>
 <tr><td><code>curl: command not found</code></td><td>是否使用本文完整的一行入口；APT 源是否能访问</td><td>完整入口会尝试安装 curl；安装失败先修复软件源或网络，再重试</td></tr>
-<tr><td>“发现已有配置，拒绝覆盖”</td><td>已有 sing-box 配置、二进制、服务或旧面板</td><td>本工具托管部署走 <code>1 → 5</code>；其他部署先备份并规划迁移</td></tr>
-<tr><td>TCP/UDP 443 被占用</td><td>用 <code>ss</code> 查看对应协议的监听进程</td><td>从 <code>1 → 6 → 3</code> 自定义端口安装；不要直接终止未知服务</td></tr>
-<tr><td>服务未启动</td><td><code>3 → 1</code> 的配置检查、<code>3 → 2</code> 日志</td><td>先修复具体配置、证书或端口错误，再重启</td></tr>
+<tr><td>“发现已有配置，拒绝覆盖”</td><td>已有 sing-box 配置、二进制、服务或旧面板</td><td>本工具托管部署走 <code>a → 5</code>；其他部署先备份并规划迁移</td></tr>
+<tr><td>TCP/UDP 443 被占用</td><td>用 <code>ss</code> 查看对应协议的监听进程</td><td>从 <code>a → 6 → 3</code> 自定义端口安装；不要直接终止未知服务</td></tr>
+<tr><td>服务未启动</td><td><code>c → 1</code> 的配置检查、<code>c → 2</code> 日志</td><td>先修复具体配置、证书或端口错误，再重启</td></tr>
 <tr><td>服务 active，但客户端超时</td><td>客户端地址/端口、实际监听、系统防火墙与云安全组</td><td>Reality 核对 TCP，HY2 核对 UDP；NAT 还需核对公网映射</td></tr>
 <tr><td>Reality 握手失败</td><td>UUID、Vision flow、SNI、公钥、Short ID 是否来自同一份最新导出</td><td>重新导入；核对 VPS 到握手目标的网络与服务器时间</td></tr>
 <tr><td>HY2 证书错误</td><td>证书是否过期、SNI/IP 是否匹配、自签证书是否受信任</td><td>按本教程处理信任，或使用客户端支持的可信 CA 证书</td></tr>
@@ -220,10 +220,10 @@ ss -lnup 'sport = :443'</code></pre>
 <h2 id="advanced">12. 进阶入口、文件位置与参考资料</h2>
 <p>基础节点可用后，再按需求使用以下功能：</p>
 <ul>
-<li><strong>Argo：</strong><code>1 → 4</code> 管理附加隧道，<code>1 → 6</code> 提供独立 Argo、IPv6/NAT 等受限网络入口。Quick Tunnel 用于临时测试，地址可能变化；固定隧道需要事先在 Cloudflare 配置公开主机名与路由。这里的 Argo 节点是独立 VLESS + WebSocket，不承载 HY2/QUIC。</li>
+<li><strong>Argo：</strong><code>a → 4</code> 管理附加隧道，<code>a → 6</code> 提供独立 Argo、IPv6/NAT 等受限网络入口。Quick Tunnel 用于临时测试，地址可能变化；固定隧道需要事先在 Cloudflare 配置公开主机名与路由。这里的 Argo 节点是独立 VLESS + WebSocket，不承载 HY2/QUIC。</li>
 <li><strong>IPv6 / NAT：</strong>安装时区分本机监听地址、客户端使用的公网地址与服务商映射端口。纯 IPv6 VPS 仍需能下载软件，客户端所在网络也需能到达该 IPv6 地址；只修改导出地址不能自动创建公网映射。</li>
-<li><strong>住宅落地中转：</strong><code>4 → 10</code>，子菜单 6 有具体使用说明。需要一台可用的入口与一台可用的落地，目标站点看到的是落地出口；与 WARP 为替代出站策略，启用前先测两段链路。</li>
-<li><strong>HAProxy TCP 透传：</strong><code>4 → 11</code>，子菜单 12 有说明。用于 TCP 转发；客户端保留落地节点的认证、SNI 和 TLS 信任，连接地址/端口改为入口。它不转发 HY2 的原生 UDP。</li>
+<li><strong>住宅落地中转：</strong><code>d → 10</code>，子菜单 6 有具体使用说明。需要一台可用的入口与一台可用的落地，目标站点看到的是落地出口；与 WARP 为替代出站策略，启用前先测两段链路。</li>
+<li><strong>HAProxy TCP 透传：</strong><code>d → 11</code>，子菜单 12 有说明。用于 TCP 转发；客户端保留落地节点的认证、SNI 和 TLS 信任，连接地址/端口改为入口。它不转发 HY2 的原生 UDP。</li>
 </ul>
 <table><thead><tr><th>位置</th><th>作用</th></tr></thead><tbody>
 <tr><td><code>/etc/sing-box/config.json</code></td><td>管理员服务端配置，包含私密参数</td></tr>
@@ -233,8 +233,8 @@ ss -lnup 'sport = :443'</code></pre>
 <tr><td><code>/usr/local/bin/sing-box</code></td><td>协议核心程序</td></tr>
 <tr><td><code>sing-box.service</code></td><td>管理员直连节点的 systemd 服务</td></tr>
 </tbody></table>
-<p>本教程依据 <a href="https://github.com/skylink9119/sing-box-v2/tree/v2.8.6" target="_blank" rel="noopener noreferrer">SKYBYTE Manager v2.8.6 源码与说明</a>核对了安装交互、菜单路径和导出文件，并参考 sing-box、Hysteria 与 Apple 官方文档。完成部署时，请结合系统日志与客户端的实际连接结果验证。后续版本菜单可能调整，可从<a href="/sing-box/">安装入口页</a>与<a href="https://github.com/skylink9119/sing-box-v2/releases" target="_blank" rel="noopener noreferrer">项目发布页</a>查看更新。</p>
-]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-23T13:04:00.000Z</updated><summary>按 SKYBYTE Manager v2.8.6 实际菜单，从 VPS 准备到 Reality + Vision、HY2、双协议、客户端导入、防火墙、BBR、WARP、用户配额与排错，逐步完成节点搭建。</summary></entry>
+<p>本教程依据 <a href="https://github.com/skylink9119/sing-box-v2/tree/v2.8.7" target="_blank" rel="noopener noreferrer">SKYBYTE Manager v2.8.7 源码与说明</a>核对了安装交互、菜单路径和导出文件，并参考 sing-box、Hysteria 与 Apple 官方文档。完成部署时，请结合系统日志与客户端的实际连接结果验证。后续版本菜单可能调整，可从<a href="/sing-box/">安装入口页</a>与<a href="https://github.com/skylink9119/sing-box-v2/releases" target="_blank" rel="noopener noreferrer">项目发布页</a>查看更新。</p>
+]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-23T22:49:36.000Z</updated><summary>按 SKYBYTE Manager v2.8.7 实际菜单，从 VPS 准备到 Reality + Vision、HY2、双协议、客户端导入、防火墙、BBR、WARP、用户配额与排错，逐步完成节点搭建。</summary></entry>
 <entry><author><name>SKYBYTE</name></author><category term="VPS 选购" scheme="https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/"/><content type="html"><![CDATA[
 <div class="bwh-hero">
 <div class="bwh-kicker">BANDWAGONHOST · LOS ANGELES · USCA_9</div>
