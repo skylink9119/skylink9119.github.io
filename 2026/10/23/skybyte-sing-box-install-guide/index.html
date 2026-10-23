@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 SKYBYTE Manager v2.8.6 实际菜单，从 VPS 准备到 Reality + Vision、HY2、双协议、客户端导入、防火墙、BBR、WARP、用户配额与排错，逐步完成节点搭建。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入">
+<meta property="og:url" content="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/">
+<meta property="og:site_name" content="SKYBYTE">
+<meta property="og:description" content="按 SKYBYTE Manager v2.8.6 实际菜单，从 VPS 准备到 Reality + Vision、HY2、双协议、客户端导入、防火墙、BBR、WARP、用户配额与排错，逐步完成节点搭建。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-10-23T13:04:00.000Z">
+<meta property="article:modified_time" content="2026-10-23T13:04:00.000Z">
+<meta property="article:author" content="SKYBYTE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入",
+  "url": "https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"
+  },
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "description": "按 SKYBYTE Manager v2.8.6 实际菜单，从 VPS 准备到 Reality + Vision、HY2、双协议、客户端导入、防火墙、BBR、WARP、用户配额与排错，逐步完成节点搭建。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-10-23T13:04:00.000Z",
+  "dateModified": "2026-10-23T13:04:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SKYBYTE",
+      "url": "https://www.youtube.com/@SKYBYTE9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Person",
+    "name": "SKYBYTE",
+    "url": "https://skylink9119.github.io/"
+  }
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const start = 6
+              const end = 18
+              const isNight =
+                start < end
+                    ? hour < start || hour >= end
+                    : hour >= start || hour < end
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SKYBYTE","link":"链接: ","source":"来源: SKYBYTE","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css?v=20260905-type-1"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"SKYBYTE","url":"https://skylink9119.github.io/about/","image":"https://skylink9119.github.io/img/icon.jpg","sameAs":["https://www.youtube.com/@SKYBYTE9119"]}</script><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SKYBYTE" type="application/atom+xml">
+<meta property="article:tag" content="sing-box"><meta property="article:tag" content="VLESS"><meta property="article:tag" content="Reality协议"><meta property="article:tag" content="Hysteria2"><meta property="article:tag" content="一键脚本"><meta property="article:tag" content="VPS"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" href="/sing-box/"><i class="fa-fw fas fa-terminal"></i><span> sing-box 一键脚本</span></a></div><div class="menus_item"><a class="site-page" href="/xray/"><i class="fa-fw fas fa-terminal"></i><span> Xray 一键脚本</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="https://cmy.homes/register?aff=169XVG" target="_blank" rel="sponsored noopener" title="推广链接"><i class="fa-fw fas fa-network-wired"></i><span> CMY Network</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SKYBYTE</span></a><a class="nav-page-title" href="/"><span class="site-name">sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" href="/sing-box/"><i class="fa-fw fas fa-terminal"></i><span> sing-box 一键脚本</span></a></div><div class="menus_item"><a class="site-page" href="/xray/"><i class="fa-fw fas fa-terminal"></i><span> Xray 一键脚本</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="https://cmy.homes/register?aff=169XVG" target="_blank" rel="sponsored noopener" title="推广链接"><i class="fa-fw fas fa-network-wired"></i><span> CMY Network</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-23T13:04:00.000Z" title="发表于 2026-10-23 21:04:00">2026-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-23T13:04:00.000Z" title="更新于 2026-10-23 21:04:00">2026-10-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a> / <a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/">网络链路</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article id="article-container" class="container post-content"><style id="sb-tutorial-style">
+#article-container .sb-guide-hero{padding:26px;border-radius:16px;background:linear-gradient(125deg,#10203d,#155265);color:#eef7ff;margin:0 0 22px}
+#article-container .sb-guide-kicker{font-size:13px;letter-spacing:.08em;color:#b2dfec}
+#article-container .sb-guide-lead{font-size:1.4em;font-weight:700;line-height:1.65;margin:12px 0}
+#article-container .sb-guide-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+#article-container .sb-guide-actions a{display:inline-block;padding:10px 16px;border-radius:8px;background:#d4f4eb;color:#103c40;text-decoration:none;font-weight:700}
+#article-container .sb-guide-note{padding:16px 20px;border-left:4px solid #20a5ad;background:var(--blockquote-bg);line-height:1.9;margin:20px 0}
+#article-container .sb-guide-table{overflow-x:auto;margin:18px 0;border:1px solid var(--light-grey);border-radius:8px}
+#article-container .sb-guide-table table{margin:0;min-width:580px}
+#article-container .sb-guide-table th{background:#16465b;color:#fff}
+#article-container .sb-guide-table th,#article-container .sb-guide-table td{padding:10px 14px;line-height:1.85}
+#article-container pre{overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:18px;border-radius:10px;background:#172033;color:#f1f5f9;line-height:1.8}
+#article-container pre code{background:transparent;color:inherit;padding:0}
+#article-container h2,#article-container h3{scroll-margin-top:80px}
+@media(max-width:600px){#article-container .sb-guide-hero{padding:20px}#article-container .sb-guide-lead{font-size:1.2em}#article-container .sb-guide-actions a{width:100%;text-align:center}}
+</style><div class="sb-guide-hero">
+<div class="sb-guide-kicker">SKYBYTE · SING-BOX · 从安装到实际连接</div>
+<p class="sb-guide-lead">先搭通一个 Reality 节点，再按需增加 HY2、WARP 和用户管理。</p>
+<p>按 SKYBYTE Manager <strong>v2.8.6</strong> 的实际菜单编写，首次安装使用本版测试的 sing-box <strong>1.14.3</strong>。核对日期：2026-10-23。</p>
+<div class="sb-guide-actions"><a href="#reality">从 Reality 主线开始 ↓</a><a href="/sing-box/">打开安装命令与 VPS 选购页 ↗</a></div>
+</div>
+<div class="sb-guide-note"><strong>第一次搭建，按这条路线走：</strong>准备 VPS → 登录 SSH → 运行安装命令 → 选择 <code>1 → 1</code> → 放行实际 TCP 端口 → 导入客户端 → 做真实连接测试。HY2、BBR、WARP 和配额管理都可以在节点连通后再配置。</div>
+<p>本文中的 <code>1 → 1</code> 表示先在主菜单输入 <code>1</code>，再在子菜单输入 <code>1</code>，每次输入后按回车。一次操作结束后通常会回到主菜单，下一项操作重新按完整路径进入。</p>
+
+<h2 id="prepare">1. 准备 VPS、系统与端口</h2>
+<p>准备一台能通过 SSH 登录、能访问软件源与 GitHub 的 Ubuntu/Debian VPS，并保留服务商的网页控制台。本文以新装 Debian 12/13 或 Ubuntu 24.04 为例；脚本依赖 <code>systemd</code>，普通共享虚拟主机和缺少系统服务管理能力的容器不适合直接照做。</p>
+<p>需要掌握四项信息：<strong>VPS 公网 IP、SSH 端口、root 登录方式、服务商防火墙入口</strong>。SSH 端口可能不是 22，以服务商控制台和你自己的设置为准。尚未选购 VPS，可先看<a href="/sing-box/#vps-promotion-title">四家服务商的选购方向</a>，按预算、线路和 IP 需求选择。</p>
+<h3 id="protocols">先选一种部署方式</h3>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>方案</th><th>安装入口</th><th>默认公网入站</th><th>域名与证书</th><th>适用情况</th></tr></thead><tbody>
+<tr><td>VLESS + Reality + Vision</td><td><code>1 → 1</code></td><td>TCP 443</td><td>无需自购域名或申请自己的 TLS 证书</td><td>先完成一个直连节点，作为本文主线</td></tr>
+<tr><td>Hysteria2（HY2）</td><td><code>1 → 2</code></td><td>UDP 443</td><td>需要 TLS；可自签、使用已有证书或托管 ACME</td><td>客户端和两端网络都支持所需 UDP 通信</td></tr>
+<tr><td>Reality + HY2 双协议</td><td><code>1 → 3</code></td><td>TCP 443 + UDP 443</td><td>Reality 与 HY2 各按自己的要求配置</td><td>希望保留两种连接方式用于比较与备用</td></tr>
+</tbody></table>
+</div><p>TCP 443 与 UDP 443 是两种不同的传输协议，双协议可以同时使用数字 443。已有网站占用 TCP 443 时，普通 Reality 安装会报端口占用；改用 <code>1 → 6 → 3</code> 的自定义端口安装入口，或先规划已有服务的端口。</p>
+<p>服务商控制台里的安全组/云防火墙与 VPS 内部的 UFW 是两层配置。<strong>脚本不会替你修改服务商安全组。</strong> 放行 TCP 443 也不会同时放行 UDP 443。</p>
+
+<h2 id="install">2. 登录 VPS，安装并打开管理脚本</h2>
+<h3 id="ssh">从自己的电脑连接 SSH</h3>
+<p>下面是连接格式示例。<code>203.0.113.10</code> 是文档示例 IP，请换成你的 VPS 公网 IP，端口也换成实际值。这条命令在<strong>自己电脑的终端</strong>运行；成功登录后，后续安装命令才在 VPS 上运行。</p>
+<pre><code class="language-bash">ssh -p 22 root@203.0.113.10</code></pre>
+<p>如果服务商提供的是带 sudo 权限的普通账户，先登录该账户，再执行 <code>sudo -i</code> 切换到 root。可以在 VPS 执行以下只读命令确认环境：</p>
+<pre><code class="language-bash">id -u
+cat /etc/os-release
+uname -m
+systemctl --version</code></pre>
+<p><code>id -u</code> 应返回 <code>0</code>；系统应为 Ubuntu/Debian，并能使用 systemd。这里检查的是安装环境，还没有部署节点。</p>
+<h3 id="bootstrap">执行一行安装命令</h3>
+<p>在 <strong>VPS 的 Bash 终端</strong>运行：</p>
+<pre><code class="language-bash" id="tutorial-install-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; script=$(curl -q -fsSL --max-time 60 https://raw.githubusercontent.com/skylink9119/sing-box-v2/main/bootstrap.sh) &amp;&amp; bash -c "$script")</code></pre>
+<p>没有 <code>curl</code> 时，这条命令会先安装 curl 与 CA 证书；仍需有可用的 APT 软件源和网络。启动入口会继续检查系统并下载管理脚本。下载失败时先处理显示的错误，再重试，不要把后面的菜单数字粘贴进尚未下载完成的终端。</p>
+<p>首次打开选择 <code>1. 简体中文</code> 或 <code>2. English</code>。中文主菜单如下，为 v2.8.6 菜单节选：</p>
+<pre><code>1. 节点安装
+2. 节点与订阅
+3. 服务与日志
+4. 服务器与网络
+5. 更新与备份
+6. 设置与卸载
+7. 用户与配额管理
+0. 退出</code></pre>
+<p>重新登录 SSH 后输入 <code>sb</code> 可打开管理菜单。若当前终端仍缓存旧命令，运行 <code>hash -r</code> 或重新登录；遇到同名入口冲突时，按脚本提示处理，先保留原有自定义命令。</p>
+<div class="sb-guide-note"><strong>确认规则：</strong>看到 <code>[y/N]</code> 时，输入 <code>y</code> 或 <code>Y</code> 才确认；直接回车、<code>n</code> 或 <code>N</code> 都会取消。参数提示里的 <code>[默认值]</code> 则表示可回车采用该参数，两种提示含义不同。</div>
+
+<h2 id="reality">3. 主线：搭建 Reality + Vision 节点</h2>
+<p>在主菜单选择 <code>1. 节点安装</code>，再选择 <code>1. 安装 Reality + Vision</code>，即 <strong><code>1 → 1</code></strong>。脚本会展示声明，阅读后输入 <code>y</code> 确认安装。</p>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>交互项</th><th>如何填写</th><th>说明</th></tr></thead><tbody>
+<tr><td>节点名称前缀</td><td>例如 <code>洛杉矶</code>，或直接回车</td><td>默认 <code>SKYBYTE</code>；导出会追加 <code>-Reality</code>，中文名称可用</td></tr>
+<tr><td>Reality 握手域名</td><td>可先回车采用 <code>addons.mozilla.org</code></td><td>它是握手目标的域名，不是你的 VPS 地址；在 VPS 所在网络中仍需可达</td></tr>
+<tr><td>监听端口</td><td>普通安装固定使用 TCP 443</td><td>需要其他端口时，从 <code>1 → 6 → 3</code> 安装，或部署后通过 <code>1 → 5</code> 修改</td></tr>
+</tbody></table>
+</div><p>这一流程会安装依赖、下载经摘要校验的官方 sing-box 核心，生成 UUID、Reality 密钥和 Short ID，检查配置后创建服务。<strong>Vision flow 已由脚本设置为 <code>xtls-rprx-vision</code></strong>，无需另外寻找一个“开启 Vision”的选项。字段含义可参考 <a href="https://sing-box.sagernet.org/configuration/inbound/vless/" target="_blank" rel="noopener noreferrer">sing-box 官方 VLESS 文档</a>。</p>
+<p>结束时应看到“部署完成；请检查云防火墙”，并显示各客户端的节点信息。默认名称类似 <code>SKYBYTE-Reality</code>。如果出现“发现已有配置，拒绝覆盖”，请先确认是不是已经安装过；已有托管节点应从 <code>1 → 5</code> 修改，不要反复尝试覆盖首次安装。</p>
+<p>请记住三类参数的区别：<strong>服务器地址</strong>是客户端连接的 VPS 公网 IP/域名；<strong>SNI</strong>是 Reality 握手域名；<strong>Reality 公钥</strong>用于客户端配置。服务端的私钥留在服务器，不需要导入手机或电脑。</p>
+
+<h2 id="hy2">4. 可选：安装 HY2 或双协议</h2>
+<p>还没有节点时，HY2 单协议选 <code>1 → 2</code>，双协议选 <code>1 → 3</code>。双协议安装会先询问 HY2 的证书方式，再询问 Reality 握手域名。已有 Reality 节点想追加 HY2，走 <strong><code>1 → 5 → 4</code> 添加协议</strong>，选择 Hysteria2，保留已有节点和凭据。</p>
+<h3 id="hy2-certificate">HY2 的三种证书方式</h3>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>选择</th><th>需要准备</th><th>客户端要求</th></tr></thead><tbody>
+<tr><td>1 无域名，自动自签名</td><td>脚本生成与实际公网 IP 身份匹配的证书</td><td>必须通过可信通道取得公开证书，并让客户端建立对应信任</td></tr>
+<tr><td>2 已有证书</td><td>证书域名、完整证书链路径、私钥路径</td><td>域名/IP 身份与证书一致，证书链可信且未过期</td></tr>
+<tr><td>3 托管 ACME</td><td>自有域名和验证条件；按提示输入邮箱、选择验证方式</td><td>使用签发成功的证书，并配置与证书匹配的 SNI</td></tr>
+</tbody></table>
+</div><p>HY2 使用 UDP/QUIC 并需要 TLS。想采用自有域名与公开 CA 证书，可使用脚本的托管 ACME：HTTP-01 要求域名解析正确、公网 TCP 80 可达且该端口没有被已有网站占用；Cloudflare DNS-01 则按提示提供限定授权范围的 DNS Token。管理入口是 <code>5 → 6</code>，自动续签需要显式开启。参考 <a href="https://sing-box.sagernet.org/configuration/inbound/hysteria2/" target="_blank" rel="noopener noreferrer">sing-box HY2 配置</a>和 <a href="https://v2.hysteria.network/docs/getting-started/Server/" target="_blank" rel="noopener noreferrer">Hysteria 官方部署说明</a>；本文使用的是 sing-box 实现，由 SKYBYTE 菜单生成配置。</p>
+<div class="sb-guide-note"><strong>无域名也需要验证证书。</strong>自签名模式的节点链接保持验证开启，复制 URI 本身不会让客户端自动信任证书。若客户端无法正确配置信任，优先使用它支持的受信任 CA 证书方案。</div>
+<p>双协议部署完成后应得到 <code>名称-Reality</code> 和 <code>名称-HY2</code> 两个节点。默认分别使用 TCP 443 和 UDP 443，随后到系统与云防火墙逐项确认。</p>
+
+<h2 id="firewall">5. 放行系统防火墙与云防火墙</h2>
+<p>先去服务商控制台检查入站规则，再检查 VPS 内部防火墙。下面按本教程的默认端口列出；若改过端口，表格中的 443 必须换成实际端口。</p>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>用途</th><th>入站协议</th><th>端口</th><th>何时需要</th></tr></thead><tbody>
+<tr><td>SSH 管理</td><td>TCP</td><td>你的实际 SSH 端口</td><td>始终保留可用的管理入口</td></tr>
+<tr><td>Reality + Vision</td><td>TCP</td><td>443</td><td>安装 Reality 或双协议</td></tr>
+<tr><td>HY2</td><td>UDP</td><td>443</td><td>安装 HY2 或双协议</td></tr>
+<tr><td>HTTP-01 证书验证</td><td>TCP</td><td>80</td><td>选择对应 ACME 验证方式时</td></tr>
+</tbody></table>
+</div><p>脚本的 UFW 入口是 <strong><code>4 → 2</code></strong>：<code>1 安装 UFW</code>、<code>2 开启</code>、<code>3 关闭</code>、<code>4 查看状态</code>、<code>5 放行端口</code>、<code>6 删除规则</code>。尚未安装 UFW 时先选 1，输入 <code>y</code>；然后重新进入该菜单选 2，人工核实 SSH 端口后再确认开启。开启时会加入实际托管节点的端口规则。</p>
+<p>已经开启 UFW 的服务器，节点安装会尝试添加对应端口规则；仍建议通过状态页面核对。手动补规则时，选 <code>4 → 2 → 5</code>，填写数字端口，再填写 <code>tcp</code> 或 <code>udp</code>。两个协议需要分别操作。<code>4 → 3</code> 可检查规则，但它读不到云安全组。</p>
+<p>开启防火墙前保留当前 SSH 会话和网页控制台。已有 Docker、Fail2ban 或其他防火墙的服务器，应结合现有策略检查，不要为了排错直接清空整机规则。脚本的“配置检查通过”说明配置可解析，<strong>不能证明公网 TCP/UDP 已连通</strong>。</p>
+
+<h2 id="clients">6. 导入手机与电脑客户端</h2>
+<p>通过 <code>2 → 1</code> 重新查看节点和各客户端格式，<code>2 → 2</code> 刷新本地导出，<code>2 → 4</code> 显示小火箭二维码。客户端需要支持相应协议；是否能导入与所选核心能否运行该协议，是两个检查点。</p>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>客户端/用途</th><th>可使用的导出</th><th>操作重点</th></tr></thead><tbody>
+<tr><td>Shadowrocket（小火箭）</td><td>专用节点链接、<code>shadowrocket-nodes.txt</code>、二维码</td><td>扫描/复制导入节点；HY2 自签证书还需处理信任</td></tr>
+<tr><td>v2rayN</td><td><code>v2rayn-nodes.txt</code> 或本地 Base64 订阅</td><td>从剪贴板/文件导入，再确认内核支持与节点参数</td></tr>
+<tr><td>Clash Verge Rev / Mihomo</td><td><code>clash-verge.yaml</code></td><td>作为完整本地配置导入，在代理组选择节点</td></tr>
+<tr><td>OpenClash / 已有 Mihomo 配置</td><td><code>mihomo-proxies.yaml</code></td><td>这是配置片段，需合并代理和所需证书字段</td></tr>
+<tr><td>sing-box 客户端</td><td><code>sing-box-client.json</code></td><td>完整客户端配置；默认使用首个节点，默认本地混合端口 1080</td></tr>
+</tbody></table>
+</div><p>完整配置与片段不要混用。经典 Clash 内核不具备这里所需的协议支持，应选用兼容的 Mihomo 客户端。以上导出均在 VPS 的 <code>/etc/singbox-v2/</code> 中；可通过 SSH/SFTP 安全取回。<strong>本地 Base64 订阅文件不是一个自动上线的 HTTPS 订阅地址。</strong></p>
+<h3 id="client-import">第一次导入，可以这样操作</h3>
+<ol>
+<li><strong>小火箭：</strong>在 VPS 选 <code>2 → 4</code>，用客户端的扫码功能导入二维码，或复制小火箭专用 URI 后使用剪贴板导入。选中新增节点、开启连接，并按系统提示允许建立 VPN 配置，再用浏览器测试。二维码只包含该节点的信息，自签 HY2 还需按下文建立信任。</li>
+<li><strong>v2rayN：</strong>复制 <code>v2rayn-nodes.txt</code> 中所需的单节点 URI，使用客户端的从剪贴板导入功能，选中节点。确认协议核心支持后启用系统代理或按需求启用 TUN，再测试实际网页访问。</li>
+<li><strong>Clash Verge Rev：</strong>通过 SFTP 将 <code>clash-verge.yaml</code> 取回电脑，作为本地配置导入并启用，在代理组选择目标节点，再开启需要的系统代理/TUN。不要把完整 YAML 当作单个节点链接粘贴。</li>
+</ol>
+<p>各客户端的按钮名称和入口可能随版本变化，上面的步骤强调“导入 → 选中 → 启用接入方式 → 实际请求”这四件事。只在列表里看到节点，流量还不会自动经过它。</p>
+<h3 id="client-reality">Reality 导入后核对这些字段</h3>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>字段</th><th>应与什么一致</th></tr></thead><tbody>
+<tr><td>地址 / 端口</td><td>VPS 的客户端连接地址与实际 TCP 端口</td></tr>
+<tr><td>UUID</td><td>脚本导出的 UUID</td></tr>
+<tr><td>传输与安全</td><td>TCP、Reality；界面名称随客户端不同</td></tr>
+<tr><td>Flow</td><td><code>xtls-rprx-vision</code></td></tr>
+<tr><td>SNI、公钥、Short ID</td><td>以该节点最新导出为准，保留导出的指纹等其他参数</td></tr>
+</tbody></table>
+</div><p>导入后选中该节点，按客户端提供的系统代理或 VPN/TUN 接入方式启动连接，再用浏览器实际访问网页。仅点击“延迟测试”或看到一个毫秒数，还不足以确认所需应用已经通过该节点访问。</p>
+<h3 id="client-trust">HY2 自签名证书如何处理</h3>
+<ol>
+<li>从自己的 VPS 经可信 SSH/SFTP 取得 <code>/etc/singbox-v2/hy2-client-ca.pem</code>，并查看 <code>subscription-notes.txt</code> 中的信任说明。</li>
+<li>在 VPS 上运行下面的只读命令核对公开证书指纹，再通过可信通道与导出说明比对。</li>
+</ol>
+<pre><code class="language-bash">openssl x509 -in /etc/sing-box/hy2-selfsigned.crt -noout -fingerprint -sha256</code></pre>
+<p>sing-box JSON 和 Mihomo 完整 YAML 会内嵌所需公开证书。小火箭/v2rayN 的 URI 导入则取决于其具体实现对 CA、指纹字段的支持；无法确认信任是否生效时，查看客户端 TLS 错误日志，或使用受信任 CA 证书。</p>
+<p>iPhone 可使用导出的 <code>hy2-client-ca.mobileconfig</code>（仅 CA 证书生成该文件），按系统提示安装后，在<strong>设置 → 通用 → 关于本机 → 证书信任设置</strong>手动开启对应根证书的完全信任。安装描述文件与开启信任是两个步骤；具体客户端是否采用系统信任，还需用实际连接验证。只信任你自己取得、核对指纹的证书，停用后可删除。操作路径参见 <a href="https://support.apple.com/en-us/102390" target="_blank" rel="noopener noreferrer">Apple 官方说明</a>。</p>
+<p>不需要传输服务端的 <code>hy2-selfsigned.key</code>、Reality 私钥或服务器配置。分享节点时只发送相应客户端导出。</p>
+
+<h2 id="verify">7. 分三层确认节点真正可用</h2>
+<h3 id="verify-service">第一层：VPS 服务与配置</h3>
+<p>从 <code>3 → 1</code> 选择状态或配置检查；也可以在 VPS 运行：</p>
+<pre><code class="language-bash">systemctl is-active sing-box
+systemctl is-enabled sing-box
+/usr/local/bin/sing-box check -c /etc/sing-box/config.json</code></pre>
+<p>默认安装成功后，前两项应分别显示 <code>active</code> 和 <code>enabled</code>，配置检查应成功退出。它们说明本机服务和配置情况。</p>
+<h3 id="verify-port">第二层：实际监听与两层防火墙</h3>
+<p>按所安装的协议检查。以下为默认端口，只安装 Reality 时没有 UDP 监听是正常情况，反之亦然：</p>
+<pre><code class="language-bash">ss -lntp 'sport = :443'
+ss -lnup 'sport = :443'</code></pre>
+<p>然后核对 UFW/其他系统防火墙和服务商安全组都允许对应协议。UDP 显示监听，仍需客户端从外部发起连接，才能验证实际路径。</p>
+<h3 id="verify-client">第三层：客户端实际请求</h3>
+<p>启动客户端并选中节点，用浏览器访问常用网页，观察客户端日志。若使用本教程导出的 sing-box 完整客户端配置，且客户端已在本机监听默认 1080 端口，也可在<strong>客户端电脑</strong>运行：</p>
+<pre><code class="language-bash">curl --proxy socks5h://127.0.0.1:1080 https://www.cloudflare.com/cdn-cgi/trace</code></pre>
+<p>这条请求会通过指定本地代理，并由代理处理目标域名。<code>ip=</code> 可帮助观察实际出口；未设置额外中转/WARP 时，通常对应 VPS 出口。若你的客户端端口不同，改成它的实际代理端口。手机无需运行这条命令，用浏览器与客户端连接日志验证即可。</p>
+<p>配置、监听、公网连通与特定平台可用性是不同层次。完成前面的验证后，再判断视频播放、账号地区和 AI 服务是否满足需求。</p>
+
+<h2 id="optimize">8. 可选优化：BBR 与 WARP</h2>
+<h3 id="bbr">BBR + FQ：先确认内核支持</h3>
+<p>入口 <strong><code>4 → 4</code></strong>。脚本确认后尝试加载 BBR，检查内核可用算法，再设置 TCP 拥塞控制和 FQ 队列。它调整的是系统 TCP 参数，不代表 HY2 的 QUIC 拥塞控制也被切换，更不代表所有链路都会提速。</p>
+<p>可在 VPS 查看实际结果：</p>
+<pre><code class="language-bash">sysctl net.ipv4.tcp_congestion_control net.core.default_qdisc</code></pre>
+<p>成功应用本项设置后应分别为 <code>bbr</code> 和 <code>fq</code>。提示内核不支持时，先保留原系统，不必为完成基础节点搭建而继续强行修改。</p>
+<h3 id="warp">WARP：先验证出口，再选择平台</h3>
+<p>入口 <strong><code>4 → 9</code></strong>，按 v2.8.6 分组：</p>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>选项</th><th>用途</th></tr></thead><tbody>
+<tr><td>1 / 2 / 3</td><td>安装官方本机代理 / 使用已有本机代理 / 导入 WireGuard 配置</td></tr>
+<tr><td>4</td><td>选择 Netflix、Disney+、ChatGPT、Gemini、组合或自定义域名后缀</td></tr>
+<tr><td>5 / 6</td><td>切换出站模式 / 管理分流规则</td></tr>
+<tr><td>7 / 8</td><td>验证双栈出口 / 比较直连与 WARP 平台响应</td></tr>
+</tbody></table>
+</div><ol>
+<li>没有部署 WARP 时按需要选择 1，阅读并确认 Cloudflare 条款；已有可用回环代理则选择 2。默认 SOCKS5 地址为 <code>127.0.0.1:40000</code>，不需要把它开放到公网。</li>
+<li>选择 4，选需要的平台，填写实际代理端口。脚本会检查回环监听与 WARP 出口；验证通过后，再输入 <code>y</code> 应用分流。</li>
+<li>通过 8 比较平台响应，再回到客户端验证实际应用。需要改为直连时，从 5 选择“全局直连”。</li>
+</ol>
+<p>“全局 WARP”指本工具托管节点的流量，不改 VPS 操作系统的默认路由。指定域名模式依赖域名匹配与嗅探，IP 直连、ECH 和未覆盖域名可能不匹配。WARP 不保证某个国家或平台解锁，匿名网页检测也不等于账号登录、API 调用或实际播放成功。先搭通基础节点，再逐项开启这些可选功能，更容易判断问题来自哪里。</p>
+
+<h2 id="users">9. 多人使用：独立账户、配额与订阅</h2>
+<p>需要把节点交给其他人时，进入<strong>主菜单 <code>7</code></strong>。先选 1 初始化用户管理，再选 2 添加用户，填写用户名、上传与下载合计额度（GiB）和有效天数；选 9 查看该用户的节点与二维码。该功能需要先有 Reality/HY2 直连节点，独立 Argo 部署暂不支持受限账户。</p>
+<p>每个受限账户有自己的凭据、进程与端口。请把<strong>该用户的个人导出</strong>发给对方，不要分发管理员节点；管理员节点不受这些用户配额限制。云安全组还需放行个人节点实际分配的 TCP/UDP 端口，不能只留下管理员的 443。</p>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>用户菜单</th><th>用途与注意点</th></tr></thead><tbody>
+<tr><td>3 / 4</td><td>查看用量 / 修改额度；修改额度保留原有效期与累计用量</td></tr>
+<tr><td>5 / 6</td><td>启用或禁用 / 删除账户</td></tr>
+<tr><td>7 / 13</td><td>单独重置流量 / 修改从当前时间起的有效天数</td></tr>
+<tr><td>14 / 15</td><td>用户故障诊断 / 进程与资源占用</td></tr>
+<tr><td>16</td><td>签发、重置或撤销个人 HTTPS 订阅 Token</td></tr>
+</tbody></table>
+</div><p>额度没有自动月度重置周期，续期也不会自动清空累计用量。人数上限统计的是未删除账户数量，不能识别真实使用人数。配额通过周期采样执行，适合日常额度管理；每个账户额外消耗内存、CPU 和端口，容量可通过 <code>4 → 7</code> 查看。</p>
+<p>如果需要在线订阅，先通过 <code>5 → 6</code> 准备受信任证书，再进入 <code>2 → 6</code> 配置 HTTPS 服务，使用用户菜单 16 管理个人链接，并放行实际 HTTPS 服务端口。订阅 URL 中的 Token 可以取得个人节点凭据，应私密保存；撤销订阅 Token 不会同时轮换已经泄露的节点密码。</p>
+
+<h2 id="maintenance">10. 修改、更新、备份与卸载</h2>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>要做什么</th><th>菜单路径</th><th>实际影响</th></tr></thead><tbody>
+<tr><td>重新查看节点 / 二维码</td><td><code>2 → 1</code> / <code>2 → 4</code></td><td>取最新导出，便于重新导入</td></tr>
+<tr><td>修改节点名称</td><td><code>2 → 3</code></td><td>改客户端显示名称，保留 UUID/密码</td></tr>
+<tr><td>改端口 / 连接地址 / SNI</td><td><code>1 → 5</code> 的 1 / 2 / 3</td><td>更新后重新导入，核对实际端口规则</td></tr>
+<tr><td>添加 / 移除协议</td><td><code>1 → 5</code> 的 4 / 5</td><td>已有部署使用这个入口，保留仍在使用的凭据与用量</td></tr>
+<tr><td>服务状态 / 重启 / 配置检查</td><td><code>3 → 1</code></td><td>子菜单 1 / 3 / 6</td></tr>
+<tr><td>查看日志</td><td><code>3 → 2</code></td><td>显示近期 sing-box 日志</td></tr>
+<tr><td>更新管理脚本</td><td><code>5 → 4</code></td><td>检查正式发布版本，确认后更新管理菜单与脚本功能</td></tr>
+<tr><td>更新 sing-box 核心</td><td><code>5 → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本，先做配置检查</td></tr>
+<tr><td>备份 / 恢复 / 管理备份</td><td><code>5 → 2</code> / <code>5 → 3</code> / <code>5 → 7</code></td><td>备份含配置、证书、凭据等私密数据，离机副本也需保护</td></tr>
+<tr><td>卸载</td><td><code>6 → 3</code></td><td>卸载前自动备份；保留的防火墙规则、BBR 参数等需另行管理</td></tr>
+</tbody></table>
+</div><p>重要修改前先备份。更新管理脚本与更新协议核心是两件事；更新可能短暂重启此前运行的相关服务，选择合适的操作时间。脚本不做每周自动升级。</p>
+<p>如果启用了 HY2 端口跳跃，节点参数修改后原跳跃会关闭，需要按当前端口重新开启。刚入门时先使用一个明确的 UDP 端口完成验证，再从 <code>4 → 5</code> 配置跳跃范围，并同步放行云防火墙范围。</p>
+<p>恢复会协调配置与服务，并保留当前仍存在用户的最新策略/累计用量。卸载保留备份、UFW 放行规则、BBR/FQ 设置等系统项，不能将其视为整台 VPS 恢复出厂。</p>
+
+<h2 id="troubleshoot">11. 常见问题：按错误发生的位置排查</h2>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>现象</th><th>先检查什么</th><th>下一步</th></tr></thead><tbody>
+<tr><td><code>curl: command not found</code></td><td>是否使用本文完整的一行入口；APT 源是否能访问</td><td>完整入口会尝试安装 curl；安装失败先修复软件源或网络，再重试</td></tr>
+<tr><td>“发现已有配置，拒绝覆盖”</td><td>已有 sing-box 配置、二进制、服务或旧面板</td><td>本工具托管部署走 <code>1 → 5</code>；其他部署先备份并规划迁移</td></tr>
+<tr><td>TCP/UDP 443 被占用</td><td>用 <code>ss</code> 查看对应协议的监听进程</td><td>从 <code>1 → 6 → 3</code> 自定义端口安装；不要直接终止未知服务</td></tr>
+<tr><td>服务未启动</td><td><code>3 → 1</code> 的配置检查、<code>3 → 2</code> 日志</td><td>先修复具体配置、证书或端口错误，再重启</td></tr>
+<tr><td>服务 active，但客户端超时</td><td>客户端地址/端口、实际监听、系统防火墙与云安全组</td><td>Reality 核对 TCP，HY2 核对 UDP；NAT 还需核对公网映射</td></tr>
+<tr><td>Reality 握手失败</td><td>UUID、Vision flow、SNI、公钥、Short ID 是否来自同一份最新导出</td><td>重新导入；核对 VPS 到握手目标的网络与服务器时间</td></tr>
+<tr><td>HY2 证书错误</td><td>证书是否过期、SNI/IP 是否匹配、自签证书是否受信任</td><td>按本教程处理信任，或使用客户端支持的可信 CA 证书</td></tr>
+<tr><td>Reality 能用，HY2 不通</td><td>UDP 规则、客户端核心支持、手机/本地网络是否允许所需 UDP</td><td>换可用网络做对比，结合两端日志定位；TCP 可用不能证明 UDP 可用</td></tr>
+<tr><td>更新后仍看到旧菜单</td><td>是否更新了管理脚本，而不是只更新核心；是否仍运行旧副本</td><td>结束旧会话后重新输入 <code>sb</code>，核对顶部脚本版本</td></tr>
+<tr><td>WARP 显示在线，平台仍不可用</td><td>实际出口、平台域名匹配、地区/账号/播放或 API 限制</td><td>对比直连与 WARP，并在客户端实际验证，不把 trace 结果当作解锁证明</td></tr>
+</tbody></table>
+</div><p>需要进一步查看主服务日志时，在 VPS 执行：</p>
+<pre><code class="language-bash">journalctl -u sing-box -n 80 --no-pager</code></pre>
+<p>求助时提供系统版本、管理脚本版本、协议、实际端口和脱敏错误。不要公开节点链接、订阅 Token、UUID/密码、服务端配置或私钥。</p>
+
+<h2 id="advanced">12. 进阶入口、文件位置与参考资料</h2>
+<p>基础节点可用后，再按需求使用以下功能：</p>
+<ul>
+<li><strong>Argo：</strong><code>1 → 4</code> 管理附加隧道，<code>1 → 6</code> 提供独立 Argo、IPv6/NAT 等受限网络入口。Quick Tunnel 用于临时测试，地址可能变化；固定隧道需要事先在 Cloudflare 配置公开主机名与路由。这里的 Argo 节点是独立 VLESS + WebSocket，不承载 HY2/QUIC。</li>
+<li><strong>IPv6 / NAT：</strong>安装时区分本机监听地址、客户端使用的公网地址与服务商映射端口。纯 IPv6 VPS 仍需能下载软件，客户端所在网络也需能到达该 IPv6 地址；只修改导出地址不能自动创建公网映射。</li>
+<li><strong>住宅落地中转：</strong><code>4 → 10</code>，子菜单 6 有具体使用说明。需要一台可用的入口与一台可用的落地，目标站点看到的是落地出口；与 WARP 为替代出站策略，启用前先测两段链路。</li>
+<li><strong>HAProxy TCP 透传：</strong><code>4 → 11</code>，子菜单 12 有说明。用于 TCP 转发；客户端保留落地节点的认证、SNI 和 TLS 信任，连接地址/端口改为入口。它不转发 HY2 的原生 UDP。</li>
+</ul>
+<div class="sb-guide-table" role="region" tabindex="0" aria-label="教程对照表，可横向滚动"><table><thead><tr><th>位置</th><th>作用</th></tr></thead><tbody>
+<tr><td><code>/etc/sing-box/config.json</code></td><td>管理员服务端配置，包含私密参数</td></tr>
+<tr><td><code>/etc/singbox-v2/</code></td><td>状态、客户端导出、语言与可选功能配置</td></tr>
+<tr><td><code>/etc/singbox-v2/backups/</code></td><td>配置备份，包含凭据与证书等内容</td></tr>
+<tr><td><code>/etc/singbox-v2/users/</code></td><td>个人用户的配置、导出与故障信息</td></tr>
+<tr><td><code>/usr/local/bin/sing-box</code></td><td>协议核心程序</td></tr>
+<tr><td><code>sing-box.service</code></td><td>管理员直连节点的 systemd 服务</td></tr>
+</tbody></table>
+</div><p>本教程依据 <a href="https://github.com/skylink9119/sing-box-v2/tree/v2.8.6" target="_blank" rel="noopener noreferrer">SKYBYTE Manager v2.8.6 源码与说明</a>核对了安装交互、菜单路径和导出文件，并参考 sing-box、Hysteria 与 Apple 官方文档。完成部署时，请结合系统日志与客户端的实际连接结果验证。后续版本菜单可能调整，可从<a href="/sing-box/">安装入口页</a>与<a href="https://github.com/skylink9119/sing-box-v2/releases" target="_blank" rel="noopener noreferrer">项目发布页</a>查看更新。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119">SKYBYTE</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/">https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">SKYBYTE</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/sing-box/">sing-box</a><a class="post-meta__tags" href="/tags/VLESS/">VLESS</a><a class="post-meta__tags" href="/tags/Reality%E5%8D%8F%E8%AE%AE/">Reality协议</a><a class="post-meta__tags" href="/tags/Hysteria2/">Hysteria2</a><a class="post-meta__tags" href="/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/">一键脚本</a><a class="post-meta__tags" href="/tags/VPS/">VPS</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/23/bandwagonhost-los-angeles-dc9/" title="搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格</div></div><div class="info-2"><div class="info-item-1">搬瓦工洛杉矶 DC9 常用配置、价格与推广入口。</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">SKYBYTE</div><div class="author-info-description">实用技术教程 · YouTube @SKYBYTE9119</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@SKYBYTE9119" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">📺 图文教程均有视频版：<a href="https://www.youtube.com/@SKYBYTE9119" target="_blank" rel="noopener">前往 SKYBYTE YouTube 频道</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#prepare"><span class="toc-text">1. 准备 VPS、系统与端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#install"><span class="toc-text">2. 登录 VPS，安装并打开管理脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reality"><span class="toc-text">3. 主线：搭建 Reality + Vision 节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hy2"><span class="toc-text">4. 可选：安装 HY2 或双协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#firewall"><span class="toc-text">5. 放行系统防火墙与云防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#clients"><span class="toc-text">6. 导入手机与电脑客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#verify"><span class="toc-text">7. 分三层确认节点真正可用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#optimize"><span class="toc-text">8. 可选优化：BBR 与 WARP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#users"><span class="toc-text">9. 多人使用：独立账户、配额与订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maintenance"><span class="toc-text">10. 修改、更新、备份与卸载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#troubleshoot"><span class="toc-text">11. 常见问题：按错误发生的位置排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#advanced"><span class="toc-text">12. 进阶入口、文件位置与参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/skybyte-sing-box-install-guide/" title="sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入">sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</a><time datetime="2026-10-23T13:04:00.000Z" title="发表于 2026-10-23 21:04:00">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/bandwagonhost-los-angeles-dc9/" title="搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格">搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格</a><time datetime="2026-10-23T02:18:00.000Z" title="发表于 2026-10-23 10:18:00">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/cmy-network-plans-2026/" title="红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南">红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南</a><time datetime="2026-09-10T11:28:00.000Z" title="发表于 2026-09-10 19:28:00">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/" title="2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</a><time datetime="2026-09-03T13:51:00.000Z" title="发表于 2026-09-03 21:51:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/" title="3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程">3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</a><time datetime="2026-08-14T11:30:00.000Z" title="发表于 2026-08-14 19:30:00">2026-08-14</time></div></div></div></div><div class="card-widget side-media-card"><a class="side-media-link" href="/go/vps-offer/" target="_blank" rel="nofollow noopener noreferrer" aria-label="访问 RackNerd VPS 优惠页面（推广链接）"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/vps-card.gif" alt="RackNerd VPS 推广横幅" width="300" height="250" decoding="async"></a><div class="side-media-note">推广链接 · Affiliate</div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">© 2025 - 2026 By SKYBYTE</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/liquid-glass.js?v=20260905-1" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
