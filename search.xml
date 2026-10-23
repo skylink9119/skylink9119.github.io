@@ -1,5 +1,69 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <search>
+<entry><title>Xray 一键脚本功能对照表</title><url>/2026/10/24/skybyte-xray-menu-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.16</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+
+<h2 id="nodes">1. 安装节点、导入客户端</h2>
+<p>用 root 登录 Ubuntu/Debian VPS，到<a href="/xray/">Xray 安装入口页</a>复制命令执行。安装后输入 <code>xr</code> 打开管理菜单。</p>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>搭建 Reality + Vision</td><td><code>a → 1</code></td><td>安装 TCP / Reality 节点，默认 TCP 443，启用 Vision flow。</td></tr>
+<tr><td>搭建 XHTTP + Reality</td><td><code>a → 2</code></td><td>默认 TCP 443，无需自己的域名证书；按提示设置路径和模式。</td></tr>
+<tr><td>搭建 XHTTP + TLS / CDN</td><td><code>a → 3</code></td><td>默认 TCP 2053；需自己的域名、可信 fullchain 和匹配私钥。</td></tr>
+<tr><td>查看链接与客户端配置</td><td><code>b</code></td><td>查看节点链接、订阅与 Xray 客户端配置文件位置。</td></tr>
+<tr><td>扫码导入节点</td><td><code>c</code></td><td>显示本地生成的节点二维码；客户端需支持相应协议。</td></tr>
+<tr><td>切换语言</td><td><code>j</code></td><td>选择 1 为中文、2 为 English。</td></tr>
+<tr><td>查看使用说明</td><td><code>i</code></td><td>显示脚本使用帮助。</td></tr>
+</tbody></table></div>
+<p>连接地址填写本 VPS 的公网 IP 或域名。每种节点需使用不同的空闲 TCP 端口；安装时可自行修改，系统防火墙与云安全组都要放行实际端口。</p>
+
+<h2 id="services">2. 服务控制与节点编辑</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>查看运行状态</td><td><code>d → 1</code></td><td>查看 Xray 服务是否运行。</td></tr>
+<tr><td>启动节点服务</td><td><code>d → 2</code></td><td>启动 Xray 服务。</td></tr>
+<tr><td>停止节点服务</td><td><code>d → 3</code></td><td>停止 Xray；当前节点连接会中断。</td></tr>
+<tr><td>重启节点服务</td><td><code>d → 4</code></td><td>重启 Xray 服务。</td></tr>
+<tr><td>检查配置</td><td><code>d → 5</code></td><td>检查服务端配置；不代表公网或 CDN 已连通。</td></tr>
+<tr><td>查看日志</td><td><code>d → 6</code></td><td>显示近期服务日志，排查启动或连接错误。</td></tr>
+<tr><td>修改节点名称</td><td><code>e → 1</code></td><td>选择协议后重命名节点。</td></tr>
+<tr><td>删除某种协议</td><td><code>e → 2</code></td><td>选择协议后删除；重新安装会生成新凭据。</td></tr>
+<tr><td>更新 TLS 证书</td><td><code>e → 3</code></td><td>为 XHTTP-TLS 更换可信 fullchain 与匹配私钥。</td></tr>
+<tr><td>修改地址 / 端口 / 路径</td><td><code>e → 4</code></td><td>回车保留原值；保留 UUID / 密钥。改完从 b 获取新链接。</td></tr>
+</tbody></table></div>
+
+<h2 id="firewall">3. 防火墙与 BBR</h2>
+<p>从主菜单输入 <code>l</code> 进入防火墙 / BBR。操作后可直接选择下一项。</p>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>查看防火墙状态</td><td><code>l → 1</code></td><td>查看 UFW / firewalld 状态及规则。</td></tr>
+<tr><td>安装并开启 UFW</td><td><code>l → 2</code></td><td>核实 SSH 端口，放行所需端口，再安装并启用 UFW。</td></tr>
+<tr><td>放行全部节点</td><td><code>l → 3</code></td><td>在已开启的防火墙中放行实际节点 TCP 端口。</td></tr>
+<tr><td>放行指定端口</td><td><code>l → 4</code></td><td>输入需要放行的 TCP 端口。</td></tr>
+<tr><td>仅停用 UFW</td><td><code>l → 5 → 1</code></td><td>停用防火墙，保留软件包和规则配置。</td></tr>
+<tr><td>卸载 UFW，保留配置</td><td><code>l → 5 → 2</code></td><td>停用后卸载软件包，保留规则配置。</td></tr>
+<tr><td>卸载并清除 UFW 配置</td><td><code>l → 5 → 3</code></td><td>卸载软件包并清除规则配置，清除后不可恢复。</td></tr>
+<tr><td>查看 BBR 是否开启</td><td><code>l → 6</code></td><td>显示 BBR 状态、当前拥塞算法和队列。</td></tr>
+<tr><td>启用 BBR + fq</td><td><code>l → 7</code></td><td>保存原参数并尝试启用；实际效果取决于内核与线路。</td></tr>
+<tr><td>恢复 BBR 原参数</td><td><code>l → 8</code></td><td>恢复本脚本启用 BBR 前保存的系统参数。</td></tr>
+</tbody></table></div>
+<p><strong>连续操作：</strong>进入 <code>l</code> 后选 <code>2</code> 安装并启用 UFW，完成后直接选 <code>1</code> 查看状态，无需回主菜单。</p>
+
+<h2 id="warp">4. WARP 分流与平台检测</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>安装官方 WARP</td><td><code>n → 1</code></td><td>安装本机代理，按提示选择分流平台。</td></tr>
+<tr><td>使用已有代理 / 选择平台</td><td><code>n → 2</code></td><td>填写 SOCKS5 端口，再选 Netflix、Disney+、ChatGPT、Gemini 或自定义域名。</td></tr>
+<tr><td>关闭 WARP 分流</td><td><code>n → 3</code></td><td>本项目恢复直连，保留 WARP 软件。</td></tr>
+<tr><td>验证 WARP 出口</td><td><code>n → 4</code></td><td>检查本机代理实际出口与 WARP 连接状态。</td></tr>
+<tr><td>对比平台响应</td><td><code>n → 5</code></td><td>对比直连与 WARP；检测结果不保证实际播放或账号可用。</td></tr>
+</tbody></table></div>
+
+<h2 id="maintenance">5. 更新、备份与卸载</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>更新管理脚本</td><td><code>m</code></td><td>检查并更新管理脚本；成功后重新输入 xr。</td></tr>
+<tr><td>更新 Xray 核心</td><td><code>f</code></td><td>校验并更新官方核心，保留已有节点。</td></tr>
+<tr><td>备份配置</td><td><code>g</code></td><td>生成配置备份；备份包含私钥与凭据。</td></tr>
+<tr><td>恢复配置</td><td><code>h</code></td><td>输入可信备份路径，校验后恢复。</td></tr>
+<tr><td>卸载 Xray 管理器</td><td><code>k</code></td><td>备份后移除托管节点与管理器，保留备份及外部文件。</td></tr>
+</tbody></table></div>
+]]></content><categories><category>技术教程</category><category>网络链路</category></categories><tags><tag>Xray</tag><tag>VLESS</tag><tag>Reality协议</tag><tag>Vision</tag><tag>一键脚本</tag><tag>VPS</tag></tags></entry>
+
 <entry><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><url>/2026/10/23/skybyte-sing-box-install-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.7</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <span class="sb-guide-anchor" id="prepare"></span>
