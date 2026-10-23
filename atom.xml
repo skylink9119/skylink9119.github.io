@@ -12,7 +12,30 @@
   <rights>All rights reserved 2026, SKYBYTE</rights>
   <subtitle>网络、硬件与效率工具，让技术更好用</subtitle>
   <title>SKYBYTE</title>
-  <updated>2026-09-10T11:28:00.000Z</updated>
+  <updated>2026-10-23T02:18:00.000Z</updated>
+  <entry><author><name>SKYBYTE</name></author><category term="VPS 选购" scheme="https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/"/><content type="html"><![CDATA[
+<div class="bwh-hero">
+<div class="bwh-kicker">BANDWAGONHOST · LOS ANGELES · USCA_9</div>
+<h2 id="dc9-overview">搬瓦工洛杉矶 DC9</h2>
+<p>CN2 GIA · CMIN2 · China Unicom Premium</p>
+<p>常用配置与整周期价格，一页看清。</p>
+<div class="bwh-actions"><a href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener noreferrer">前往搬瓦工 · 推广入口 ↗</a><a class="bwh-secondary" href="#plans">查看套餐价格 ↓</a></div>
+</div>
+<p class="bwh-note"><strong>推广说明：</strong>通过本文推广链接购买，本站可能获得佣金。信息核对于 <time datetime="2026-10-23">2026 年 10 月 23 日</time>；价格、库存和权益以官方下单页为准。</p>
+<p>搬瓦工洛杉矶 DC9 的机房编号为 <strong>USCA_9</strong>。官网将其归入 E-Commerce VPS：机房为 Coresite LA2，标注 AMD + NVMe，以及电信 CN2 GIA、移动 CMIN2、联通 Premium 线路。<a href="https://bandwagonhost.com/order/ecommerce/Los%20Angeles/USCA_9" target="_blank" rel="noopener noreferrer">查看官方机房与套餐说明</a>。</p>
+<h2 id="plans">常用套餐与价格</h2>
+<p><strong>单位为美元；季付是 3 个月的总价，年付是 12 个月的总价。</strong> 下表没有把年费换算成月费。流量为每月额度，端口速率为官方规格。</p>
+<div class="bwh-table" role="region" aria-label="DC9 常用套餐对比，可横向滚动" tabindex="0"><table><caption>DC9 常用套餐 · 2026-10-23 核对</caption><thead><tr><th scope="col">套餐</th><th scope="col">CPU / 内存</th><th scope="col">存储</th><th scope="col">月流量</th><th scope="col">端口</th><th scope="col">季付总价</th><th scope="col">年付总价</th></tr></thead><tbody><tr><th scope="row">20G</th><td>2 核 / 1 GB</td><td>20 GB</td><td>1,000 GB</td><td>2.5 Gbps</td><td>$49.99</td><td>$169.99</td></tr><tr><th scope="row">40G</th><td>3 核 / 2 GB</td><td>40 GB</td><td>2,000 GB</td><td>2.5 Gbps</td><td>$89.99</td><td>$299.99</td></tr><tr><th scope="row">80G</th><td>4 核 / 4 GB</td><td>80 GB</td><td>3,000 GB</td><td>2.5 Gbps</td><td>$149.99</td><td>$549.99</td></tr><tr><th scope="row">160G</th><td>6 核 / 8 GB</td><td>160 GB</td><td>5,000 GB</td><td>5 Gbps</td><td>$239.99</td><td>$879.99</td></tr><tr><th scope="row">320G</th><td>8 核 / 16 GB</td><td>320 GB</td><td>8,000 GB</td><td>5 Gbps</td><td>$459.99</td><td>$1599.99</td></tr></tbody></table></div>
+<p>20G、40G 档当前未提供月付选项；80G 及以上还有其他计费周期。更大容量套餐及实时库存请查看<a href="https://bandwagonhost.com/order/ecommerce/Los%20Angeles/USCA_9" target="_blank" rel="noopener noreferrer">官方完整套餐页</a>。价格取自<a href="https://bandwagonhost.com/order/catalog.json" target="_blank" rel="noopener noreferrer">官方套餐目录</a>。</p>
+<h2 id="choose">怎么选择配置</h2>
+<ul><li><strong>先算资源需求：</strong>把系统、应用、日志和备份所需空间算进去，再比较内存与流量；预算低不代表应该忽略余量。</li><li><strong>先确认线路体验：</strong>结合自己所在地区、运营商和晚高峰需求评估，再决定付款周期。长周期前先确认服务适合自己。</li><li><strong>区分规格和实测：</strong>2.5 / 5 Gbps 是端口规格；实际速度、延迟及 Netflix、ChatGPT 等平台可用性，应以自己的测试为准。</li></ul>
+<h2 id="buy">通过 SKYBYTE 推广入口购买</h2>
+<p>先打开推广入口，再在官网选择 <strong>Los Angeles → USCA_9 → E-Commerce VPS</strong>，核对配置、计费周期和订单金额。推广入口可能先进入首页，请在下单前确认机房编号。</p>
+<p><a class="btn-beautify button--animated blue larger" href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener noreferrer">前往搬瓦工官网 · aff=83101</a></p>
+<p>VPS 需要自行管理。购买后可参考本站的<a href="/xray/">Xray 一键脚本</a>、<a href="/sing-box/">sing-box 一键脚本</a>，或继续阅读<a href="/2026/07/28/vps-bandwagonhost-dmit-racknerd-akilecloud-2026/">VPS 选购对比</a>。</p>
+<h2 id="sources">信息来源</h2>
+<p><a href="https://bandwagonhost.com/order/ecommerce/Los%20Angeles/USCA_9" target="_blank" rel="noopener noreferrer">BandwagonHost 洛杉矶 USCA_9 套餐页</a> · <a href="https://bandwagonhost.com/order/catalog.json" target="_blank" rel="noopener noreferrer">官方价格与配置目录</a>。核对日期：2026-10-23。本文为信息整理与选购建议，未作线路实测。</p>
+]]></content><id>https://skylink9119.github.io/2026/10/23/bandwagonhost-los-angeles-dc9/</id><link href="https://skylink9119.github.io/2026/10/23/bandwagonhost-los-angeles-dc9/"/><published>2026-10-23T02:18:00.000Z</published><title>搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格</title><updated>2026-10-23T02:18:00.000Z</updated><summary>整理搬瓦工洛杉矶 DC9（USCA_9）常用套餐的配置、季度与年度价格，附 SKYBYTE 推广入口和官方套餐页。价格核对于 2026 年 10 月 23 日。</summary></entry>
   <entry>
     <author>
       <name>SKYBYTE</name>

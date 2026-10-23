@@ -157,7 +157,7 @@
 
   <url>
     <loc>https://skylink9119.github.io/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -179,7 +179,7 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/%E5%A5%97%E9%A4%90%E6%8E%A8%E8%8D%90/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -235,7 +235,7 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/VPS/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -333,7 +333,7 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/%E6%90%AC%E7%93%A6%E5%B7%A5/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -361,7 +361,7 @@
   
   <url>
     <loc>https://skylink9119.github.io/tags/CN2-GIA/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -454,7 +454,7 @@
   
   <url>
     <loc>https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -466,4 +466,10 @@
     <priority>0.2</priority>
   </url>
   
+<url><loc>https://skylink9119.github.io/2026/10/23/bandwagonhost-los-angeles-dc9/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://skylink9119.github.io/archives/2026/10/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://skylink9119.github.io/xray/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://skylink9119.github.io/sing-box/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://skylink9119.github.io/archives/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://skylink9119.github.io/archives/2026/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
