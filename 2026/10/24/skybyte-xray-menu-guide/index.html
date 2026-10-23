@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本功能对照表 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 SKYBYTE Xray Manager v0.1.16 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xray 一键脚本功能对照表">
+<meta property="og:url" content="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/">
+<meta property="og:site_name" content="SKYBYTE">
+<meta property="og:description" content="按 SKYBYTE Xray Manager v0.1.16 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
+<meta property="article:published_time" content="2026-10-23T23:11:34.000Z">
+<meta property="article:modified_time" content="2026-10-23T23:11:34.000Z">
+<meta property="article:author" content="SKYBYTE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Xray 一键脚本功能对照表",
+  "url": "https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/"
+  },
+  "image": "https://skylink9119.github.io/img/icon.jpg",
+  "description": "按 SKYBYTE Xray Manager v0.1.16 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-10-23T23:11:34.000Z",
+  "dateModified": "2026-10-23T23:11:34.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SKYBYTE",
+      "url": "https://www.youtube.com/@SKYBYTE9119"
+    }
+  ],
+  "publisher": {
+    "@type": "Person",
+    "name": "SKYBYTE",
+    "url": "https://skylink9119.github.io/"
+  }
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const start = 6
+              const end = 18
+              const isNight =
+                start < end
+                    ? hour < start || hour >= end
+                    : hour >= start || hour < end
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":2,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SKYBYTE","link":"链接: ","source":"来源: SKYBYTE","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Xray 一键脚本功能对照表',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css?v=20260905-type-1"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"SKYBYTE","url":"https://skylink9119.github.io/about/","image":"https://skylink9119.github.io/img/icon.jpg","sameAs":["https://www.youtube.com/@SKYBYTE9119"]}</script><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SKYBYTE" type="application/atom+xml">
+<meta property="article:tag" content="Xray"><meta property="article:tag" content="VLESS"><meta property="article:tag" content="Reality协议"><meta property="article:tag" content="Vision"><meta property="article:tag" content="一键脚本"><meta property="article:tag" content="VPS"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" href="/sing-box/"><i class="fa-fw fas fa-terminal"></i><span> sing-box 一键脚本</span></a></div><div class="menus_item"><a class="site-page" href="/xray/"><i class="fa-fw fas fa-terminal"></i><span> Xray 一键脚本</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="https://cmy.homes/register?aff=169XVG" target="_blank" rel="sponsored noopener" title="推广链接"><i class="fa-fw fas fa-network-wired"></i><span> CMY Network</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SKYBYTE</span></a><a class="nav-page-title" href="/"><span class="site-name">Xray 一键脚本功能对照表</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-book-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/downloads/"><i class="fa-fw fas fa-download"></i><span> 配置下载</span></a></div><div class="menus_item"><a class="site-page" href="/sing-box/"><i class="fa-fw fas fa-terminal"></i><span> sing-box 一键脚本</span></a></div><div class="menus_item"><a class="site-page" href="/xray/"><i class="fa-fw fas fa-terminal"></i><span> Xray 一键脚本</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fa-fw fab fa-youtube"></i><span> YouTube</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="https://cmy.homes/register?aff=169XVG" target="_blank" rel="sponsored noopener" title="推广链接"><i class="fa-fw fas fa-network-wired"></i><span> CMY Network</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://fast.com/zh/cn/"><i class="fa-fw fas fa-tachometer-alt"></i><span> 网速测试</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://browserleaks.com/dns"><i class="fa-fw fas fa-globe"></i><span> DNS 检测</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Xray 一键脚本功能对照表</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-23T23:11:34.000Z" title="发表于 2026-10-24 07:11:34">2026-10-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-23T23:11:34.000Z" title="更新于 2026-10-24 07:11:34">2026-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a> / <a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/">网络链路</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article id="article-container" class="container post-content"><style id="sb-tutorial-style">
+#article-container .sb-guide-intro{padding:18px 20px;margin-bottom:20px;border-left:4px solid #0f766e;background:var(--blockquote-bg);line-height:1.9}
+#article-container .sb-guide-table{overflow-x:auto;margin:14px 0 24px;border:1px solid var(--light-grey);border-radius:8px}
+#article-container .sb-guide-table table{width:100%;margin:0;table-layout:fixed}
+#article-container .sb-guide-table th{background:#16465b;color:#fff}
+#article-container .sb-guide-table th,#article-container .sb-guide-table td{padding:11px 13px;line-height:1.8;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+#article-container .sb-guide-table th:nth-child(1){width:24%}
+#article-container .sb-guide-table th:nth-child(2){width:26%}
+#article-container .sb-guide-table th:nth-child(3){width:50%}
+#article-container .sb-guide-table code{white-space:nowrap}
+#article-container h2,#article-container .sb-guide-anchor{scroll-margin-top:80px}
+#article-container .sb-guide-anchor{display:block;height:0}
+@media(max-width:600px){#article-container .sb-guide-table th,#article-container .sb-guide-table td{padding:9px 7px;font-size:13px}#article-container .sb-guide-table th:nth-child(1){width:26%}#article-container .sb-guide-table th:nth-child(2){width:29%}#article-container .sb-guide-table th:nth-child(3){width:45%}#article-container .sb-guide-table code{font-size:12px}}
+</style><div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.16</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+
+<h2 id="nodes">1. 安装节点、导入客户端</h2>
+<p>用 root 登录 Ubuntu/Debian VPS，到<a href="/xray/">Xray 安装入口页</a>复制命令执行。安装后输入 <code>xr</code> 打开管理菜单。</p>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>搭建 Reality + Vision</td><td><code>a → 1</code></td><td>安装 TCP / Reality 节点，默认 TCP 443，启用 Vision flow。</td></tr>
+<tr><td>搭建 XHTTP + Reality</td><td><code>a → 2</code></td><td>默认 TCP 443，无需自己的域名证书；按提示设置路径和模式。</td></tr>
+<tr><td>搭建 XHTTP + TLS / CDN</td><td><code>a → 3</code></td><td>默认 TCP 2053；需自己的域名、可信 fullchain 和匹配私钥。</td></tr>
+<tr><td>查看链接与客户端配置</td><td><code>b</code></td><td>查看节点链接、订阅与 Xray 客户端配置文件位置。</td></tr>
+<tr><td>扫码导入节点</td><td><code>c</code></td><td>显示本地生成的节点二维码；客户端需支持相应协议。</td></tr>
+<tr><td>切换语言</td><td><code>j</code></td><td>选择 1 为中文、2 为 English。</td></tr>
+<tr><td>查看使用说明</td><td><code>i</code></td><td>显示脚本使用帮助。</td></tr>
+</tbody></table></div>
+<p>连接地址填写本 VPS 的公网 IP 或域名。每种节点需使用不同的空闲 TCP 端口；安装时可自行修改，系统防火墙与云安全组都要放行实际端口。</p>
+
+<h2 id="services">2. 服务控制与节点编辑</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>查看运行状态</td><td><code>d → 1</code></td><td>查看 Xray 服务是否运行。</td></tr>
+<tr><td>启动节点服务</td><td><code>d → 2</code></td><td>启动 Xray 服务。</td></tr>
+<tr><td>停止节点服务</td><td><code>d → 3</code></td><td>停止 Xray；当前节点连接会中断。</td></tr>
+<tr><td>重启节点服务</td><td><code>d → 4</code></td><td>重启 Xray 服务。</td></tr>
+<tr><td>检查配置</td><td><code>d → 5</code></td><td>检查服务端配置；不代表公网或 CDN 已连通。</td></tr>
+<tr><td>查看日志</td><td><code>d → 6</code></td><td>显示近期服务日志，排查启动或连接错误。</td></tr>
+<tr><td>修改节点名称</td><td><code>e → 1</code></td><td>选择协议后重命名节点。</td></tr>
+<tr><td>删除某种协议</td><td><code>e → 2</code></td><td>选择协议后删除；重新安装会生成新凭据。</td></tr>
+<tr><td>更新 TLS 证书</td><td><code>e → 3</code></td><td>为 XHTTP-TLS 更换可信 fullchain 与匹配私钥。</td></tr>
+<tr><td>修改地址 / 端口 / 路径</td><td><code>e → 4</code></td><td>回车保留原值；保留 UUID / 密钥。改完从 b 获取新链接。</td></tr>
+</tbody></table></div>
+
+<h2 id="firewall">3. 防火墙与 BBR</h2>
+<p>从主菜单输入 <code>l</code> 进入防火墙 / BBR。操作后可直接选择下一项。</p>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>查看防火墙状态</td><td><code>l → 1</code></td><td>查看 UFW / firewalld 状态及规则。</td></tr>
+<tr><td>安装并开启 UFW</td><td><code>l → 2</code></td><td>核实 SSH 端口，放行所需端口，再安装并启用 UFW。</td></tr>
+<tr><td>放行全部节点</td><td><code>l → 3</code></td><td>在已开启的防火墙中放行实际节点 TCP 端口。</td></tr>
+<tr><td>放行指定端口</td><td><code>l → 4</code></td><td>输入需要放行的 TCP 端口。</td></tr>
+<tr><td>仅停用 UFW</td><td><code>l → 5 → 1</code></td><td>停用防火墙，保留软件包和规则配置。</td></tr>
+<tr><td>卸载 UFW，保留配置</td><td><code>l → 5 → 2</code></td><td>停用后卸载软件包，保留规则配置。</td></tr>
+<tr><td>卸载并清除 UFW 配置</td><td><code>l → 5 → 3</code></td><td>卸载软件包并清除规则配置，清除后不可恢复。</td></tr>
+<tr><td>查看 BBR 是否开启</td><td><code>l → 6</code></td><td>显示 BBR 状态、当前拥塞算法和队列。</td></tr>
+<tr><td>启用 BBR + fq</td><td><code>l → 7</code></td><td>保存原参数并尝试启用；实际效果取决于内核与线路。</td></tr>
+<tr><td>恢复 BBR 原参数</td><td><code>l → 8</code></td><td>恢复本脚本启用 BBR 前保存的系统参数。</td></tr>
+</tbody></table></div>
+<p><strong>连续操作：</strong>进入 <code>l</code> 后选 <code>2</code> 安装并启用 UFW，完成后直接选 <code>1</code> 查看状态，无需回主菜单。</p>
+
+<h2 id="warp">4. WARP 分流与平台检测</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>安装官方 WARP</td><td><code>n → 1</code></td><td>安装本机代理，按提示选择分流平台。</td></tr>
+<tr><td>使用已有代理 / 选择平台</td><td><code>n → 2</code></td><td>填写 SOCKS5 端口，再选 Netflix、Disney+、ChatGPT、Gemini 或自定义域名。</td></tr>
+<tr><td>关闭 WARP 分流</td><td><code>n → 3</code></td><td>本项目恢复直连，保留 WARP 软件。</td></tr>
+<tr><td>验证 WARP 出口</td><td><code>n → 4</code></td><td>检查本机代理实际出口与 WARP 连接状态。</td></tr>
+<tr><td>对比平台响应</td><td><code>n → 5</code></td><td>对比直连与 WARP；检测结果不保证实际播放或账号可用。</td></tr>
+</tbody></table></div>
+
+<h2 id="maintenance">5. 更新、备份与卸载</h2>
+<div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>选择</th><th>得到什么</th></tr></thead><tbody>
+<tr><td>更新管理脚本</td><td><code>m</code></td><td>检查并更新管理脚本；成功后重新输入 xr。</td></tr>
+<tr><td>更新 Xray 核心</td><td><code>f</code></td><td>校验并更新官方核心，保留已有节点。</td></tr>
+<tr><td>备份配置</td><td><code>g</code></td><td>生成配置备份；备份包含私钥与凭据。</td></tr>
+<tr><td>恢复配置</td><td><code>h</code></td><td>输入可信备份路径，校验后恢复。</td></tr>
+<tr><td>卸载 Xray 管理器</td><td><code>k</code></td><td>备份后移除托管节点与管理器，保留备份及外部文件。</td></tr>
+</tbody></table></div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119">SKYBYTE</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/">https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skylink9119.github.io" target="_blank">SKYBYTE</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Xray/">Xray</a><a class="post-meta__tags" href="/tags/VLESS/">VLESS</a><a class="post-meta__tags" href="/tags/Reality%E5%8D%8F%E8%AE%AE/">Reality协议</a><a class="post-meta__tags" href="/tags/Vision/">Vision</a><a class="post-meta__tags" href="/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/">一键脚本</a><a class="post-meta__tags" href="/tags/VPS/">VPS</a></div><div class="post-share"><div class="social-share" data-image="/img/icon.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/23/skybyte-sing-box-install-guide/" title="sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</div></div><div class="info-2"><div class="info-item-1">sing-box 的菜单选择与功能对照表。</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">SKYBYTE</div><div class="author-info-description">实用技术教程 · YouTube @SKYBYTE9119</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@SKYBYTE9119" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">📺 图文教程均有视频版：<a href="https://www.youtube.com/@SKYBYTE9119" target="_blank" rel="noopener">前往 SKYBYTE YouTube 频道</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nodes"><span class="toc-text">1. 安装节点、导入客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#services"><span class="toc-text">2. 服务控制与节点编辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#firewall"><span class="toc-text">3. 防火墙与 BBR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#warp"><span class="toc-text">4. WARP 分流与平台检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maintenance"><span class="toc-text">5. 更新、备份与卸载</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/24/skybyte-xray-menu-guide/" title="Xray 一键脚本功能对照表">Xray 一键脚本功能对照表</a><time datetime="2026-10-23T23:11:34.000Z" title="发表于 2026-10-24 07:11:34">2026-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/skybyte-sing-box-install-guide/" title="sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入">sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</a><time datetime="2026-10-23T13:04:00.000Z" title="发表于 2026-10-23 21:04:00">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/bandwagonhost-los-angeles-dc9/" title="搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格">搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格</a><time datetime="2026-10-23T02:18:00.000Z" title="发表于 2026-10-23 10:18:00">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/cmy-network-plans-2026/" title="红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南">红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南</a><time datetime="2026-09-10T11:28:00.000Z" title="发表于 2026-09-10 19:28:00">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/" title="2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</a><time datetime="2026-09-03T13:51:00.000Z" title="发表于 2026-09-03 21:51:00">2026-09-03</time></div></div></div></div><div class="card-widget side-media-card"><a class="side-media-link" href="/go/vps-offer/" target="_blank" rel="nofollow noopener noreferrer" aria-label="访问 RackNerd VPS 优惠页面（推广链接）"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/vps-card.gif" alt="RackNerd VPS 推广横幅" width="300" height="250" decoding="async"></a><div class="side-media-note">推广链接 · Affiliate</div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">© 2025 - 2026 By SKYBYTE</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/liquid-glass.js?v=20260905-1" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
