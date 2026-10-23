@@ -227,6 +227,61 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>进入脚本即显示服务器配置、Xray 运行状态和相关组件；菜单 <code>14</code> 已按代理设置、分流设置、连接检测分组，每项独立一行，提供 Netflix、Disney+、ChatGPT、Gemini 的 WARP 分流与对比检测。</p>
 <p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.15" target="_blank" rel="noopener">查看 v0.1.15 版本</a></p>
 <p>安装后输入 <code>xr</code> 打开管理菜单；已安装用户可通过菜单 <strong>13 更新管理脚本</strong>。请放行节点实际使用的 TCP 端口。</p>
+<section id="xray-vps-promotion" aria-labelledby="vps-promotion-title">
+<style id="xray-vps-style">
+#xray-vps-promotion{margin-top:32px;padding-top:24px;border-top:1px solid var(--light-grey)}
+#xray-vps-promotion h2{margin:0 0 8px;font-size:1.4em}
+#xray-vps-promotion .vps-intro{margin:0 0 20px}
+#xray-vps-promotion .vps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#xray-vps-promotion .vps-card{display:flex;flex-direction:column;min-width:0;padding:20px;border:1px solid var(--light-grey);border-radius:12px;background:var(--card-bg)}
+#xray-vps-promotion .vps-focus{font-size:13px;letter-spacing:.05em;color:var(--theme-color);font-weight:700}
+#xray-vps-promotion h3{margin:8px 0;font-size:1.25em}
+#xray-vps-promotion .vps-plan{font-size:14px;font-weight:700;line-height:1.8;margin:0 0 8px}
+#xray-vps-promotion .vps-description{font-size:14px;line-height:1.9;margin:0 0 18px}
+#xray-vps-promotion .vps-cta{display:block;margin-top:auto;padding:10px 12px;border-radius:8px;background:#1677ff;color:#fff;text-align:center;text-decoration:none;white-space:nowrap;font-size:14px;font-weight:700}
+#xray-vps-promotion .vps-cta:hover{background:#095ac7;color:#fff}
+#xray-vps-promotion .vps-detail{display:block;text-align:center;font-size:13px;line-height:1.8;min-height:3.6em;margin-top:10px}
+#xray-vps-promotion .vps-disclosure{font-size:13px;line-height:1.9;color:var(--font-color);margin:16px 0 0}
+@media(max-width:600px){#xray-vps-promotion .vps-grid{grid-template-columns:1fr}}
+</style>
+<h2 id="vps-promotion-title">VPS 选购参考</h2>
+<p class="vps-intro">准备搭建前，可以按预算、线路、部署地区和 IP 类型选择方案。</p>
+<div class="vps-grid">
+<div class="vps-card">
+<span class="vps-focus">关注国内访问线路</span>
+<h3>搬瓦工</h3>
+<p class="vps-plan">参考方案：洛杉矶 DC9 · CN2 GIA</p>
+<p class="vps-description">以 DC9 为例比较配置与价格，按 CPU、内存和月流量选择适合自己的档位。</p>
+<a class="vps-cta" href="https://bandwagonhost.com/aff.php?aff=83101" target="_blank" rel="sponsored noopener noreferrer">查看搬瓦工方案 ↗</a>
+<a class="vps-detail" href="/2026/10/23/bandwagonhost-los-angeles-dc9/">查看本站 DC9 配置与价格</a>
+</div>
+<div class="vps-card">
+<span class="vps-focus">按地区与网络选型</span>
+<h3>DMIT</h3>
+<p class="vps-plan">参考方案：Premium 云服务器</p>
+<p class="vps-description">洛杉矶、东京、香港可选。关注国内访问，可从 Premium 网络系列开始比较。</p>
+<a class="vps-cta" href="https://www.dmit.io/aff.php?aff=18635" target="_blank" rel="sponsored noopener noreferrer">查看 DMIT 方案 ↗</a>
+<a class="vps-detail" href="https://www.dmit.io/pages/pricing" target="_blank" rel="noopener noreferrer">官网配置与网络系列说明</a>
+</div>
+<div class="vps-card">
+<span class="vps-focus">TikTok 运营 / 外贸</span>
+<h3>丽萨主机</h3>
+<p class="vps-plan">参考方案：双 ISP 住宅 IP VPS</p>
+<p class="vps-description">面向 TikTok 运营、外贸等有住宅 IP 需求的用户；没有住宅 IP 需求，可不考虑此类方案。</p>
+<a class="vps-cta" href="https://lisahost.com/aff.php?aff=11072" target="_blank" rel="sponsored noopener noreferrer">查看丽萨主机方案 ↗</a>
+<a class="vps-detail" href="https://lisahost.com/cart.php" target="_blank" rel="noopener noreferrer">官网地区与产品说明</a>
+</div>
+<div class="vps-card">
+<span class="vps-focus">预算优先 / 学习建站</span>
+<h3>RackNerd</h3>
+<p class="vps-plan">参考方案：年付特价 KVM VPS</p>
+<p class="vps-description">适合学习 Linux、搭建个人博客或小型网站，以及运行轻量应用、开发测试的用户。按实际资源需求选择配置。</p>
+<a class="vps-cta" href="https://my.racknerd.com/aff.php?aff=18647" target="_blank" rel="sponsored noopener noreferrer">查看 RackNerd 方案 ↗</a>
+<a class="vps-detail" href="https://www.racknerd.com/specials/" target="_blank" rel="noopener noreferrer">官网特价方案与配置说明</a>
+</div>
+</div>
+<p class="vps-disclosure">推广说明：通过上方推广链接购买，本站可能获得佣金。方案信息核对于 2026-10-23，价格、库存和权益以各家官网为准。</p>
+</section>
 </div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">SKYBYTE</div><div class="author-info-description">实用技术教程 · YouTube @SKYBYTE9119</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.youtube.com/@SKYBYTE9119"><i class="fab fa-youtube"></i><span>YouTube</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://www.youtube.com/@SKYBYTE9119" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a><a class="social-icon" href="mailto:sky13712559955@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">📺 图文教程均有视频版：<a href="https://www.youtube.com/@SKYBYTE9119" target="_blank" rel="noopener">前往 SKYBYTE YouTube 频道</a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/bandwagonhost-los-angeles-dc9/" title="搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格">搬瓦工洛杉矶 DC9：CN2 GIA 套餐配置与价格</a><time datetime="2026-10-23T02:18:00.000Z" title="发表于 2026-10-23 10:18:00">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/cmy-network-plans-2026/" title="红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南">红莓网络 CMY Network 套餐推荐：2026 年价格对比与选购指南</a><time datetime="2026-09-10T11:28:00.000Z" title="发表于 2026-09-10 19:28:00">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/r76s-istoreos-passwall2-vless-reality-vision-guide/" title="2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流">2026年R76S安装配置PassWall2全流程：VLESS REALITY Vision国内外分流</a><time datetime="2026-09-03T13:51:00.000Z" title="发表于 2026-09-03 21:51:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/14/3x-ui-site-connection-not-secure-https-ssl-fix/" title="3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程">3x-ui 提示“此站点的连接不安全”怎么办？HTTPS 与 SSL 证书完整解决教程</a><time datetime="2026-08-14T11:30:00.000Z" title="发表于 2026-08-14 19:30:00">2026-08-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/30/2026-august-debian-vless-tcp-raw-reality-vision/" title="2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程">2026年8月最新稳定Debian搭建VLESS+TCPRAW+REALITY+Vision节点教程</a><time datetime="2026-07-30T02:30:00.000Z" title="发表于 2026-07-30 10:30:00">2026-07-30</time></div></div></div></div><div class="card-widget side-media-card"><a class="side-media-link" href="/go/vps-offer/" target="_blank" rel="nofollow noopener noreferrer" aria-label="访问 RackNerd VPS 优惠页面（推广链接）"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/vps-card.gif" alt="RackNerd VPS 推广横幅" width="300" height="250" decoding="async"></a><div class="side-media-note">推广链接 · Affiliate</div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS-%E9%80%89%E8%B4%AD/"><span class="card-category-list-name">VPS 选购</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">技术教程</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">服务器运维</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"><span class="card-category-list-name">网络链路</span><span class="card-category-list-count">6</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"><span class="card-category-list-name">网络服务</span><span class="card-category-list-count">1</span></a></li>
