@@ -12,8 +12,8 @@
   <rights>All rights reserved 2026, SKYBYTE</rights>
   <subtitle>网络、硬件与效率工具，让技术更好用</subtitle>
   <title>SKYBYTE</title>
-  <updated>2026-10-23T23:11:34.000Z</updated>
-  <entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/><category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Vision" scheme="https://skylink9119.github.io/tags/Vision/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.16</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+  <updated>2026-10-26T00:37:08.000Z</updated>
+  <entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="网络链路" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E7%BD%91%E7%BB%9C%E9%93%BE%E8%B7%AF/"/><category term="Xray" scheme="https://skylink9119.github.io/tags/Xray/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Vision" scheme="https://skylink9119.github.io/tags/Vision/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.18</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <h2 id="nodes">1. 安装节点、导入客户端</h2>
 <p>用 root 登录 Ubuntu/Debian VPS，到<a href="/xray/">Xray 安装入口页</a>复制命令执行。安装后输入 <code>xr</code> 打开管理菜单。</p>
@@ -65,6 +65,8 @@
 <tr><td>关闭 WARP 分流</td><td><code>n → 3</code></td><td>本项目恢复直连，保留 WARP 软件。</td></tr>
 <tr><td>验证 WARP 出口</td><td><code>n → 4</code></td><td>检查本机代理实际出口与 WARP 连接状态。</td></tr>
 <tr><td>对比平台响应</td><td><code>n → 5</code></td><td>对比直连与 WARP；检测结果不保证实际播放或账号可用。</td></tr>
+<tr><td>检测当前 Reality 网站</td><td><code>o → 1</code></td><td>检测 TCP/Reality 与 XHTTP/Reality 的握手目标，检查 DNS、TCP、TLS 1.3、证书与 HTTP/2。</td></tr>
+<tr><td>检测自定义握手网站</td><td><code>o → 2</code></td><td>填写域名或 域名:端口，可单独指定 SNI；明确显示通过或失败原因。</td></tr>
 </tbody></table></div>
 
 <h2 id="maintenance">5. 更新、备份与卸载</h2>
@@ -75,8 +77,8 @@
 <tr><td>恢复配置</td><td><code>h</code></td><td>输入可信备份路径，校验后恢复。</td></tr>
 <tr><td>卸载 Xray 管理器</td><td><code>k</code></td><td>备份后移除托管节点与管理器，保留备份及外部文件。</td></tr>
 </tbody></table></div>
-]]></content><id>https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/</id><link href="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/"/><published>2026-10-23T23:11:34.000Z</published><title>Xray 一键脚本功能对照表</title><updated>2026-10-23T23:11:34.000Z</updated><summary>按 SKYBYTE Xray Manager v0.1.16 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。</summary></entry>
-<entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Hysteria2" scheme="https://skylink9119.github.io/tags/Hysteria2/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.7</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+]]></content><id>https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/</id><link href="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/"/><published>2026-10-23T23:11:34.000Z</published><title>Xray 一键脚本功能对照表</title><updated>2026-10-26T00:37:08.000Z</updated><summary>按 SKYBYTE Xray Manager v0.1.18 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。</summary></entry>
+<entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Hysteria2" scheme="https://skylink9119.github.io/tags/Hysteria2/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.8</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <span class="sb-guide-anchor" id="prepare"></span>
 <h2 id="install">1. 先安装，再打开脚本</h2>
@@ -124,6 +126,8 @@
 <tr><td>修改节点名称</td><td><code>b → 3</code></td><td>修改客户端显示名称，保留 UUID / 密码。</td></tr>
 <tr><td>启用 BBR + FQ</td><td><code>d → 4</code></td><td>检查内核支持并调整系统 TCP 参数；实际效果取决于线路。</td></tr>
 <tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看进程、内存与负载。</td></tr>
+<tr><td>检测当前 Reality 网站</td><td><code>d → 12 → 1</code></td><td>读取当前握手目标，检查 DNS、TCP、TLS 1.3、证书与 HTTP/2，明确显示通过或失败原因。</td></tr>
+<tr><td>检测自定义握手网站</td><td><code>d → 12 → 2</code></td><td>填写域名或 域名:端口，可单独指定 SNI；只检测，不修改节点。</td></tr>
 <tr><td>管理用户与配额</td><td><code>g</code></td><td>进入后：1 初始化、2 添加、3 用量、9 个人节点 / 二维码。</td></tr>
 <tr><td>申请域名证书</td><td><code>e → 6</code></td><td>进入 ACME 证书申请与续签菜单。</td></tr>
 <tr><td>更新管理脚本</td><td><code>e → 4</code></td><td>检查正式版，确认后更新 SKYBYTE 管理菜单与功能。</td></tr>
@@ -146,7 +150,7 @@
 <tr><td>对比平台响应</td><td><code>8</code></td><td>对比直连与 WARP；检测结果不保证实际播放或账号可用。</td></tr>
 </tbody></table></div>
 <p>节点先直连成功，再按需配置 BBR、WARP 或多人配额。配置检查通过不等于公网已连通。</p>
-]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-23T22:58:40.000Z</updated><summary>sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.8.7 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。</summary></entry>
+]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-26T00:37:08.000Z</updated><summary>sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.8.8 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。</summary></entry>
 <entry><author><name>SKYBYTE</name></author><category term="VPS 选购" scheme="https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/"/><content type="html"><![CDATA[
 <div class="bwh-hero">
 <div class="bwh-kicker">BANDWAGONHOST · LOS ANGELES · USCA_9</div>
