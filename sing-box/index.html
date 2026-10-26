@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box v2.8.8 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box v2.8.9 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="sing-box 一键脚本">
 <meta property="og:url" content="https://skylink9119.github.io/sing-box/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="sing-box v2.8.8 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
+<meta property="og:description" content="sing-box v2.8.9 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-07-20T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-02T08:15:00.000Z">
+<meta property="article:modified_time" content="2026-10-26T01:43:54.000Z">
 <meta property="article:author" content="SKYBYTE">
 <meta property="article:tag" content="SKYBYTE,YouTube技术频道,Debian VPS,3X-UI,VLESS Reality,网络优化,macOS,服务器运维">
 <meta name="twitter:card" content="summary">
@@ -228,14 +228,14 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container .sb-install-actions>.sb-install-action:focus-visible{outline:2px solid #0f766e;outline-offset:3px}
 @media(max-width:480px){#article-container .sb-install-actions>.sb-install-action{width:calc((100% - 12px)/2);padding:0 8px;font-size:14px}}
 </style><h2>sing-box 一键安装脚本</h2>
-<p>版本：v2.8.8。以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
+<p>版本：v2.8.9。以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('sing-box-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button><a class="sb-install-action sb-tutorial-link" href="/2026/10/23/skybyte-sing-box-install-guide/">功能对照表 →</a></div>
 <pre style="padding:20px;border-radius:12px;overflow-x:auto;background:#172033;color:#f1f5f9;white-space:pre-wrap;overflow-wrap:anywhere"><code id="sing-box-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; script=$(curl -q -fsSL --max-time 60 https://raw.githubusercontent.com/skylink9119/sing-box-v2/main/bootstrap.sh) &amp;&amp; bash -c &quot;$script&quot;)</code></pre>
 <p>操作确认输入 <code>y</code> 或 <code>Y</code>；回车或 <code>n/N</code> 取消。</p>
 <p>主菜单用字母，子菜单用数字；操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。例如 <code>d → 2</code> 进入 UFW 后，可连续安装、开启和查看状态；更新管理脚本用 <code>e → 4</code>。</p>
 <p>WARP 支持 Netflix、Disney+、ChatGPT 和 Gemini。进入 <code>d → 9</code>：1–3 设置代理，4–6 设置分流，7–8 做连接检测。选项 <code>4</code> 选择平台，选项 <code>8</code> 对比直连与 WARP。</p>
-<p>Reality 握手网站检测：进入 <code>d → 12</code>，选 <code>1</code> 检测当前节点，选 <code>2</code> 检测自定义网站。逐项显示 DNS、TCP、TLS 1.3、证书与 HTTP/2 结果；检测后可继续选择。</p>
-<p style="margin-top:24px"><a href="https://github.com/skylink9119/sing-box-v2" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/sing-box-v2/releases/tag/v2.8.8" target="_blank" rel="noopener">查看 v2.8.8 版本</a></p>
+<p>Reality 握手网站检测：进入 <code>d → 12</code>，选 <code>1</code> 检测当前节点，选 <code>2</code> 检测自定义网站。选 <code>3</code> 更换握手网站：选择常用网站或自定义目标，检测通过后输入 <code>y</code> 应用，保留 UUID、密钥及端口；完成后重新导入客户端节点。</p>
+<p style="margin-top:24px"><a href="https://github.com/skylink9119/sing-box-v2" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/sing-box-v2/releases/tag/v2.8.9" target="_blank" rel="noopener">查看 v2.8.9 版本</a></p>
 <section id="sing-box-vps-promotion" aria-labelledby="vps-promotion-title">
 <style id="sing-box-vps-style">
 #sing-box-vps-promotion{margin-top:32px;padding-top:24px;border-top:1px solid var(--light-grey)}
