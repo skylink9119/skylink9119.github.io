@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE Xray Manager v0.1.18 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE Xray Manager v0.1.19 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Xray 一键脚本">
 <meta property="og:url" content="https://skylink9119.github.io/xray/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="SKYBYTE Xray Manager v0.1.18 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
+<meta property="og:description" content="SKYBYTE Xray Manager v0.1.19 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-07-20T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-02T08:15:00.000Z">
+<meta property="article:modified_time" content="2026-10-26T01:43:54.000Z">
 <meta property="article:author" content="SKYBYTE">
 <meta property="article:tag" content="SKYBYTE,YouTube技术频道,Debian VPS,3X-UI,VLESS Reality,网络优化,macOS,服务器运维">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container .sb-install-actions>.sb-install-action:focus-visible{outline:2px solid #0f766e;outline-offset:3px}
 @media(max-width:480px){#article-container .sb-install-actions>.sb-install-action{width:calc((100% - 12px)/2);padding:0 8px;font-size:14px}}
 </style><h2>Xray 一键安装脚本</h2>
-<p>SKYBYTE Xray Manager · v0.1.18。支持 VLESS + Reality + Vision、XHTTP + Reality 与 XHTTP + TLS/CDN。</p>
+<p>SKYBYTE Xray Manager · v0.1.19。支持 VLESS + Reality + Vision、XHTTP + Reality 与 XHTTP + TLS/CDN。</p>
 <p>以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('xray-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button>
 <a class="sb-install-action sb-tutorial-link" href="/2026/10/24/skybyte-xray-menu-guide/">功能对照表 →</a></div>
@@ -236,8 +236,8 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>操作确认输入 <code>y</code> 或 <code>Y</code>；回车或 <code>n/N</code> 取消。</p>
 <p>主菜单用字母，子菜单用数字；操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。防火墙 / BBR 用 <code>l</code>，服务与日志用 <code>d</code>，更新管理脚本用 <code>m</code>。</p>
 <p>进入脚本即显示服务器配置、Xray 运行状态和相关组件；菜单 <code>n</code> 已按代理设置、分流设置、连接检测分组，每项独立一行，提供 Netflix、Disney+、ChatGPT、Gemini 的 WARP 分流与对比检测。</p>
-<p>Reality 握手网站检测：主菜单 <code>o</code>，选 <code>1</code> 检测当前节点，选 <code>2</code> 检测自定义网站。逐项显示 DNS、TCP、TLS 1.3、证书与 HTTP/2，明确提示通过或失败原因。</p>
-<p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.18" target="_blank" rel="noopener">查看 v0.1.18 版本</a></p>
+<p>Reality 握手网站检测：主菜单 <code>o</code>，选 <code>1</code> 检测当前节点，选 <code>2</code> 检测自定义网站。选 <code>3</code> 更换所选 Vision 或 XHTTP + Reality 的握手网站，检测通过后输入 <code>y</code> 应用；保留 UUID、密钥、端口及路径，完成后重新导入所选节点。</p>
+<p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.19" target="_blank" rel="noopener">查看 v0.1.19 版本</a></p>
 <p>安装后输入 <code>xr</code> 打开管理菜单；已安装用户可通过菜单 <strong>m 更新管理脚本</strong>。请放行节点实际使用的 TCP 端口。</p>
 <section id="xray-vps-promotion" aria-labelledby="vps-promotion-title">
 <style id="xray-vps-style">
