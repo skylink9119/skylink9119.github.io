@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本功能对照表 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 SKYBYTE Xray Manager v0.1.19 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
+<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本功能对照表 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="按 SKYBYTE Xray Manager v0.1.20 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Xray 一键脚本功能对照表">
 <meta property="og:url" content="https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="按 SKYBYTE Xray Manager v0.1.19 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
+<meta property="og:description" content="按 SKYBYTE Xray Manager v0.1.20 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-10-23T23:11:34.000Z">
-<meta property="article:modified_time" content="2026-10-26T01:43:54.000Z">
+<meta property="article:modified_time" content="2026-10-27T16:00:00.000Z">
 <meta property="article:author" content="SKYBYTE">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://skylink9119.github.io/img/icon.jpg"><script type="application/ld+json">{
@@ -21,7 +21,7 @@
     "@id": "https://skylink9119.github.io/2026/10/24/skybyte-xray-menu-guide/"
   },
   "image": "https://skylink9119.github.io/img/icon.jpg",
-  "description": "按 SKYBYTE Xray Manager v0.1.19 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。",
+  "description": "按 SKYBYTE Xray Manager v0.1.20 整理：想做什么、依次选择什么、得到什么结果。快速查询节点安装与编辑、服务控制、防火墙、BBR、WARP、更新备份入口。",
   "inLanguage": "zh-CN",
   "datePublished": "2026-10-23T23:11:34.000Z",
   "dateModified": "2026-10-26T01:43:54.000Z",
@@ -257,7 +257,7 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container h2,#article-container .sb-guide-anchor{scroll-margin-top:80px}
 #article-container .sb-guide-anchor{display:block;height:0}
 @media(max-width:600px){#article-container .sb-guide-table th,#article-container .sb-guide-table td{padding:9px 7px;font-size:13px}#article-container .sb-guide-table th:nth-child(1){width:26%}#article-container .sb-guide-table th:nth-child(2){width:29%}#article-container .sb-guide-table th:nth-child(3){width:45%}#article-container .sb-guide-table code{font-size:12px}}
-</style><div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.19</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+</style><div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.20</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <h2 id="nodes">1. 安装节点、导入客户端</h2>
 <p>用 root 登录 Ubuntu/Debian VPS，到<a href="/xray/">Xray 安装入口页</a>复制命令执行。安装后输入 <code>xr</code> 打开管理菜单。</p>
@@ -266,6 +266,7 @@ btf.addGlobalFn('pjaxSend', () => {
 <tr><td>搭建 XHTTP + Reality</td><td><code>a → 2</code></td><td>默认 TCP 443，无需自己的域名证书；按提示设置路径和模式。</td></tr>
 <tr><td>搭建 XHTTP + TLS / CDN</td><td><code>a → 3</code></td><td>默认 TCP 2053；需自己的域名、可信 fullchain 和匹配私钥。</td></tr>
 <tr><td>查看链接与客户端配置</td><td><code>b</code></td><td>查看节点链接、订阅与 Xray 客户端配置文件位置。</td></tr>
+<tr><td>查看节点参数（请保密）</td><td><code>p</code></td><td>按节点查看 UUID、公钥、Short ID、握手网站和目标；TLS 节点标明不适用。重要数据保存在本 VPS，请勿公开；务必通过 l → 2 安装并启用防火墙，先放行 SSH 和实际节点端口。</td></tr>
 <tr><td>扫码导入节点</td><td><code>c</code></td><td>显示本地生成的节点二维码；客户端需支持相应协议。</td></tr>
 <tr><td>切换语言</td><td><code>j</code></td><td>选择 1 为中文、2 为 English。</td></tr>
 <tr><td>查看使用说明</td><td><code>i</code></td><td>显示脚本使用帮助。</td></tr>
