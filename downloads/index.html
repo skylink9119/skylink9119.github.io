@@ -240,19 +240,19 @@ btf.addGlobalFn('pjaxSend', () => {
 <div class="download-card">
   <div class="download-card-icon"><i class="fas fa-file-code"></i></div>
   <div class="download-card-body">
-    <h2>V14 · VLESS + Reality 配置模板</h2>
-    <p>适用于支持 VLESS + Reality 的 Mihomo / Clash Meta 内核客户端。包含 DNS、分流、TUN 和 Reality 节点配置。</p>
+    <h2>V15 · OpenClash / VLESS + Reality 配置模板</h2>
+    <p>适用于 OpenWrt / iStoreOS 的 OpenClash（Mihomo 内核）。包含 VLESS + Reality、国内直连与国外代理分流、加密 DNS；默认关闭 IPv6 和 TUN，透明代理由 OpenClash 管理。</p>
     <div class="download-meta">
-      <span><i class="far fa-calendar-alt"></i> 更新：2026-07-31</span>
+      <span><i class="far fa-calendar-alt"></i> 更新：2026-10-27</span>
       <span><i class="fas fa-shield-alt"></i> 已脱敏</span>
       <span><i class="fas fa-file-code"></i> YAML</span>
     </div>
     <div class="download-warning">
-      <strong>使用前必须修改：</strong>服务器地址、UUID、Reality 伪装域名、公钥和 Short ID。端口已固定为 443，文件内使用简短占位词标明修改位置。
+      <strong>使用前必须修改：</strong>服务器 IP 或域名、UUID、Reality 握手域名（SNI）、公钥和 Short ID；端口默认 443，请与实际节点一致。中文占位符不能直接连接；OpenClash 需保留本配置的 DNS 设置并开启局域网 DNS 接管。
     </div>
     <div class="download-actions">
-      <a class="download-button primary" href="/downloads/files/v14-reality-template.yaml" download><i class="fas fa-download"></i> 下载 YAML</a>
-      <a class="download-button secondary" href="/downloads/files/v14-reality-template.zip" download><i class="fas fa-file-archive"></i> 下载 ZIP</a>
+      <a class="download-button primary" href="/downloads/files/v15-openclash.yaml" download data-pjax="false"><i class="fas fa-download"></i> 下载 YAML</a>
+      <a class="download-button secondary" href="/downloads/files/v15-openclash.zip" download data-pjax="false"><i class="fas fa-file-archive"></i> 下载 ZIP</a>
     </div>
   </div>
 </div>
