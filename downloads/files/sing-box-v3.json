@@ -15,7 +15,8 @@
         "tls": {
           "enabled": true,
           "server_name": "dns.alidns.com"
-        }
+        },
+        "detour": "direct"
       },
       {
         "type": "https",
@@ -51,7 +52,6 @@
     {
       "type": "tun",
       "tag": "tun-in",
-      "interface_name": "singtun0",
       "address": [
         "172.19.0.1/30",
         "fdfe:dcba:9876::1/126"
@@ -67,33 +67,38 @@
     {
       "type": "vless",
       "tag": "proxy",
-      "server": "替换为服务器IP",
+      "server": "请填写代理服务器IP或域名",
       "server_port": 443,
-      "uuid": "替换为服务端UUID",
+      "uuid": "请填写服务端提供的UUID",
       "flow": "xtls-rprx-vision",
-      "network": "tcp",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "服务端握手目标网站",
+        "server_name": "请填写服务端要求的TLS服务器名称（SNI）",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
         },
         "reality": {
           "enabled": true,
-          "public_key": "替换为Reality公钥",
-          "short_id": "替换为ShortID"
+          "public_key": "请填写服务端提供的Reality公钥",
+          "short_id": "请填写服务端提供的Reality短ID（short_id）"
         }
       }
     },
     {
       "type": "direct",
-      "tag": "direct"
+      "tag": "direct",
+      "domain_resolver": "dns-cn"
     }
   ],
   "route": {
     "rules": [
+      {
+        "inbound": "tun-in",
+        "port": 53,
+        "action": "hijack-dns"
+      },
       {
         "action": "sniff"
       },
@@ -124,7 +129,8 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
         "http_client": "rules-via-proxy",
-        "update_interval": "1d"
+        "update_interval": "1d",
+        "initial_path": "rules/geosite-cn.srs"
       },
       {
         "type": "remote",
@@ -132,19 +138,20 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
         "http_client": "rules-via-proxy",
-        "update_interval": "1d"
+        "update_interval": "1d",
+        "initial_path": "rules/geoip-cn.srs"
       }
     ],
     "final": "proxy",
     "auto_detect_interface": true,
     "default_http_client": "rules-via-proxy",
-    "default_domain_resolver": "dns-cn"
+    "default_domain_resolver": "dns-global"
   },
   "experimental": {
     "cache_file": {
       "enabled": true,
       "path": "cache.db",
-      "store_dns": true
+      "store_dns": false
     }
   }
 }

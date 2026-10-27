@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>配置下载 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE 技术博客配置文件下载中心，提供 VPS、sing-box、Hysteria2 等教程配套的 YAML 配置模板。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>配置下载 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE 技术博客配置文件下载中心，提供 VPS、sing-box、Hysteria2 等教程配套的 YAML 和 JSON 配置模板。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="配置下载">
 <meta property="og:url" content="https://skylink9119.github.io/downloads/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="SKYBYTE 技术博客配置文件下载中心，提供 VPS、sing-box、Hysteria2 等教程配套的 YAML 配置模板。">
+<meta property="og:description" content="SKYBYTE 技术博客配置文件下载中心，提供 VPS、sing-box、Hysteria2 等教程配套的 YAML 和 JSON 配置模板。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-07-20T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-02T08:15:00.000Z">
+<meta property="article:modified_time" content="2026-10-27T00:00:00.000Z">
 <meta property="article:author" content="SKYBYTE">
 <meta property="article:tag" content="SKYBYTE,YouTube技术频道,Debian VPS,3X-UI,VLESS Reality,网络优化,macOS,服务器运维">
 <meta name="twitter:card" content="summary">
@@ -260,18 +260,19 @@ btf.addGlobalFn('pjaxSend', () => {
 <div class="download-card">
   <div class="download-card-icon"><i class="fas fa-file-code"></i></div>
   <div class="download-card-body">
-    <h2>sing-box V3 · VLESS + Reality JSON 配置</h2>
-    <p>适用于新版 sing-box 客户端，包含 TUN、国内外 DoH、VLESS + Reality、国内直连分流和远程规则集配置。</p>
+    <h2>sing-box V01 · VLESS + Reality JSON 配置</h2>
+    <p>适用于 sing-box 1.14 系列客户端，包含 TUN、国内外 DoH、VLESS + Reality、国内直连分流和远程规则集配置。</p>
     <div class="download-meta">
-      <span><i class="far fa-calendar-alt"></i> 更新：2026-09-02</span>
+      <span><i class="far fa-calendar-alt"></i> 更新：2026-10-27</span>
       <span><i class="fas fa-shield-alt"></i> 已脱敏</span>
       <span><i class="fas fa-file-code"></i> JSON</span>
     </div>
     <div class="download-warning">
-      <strong>使用前必须修改：</strong>服务器 IP、服务端 UUID、Reality 握手目标网站、公钥和 Short ID。文件中的中文占位符不能直接用于连接。
+      <strong>使用前必须修改：</strong>服务器 IP 或域名、端口、UUID、TLS 服务器名称（SNI）、Reality 公钥和 Short ID。首次使用建议下载 ZIP，将配置与 <code>rules</code> 文件夹放在同一目录；中文占位符不能直接用于连接。
     </div>
     <div class="download-actions">
-      <a class="download-button primary" href="/downloads/files/sing-box-v3.json" download><i class="fas fa-download"></i> 下载 JSON</a>
+      <a class="download-button primary" href="/downloads/files/sing-box-v01.json" download data-pjax="false"><i class="fas fa-download"></i> 下载 JSON</a>
+      <a class="download-button secondary" href="/downloads/files/sing-box-v01.zip" download data-pjax="false"><i class="fas fa-file-archive"></i> 下载 ZIP（含规则）</a>
     </div>
   </div>
 </div>
