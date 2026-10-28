@@ -243,6 +243,26 @@ btf.addGlobalFn('pjaxSend', () => {
   </div>
 </div>
 
+<div class="download-card" id="hy2-openclash-template">
+  <div class="download-card-icon"><i class="fas fa-file-code"></i></div>
+  <div class="download-card-body">
+    <h2>V15 · OpenClash / Hysteria2（HY2）配置模板</h2>
+    <p>基于 V15 的 HY2 版本，保留 DNS、策略组和国内外分流，适用于 OpenWrt / iStoreOS 的 OpenClash（Mihomo 内核）。</p>
+    <div class="download-meta">
+      <span><i class="far fa-calendar-alt"></i> 更新：2026-10-28</span>
+      <span><i class="fas fa-shield-alt"></i> 已脱敏</span>
+      <span><i class="fas fa-file-code"></i> YAML · HY2</span>
+    </div>
+    <div class="download-warning">
+      <strong>使用前填写：</strong>服务器、实际 UDP 端口、HY2 密码和证书 SNI。自签名证书须核实并固定证书指纹；默认保持证书校验。<a href="/downloads/files/hy2-template-guide.txt" target="_blank" rel="noopener">查看填写与证书说明</a>。
+    </div>
+    <div class="download-actions">
+      <a class="download-button primary" href="/downloads/files/v15-openclash-hy2.yaml" download data-pjax="false"><i class="fas fa-download"></i> 下载 HY2 YAML</a>
+      <a class="download-button secondary" href="/downloads/files/v15-openclash-hy2.zip" download data-pjax="false"><i class="fas fa-file-archive"></i> 下载 ZIP（含说明）</a>
+    </div>
+  </div>
+</div>
+
 <div class="download-card">
   <div class="download-card-icon"><i class="fas fa-file-code"></i></div>
   <div class="download-card-body">
@@ -259,6 +279,26 @@ btf.addGlobalFn('pjaxSend', () => {
     <div class="download-actions">
       <a class="download-button primary" href="/downloads/files/sing-box-v01.json" download data-pjax="false"><i class="fas fa-download"></i> 下载 JSON</a>
       <a class="download-button secondary" href="/downloads/files/sing-box-v01.zip" download data-pjax="false"><i class="fas fa-file-archive"></i> 下载 ZIP（含规则）</a>
+    </div>
+  </div>
+</div>
+
+<div class="download-card" id="hy2-sing-box-template">
+  <div class="download-card-icon"><i class="fas fa-file-code"></i></div>
+  <div class="download-card-body">
+    <h2>sing-box V01 · Hysteria2（HY2）JSON 配置</h2>
+    <p>基于 V01 的 HY2 版本，适用于 sing-box 1.14 系列客户端，保留 TUN、加密 DNS、国内直连与国外代理分流。</p>
+    <div class="download-meta">
+      <span><i class="far fa-calendar-alt"></i> 更新：2026-10-28</span>
+      <span><i class="fas fa-shield-alt"></i> 已脱敏</span>
+      <span><i class="fas fa-file-code"></i> JSON · HY2</span>
+    </div>
+    <div class="download-warning">
+      <strong>使用前填写：</strong>服务器、实际 UDP 端口、HY2 密码和证书 SNI。自签名证书须导入自己的公钥证书；默认保持证书校验。优先下载 ZIP 并保留 <code>rules</code> 文件夹。<a href="/downloads/files/hy2-template-guide.txt" target="_blank" rel="noopener">查看填写与证书说明</a>。
+    </div>
+    <div class="download-actions">
+      <a class="download-button primary" href="/downloads/files/sing-box-v01-hy2.json" download data-pjax="false"><i class="fas fa-download"></i> 下载 HY2 JSON</a>
+      <a class="download-button secondary" href="/downloads/files/sing-box-v01-hy2.zip" download data-pjax="false"><i class="fas fa-file-archive"></i> 下载 ZIP（含规则与说明）</a>
     </div>
   </div>
 </div>

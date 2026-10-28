@@ -1,0 +1,55 @@
+SKYBYTE HY2 客户端配置模板（2026-10-28）
+
+一、选择文件
+sing-box-v01-hy2.json：sing-box 1.14 系列客户端，保留原 V01 的 TUN、DNS 与路由。
+v15-openclash-hy2.yaml：OpenWrt / iStoreOS + OpenClash（Mihomo），保留原 V15 的 DNS、策略组、分流、IPv6 和 TUN 设置。
+这是客户端模板，不能作为 VPS 服务端配置直接运行。原 Reality 配置保留不变。
+
+二、必须修改的四项
+1. server：你的 HY2 VPS 公网 IP 或指向它的域名。
+2. server_port（JSON）/ port（YAML）：服务端实际 UDP 端口，模板默认 443。
+3. password：服务端 HY2 认证密码。不是 VLESS UUID，也不是 Reality 密钥。
+4. tls.server_name（JSON）/ sni（YAML）：服务端证书中的名称。
+HY2 不使用 Reality 握手网站、公钥或 Short ID。SNI 应与自己的服务端证书一致。
+VPS 系统防火墙及云安全组需放行实际 UDP 端口；普通 HTTP CDN 代理不能直接转发此 HY2 UDP 连接。
+
+三、域名可信证书
+证书由系统信任的 CA 签发，且证书名称与 SNI 匹配时，填写四项后保持默认设置：
+JSON：insecure 为 false。
+YAML：skip-cert-verify 为 false，fingerprint 注释保持不启用。
+
+四、脚本无域名 / 自签名证书
+先从自己的 VPS 通过可信途径取得对应节点的公钥证书（例如脚本导出的 hy2-client-ca.pem）。
+不要复制或公开 private.key 等私钥文件，也不要为省事关闭证书校验。
+
+sing-box JSON：将公钥证书放在客户端可读取的位置，例如与 JSON 同目录的 hy2-ca.pem；
+在 hysteria2 出站的 tls 对象中增加：
+  "certificate_path": "hy2-ca.pem"
+继续保留 "insecure": false。相对路径按客户端工作目录解析，GUI 客户端必要时填绝对路径或用其证书导入功能。
+
+OpenClash / Mihomo YAML：在自己的 VPS 上，对该节点的实际证书执行：
+  openssl x509 -in hy2-client-ca.pem -noout -fingerprint -sha256
+复制输出中 SHA256 Fingerprint= 后的完整指纹，取消节点 fingerprint 一行的注释并填入。
+例如该字段格式为 fingerprint: "AA:BB:..."（示例省略号不能直接使用）。
+保持 skip-cert-verify: false。此方式固定核验指定证书；证书更换后必须同步更新指纹。
+不要把 Reality 公钥、公钥 SHA256 或浏览器的 TLS ClientHello 指纹填进这个字段。
+
+五、可选混淆
+默认未启用混淆。仅在服务端启用了 Salamander 时配置：
+JSON hysteria2 出站增加 "obfs": {"type": "salamander", "password": "与服务端相同的混淆密码"}。
+YAML 取消 obfs: salamander 和 obfs-password 两行的注释并填写服务端相同密码。
+端口跳跃与固定带宽值均不预设；有需要时按服务端设置和对应客户端文档配置。
+
+六、导入
+sing-box：优先下载 ZIP 并完整解压，保留 rules/ 和 rules.sha256。远程规则使用原 V01 的初始规则文件，首次启动不必先经过代理下载它们。
+OpenClash：保留本模板 DNS 配置，并沿用原 V15 的 OpenClash 透明代理和局域网 DNS 接管设置。
+中文占位符必须替换，填入真实密码后的文件请保密。模板不包含任何可直接使用的公共节点。
+
+验证基线：sing-box 1.14.3、Mihomo 1.19.32；已填入本地测试参数后进行配置与 HY2 代理连通验证。
+配置检查和本地连通测试不代表你的公网 UDP 链路已经连通。
+
+官方参考：
+https://sing-box.sagernet.org/configuration/outbound/hysteria2/
+https://sing-box.sagernet.org/configuration/shared/tls/
+https://wiki.metacubex.one/config/proxies/hysteria2/
+https://wiki.metacubex.one/config/proxies/tls/
