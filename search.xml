@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <search>
-<entry><title>Xray 一键脚本功能对照表</title><url>/2026/10/24/skybyte-xray-menu-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.22</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+<entry><title>Xray 一键脚本功能对照表</title><url>/2026/10/24/skybyte-xray-menu-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Xray Manager <strong>v0.1.23</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。路径均从主菜单开始；已经在子菜单时直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <h2 id="nodes">1. 安装节点、导入客户端</h2>
 <p>用 root 登录 Ubuntu/Debian VPS，到<a href="/xray/">Xray 安装入口页</a>复制命令执行。安装后输入 <code>xr</code> 打开管理菜单。</p>
@@ -69,7 +69,7 @@
 </tbody></table></div>
 ]]></content><categories><category>技术教程</category><category>网络链路</category></categories><tags><tag>Xray</tag><tag>VLESS</tag><tag>Reality协议</tag><tag>Vision</tag><tag>一键脚本</tag><tag>VPS</tag></tags></entry>
 
-<entry><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><url>/2026/10/23/skybyte-sing-box-install-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.11</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+<entry><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><url>/2026/10/23/skybyte-sing-box-install-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.12</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <span class="sb-guide-anchor" id="prepare"></span>
 <h2 id="install">1. 先安装，再打开脚本</h2>
