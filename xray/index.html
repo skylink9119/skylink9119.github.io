@@ -233,16 +233,10 @@ btf.addGlobalFn('pjaxSend', () => {
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('xray-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button>
 <a class="sb-install-action sb-tutorial-link" href="/2026/10/24/skybyte-xray-menu-guide/">功能对照表 →</a></div>
 <pre style="padding:20px;border-radius:12px;overflow-x:auto;background:#172033;color:#f1f5f9;white-space:pre-wrap;overflow-wrap:anywhere"><code id="xray-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; s=$(curl -q -fsSL --max-time 60 https://sky9119.cc/xr.sh) &amp;&amp; [ -n &quot;$s&quot; ] &amp;&amp; bash -c &quot;$s&quot;)</code></pre>
-<p>安装前检测：<code>a → 4</code> 只检查、不安装；新安装也会自动检测系统、依赖、APT 锁、端口和握手目标。GitHub 网络等待上限 10 秒，Reality 目标检测总时限 12 秒；通过不代表公网入站已连通。</p>
-<p>短安装入口 <code>https://sky9119.cc/xr.sh</code> 跳转至最新正式 GitHub 启动脚本；命令仍自动补装 curl，下载失败或内容为空时不执行。安装速度取决于 VPS 网络与软件源，不能保证固定耗时。</p>
-<p>菜单响应优化：状态查询并行执行，短时间返回只读菜单时复用最多 5 秒的本地快照；管理操作后刷新。</p>
-<p>操作确认输入 <code>y</code> 或 <code>Y</code>；回车或 <code>n/N</code> 取消。</p>
-<p>主菜单用字母，子菜单用数字；操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。防火墙 / BBR 用 <code>l</code>，服务与日志用 <code>d</code>，更新管理脚本用 <code>m</code>。</p>
-<p>进入脚本即显示服务器配置、Xray 运行状态和相关组件；菜单 <code>n</code> 已按代理设置、分流设置、连接检测分组，每项独立一行，提供 Netflix、Disney+、ChatGPT、Gemini 的 WARP 分流与对比检测。</p>
-<p><strong>查看节点参数：<code>p</code> 显示 UUID、公钥、Short ID、握手网站与目标。节点配置、凭据、订阅和备份等重要数据保存在当前 VPS，请勿公开参数、链接、二维码或截图；请务必通过 <code>l → 2</code> 安装并启用防火墙，先放行 SSH 和实际节点端口。</strong></p>
-<p>Reality 握手网站检测：主菜单 <code>o</code>，选 <code>1</code> 检测当前节点，选 <code>2</code> 检测自定义网站。选 <code>3</code> 更换所选 Vision 或 XHTTP + Reality 的握手网站，检测通过后输入 <code>y</code> 应用；保留 UUID、密钥、端口及路径，完成后重新导入所选节点。</p>
+<!-- SKYBYTE_LATEST_UPDATE_START: xray -->
+<p class="script-latest-update"><strong>最新更新 · v0.1.23：</strong>优化菜单响应，修复 TCP 端口误判及证书校验等待。已有用户通过 <code>xr → m</code> 更新。</p>
+<!-- SKYBYTE_LATEST_UPDATE_END: xray -->
 <p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.23" target="_blank" rel="noopener">查看 v0.1.23 版本</a></p>
-<p>安装后输入 <code>xr</code> 打开管理菜单；已安装用户可通过菜单 <strong>m 更新管理脚本</strong>。请放行节点实际使用的 TCP 端口。</p>
 <section id="xray-vps-promotion" aria-labelledby="vps-promotion-title">
 <style id="xray-vps-style">
 #xray-vps-promotion{margin-top:32px;padding-top:24px;border-top:1px solid var(--light-grey)}
