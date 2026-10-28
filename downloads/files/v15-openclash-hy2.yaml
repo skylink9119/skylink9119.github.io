@@ -1,0 +1,294 @@
+# v15 HY2 - OpenWrt / iStoreOS + OpenClash, domestic speed + split encrypted DNS
+# Public sanitized template: fill in your own node parameters before use.
+# 使用前填写 server、port、password 和 sni；中文占位符不能连接。
+# 使用 HY2 服务端证书名称；自签名证书按 README-HY2.txt 核实指纹，保持证书校验。
+# DNS: domestic domains and DIRECT egress use domestic DoH via DIRECT.
+# Foreign/unknown domains use DoH via PROXY; no plain/system DNS fallback.
+# Bootstrap and node-domain resolution intentionally use domestic encrypted DNS.
+# Node failure => foreign DNS fails; domestic direct services remain available.
+# OpenClash must retain this DNS section, use Fake-IP + TCP/UDP interception,
+# forward dnsmasq to 127.0.0.1#1053, and enable LAN DNS hijack.
+# Configure router DNS interception and IPv6 settings consistently with this template.
+# This YAML alone does not stop applications using arbitrary DoH endpoints.
+# tun.enable=false: transparent interception is managed by OpenClash.
+mixed-port: 7890
+redir-port: 7892
+tproxy-port: 7895
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: warning
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+profile:
+  store-selected: false
+  store-fake-ip: true
+geodata-mode: true
+geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+  geosite: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+  mmdb: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    TLS:
+      ports:
+      - 443
+      - 8443
+    HTTP:
+      ports:
+      - 80
+      - 8080-8880
+    QUIC:
+      ports:
+      - 443
+      - 8443
+  skip-domain:
+  - Mijia Cloud
+  - dlg.io.mi.com
+  - +.push.apple.com
+  - +.googlevideo.com
+tun:
+  enable: false
+  stack: mixed
+  dns-hijack:
+  - any:53
+  - tcp://any:53
+  auto-route: false
+  auto-detect-interface: true
+proxies:
+- name: "自建节点-1"
+  type: hysteria2
+  server: "修改为你的HY2服务器IP或域名"
+  port: 443
+  ip-version: ipv4
+  udp: true
+  password: "修改为你的HY2密码"
+  sni: "修改为HY2证书的域名"
+  skip-cert-verify: false
+  alpn:
+    - h3
+  # 自签名证书：从 VPS 核实完整证书 SHA-256 指纹后填写；证书更换时更新。
+  # fingerprint: "填写你的完整证书SHA256指纹"
+  # 只有服务端启用 Salamander 混淆时才填写以下两行，并保持密码一致。
+  # obfs: salamander
+  # obfs-password: "填写服务端的混淆密码"
+- name: DNS-INTERNAL
+  type: dns
+proxy-groups:
+- name: PROXY
+  type: select
+  proxies:
+  - "自建节点-1"
+dns:
+  enable: true
+  listen: 127.0.0.1:1053
+  cache-algorithm: arc
+  ipv6: false
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+  - '*.lan'
+  - '*.local'
+  - +.localdomain
+  - localhost
+  - localhost.ptlogin2.qq.com
+  - dlg.io.mi.com
+  nameserver-policy:
+    +.lan,+.local,+.localdomain,localhost,+.in-addr.arpa,+.ip6.arpa:
+    - rcode://success
+    ? +.dns.google,+.cloudflare-dns.com,+.one.one.one.one,+.dns.quad9.net,+.dns.alidns.com,+.doh.pub,+.doh.360.cn,+.oaistatic.com,+.oaiusercontent.com,+.claudeusercontent.com,+.github.com,+.githubusercontent.com,+.githubassets.com,+.ghcr.io,+.github.io,+.githubapp.com,+.github.dev,+.githubcopilot.com,+.openai.com,+.chatgpt.com,+.anthropic.com,+.claude.ai,+.google.com,+.googleapis.com,+.googleapis.cn,+.gstatic.com,+.gvt1.com,+.gvt2.com,+.gvt3.com,+.googleusercontent.com,+.ggpht.com,+.android.com,+.xn--ngstr-lra8j.com
+    : - https://1.1.1.1/dns-query#PROXY
+      - https://8.8.8.8/dns-query#PROXY
+    geosite:github,google,youtube,telegram:
+    - https://1.1.1.1/dns-query#PROXY
+    - https://8.8.8.8/dns-query#PROXY
+    ? +.qq.com,+.tencent.com,+.wechat.com,+.servicewechat.com,+.gtimg.com,+.gtimg.cn,+.qpic.cn,+.qlogo.cn,+.tenpay.com,+.myqcloud.com,+.qcloud.com,+.douyin.com,+.douyincdn.com,+.douyinpic.com,+.douyinstatic.com,+.douyinliving.com,+.iesdouyin.com,+.douyinvod.com,+.douyinvideo.net,+.amemv.com,+.snssdk.com,+.byteimg.com,+.bytecdn.cn,+.ibytedtos.com,+.zijieapi.com,+.pstatp.com,+.toutiao.com,+.toutiaovod.com,+.bytedance.net,+.xiaohongshu.com,+.xhscdn.com,+.xhscdn.net,+.xhslink.com,+.xhsimg.com,+.115.com,+.115cdn.com,+.115cdn.net,+.115img.com,+.116cd.cn,+.116cd.com,+.116cd.net,+.anxia.com,+.sq.cc,+.speedtest.net,+.ooklaserver.net,+.speedtestcustom.com,+.speed.cloudflare.com,+.measurementlab.net,+.speedtest.cn,+.microsoft.com,+.msftconnecttest.com,+.msftncsi.com,+.windowsupdate.com,+.office.com,+.office.net,+.office365.com,+.live.com,+.live.net,+.outlook.com,+.microsoftonline.com,+.microsoftonline-p.com,+.sharepoint.com,+.sharepointonline.com,+.onedrive.com,+.skype.com,+.azureedge.net,+.msauth.net,+.msauthimages.net,+.msftauth.net,+.msftauthimages.net,fhnfile.oss-cn-shenzhen.aliyuncs.com
+    : - https://223.5.5.5/dns-query#DIRECT
+      - https://doh.pub/dns-query#DIRECT
+    geosite:alibaba,microsoft,category-games@cn,apple-cn,apple,microsoft@cn,steam@cn,cn,geolocation-cn:
+    - https://223.5.5.5/dns-query#DIRECT
+    - https://doh.pub/dns-query#DIRECT
+  default-nameserver:
+  - https://223.5.5.5/dns-query#DIRECT
+  - https://223.6.6.6/dns-query#DIRECT
+  nameserver:
+  - https://1.1.1.1/dns-query#PROXY
+  - https://8.8.8.8/dns-query#PROXY
+  proxy-server-nameserver:
+  - https://223.5.5.5/dns-query#DIRECT
+  - https://doh.pub/dns-query#DIRECT
+  direct-nameserver:
+  - https://223.5.5.5/dns-query#DIRECT
+  - https://doh.pub/dns-query#DIRECT
+  direct-nameserver-follow-policy: false
+rules:
+- DST-PORT,53,DNS-INTERNAL
+- DST-PORT,853,REJECT
+- IP-CIDR6,::/0,REJECT,no-resolve
+- DOMAIN-SUFFIX,dns.google,PROXY
+- DOMAIN-SUFFIX,cloudflare-dns.com,PROXY
+- DOMAIN-SUFFIX,one.one.one.one,PROXY
+- DOMAIN-SUFFIX,dns.quad9.net,PROXY
+- DOMAIN-SUFFIX,dns.alidns.com,PROXY
+- DOMAIN-SUFFIX,doh.pub,PROXY
+- DOMAIN-SUFFIX,doh.360.cn,PROXY
+- IP-CIDR,1.1.1.1/32,PROXY,no-resolve
+- IP-CIDR,1.0.0.1/32,PROXY,no-resolve
+- IP-CIDR,8.8.8.8/32,PROXY,no-resolve
+- IP-CIDR,8.8.4.4/32,PROXY,no-resolve
+- IP-CIDR,9.9.9.9/32,PROXY,no-resolve
+- IP-CIDR,149.112.112.112/32,PROXY,no-resolve
+- IP-CIDR,223.5.5.5/32,PROXY,no-resolve
+- IP-CIDR,223.6.6.6/32,PROXY,no-resolve
+- IP-CIDR,119.29.29.29/32,PROXY,no-resolve
+- IP-CIDR,1.12.12.12/32,PROXY,no-resolve
+- IP-CIDR,120.53.53.53/32,PROXY,no-resolve
+- IP-CIDR,180.76.76.76/32,PROXY,no-resolve
+- IP-CIDR,114.114.114.114/32,PROXY,no-resolve
+- IP-CIDR,114.114.115.115/32,PROXY,no-resolve
+- DOMAIN-SUFFIX,oaistatic.com,PROXY
+- DOMAIN-SUFFIX,oaiusercontent.com,PROXY
+- DOMAIN-SUFFIX,claudeusercontent.com,PROXY
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+- IP-CIDR,240.0.0.0/4,DIRECT,no-resolve
+- GEOSITE,private,DIRECT
+- GEOSITE,alibaba,DIRECT
+- DOMAIN-SUFFIX,qq.com,DIRECT
+- DOMAIN-SUFFIX,tencent.com,DIRECT
+- DOMAIN-SUFFIX,wechat.com,DIRECT
+- DOMAIN-SUFFIX,servicewechat.com,DIRECT
+- DOMAIN-SUFFIX,gtimg.com,DIRECT
+- DOMAIN-SUFFIX,gtimg.cn,DIRECT
+- DOMAIN-SUFFIX,qpic.cn,DIRECT
+- DOMAIN-SUFFIX,qlogo.cn,DIRECT
+- DOMAIN-SUFFIX,tenpay.com,DIRECT
+- DOMAIN-SUFFIX,myqcloud.com,DIRECT
+- DOMAIN-SUFFIX,qcloud.com,DIRECT
+- DOMAIN-SUFFIX,douyin.com,DIRECT
+- DOMAIN-SUFFIX,douyincdn.com,DIRECT
+- DOMAIN-SUFFIX,douyinpic.com,DIRECT
+- DOMAIN-SUFFIX,douyinstatic.com,DIRECT
+- DOMAIN-SUFFIX,douyinliving.com,DIRECT
+- DOMAIN-SUFFIX,iesdouyin.com,DIRECT
+- DOMAIN-SUFFIX,douyinvod.com,DIRECT
+- DOMAIN-SUFFIX,douyinvideo.net,DIRECT
+- DOMAIN-SUFFIX,amemv.com,DIRECT
+- DOMAIN-SUFFIX,snssdk.com,DIRECT
+- DOMAIN-SUFFIX,byteimg.com,DIRECT
+- DOMAIN-SUFFIX,bytecdn.cn,DIRECT
+- DOMAIN-SUFFIX,ibytedtos.com,DIRECT
+- DOMAIN-SUFFIX,zijieapi.com,DIRECT
+- DOMAIN-SUFFIX,pstatp.com,DIRECT
+- DOMAIN-SUFFIX,toutiao.com,DIRECT
+- DOMAIN-SUFFIX,toutiaovod.com,DIRECT
+- DOMAIN-SUFFIX,bytedance.net,DIRECT
+- DOMAIN-SUFFIX,xiaohongshu.com,DIRECT
+- DOMAIN-SUFFIX,xhscdn.com,DIRECT
+- DOMAIN-SUFFIX,xhscdn.net,DIRECT
+- DOMAIN-SUFFIX,xhslink.com,DIRECT
+- DOMAIN-SUFFIX,xhsimg.com,DIRECT
+- DOMAIN-SUFFIX,115.com,DIRECT
+- DOMAIN-SUFFIX,115cdn.com,DIRECT
+- DOMAIN-SUFFIX,115cdn.net,DIRECT
+- DOMAIN-SUFFIX,115img.com,DIRECT
+- DOMAIN-SUFFIX,116cd.cn,DIRECT
+- DOMAIN-SUFFIX,116cd.com,DIRECT
+- DOMAIN-SUFFIX,116cd.net,DIRECT
+- DOMAIN-SUFFIX,anxia.com,DIRECT
+- DOMAIN-SUFFIX,sq.cc,DIRECT
+- DOMAIN,fhnfile.oss-cn-shenzhen.aliyuncs.com,DIRECT
+- DOMAIN-SUFFIX,speedtest.net,DIRECT
+- DOMAIN-SUFFIX,ooklaserver.net,DIRECT
+- DOMAIN-SUFFIX,speedtestcustom.com,DIRECT
+- DOMAIN-SUFFIX,speed.cloudflare.com,DIRECT
+- DOMAIN-SUFFIX,measurementlab.net,DIRECT
+- DOMAIN-SUFFIX,speedtest.cn,DIRECT
+- GEOSITE,github,PROXY
+- DOMAIN-SUFFIX,github.com,PROXY
+- DOMAIN-SUFFIX,githubusercontent.com,PROXY
+- DOMAIN-SUFFIX,githubassets.com,PROXY
+- DOMAIN-SUFFIX,ghcr.io,PROXY
+- DOMAIN-SUFFIX,github.io,PROXY
+- DOMAIN-SUFFIX,githubapp.com,PROXY
+- DOMAIN-SUFFIX,github.dev,PROXY
+- DOMAIN-SUFFIX,githubcopilot.com,PROXY
+- GEOSITE,microsoft,DIRECT
+- DOMAIN-SUFFIX,microsoft.com,DIRECT
+- DOMAIN-SUFFIX,msftconnecttest.com,DIRECT
+- DOMAIN-SUFFIX,msftncsi.com,DIRECT
+- DOMAIN-SUFFIX,windowsupdate.com,DIRECT
+- DOMAIN-SUFFIX,office.com,DIRECT
+- DOMAIN-SUFFIX,office.net,DIRECT
+- DOMAIN-SUFFIX,office365.com,DIRECT
+- DOMAIN-SUFFIX,live.com,DIRECT
+- DOMAIN-SUFFIX,live.net,DIRECT
+- DOMAIN-SUFFIX,outlook.com,DIRECT
+- DOMAIN-SUFFIX,microsoftonline.com,DIRECT
+- DOMAIN-SUFFIX,microsoftonline-p.com,DIRECT
+- DOMAIN-SUFFIX,sharepoint.com,DIRECT
+- DOMAIN-SUFFIX,sharepointonline.com,DIRECT
+- DOMAIN-SUFFIX,onedrive.com,DIRECT
+- DOMAIN-SUFFIX,skype.com,DIRECT
+- DOMAIN-SUFFIX,azureedge.net,DIRECT
+- DOMAIN-SUFFIX,msauth.net,DIRECT
+- DOMAIN-SUFFIX,msauthimages.net,DIRECT
+- DOMAIN-SUFFIX,msftauth.net,DIRECT
+- DOMAIN-SUFFIX,msftauthimages.net,DIRECT
+- DOMAIN-SUFFIX,openai.com,PROXY
+- DOMAIN-SUFFIX,chatgpt.com,PROXY
+- DOMAIN-SUFFIX,anthropic.com,PROXY
+- DOMAIN-SUFFIX,claude.ai,PROXY
+- DOMAIN-SUFFIX,google.com,PROXY
+- DOMAIN-SUFFIX,googleapis.com,PROXY
+- DOMAIN-SUFFIX,googleapis.cn,PROXY
+- DOMAIN-SUFFIX,gstatic.com,PROXY
+- DOMAIN-SUFFIX,gvt1.com,PROXY
+- DOMAIN-SUFFIX,gvt2.com,PROXY
+- DOMAIN-SUFFIX,gvt3.com,PROXY
+- DOMAIN-SUFFIX,googleusercontent.com,PROXY
+- DOMAIN-SUFFIX,ggpht.com,PROXY
+- DOMAIN-SUFFIX,android.com,PROXY
+- DOMAIN-SUFFIX,xn--ngstr-lra8j.com,PROXY
+- GEOSITE,google,PROXY
+- GEOSITE,youtube,PROXY
+- GEOSITE,telegram,PROXY
+- GEOSITE,category-games@cn,DIRECT
+- GEOSITE,apple-cn,DIRECT
+- GEOSITE,apple,DIRECT
+- GEOSITE,microsoft@cn,DIRECT
+- GEOSITE,steam@cn,DIRECT
+- DOMAIN-SUFFIX,cn,DIRECT
+- DOMAIN-SUFFIX,中国,DIRECT
+- DOMAIN-SUFFIX,公司,DIRECT
+- DOMAIN-SUFFIX,网络,DIRECT
+- GEOSITE,cn,DIRECT
+- GEOSITE,geolocation-cn,DIRECT
+- GEOSITE,geolocation-!cn,PROXY
+- GEOIP,CN,DIRECT
+- MATCH,PROXY
+lan-allowed-ips:
+- 127.0.0.0/8
+- 10.0.0.0/8
+- 172.16.0.0/12
+- 192.168.0.0/16
+- 100.64.0.0/10
+find-process-mode: 'off'
