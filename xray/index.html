@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE Xray Manager v0.1.23 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Xray 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKYBYTE Xray Manager v0.1.24 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Xray 一键脚本">
 <meta property="og:url" content="https://skylink9119.github.io/xray/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="SKYBYTE Xray Manager v0.1.23 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
+<meta property="og:description" content="SKYBYTE Xray Manager v0.1.24 一键安装脚本，支持 VLESS Reality/Vision 与 XHTTP，提供安装命令与项目链接。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-07-20T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-28T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-29T00:00:00.000Z">
 <meta property="article:author" content="SKYBYTE">
 <meta property="article:tag" content="SKYBYTE,YouTube技术频道,Debian VPS,3X-UI,VLESS Reality,网络优化,macOS,服务器运维">
 <meta name="twitter:card" content="summary">
@@ -228,15 +228,15 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container .sb-install-actions>.sb-install-action:focus-visible{outline:2px solid #0f766e;outline-offset:3px}
 @media(max-width:480px){#article-container .sb-install-actions>.sb-install-action{width:calc((100% - 12px)/2);padding:0 8px;font-size:14px}}
 </style><h2>Xray 一键安装脚本</h2>
-<p>SKYBYTE Xray Manager · v0.1.23。支持 VLESS + Reality + Vision、XHTTP + Reality 与 XHTTP + TLS/CDN。</p>
+<p>SKYBYTE Xray Manager · v0.1.24。支持 VLESS + Reality + Vision、XHTTP + Reality 与 XHTTP + TLS/CDN。</p>
 <p>以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('xray-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button>
 <a class="sb-install-action sb-tutorial-link" href="/2026/10/24/skybyte-xray-menu-guide/">功能对照表 →</a></div>
 <pre style="padding:20px;border-radius:12px;overflow-x:auto;background:#172033;color:#f1f5f9;white-space:pre-wrap;overflow-wrap:anywhere"><code id="xray-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; s=$(curl -q -fsSL --max-time 60 https://sky9119.cc/xr.sh) &amp;&amp; [ -n &quot;$s&quot; ] &amp;&amp; bash -c &quot;$s&quot;)</code></pre>
 <!-- SKYBYTE_LATEST_UPDATE_START: xray -->
-<p class="script-latest-update"><strong>最新更新 · v0.1.23：</strong>优化菜单响应，修复 TCP 端口误判及证书校验等待。已有用户通过 <code>xr → m</code> 更新。</p>
+<p class="script-latest-update"><strong>最新更新 · v0.1.24：</strong>整理菜单分组与单行选项，修复异常下载、节点读取失败和无效编辑选项的处理。已有用户通过 <code>xr → m</code> 更新。</p>
 <!-- SKYBYTE_LATEST_UPDATE_END: xray -->
-<p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.23" target="_blank" rel="noopener">查看 v0.1.23 版本</a></p>
+<p style="margin-top:24px"><a href="https://github.com/skylink9119/skybyte-xray-manager" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/skybyte-xray-manager/releases/tag/v0.1.24" target="_blank" rel="noopener">查看 v0.1.24 版本</a></p>
 <section id="xray-vps-promotion" aria-labelledby="vps-promotion-title">
 <style id="xray-vps-style">
 #xray-vps-promotion{margin-top:32px;padding-top:24px;border-top:1px solid var(--light-grey)}
