@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box v2.8.17 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本 | SKYBYTE</title><meta name="author" content="SKYBYTE,sky13712559955@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box v2.8.18 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="sing-box 一键脚本">
 <meta property="og:url" content="https://skylink9119.github.io/sing-box/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="sing-box v2.8.17 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
+<meta property="og:description" content="sing-box v2.8.18 一键安装脚本，复制命令即可在服务器 Bash 终端运行。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-07-20T07:00:00.000Z">
@@ -228,13 +228,13 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container .sb-install-actions>.sb-install-action:focus-visible{outline:2px solid #0f766e;outline-offset:3px}
 @media(max-width:480px){#article-container .sb-install-actions>.sb-install-action{width:calc((100% - 12px)/2);padding:0 8px;font-size:14px}}
 </style><h2>sing-box 一键安装脚本</h2>
-<p>版本：v2.8.17。以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
+<p>版本：v2.8.18。以 root 账号登录 Ubuntu/Debian VPS，在 Bash 终端运行下面这一条命令；缺少 curl 时会自动安装。</p>
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('sing-box-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button><a class="sb-install-action sb-tutorial-link" href="/2026/10/23/skybyte-sing-box-install-guide/">功能对照表 →</a></div>
 <pre style="padding:20px;border-radius:12px;overflow-x:auto;background:#172033;color:#f1f5f9;white-space:pre-wrap;overflow-wrap:anywhere"><code id="sing-box-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; s=$(curl -q -fsSL --max-time 60 https://sky9119.cc/sb.sh) &amp;&amp; [ -n &quot;$s&quot; ] &amp;&amp; bash -c &quot;$s&quot;)</code></pre>
 <!-- SKYBYTE_LATEST_UPDATE_START: sing-box -->
-<p class="script-latest-update"><strong>最新更新 · v2.8.17：</strong>新增 <code>d → 13</code> IPv6 备用入口，排除 WARP 等隧道地址：保留原 IPv4 地址和凭据，额外导出 IPv6 节点；VPS 和客户端均需支持 IPv6。通过 <code>sb → e → 4</code> 更新。</p>
+<p class="script-latest-update"><strong>最新更新 · v2.8.18：</strong>新增 <code>b → 8</code> 修改节点端口：显示当前值，回车保留，不再默认恢复 443；保留凭据并同步 IPv6 备用。通过 <code>sb → e → 4</code> 更新。</p>
 <!-- SKYBYTE_LATEST_UPDATE_END: sing-box -->
-<p style="margin-top:24px"><a href="https://github.com/skylink9119/sing-box-v2" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/sing-box-v2/releases/tag/v2.8.17" target="_blank" rel="noopener">查看 v2.8.17 版本</a></p>
+<p style="margin-top:24px"><a href="https://github.com/skylink9119/sing-box-v2" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/sing-box-v2/releases/tag/v2.8.18" target="_blank" rel="noopener">查看 v2.8.18 版本</a></p>
 <section id="sing-box-vps-promotion" aria-labelledby="vps-promotion-title">
 <style id="sing-box-vps-style">
 #sing-box-vps-promotion{margin-top:32px;padding-top:24px;border-top:1px solid var(--light-grey)}
