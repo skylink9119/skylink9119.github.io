@@ -232,7 +232,7 @@ btf.addGlobalFn('pjaxSend', () => {
 <div class="sb-install-actions"><button type="button" onclick="navigator.clipboard.writeText(document.getElementById('sing-box-command').textContent).then(()=&gt;{this.textContent='已复制';setTimeout(()=&gt;this.textContent='复制安装命令',2000)}).catch(()=&gt;{this.textContent='请手动复制'})" class="sb-install-action sb-copy-action">复制安装命令</button><a class="sb-install-action sb-tutorial-link" href="/2026/10/23/skybyte-sing-box-install-guide/">功能对照表 →</a></div>
 <pre style="padding:20px;border-radius:12px;overflow-x:auto;background:#172033;color:#f1f5f9;white-space:pre-wrap;overflow-wrap:anywhere"><code id="sing-box-command">(if ! command -v curl &gt;/dev/null; then apt-get update &amp;&amp; apt-get install -y curl ca-certificates; fi &amp;&amp; s=$(curl -q -fsSL --max-time 60 https://sky9119.cc/sb.sh) &amp;&amp; [ -n &quot;$s&quot; ] &amp;&amp; bash -c &quot;$s&quot;)</code></pre>
 <!-- SKYBYTE_LATEST_UPDATE_START: sing-box -->
-<p class="script-latest-update"><strong>最新更新 · v2.8.26：</strong>内核菜单仅显示当前安装版本，删除旁边的脚本验证版本说明。通过 <code>sb → e → 4</code> 更新管理脚本。</p>
+<p class="script-latest-update"><strong>最新更新 · v2.8.26：</strong>启动概览显示 sing-box 实际内核版本与运行状态；内核菜单删除旁边的脚本验证版本说明。通过 <code>sb → e → 4</code> 更新管理脚本。</p>
 <!-- SKYBYTE_LATEST_UPDATE_END: sing-box -->
 <p style="margin-top:24px"><a href="https://github.com/skylink9119/sing-box-v2" target="_blank" rel="noopener">查看 GitHub 项目</a> · <a href="https://github.com/skylink9119/sing-box-v2/releases/tag/v2.8.26" target="_blank" rel="noopener">查看 v2.8.26 版本</a></p>
 <section id="sing-box-vps-promotion" aria-labelledby="vps-promotion-title">
