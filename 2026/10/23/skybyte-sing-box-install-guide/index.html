@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入 | SKYBYTE</title><meta name="author" content="SKYBYTE,gsx2056@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.8.28 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。">
+<html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入 | SKYBYTE</title><meta name="author" content="SKYBYTE,gsx2056@gmail.com"><meta name="copyright" content="SKYBYTE"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.9.0 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入">
 <meta property="og:url" content="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/">
 <meta property="og:site_name" content="SKYBYTE">
-<meta property="og:description" content="sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.8.28 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。">
+<meta property="og:description" content="sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.9.0 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://skylink9119.github.io/img/icon.jpg">
 <meta property="article:published_time" content="2026-10-23T13:04:00.000Z">
@@ -21,7 +21,7 @@
     "@id": "https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"
   },
   "image": "https://skylink9119.github.io/img/icon.jpg",
-  "description": "sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.8.28 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。",
+  "description": "sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.9.0 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。",
   "inLanguage": "zh-CN",
   "datePublished": "2026-10-23T13:04:00.000Z",
   "dateModified": "2026-10-26T01:43:54.000Z",
@@ -258,7 +258,7 @@ btf.addGlobalFn('pjaxSend', () => {
 #article-container .sb-guide-anchor{display:block;height:0}
 @media(max-width:600px){#article-container .sb-guide-table th,#article-container .sb-guide-table td{padding:9px 7px;font-size:13px}#article-container .sb-guide-table th:nth-child(1){width:26%}#article-container .sb-guide-table th:nth-child(2){width:29%}#article-container .sb-guide-table th:nth-child(3){width:45%}#article-container .sb-guide-table code{font-size:12px}}
 </style>
-<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.8.28</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.9.0</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <span class="sb-guide-anchor" id="prepare"></span>
 <h2 id="install">1. 先安装，再打开脚本</h2>
@@ -272,12 +272,13 @@ btf.addGlobalFn('pjaxSend', () => {
 <span class="sb-guide-anchor" id="hy2"></span><span class="sb-guide-anchor" id="clients"></span>
 <h2 id="reality">2. 搭建节点、导入客户端</h2>
 <div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
-<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>安装 Reality + Vision（TCP；端口受阻时暂不建议），默认 TCP 443；无需自购域名。</td></tr>
-<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>安装 Hysteria2（UDP；推荐优先尝试），默认 UDP 443；需放行 UDP 端口，自签证书需在客户端配置信任。</td></tr>
-<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>安装 Reality + HY2，分别使用 TCP / UDP。</td></tr>
+<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>自动向导先填写节点名称，选择 BBR / UFW / 二维码工具，确认后安装 Reality + Vision；默认 TCP 443 和 addons.mozilla.org。</td></tr>
+<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>自动向导先填写节点名称并选择配套项；默认 UDP 443、自签证书，客户端须配置信任；IPv4 默认自动配置 20000–30000/UDP 跳跃，云安全组须放行。</td></tr>
+<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>自动向导安装 Reality + HY2，TCP / UDP 均为 443；BBR / UFW / 二维码按前置选择执行。</td></tr>
 <tr><td>独立搭建 IPv6 Reality</td><td><code>a → 8 → 1</code></td><td>检测并选择本机原生公网 IPv6，安装 TCP Reality + Vision，直接导出 IPv6 节点。</td></tr>
 <tr><td>独立搭建 IPv6 HY2</td><td><code>a → 8 → 2</code></td><td>用所选 IPv6 搭建 UDP Hysteria2；自签证书包含该地址，客户端仍须安全导入证书并验证。</td></tr>
 <tr><td>IPv6 双协议</td><td><code>a → 8 → 3</code></td><td>同时安装 IPv6 Reality + HY2，可填写各自端口。客户端需 IPv6；云安全组放行实际 IPv6 TCP/UDP 端口。已有节点不覆盖，请用 d → 13 增加备用。</td></tr>
+<tr><td>手动填写安装参数</td><td><code>a → 9</code></td><td>选择协议后，自定义端口、连接地址、监听地址族、证书和 Reality 握手网站。</td></tr>
 <tr><td>使用其他安装端口</td><td><code>a → 6 → 3</code></td><td>选择协议并自定义监听端口。</td></tr>
 <tr><td>已有节点追加协议</td><td><code>a → 5 → 4</code></td><td>追加 Reality 或 HY2，保留现有节点凭据。</td></tr>
 <tr><td>安装前检测（不安装）</td><td><code>a → 7</code></td><td>检查系统、APT 锁、依赖、TCP/UDP 端口、Reality 握手与下载网络；失败项先处理。已有 HY2 用 a → 5 → 4 追加 Reality。已安装 HY2 占用 UDP 端口时，核对本脚本配置、服务和监听归属后提示无需重复安装；未知占用仍报冲突。</td></tr>
@@ -314,14 +315,15 @@ btf.addGlobalFn('pjaxSend', () => {
 <tr><td>IPv4 不通时的 IPv6 备用</td><td><code>d → 13 → 2</code></td><td>检测本机公网 IPv6、路由、端口与 UFW 支持，确认后启用双栈并额外导出“IPv6备用”节点。保留原 IPv4 地址、UUID、密钥、SNI 和实际端口；重新导入客户端后切换备用节点。</td></tr>
 <tr><td>移除 IPv6 备用入口</td><td><code>d → 13 → 3</code></td><td>移除备用导出，恢复启用前监听；保留原节点及凭据。</td></tr>
 <tr><td>启用 BBR + FQ</td><td><code>d → 4</code></td><td>检查内核支持并调整系统 TCP 参数；实际效果取决于线路。</td></tr>
-<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看进程、内存与负载。</td></tr>
+<tr><td>一键配套部署</td><td><code>d → 14</code></td><td>一次确认自动安装二维码工具、启用 BBR + FQ、放行 SSH / 节点端口后启用 UFW；IPv4 HY2 自动启用 20000–30000/UDP 跳跃。已有范围保留，冲突或不支持时明确提示，云安全组仍需另行放行。</td></tr>
+<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看运行账号、RSS/PSS、内存余量与保守容量参考，不自动修改配额。</td></tr>
 <tr><td>检测当前 Reality 网站</td><td><code>d → 12 → 1</code></td><td>读取当前握手目标，检查 DNS、TCP、TLS 1.3、证书与 HTTP/2，明确显示通过或失败原因。</td></tr>
 <tr><td>检测自定义握手网站</td><td><code>d → 12 → 2</code></td><td>填写域名或 域名:端口，可单独指定 SNI；只检测，不修改节点。</td></tr>
 <tr><td>更换 Reality 握手网站</td><td><code>d → 12 → 3</code></td><td>选择常用网站或自定义 SNI / 目标；检测通过后输入 y 应用，同步管理员与受限用户，保留 UUID、密钥、端口及用量。完成后重新导入客户端节点。</td></tr>
 <tr><td>管理用户与配额</td><td><code>g</code></td><td>进入后：1 初始化、2 添加、3 用量、9 个人节点 / 二维码。</td></tr>
 <tr><td>申请域名证书</td><td><code>e → 6</code></td><td>进入 ACME 证书申请与续签菜单。</td></tr>
 <tr><td>更新管理脚本</td><td><code>e → 4</code></td><td>检查正式版，确认后更新 SKYBYTE 管理菜单与功能。</td></tr>
-<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本。</td></tr>
+<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择脚本已验证版本（可能降级）、最新稳定版或指定版本。</td></tr>
 <tr><td>备份 / 恢复</td><td><code>e → 2</code><br><code>e → 3</code></td><td>分别备份或恢复配置；备份含私钥，需妥善保存。</td></tr>
 <tr><td>卸载脚本与节点</td><td><code>f → 3</code></td><td>备份后卸载托管服务与配置。</td></tr>
 </tbody></table></div><p><strong>IPv6 备用前提：</strong>检测排除 WARP/WireGuard、TUN 等隧道网卡；代理出口不能当作入站地址。VPS 需已配置原生公网 IPv6，客户端网络也需支持 IPv6；云防火墙需放行实际 IPv6 TCP/UDP 端口。本机检测不等于公网可达，IPv6 也可能受限。节点参数与链接保存在本 VPS，请安装防火墙并做好保密。HY2 保留原 SNI 和证书验证；备用 JSON 为 <code>sing-box-client-ipv6.json</code>，IPv6 备用不使用 IPv4 端口跳跃。</p>
