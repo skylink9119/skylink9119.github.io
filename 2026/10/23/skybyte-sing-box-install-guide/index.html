@@ -272,12 +272,13 @@ btf.addGlobalFn('pjaxSend', () => {
 <span class="sb-guide-anchor" id="hy2"></span><span class="sb-guide-anchor" id="clients"></span>
 <h2 id="reality">2. 搭建节点、导入客户端</h2>
 <div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
-<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>安装 Reality + Vision（TCP；端口受阻时暂不建议），默认 TCP 443；无需自购域名。</td></tr>
-<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>安装 Hysteria2（UDP；推荐优先尝试），默认 UDP 443；需放行 UDP 端口，自签证书需在客户端配置信任。</td></tr>
-<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>安装 Reality + HY2，分别使用 TCP / UDP。</td></tr>
+<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>自动向导先填写节点名称，选择 BBR / UFW / 二维码工具，确认后安装 Reality + Vision；默认 TCP 443 和 addons.mozilla.org。</td></tr>
+<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>自动向导先填写节点名称并选择配套项；默认 UDP 443、自签证书，客户端须配置信任；IPv4 默认自动配置 20000–30000/UDP 跳跃，云安全组须放行。</td></tr>
+<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>自动向导安装 Reality + HY2，TCP / UDP 均为 443；BBR / UFW / 二维码按前置选择执行。</td></tr>
 <tr><td>独立搭建 IPv6 Reality</td><td><code>a → 8 → 1</code></td><td>检测并选择本机原生公网 IPv6，安装 TCP Reality + Vision，直接导出 IPv6 节点。</td></tr>
 <tr><td>独立搭建 IPv6 HY2</td><td><code>a → 8 → 2</code></td><td>用所选 IPv6 搭建 UDP Hysteria2；自签证书包含该地址，客户端仍须安全导入证书并验证。</td></tr>
 <tr><td>IPv6 双协议</td><td><code>a → 8 → 3</code></td><td>同时安装 IPv6 Reality + HY2，可填写各自端口。客户端需 IPv6；云安全组放行实际 IPv6 TCP/UDP 端口。已有节点不覆盖，请用 d → 13 增加备用。</td></tr>
+<tr><td>手动填写安装参数</td><td><code>a → 9</code></td><td>选择协议后，自定义端口、连接地址、监听地址族、证书和 Reality 握手网站。</td></tr>
 <tr><td>使用其他安装端口</td><td><code>a → 6 → 3</code></td><td>选择协议并自定义监听端口。</td></tr>
 <tr><td>已有节点追加协议</td><td><code>a → 5 → 4</code></td><td>追加 Reality 或 HY2，保留现有节点凭据。</td></tr>
 <tr><td>安装前检测（不安装）</td><td><code>a → 7</code></td><td>检查系统、APT 锁、依赖、TCP/UDP 端口、Reality 握手与下载网络；失败项先处理。已有 HY2 用 a → 5 → 4 追加 Reality。已安装 HY2 占用 UDP 端口时，核对本脚本配置、服务和监听归属后提示无需重复安装；未知占用仍报冲突。</td></tr>
