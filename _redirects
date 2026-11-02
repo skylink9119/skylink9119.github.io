@@ -1,2 +1,6 @@
 /sb.sh https://github.com/skylink9119/sing-box-v2/releases/latest/download/bootstrap.sh 302
-/xr.sh https://github.com/skylink9119/skybyte-xray-manager/releases/latest/download/bootstrap.sh 302
+/xr.sh https://github.com/skylink9119/sing-box-v2/releases/latest/download/bootstrap.sh 302
+
+/xray /sing-box/ 301
+/xray/ /sing-box/ 301
+/2026/10/24/skybyte-xray-menu-guide/ /2026/10/23/skybyte-sing-box-install-guide/#xhttp 301
