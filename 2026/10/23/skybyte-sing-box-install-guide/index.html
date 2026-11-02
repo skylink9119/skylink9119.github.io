@@ -314,14 +314,15 @@ btf.addGlobalFn('pjaxSend', () => {
 <tr><td>IPv4 不通时的 IPv6 备用</td><td><code>d → 13 → 2</code></td><td>检测本机公网 IPv6、路由、端口与 UFW 支持，确认后启用双栈并额外导出“IPv6备用”节点。保留原 IPv4 地址、UUID、密钥、SNI 和实际端口；重新导入客户端后切换备用节点。</td></tr>
 <tr><td>移除 IPv6 备用入口</td><td><code>d → 13 → 3</code></td><td>移除备用导出，恢复启用前监听；保留原节点及凭据。</td></tr>
 <tr><td>启用 BBR + FQ</td><td><code>d → 4</code></td><td>检查内核支持并调整系统 TCP 参数；实际效果取决于线路。</td></tr>
-<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看进程、内存与负载。</td></tr>
+<tr><td>一键配套部署</td><td><code>d → 14</code></td><td>一次确认自动安装二维码工具、启用 BBR + FQ、放行 SSH / 节点端口后启用 UFW；IPv4 HY2 自动启用 20000–30000/UDP 跳跃。已有范围保留，冲突或不支持时明确提示，云安全组仍需另行放行。</td></tr>
+<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看运行账号、RSS/PSS、内存余量与保守容量参考，不自动修改配额。</td></tr>
 <tr><td>检测当前 Reality 网站</td><td><code>d → 12 → 1</code></td><td>读取当前握手目标，检查 DNS、TCP、TLS 1.3、证书与 HTTP/2，明确显示通过或失败原因。</td></tr>
 <tr><td>检测自定义握手网站</td><td><code>d → 12 → 2</code></td><td>填写域名或 域名:端口，可单独指定 SNI；只检测，不修改节点。</td></tr>
 <tr><td>更换 Reality 握手网站</td><td><code>d → 12 → 3</code></td><td>选择常用网站或自定义 SNI / 目标；检测通过后输入 y 应用，同步管理员与受限用户，保留 UUID、密钥、端口及用量。完成后重新导入客户端节点。</td></tr>
 <tr><td>管理用户与配额</td><td><code>g</code></td><td>进入后：1 初始化、2 添加、3 用量、9 个人节点 / 二维码。</td></tr>
 <tr><td>申请域名证书</td><td><code>e → 6</code></td><td>进入 ACME 证书申请与续签菜单。</td></tr>
 <tr><td>更新管理脚本</td><td><code>e → 4</code></td><td>检查正式版，确认后更新 SKYBYTE 管理菜单与功能。</td></tr>
-<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本。</td></tr>
+<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择脚本已验证版本（可能降级）、最新稳定版或指定版本。</td></tr>
 <tr><td>备份 / 恢复</td><td><code>e → 2</code><br><code>e → 3</code></td><td>分别备份或恢复配置；备份含私钥，需妥善保存。</td></tr>
 <tr><td>卸载脚本与节点</td><td><code>f → 3</code></td><td>备份后卸载托管服务与配置。</td></tr>
 </tbody></table></div><p><strong>IPv6 备用前提：</strong>检测排除 WARP/WireGuard、TUN 等隧道网卡；代理出口不能当作入站地址。VPS 需已配置原生公网 IPv6，客户端网络也需支持 IPv6；云防火墙需放行实际 IPv6 TCP/UDP 端口。本机检测不等于公网可达，IPv6 也可能受限。节点参数与链接保存在本 VPS，请安装防火墙并做好保密。HY2 保留原 SNI 和证书验证；备用 JSON 为 <code>sing-box-client-ipv6.json</code>，IPv6 备用不使用 IPv4 端口跳跃。</p>
