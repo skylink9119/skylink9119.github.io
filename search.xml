@@ -69,7 +69,7 @@
 </tbody></table></div>
 ]]></content><categories><category>技术教程</category><category>网络链路</category></categories><tags><tag>Xray</tag><tag>VLESS</tag><tag>Reality协议</tag><tag>Vision</tag><tag>一键脚本</tag><tag>VPS</tag></tags></entry>
 
-<entry><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><url>/2026/10/23/skybyte-sing-box-install-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.9.0</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+<entry><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><url>/2026/10/23/skybyte-sing-box-install-guide/</url><content><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.9.1</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <span class="sb-guide-anchor" id="prepare"></span>
 <h2 id="install">1. 先安装，再打开脚本</h2>
@@ -83,12 +83,16 @@
 <span class="sb-guide-anchor" id="hy2"></span><span class="sb-guide-anchor" id="clients"></span>
 <h2 id="reality">2. 搭建节点、导入客户端</h2>
 <div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>依次选择</th><th>得到什么</th></tr></thead><tbody>
-<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>安装 Reality + Vision，默认 TCP 443；无需自购域名。</td></tr>
-<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>安装 Hysteria2，默认 UDP 443；自签证书需在客户端配置信任。</td></tr>
-<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>安装 Reality + HY2，分别使用 TCP / UDP。</td></tr>
-<tr><td>使用其他安装端口</td><td><code>a → 6 → 3</code></td><td>选择协议并自定义监听端口。</td></tr>
-<tr><td>已有节点追加协议</td><td><code>a → 5 → 4</code></td><td>追加 Reality 或 HY2，保留现有节点凭据。</td></tr>
-<tr><td>安装前检测（不安装）</td><td><code>a → 7</code></td><td>检查系统、APT 锁、依赖、TCP/UDP 端口、Reality 握手与下载网络；失败项先处理。已有 HY2 用 a → 5 → 4 追加 Reality。</td></tr>
+<tr><td>搭建 Reality</td><td><code>a → 1</code></td><td>自动向导先填写节点名称，选择 BBR / UFW / 二维码工具，确认后安装 Reality + Vision；默认 TCP 443 和 addons.mozilla.org。</td></tr>
+<tr><td>搭建 HY2</td><td><code>a → 2</code></td><td>自动向导先填写节点名称并选择配套项；默认 UDP 443、自签证书，客户端须配置信任；IPv4 默认自动配置 20000–30000/UDP 跳跃，云安全组须放行。</td></tr>
+<tr><td>同时安装两种协议</td><td><code>a → 3</code></td><td>自动向导安装 Reality + HY2，TCP / UDP 均为 443；BBR / UFW / 二维码按前置选择执行。</td></tr>
+<tr><td>独立搭建 IPv6 Reality</td><td><code>a → 4</code></td><td>自动向导收集名称和 BBR / UFW / 二维码选项；使用首个通过检测的本机原生公网 IPv6 和 TCP 443 安装 Reality + Vision。客户端须支持 IPv6。</td></tr>
+<tr><td>独立搭建 IPv6 HY2</td><td><code>a → 7 → 10 → 2</code></td><td>用所选 IPv6 搭建 UDP Hysteria2；自签证书包含该地址，客户端仍须安全导入证书并验证。</td></tr>
+<tr><td>IPv6 双协议</td><td><code>a → 7 → 10 → 3</code></td><td>同时安装 IPv6 Reality + HY2，可填写各自端口。客户端需 IPv6；云安全组放行实际 IPv6 TCP/UDP 端口。已有节点不覆盖，请用 d → 13 增加备用。</td></tr>
+<tr><td>手动填写安装参数</td><td><code>a → 9</code></td><td>选择协议后，自定义端口、连接地址、监听地址族、证书和 Reality 握手网站。</td></tr>
+<tr><td>使用其他安装端口</td><td><code>a → 7 → 3</code></td><td>选择协议并自定义监听端口。</td></tr>
+<tr><td>已有节点追加协议</td><td><code>a → 6 → 4</code></td><td>追加 Reality 或 HY2，保留现有节点凭据。</td></tr>
+<tr><td>安装前检测（不安装）</td><td><code>a → 8</code></td><td>检查系统、APT 锁、依赖、TCP/UDP 端口、Reality 握手与下载网络；失败项先处理。已有 HY2 用 a → 6 → 4 追加 Reality。已安装 HY2 占用 UDP 端口时，核对本脚本配置、服务和监听归属后提示无需重复安装；未知占用仍报冲突。</td></tr>
 <tr><td>查看节点链接</td><td><code>b → 1</code></td><td>查看链接与客户端格式，复制到对应客户端导入。</td></tr>
 <tr><td>查看节点参数（请保密）</td><td><code>b → 7</code></td><td>查看 UUID、公钥、Short ID、握手网站和目标。重要数据保存在本 VPS，请勿公开；务必通过 d → 2 安装并启用防火墙，先放行 SSH 和实际节点端口。</td></tr>
 <tr><td>导出客户端配置</td><td><code>b → 2</code></td><td>导出订阅、Mihomo YAML、sing-box JSON 等本地文件。</td></tr>
@@ -115,23 +119,28 @@
 <tr><td>查看状态 / 配置检查</td><td><code>c → 1 → 1</code><br><code>c → 1 → 6</code></td><td>分别查看服务状态、检查配置是否有效。</td></tr>
 <tr><td>重启节点服务</td><td><code>c → 1 → 3</code></td><td>校验配置后重启 sing-box。</td></tr>
 <tr><td>查看错误日志</td><td><code>c → 2</code></td><td>显示近期日志，排查启动或连接错误。</td></tr>
-<tr><td>改端口 / 地址 / SNI</td><td><code>a → 5</code></td><td>再选 1 改端口、2 改地址、3 改 SNI；修改后重新导入客户端。</td></tr>
+<tr><td>修改节点端口</td><td><code>b → 8</code></td><td>显示当前 Reality TCP / HY2 UDP 端口，只询问已安装协议；回车保留，y 确认。保留凭据和用户端口，IPv6 备用同步更新。UFW 已启用时先放行新端口；从 b → 1 重新导入节点。</td></tr>
+<tr><td>改端口 / 地址 / SNI</td><td><code>a → 6</code></td><td>原入口保留：1 改端口（回车保留当前值）、2 改地址、3 改 SNI；修改后重新导入客户端。</td></tr>
 <tr><td>修改节点名称</td><td><code>b → 3</code></td><td>修改客户端显示名称，保留 UUID / 密码。</td></tr>
+<tr><td>查看 IPv6 备用入口</td><td><code>d → 13 → 1</code></td><td>查看备用 IPv6 地址与使用前提；不修改节点。</td></tr>
+<tr><td>IPv4 不通时的 IPv6 备用</td><td><code>d → 13 → 2</code></td><td>检测本机公网 IPv6、路由、端口与 UFW 支持，确认后启用双栈并额外导出“IPv6备用”节点。保留原 IPv4 地址、UUID、密钥、SNI 和实际端口；重新导入客户端后切换备用节点。</td></tr>
+<tr><td>移除 IPv6 备用入口</td><td><code>d → 13 → 3</code></td><td>移除备用导出，恢复启用前监听；保留原节点及凭据。</td></tr>
 <tr><td>启用 BBR + FQ</td><td><code>d → 4</code></td><td>检查内核支持并调整系统 TCP 参数；实际效果取决于线路。</td></tr>
-<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看进程、内存与负载。</td></tr>
+<tr><td>一键配套部署</td><td><code>d → 14</code></td><td>一次确认自动安装二维码工具、启用 BBR + FQ、放行 SSH / 节点端口后启用 UFW；IPv4 HY2 自动启用 20000–30000/UDP 跳跃。已有范围保留，冲突或不支持时明确提示，云安全组仍需另行放行。</td></tr>
+<tr><td>查看资源占用</td><td><code>d → 7</code></td><td>查看运行账号、RSS/PSS、内存余量与保守容量参考，不自动修改配额。</td></tr>
 <tr><td>检测当前 Reality 网站</td><td><code>d → 12 → 1</code></td><td>读取当前握手目标，检查 DNS、TCP、TLS 1.3、证书与 HTTP/2，明确显示通过或失败原因。</td></tr>
 <tr><td>检测自定义握手网站</td><td><code>d → 12 → 2</code></td><td>填写域名或 域名:端口，可单独指定 SNI；只检测，不修改节点。</td></tr>
 <tr><td>更换 Reality 握手网站</td><td><code>d → 12 → 3</code></td><td>选择常用网站或自定义 SNI / 目标；检测通过后输入 y 应用，同步管理员与受限用户，保留 UUID、密钥、端口及用量。完成后重新导入客户端节点。</td></tr>
 <tr><td>管理用户与配额</td><td><code>g</code></td><td>进入后：1 初始化、2 添加、3 用量、9 个人节点 / 二维码。</td></tr>
 <tr><td>申请域名证书</td><td><code>e → 6</code></td><td>进入 ACME 证书申请与续签菜单。</td></tr>
 <tr><td>更新管理脚本</td><td><code>e → 4</code></td><td>检查正式版，确认后更新 SKYBYTE 管理菜单与功能。</td></tr>
-<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择本版测试核心、最新稳定版或指定版本。</td></tr>
+<tr><td>更新 sing-box 核心</td><td><code>e → 1</code></td><td>选择脚本已验证版本（可能降级）、最新稳定版或指定版本。</td></tr>
 <tr><td>备份 / 恢复</td><td><code>e → 2</code><br><code>e → 3</code></td><td>分别备份或恢复配置；备份含私钥，需妥善保存。</td></tr>
 <tr><td>卸载脚本与节点</td><td><code>f → 3</code></td><td>备份后卸载托管服务与配置。</td></tr>
-</tbody></table></div>
+</tbody></table></div><p><strong>IPv6 备用前提：</strong>检测排除 WARP/WireGuard、TUN 等隧道网卡；代理出口不能当作入站地址。VPS 需已配置原生公网 IPv6，客户端网络也需支持 IPv6；云防火墙需放行实际 IPv6 TCP/UDP 端口。本机检测不等于公网可达，IPv6 也可能受限。节点参数与链接保存在本 VPS，请安装防火墙并做好保密。HY2 保留原 SNI 和证书验证；备用 JSON 为 <code>sing-box-client-ipv6.json</code>，IPv6 备用不使用 IPv4 端口跳跃。</p>
 
 <span class="sb-guide-anchor" id="optimize"></span>
-<h2 id="warp">5. WARP 分流：按需开启</h2>
+<h2 id="professional-diagnostics">专业流媒体 / 回程 / 测速</h2><p>报告统一黄色显示。流媒体结果按平台、状态、地区、类型和说明五列对齐，长文本自动换行；vnStat、资源和网络状态等报告也使用黄色。</p><p>先进入 <code>d → 8</code>，再按下表选择。检测工具按需下载并校验，菜单打开时不运行测试。</p><table><thead><tr><th>想做什么</th><th>菜单选项</th><th>得到什么结果</th></tr></thead><tbody><tr><td>全球流媒体 + AI（IPv4）</td><td><code>1</code></td><td>UnlockTests 检测全球平台、ChatGPT、Gemini 等，显示状态、地区和原生/DNS/代理类型。</td></tr><tr><td>检测 IPv6 / 双栈</td><td><code>2 / 3</code></td><td>分别检测 VPS 直连 IPv6 或 IPv4+IPv6。</td></tr><tr><td>检测 WARP 出口</td><td><code>4</code></td><td>先验证本机 WARP，再通过 SOCKS5 检测；实际出口地址族由代理决定。</td></tr><tr><td>直连与 WARP 对比</td><td><code>5</code></td><td>分别输出直连 IPv4 和 WARP 的平台检测结果。</td></tr><tr><td>全地区平台检测</td><td><code>6</code></td><td>VPS IPv4 检测全部地区平台；范围较大，未完成项会标明。</td></tr><tr><td>三网回程 / 路由</td><td><code>7</code></td><td>融合怪 Go 检测 VPS 到探测目标的回程/路由，不进行带宽测速。</td></tr><tr><td>三网带宽测速</td><td><code>8</code></td><td>输入 y 后运行，可能消耗较多 VPS 流量并临时占用带宽。</td></tr><tr><td>综合网络测评</td><td><code>9</code></td><td>基础、流媒体、IP 信息、回程与测速；关闭结果上传及 CPU/内存/磁盘压力测试。</td></tr></tbody></table><p>结果保留上游判定，未知或超时不会冒充成功；不能保证账号资格或实际播放。流媒体报告仅保存在 VPS，综合检测关闭上传。</p><h2 id="warp">5. WARP 分流：按需开启</h2>
 <p>从主菜单输入 <code>d → 9</code> 进入 WARP。下表数字直接在 WARP 菜单输入。</p>
 <div class="sb-guide-table"><table><thead><tr><th>你要做什么</th><th>选择</th><th>得到什么</th></tr></thead><tbody>
 <tr><td>安装官方 WARP</td><td><code>1</code></td><td>安装本机代理，按提示配置出站。</td></tr>
@@ -141,7 +150,7 @@
 <tr><td>切换出站模式</td><td><code>5</code></td><td>直连、全局 WARP 或指定域名分流。</td></tr>
 <tr><td>管理分流规则</td><td><code>6</code></td><td>检查出口、更新规则或应用当前列表。</td></tr>
 <tr><td>检测双栈出口</td><td><code>7</code></td><td>查看 IPv4 / IPv6 出口情况。</td></tr>
-<tr><td>对比平台响应</td><td><code>8</code></td><td>对比直连与 WARP；检测结果不保证实际播放或账号可用。</td></tr>
+<tr><td>专业检测菜单</td><td><code>8</code></td><td>打开专业流媒体/回程/测速菜单，再选 5 对比直连与 WARP。</td></tr>
 </tbody></table></div>
 <p>节点先直连成功，再按需配置 BBR、WARP 或多人配额。配置检查通过不等于公网已连通。</p>
 ]]></content><categories><category>技术教程</category><category>网络链路</category></categories><tags><tag>sing-box</tag><tag>VLESS</tag><tag>Reality协议</tag><tag>Hysteria2</tag><tag>一键脚本</tag><tag>VPS</tag></tags></entry>
