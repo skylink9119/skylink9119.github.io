@@ -373,12 +373,12 @@ html[data-theme='dark'] #aside-content .card-info .avatar-img {
     -webkit-backdrop-filter: blur(10px);
 }
 
-/* Stable navigation sizes prevent crowding on medium-width screens. */
+/* Larger navigation labels and icons; compact layouts retain the theme menu toggle. */
 #nav { font-size: 1rem !important; line-height: 1.5; }
 #nav .site-name { font-size: 1.25rem; font-weight: 650; letter-spacing: .02em; }
 @media screen and (min-width: 1101px) {
     #nav {
-        font-size: 1.0625rem !important;
+        font-size: 1.125rem !important;
     }
 
     #nav #menus .menus_item {
@@ -398,6 +398,7 @@ html[data-theme='dark'] #aside-content .card-info .avatar-img {
 
 #nav #menus .site-page,
 #nav #search-button .site-page {
+    font-size: inherit;
     font-weight: 600;
     letter-spacing: 0.2px;
 }
@@ -405,7 +406,7 @@ html[data-theme='dark'] #aside-content .card-info .avatar-img {
 #nav #menus .site-page > i,
 #nav #search-button .site-page > i {
     margin-right: 5px;
-    font-size: 1.05em;
+    font-size: 1.1em;
 }
 
 /* 白天 / 黑暗模式：始终显示的液态玻璃切换按钮 */
