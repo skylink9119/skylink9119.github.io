@@ -14,7 +14,7 @@
   <title>SKYBYTE</title>
   <updated>2026-10-28T00:00:00.000Z</updated>
 
-<entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Hysteria2" scheme="https://skylink9119.github.io/tags/Hysteria2/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.10.8</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
+<entry><author><name>SKYBYTE</name></author><category term="技术教程" scheme="https://skylink9119.github.io/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/><category term="sing-box" scheme="https://skylink9119.github.io/tags/sing-box/"/><category term="VLESS" scheme="https://skylink9119.github.io/tags/VLESS/"/><category term="Reality协议" scheme="https://skylink9119.github.io/tags/Reality%E5%8D%8F%E8%AE%AE/"/><category term="Hysteria2" scheme="https://skylink9119.github.io/tags/Hysteria2/"/><category term="一键脚本" scheme="https://skylink9119.github.io/tags/%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC/"/><category term="VPS" scheme="https://skylink9119.github.io/tags/VPS/"/><content type="html"><![CDATA[<div class="sb-guide-intro"><strong>想用什么功能，就按表格选择。</strong><br>适用 SKYBYTE Manager <strong>v2.10.9</strong>。主菜单用字母，子菜单用数字，确认输入 <code>y</code>。<br><code>a → 1</code> 表示输入 <code>a</code>、回车，再输入 <code>1</code>、回车。表格路径均从主菜单开始；已经在子菜单时，直接选择编号。操作后留在当前菜单，<code>0</code> 返回上一层，主菜单 <code>q</code> 退出。</div>
 
 <p><strong>主菜单按用途分组：</strong></p>
 <div class="sb-guide-table"><table><thead><tr><th>分组</th><th>选择</th><th>功能</th></tr></thead><tbody>
@@ -85,7 +85,8 @@
 <tr><td>重启节点服务</td><td><code>e → 1 → 3</code></td><td>校验配置后重启 sing-box。</td></tr>
 <tr><td>查看错误日志</td><td><code>e → 2</code></td><td>显示近期日志，排查启动或连接错误。</td></tr>
 <tr><td>已有节点升级内核</td><td><code>f → 1 → 2</code></td><td>查询最新稳定版，检查全部托管配置后确认切换；更新管理脚本不会自动更新运行内核。</td></tr>
-<tr><td>修改节点端口</td><td><code>b → 8</code></td><td>显示当前 Reality TCP / HY2 UDP 端口，只询问已安装协议；回车保留，y 确认。保留凭据和用户端口，IPv6 备用同步更新。UFW 已启用时先放行新端口；从 b → 1 重新导入节点。</td></tr>
+<tr><td>修改节点端口</td><td><code>b → 8</code></td><td>选择 Reality/HY2 或 XHTTP，显示当前端口；回车保留，y 确认后应用。保留节点凭据，IPv6 备用同步更新；核对云安全组并重新导入客户端。</td></tr>
+<tr><td>检测端口连通性</td><td><code>b → 12</code></td><td>1 查看已安装节点的服务、TCP/UDP 监听与本机 TCP 连接；2 输入远程 IP/域名和 TCP 端口。检测公网 TCP 入站时，从另一台机器运行 <code>bash singbox-v2.sh --check-port VPS_IP_OR_DOMAIN 443</code>。HY2 UDP 公网状态待客户端实际连接与传输验证。</td></tr>
 <tr><td>改端口 / 地址 / SNI</td><td><code>b → 9</code></td><td>原入口保留：1 改端口（回车保留当前值）、2 改地址、3 改 SNI；修改后重新导入客户端；未更改 HY2 监听端口时保留已有跳跃。</td></tr>
 <tr><td>修改节点名称</td><td><code>b → 3</code></td><td>修改客户端显示名称，保留 UUID / 密码。</td></tr>
 <tr><td>查看 IPv6 备用入口</td><td><code>d → 13 → 1</code></td><td>查看备用 IPv6 地址与使用前提；不修改节点。</td></tr>
@@ -118,7 +119,7 @@
 <tr><td>检测双栈出口</td><td><code>7</code></td><td>查看 IPv4 / IPv6 出口情况。</td></tr>
 <tr><td>专业检测菜单</td><td><code>8</code></td><td>打开专业流媒体/回程/测速菜单，再选 5 对比直连与 WARP。</td></tr>
 </tbody></table></div>
-<p>节点先直连成功，再按需配置 BBR、WARP 或多人配额。配置检查通过不等于公网已连通。</p>]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-27T16:00:00.000Z</updated><summary>sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.10.8 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。</summary></entry>
+<p>节点先直连成功，再按需配置 BBR、WARP 或多人配额。配置检查通过不等于公网已连通。</p>]]></content><id>https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/</id><link href="https://skylink9119.github.io/2026/10/23/skybyte-sing-box-install-guide/"/><published>2026-10-23T13:04:00.000Z</published><title>sing-box 一键脚本搭建教程：Reality、HY2 与客户端导入</title><updated>2026-10-27T16:00:00.000Z</updated><summary>sing-box 脚本功能对照表：想做什么、依次选择什么、得到什么结果。按 SKYBYTE Manager v2.10.9 整理节点安装、客户端导入、防火墙、BBR、WARP、用户管理与更新备份入口。</summary></entry>
 <entry><author><name>SKYBYTE</name></author><category term="VPS 选购" scheme="https://skylink9119.github.io/categories/VPS-%E9%80%89%E8%B4%AD/"/><content type="html"><![CDATA[
 <div class="bwh-hero">
 <div class="bwh-kicker">BANDWAGONHOST · LOS ANGELES · USCA_9</div>
